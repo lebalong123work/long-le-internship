@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chapter5</title>
+    <h1><a href="/list.html">List</a></h1>
+</head>
+
+<body>
+    <h1>Chapter5: Images</h1>
+    <h1>Target</h1>
+    <p>Choosing the right format <br> Optimizing images for the web </p>
+    <p>There are many reasons why you might want to add an image to a web page:
+        you might want to include a logo, photograph, illustration,
+        diagram, or chart.</p>
+    <ul>
+        <li>Include an image in your web pages using HTML</li>
+        <li>Pick which image format to use </li>
+        <li>Show an image at the right size</li>
+        <li>Optimize an image for use on the web to make pages load faster</li>
+    </ul>
+    <p>You can also use CSS to include images in your pages using
+        the background-image property</p>
+    <h1>Choosing images for you site</h1>
+    <p>Remember that all images are subject to copyright, and you
+        can get in trouble for simply taking photographs from
+        another website</p>
+    <h1>Storing images on your site</h1>
+    <p>If you are building a site from scratch, it is good
+        practice to create a folder for all of the images
+        the site uses.</p>
+    <h1>Adding images</h1>
+    <p>In HTML, use <code>&lt;img src="URL" alt="description"&gt;</code> to add an image.</p>
+    <h2> <code>&lt;img&gt;</code></h2>
+    <p>To add an image into the page you need to
+        use an <code>&lt;img&gt;</code> element. This is an empty
+        element (which means there is no closing tag). It must carry
+        the following two attributes:</p>
+    <ul>
+        <li><code>src</code>
+            <br> This tells the browser where it can find
+            the image file. This will usually be a relative
+            URL pointing to an image on your own site
+        </li>
+        <li><code>alt</code>
+            <br>This provides a text description of
+            the image which describes the image if
+            you cannot see it.
+        </li>
+        <li><code>title</code>
+            <ol>You can also use the title attribute with the <code>&lt;img&gt;</code> element to provide additional
+                information about the image. Most browsers will display the content of this attribute in a tootip when
+                the user hovers over the image.</ol>
+            <ol>The text used in the alt attribute is often referred to as alt text. It should give an accurate
+                description of the image content so it can be understood by screen reader software (used by people with
+                visual impairments) and search engines.</ol>
+            <ol>If the image is just to make a page look more attractive (and it has no meaning, such as a graphic
+                dividing line), then the alt attribute should still be used but the quotes should be left empty.</ol>
+        </li>
+    </ul>
+    <img src="images/quokka.jpg" alt="A family of
+           quokka" title="The quokka is an Australia
+           marsupial that is similar in size to the
+           domestic cat." />
+    <h1>Height & Width of images</h1>
+    <h2>height</h2>
+    <ul>This specifies the height of the image in pixels.</ul>
+    <h2>with</h2>
+    <ul>This specifies the width of the image in pixels.</ul>
+    <p>The size of images is increasing being specified using CSS rather than HTML</p>
+    <img src="images/quokka.jpg" alt="A family of quokka" width="600" height="450" />
+    <h1>Aligning images horizontally</h1>
+    <h2>align</h2>
+    <p>It has been removed from HTML5 and new websites should use CSS to control the alignment of images</p>
+    <p>In HTML, use <code>&lt;img src="URL" alt="description" align="left/right/center"&gt;</code> to add an image.</p>
+    <p>In HTML, use <code>&lt;img src="URL" alt="description" align="top/middle/bottom"&gt;</code> to add an image.</p>
+    <p><img src="images/quokka.jpg" alt="Bird" width="100" height="100" align="left" />There are around
+        10,000 living species of birds that inhabit
+        different ecosystems from the Arctic to the
+        Antarctic. Many species undertake long distance
+        annual migrations, and many more perform shorter
+        irregular journeys.</p>
+    <hr />
+    <p><img src="images/quokka.jpg" alt="Bird" width="100" height="100" align="right" />There are around
+        10,000 living species of birds that inhabit
+        different ecosystems from the Arctic to the
+        Antarctic. Many species undertake long distance
+        annual migrations, and many more perform shorter
+        irregular journeys.</p>
+    <h1>HTML5: Figure and figute caption</h1>
+    <h2><code>&lt;figure&gt;</code></h2>
+    <p>Images often come with
+        captions. HTML5 has introduced
+        a new <code>&lt;figure&gt;</code> element to
+        contain images and their caption
+        so that the two are associated.
+        <br>
+        You can have more than one
+        image inside the <code>&lt;figure&gt;</code>
+        element as long as they all share
+        the same caption.
+    </p>
+    <h2><code>&lt;figcaption&gt;</code></h2>
+    <p>The <code>&lt;figcaption&gt;</code> element has
+        been added to HTML5 in order
+        to allow web page authors to add
+        a caption to an image.
+        <br>
+        Older browsers that do not
+        understand HTML5 elements
+        simply ignore the new elements
+        and display the content of them.
+    </p>
+
+</html>

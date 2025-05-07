@@ -1,30 +1,42 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>Flash, Video and Audio</title>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/
- swfobject/2.2/swfobject.js"></script>
+    <script
+      type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"
+    ></script>
     <script type="text/javascript">
-        var flashvars = {};
-        var params = { movie: "../video/puppy.flv" };
-        swfobject.embedSWF("flash/osplayer.swf", "snow",
-            "400", "320", "8.0.0", flashvars, params);</script>
-</head>
+      var flashvars = {};
+      var params = { movie: "../video/puppy.flv" };
+      swfobject.embedSWF(
+        "flash/osplayer.swf", "snow", "400", "320", "8.0.0",
+        flashvars,
+        params
+      );
+    </script>
+  </head>
 
-<body>
-    <a href="/list.html" style="font-size: 2em; font-weight: bold;">List</a>
-    <video poster="images/pic1.jpg" width="400" height="320" controls="controls">
-        <source src="video/Yorozuya Blues (Vietsub).mp4" type='video/mp4;
- codecs="avc1.42E01E, mp4a.40.2"' />
-        <source src="video/Yorozuya-Blues-_Vietsub_.webm" type='video/webm;
- codecs="vp8, vorbis"' />
-        <div id="snow">
-            <p>You cannot see this video of a puppy playing
-                in the snow because this browser does not
-                support our video formats.</p>
-        </div>
+  <body>
+    <a href="/list.html" style="font-size: 2em; font-weight: bold">List</a>
+    <video
+      poster="images/pic1.jpg" width="400" height="320" controls="controls"
+    >
+      <source
+        src="video/Yorozuya Blues (Vietsub).mp4"
+        type='video/mp4;
+ codecs="avc1.42E01E, mp4a.40.2"'
+      />
+      <source
+        src="video/Yorozuya-Blues-_Vietsub_.webm"
+        type='video/webm;
+ codecs="vp8, vorbis"'
+      />
+      <div id="snow">
+        <p>
+          You cannot see this video of a puppy playing in the snow because this
+          browser does not support our video formats.
+        </p>
+      </div>
     </video>
-</body>
-
+  </body>
 </html>

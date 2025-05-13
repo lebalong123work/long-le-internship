@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>B-World Bookstore</title>
+    <style>
+
+      /* Reset and Base Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        line-height: 1.6;
+        color: #382c2c;
+        background-color: #ffffff;
+        font-size: 16px;
+      }
+
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+      }
+
+      /* Header Styles */
+      header {
+        background-color: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .top-header {
+        border-bottom: 1px solid #eee;
+        padding: 15px 0;
+        height: 60px;
+        background-color: #f9f9f9;
+      }
+
+      .bottom-header {
+        padding: 15px 0;
+        height: 50px;
+        background-color: #fff;
+      }
+
+      /* Main Content Sections */
+      section {
+        padding: 40px 0;
+        border-bottom: 1px solid #eee;
+      }
+
+      /* Featured Author Section */
+      .featured-author {
+        background-color: #f9f9f9;
+        height: 350px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .featured-author::after {
+        content: "Featured Author Section";
+        font-size: 24px;
+        color: #382c2c;
+      }
+
+      /* Feature Points Section */
+      .feature-points {
+        background-color: #fff;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .feature-points::after {
+        content: "Feature Points Section";
+        font-size: 24px;
+        color: #382c2c;
+      }
+
+      /* Book Selection Section */
+      .book-selection {
+        background-color: #f9f9f9;
+        height: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .book-selection::after {
+        content: "Book Selection Section";
+        font-size: 24px;
+        color: #382c2c;
+      }
+
+      /* You must buy it now Section */
+      .must-books {
+        background-color: #fff;
+        height: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .must-books::after {
+        content: "Must Buy Section";
+        font-size: 24px;
+        color: #382c2c;
+      }
+
+      /* About Us Section */
+      .about-us {
+        background-color: #f9f9f9;
+        height: 350px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .about-us::after {
+        content: "About Us Section";
+        font-size: 24px;
+        color: #382c2c;
+      }
+
+      /* Footer */
+      footer {
+        background-color: #382c2c;
+        color: #fff;
+        padding: 60px 0 30px;
+        text-align: center;
+      }
+
+      .copyright {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      /* Layout Visualization */
+      .layout-label {
+        background-color: rgba(147, 125, 194, 0.1);
+        border: 1px dashed #937dc2;
+        border-radius: 4px;
+        padding: 20px;
+        margin: 10px 0;
+        text-align: center;
+        color: #937dc2;
+        font-weight: 700;
+      }
+
+      .table-container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .table {
+        width: calc(25% - 15px);
+        height: 300px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .table-image {
+        height: 180px;
+        background-color: #eee;
+        border-radius: 8px 8px 0 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .table-content {
+        padding: 15px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="top-header">
+        <div class="container">
+          <div class="layout-label">
+            Top Header - Logo, Search, User Actions
+          </div>
+        </div>
+      </div>
+      <div class="bottom-header">
+        <div class="container">
+          <div class="layout-label">Bottom Header - Main Navigation</div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="featured-author">
+        <div class="container">
+          <div class="layout-label">Featured Author - Eric-Emanuel Schmitt</div>
+        </div>
+      </section>
+
+      <section class="feature-points">
+        <div class="container">
+          <div class="layout-label">
+            Feature Points - Free Shipping, Loyalty Points, Preview
+          </div>
+        </div>
+      </section>
+
+      <section class="book-selection">
+        <div class="container">
+          <div class="layout-label">
+            Book Selection - "Selected only for you"
+          </div>
+          <div class="table-container">
+            <div class="table">
+              <div class="table-image">Table 1</div>
+              <div class="table-content">Book Content</div>
+            </div>
+
+            <div class="table">
+              <div class="table-image">Table 2</div>
+              <div class="table-content">Book Content</div>
+            </div>
+
+            <div class="table">
+              <div class="table-image">Table 3</div>
+              <div class="table-content">Book Content</div>
+            </div>
+
+            <div class="table">
+              <div class="table-image">Table 4</div>
+              <div class="table-content">Book Content</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="must-books">
+        <div class="container">
+          <div class="layout-label">Must buy - "You must buy now"</div>
+          <div class="table-container">
+            <div class="table">
+              <div class="table-image">Table 1</div>
+              <div class="table-content">Book Content</div>
+            </div>
+
+            <div class="table">
+              <div class="table-image">Table 2</div>
+              <div class="table-content">Book Content</div>
+            </div>
+
+            <div class="table">
+              <div class="table-image">Table 3</div>
+              <div class="table-content">Book Content</div>
+            </div>
+
+            <div class="table">
+              <div class="table-image">Table 4</div>
+              <div class="table-content">Book Content</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="about-us">
+        <div class="container">
+          <div class="layout-label">About Us - "Did you know us?"</div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="layout-label">
+          Footer - Categories, Help & Contacts, Social Links
+        </div>
+        <div class="copyright">
+          <p>© All copyrights are reserved. B-World 2022.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+

@@ -1,0 +1,29 @@
+/* CSS Variables */
+:root {
+  /* Color  */
+  --color-background: #ffffff;
+  --color-text-product: #4f4c57;
+  --color-text-secondary: #4d4c4c;
+  --color-primary: #937dc2;
+  --color-secondary: #c689c6;
+  --color-text-primary: #382c2c;
+  /* Font size */
+  --font-size-md: 16px; /* font size primary */
+  --font-size-sm: 12px;
+  --font-size-lg: 24px;
+  --font-size-xl: 38px;
+  --font-size-2xl: 48px;
+  /* Light height   */
+  --line-height-sm: 12px;
+  --line-height-md: 24px;
+  --line-height-lg: 60px;
+  /* Font-weight   */
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+  /* Icon size radius  */
+  --icon-size-sm: 20px; /* icon size phone */
+  --icon-size-md: 24px; /* icon size primary */
+  --icon-size-lg: 28px; /* icon size web */
+  /* Border radius  */
+  --border-radius: 2px;
+}

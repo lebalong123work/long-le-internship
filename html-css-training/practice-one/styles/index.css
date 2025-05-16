@@ -295,23 +295,22 @@ section {
   background-color: #f9f9f9;
 }
 .slider-dots {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 35px;
-    margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 35px;
+  margin-top: 20px;
 }
 
 .dot {
-    width: 2px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #ddd;
-    cursor: pointer;
+  width: 2px;
+  height: 50px;
+  background-color: #ddd;
+  cursor: pointer;
 }
 
 .dot.active {
-    background-color: var(--color-primary);
+  background-color: var(--color-primary);
 }
 
 /* Hero Section */
@@ -342,9 +341,10 @@ section {
   transition: background-color 0.3s ease;
 }
 
-.author-button:hover,
-.author-button:focus {
-border:1px solid var(--color-primary);
+.author-button:hover {
+  background-color: var(--color-secondary);
+  color: #fff;
+  border: 1px solid var(--color-secondary);
 }
 
 h1 {
@@ -402,11 +402,11 @@ p {
 
 .discount-text {
   position: absolute;
-  top: 50px;;
-  right: 300px;;
+  top: 50px;
+  right: 300px;
   width: 163px;
   height: 85px;
-  color: #201F1FCC;
+  color: #201f1fcc;
   font-size: 18px;
   font-weight: var(--font-weight-regular);
   letter-spacing: 1px;

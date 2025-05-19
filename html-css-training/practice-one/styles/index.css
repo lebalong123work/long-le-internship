@@ -401,7 +401,7 @@ body {
   white-space: pre-line;
 }
 
-.stock-limit-text {
+.stock-limit {
   position: absolute;
   bottom: 0;
   right: 0;

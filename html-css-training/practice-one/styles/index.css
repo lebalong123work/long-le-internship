@@ -390,8 +390,7 @@ body {
   position: absolute;
   top: 50px;
   right: 300px;
-  width: 163px;
-  height: 85px;
+  max-width: 163px;
   color: #201f1fcc;
   font-size: 18px;
   font-weight: var(--font-weight-regular);

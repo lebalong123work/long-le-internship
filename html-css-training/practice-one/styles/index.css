@@ -49,14 +49,9 @@ body {
   transition: all 0.3s ease;
   cursor: pointer;
   text-decoration: none;
-  font-family: "Inter";
   font-size: var(--font-size-md);
   line-height: 1;
   background: none;
-}
-
-.btn:hover {
-  cursor: pointer;
 }
 
 .btn-outline {
@@ -67,12 +62,12 @@ body {
 
 .btn-outline:hover {
   background-color: var(--color-primary);
-  color: #fff;
+  color: var(--color-text-reverser);
 }
 
 .btn-primary {
   background-color: var(--color-primary);
-  color: #fff;
+  color: var(--color-text-reverser);
   border: 1px solid var(--color-primary);
 }
 
@@ -82,20 +77,19 @@ body {
 }
 
 .btn-lg {
-  width: 171px;
-  height: 49px;
+  padding: 16px 28px;
 }
 
 /* Header Styles */
 .header {
-  background-color: #fff;
+  background-color: var(--color-background);
 }
 
 .top-header {
   border-bottom: 1px solid var(--color-primary);
   padding: 15px 0;
   height: 72px;
-  background-color: #fff;
+  background-color: var(--color-background);
 }
 
 .header-content {
@@ -160,7 +154,6 @@ body {
   background: none;
   border: none;
   color: #231f2d;
-  cursor: pointer;
 }
 
 .top-nav .nav-list {
@@ -180,10 +173,8 @@ body {
 .top-nav .nav-item:last-child {
   margin-right: 0;
 }
-
 .top-nav .nav-link:hover {
   color: var(--color-secondary);
-  cursor: pointer;
 }
 
 .user-actions {
@@ -198,7 +189,6 @@ body {
 
 .icon-images:hover {
   color: var(--color-secondary);
-  cursor: pointer;
 }
 .heart-container {
   position: relative;
@@ -234,9 +224,8 @@ body {
 
 /* Navigation Bar */
 .header-navigation-bar {
-  padding: 15px 0;
-  height: 80px;
-  background-color: #fff;
+  padding: 16px 0;
+  background-color: var(--color-background);
   border-bottom: 1px solid var(--color-primary);
 }
 
@@ -260,7 +249,6 @@ body {
 
 .main-nav .nav-link:hover {
   color: var(--color-secondary);
-  cursor: pointer;
 }
 
 .contact-info {
@@ -282,7 +270,6 @@ body {
 
 .phone:hover {
   color: var(--color-secondary);
-  cursor: pointer;
 }
 
 .phone .fa-phone {
@@ -294,27 +281,24 @@ body {
 }
 
 /* Main Content Sections */
-section {
-  background-color: #f9f9f9;
-}
+
 .slider-dots {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 35px;
-    margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 35px;
+  margin-top: 20px;
 }
 
 .dot {
-    width: 2px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #ddd;
-    cursor: pointer;
+  width: 2px;
+  height: 50px;
+  background-color: #ddd;
+  cursor: pointer;
 }
 
 .dot.active {
-    background-color: var(--color-primary);
+  background-color: var(--color-primary);
 }
 
 /* Hero Section */
@@ -339,13 +323,13 @@ section {
   color: var(--color-secondary);
   font-size: 14px;
   font-weight: 400;
-  cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.author-button:hover,
-.author-button:focus {
-border:1px solid var(--color-primary);
+.author-button:hover {
+  background-color: var(--color-secondary);
+  color: var(--color-text-reverser);
+  border: 1px solid var(--color-secondary);
 }
 
 h1 {
@@ -366,15 +350,12 @@ p {
 }
 .view-books-button {
   background-color: var(--color-primary);
-  color: white;
-  width: 190px;
-  height: 49px;
-  padding: 12px 32px;
+  color: var(--color-text-reverser);
+  padding: 14px 36px;
   border-radius: var(--border-radius);
   font-size: var(--font-size-md);
   font-weight: 500;
-  border: none;
-  cursor: pointer;
+  border: 1px solid transparent;
   transition: background-color 0.3s ease;
 }
 
@@ -403,11 +384,11 @@ p {
 
 .discount-text {
   position: absolute;
-  top: 50px;;
-  right: 300px;;
+  top: 50px;
+  right: 300px;
   width: 163px;
   height: 85px;
-  color: #201F1FCC;
+  color: #201f1fcc;
   font-size: 18px;
   font-weight: var(--font-weight-regular);
   letter-spacing: 1px;
@@ -443,21 +424,19 @@ p {
 }
 
 .nav-button {
-  width: 32px;
-  height: 32px;
-  border-radius: 9999px;
+  padding: 9px 11.5px;
+  border-radius: 50%;
   border: 1px solid var(--color-primary);
   color: var(--color-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   background: transparent;
-  cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .nav-button:hover {
   background-color: var(--color-primary);
-  color: #fff;
+  color: var(--color-text-reverser);
   outline: none;
 }

@@ -307,10 +307,30 @@ body {
   height: 533px;
   position: relative;
 }
+
 /* Left Content */
 .left-content {
   max-width: 640px;
   flex: 1;
+}
+
+.heading-primary {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-lg);
+  margin: 0 0 16px 0;
+  color: var(--color-text-primary);
+}
+
+.text-regular {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-md);
+  margin: 0 0 32px 0;
+  color: var(--color-text-secondary);
+}
+
+.hero-description {
+  max-width: 478px;
 }
 
 .author-button {
@@ -332,22 +352,6 @@ body {
   border: 1px solid var(--color-secondary);
 }
 
-h1 {
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-2xl);
-  line-height: var(--line-height-lg);
-  margin: 0 0 16px 0;
-  color: var(--color-text-primary);
-}
-
-p {
-  font-size: var(--font-size-md);
-  line-height: var(--line-height-md);
-  margin: 0 0 32px 0;
-  width: 478px;
-  height: 97px;
-  color: var(--color-text-secondary);
-}
 .view-books-button {
   background-color: var(--color-primary);
   color: var(--color-text-reverser);

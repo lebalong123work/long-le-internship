@@ -33,6 +33,10 @@ body {
   padding: 0 15px;
   width: 100%;
 }
+/*Cursor Pointer */
+.cursor-pointer {
+  cursor: pointer;
+}
 
 /* Button Styles */
 .btn {
@@ -208,13 +212,13 @@ body {
 
 .likes-badge {
   position: absolute;
-  top: -5.75px;
+  top: -7.5px;
   right: -4px;
   background-color: var(--color-secondary); /* Same purple color */
-  color: white;
+  color: var(--color-text-reverser);
   border-radius: 50%;
-  width: 12px;
-  height: 12px;
+  padding: 1px 3px;
+  box-sizing: content-box;
   display: flex;
   align-items: center;
   justify-content: center;

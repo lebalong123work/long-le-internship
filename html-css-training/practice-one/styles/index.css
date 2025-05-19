@@ -33,6 +33,7 @@ body {
   padding: 0 15px;
   width: 100%;
 }
+
 /*Cursor Pointer */
 .cursor-pointer {
   cursor: pointer;
@@ -109,7 +110,7 @@ body {
 }
 
 .tagline {
-  color: var(--color-primary); /* Light purple color with transparency */
+  color: var(--color-primary);
   font-weight: var(--font-weight-regular);
   font-size: var(--font-size-sm);
   position: relative;
@@ -123,8 +124,9 @@ body {
   transform: translateY(-50%);
   height: 100%;
   width: 1px;
-  background-color: var(--color-primary); /* Purple color for the divider */
+  background-color: var(--color-primary);
 }
+
 .tagline-padding {
   padding-left: 20px;
   margin-left: 10px;
@@ -204,7 +206,7 @@ body {
   position: absolute;
   top: -7.5px;
   right: -4px;
-  background-color: var(--color-secondary); /* Same purple color */
+  background-color: var(--color-secondary);
   color: var(--color-text-reverser);
   border-radius: 50%;
   padding: 1px 3px;
@@ -260,7 +262,7 @@ body {
 .phone {
   font-size: 14px;
   font-weight: 400;
-  padding: 3.5px 39px;
+  padding: 4px 39px;
   color: var(--color-text-primary);
   text-decoration: none;
   display: flex;
@@ -281,7 +283,6 @@ body {
 }
 
 /* Main Content Sections */
-
 .slider-dots {
   display: flex;
   flex-direction: column;
@@ -334,7 +335,7 @@ body {
 }
 
 .author-button {
-  padding: 11.5px 14px;
+  padding: 12px 14px;
   border: 1px solid var(--color-secondary);
   border-radius: 3px;
   display: inline-block;
@@ -411,12 +412,14 @@ body {
   pointer-events: none;
   padding: 0 4px 4px 0;
 }
+
 .hero .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 32px;
 }
+
 .nav-buttons {
   position: absolute;
   bottom: 24px;
@@ -427,7 +430,7 @@ body {
 }
 
 .nav-button {
-  padding: 9px 11.5px;
+  padding: 9px 12px;
   border-radius: 50%;
   border: 1px solid var(--color-primary);
   color: var(--color-primary);

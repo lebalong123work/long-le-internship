@@ -272,8 +272,7 @@ body {
 .phone {
   font-size: 14px;
   font-weight: 400;
-  width: 166px;
-  height: 25px;
+  padding: 3.5px 39px;
   color: var(--color-text-primary);
   text-decoration: none;
   display: flex;
@@ -331,9 +330,7 @@ section {
 }
 
 .author-button {
-  width: 132px;
-  height: 41px;
-  padding: 10.01px;
+  padding: 11.5px 14px;
   border: 1px solid var(--color-secondary);
   border-radius: 3px;
   display: inline-block;

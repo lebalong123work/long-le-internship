@@ -47,12 +47,12 @@ body {
   padding: 12px 20px;
   border-radius: var(--border-radius);
   font-weight: 500;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  text-decoration: none;
   font-size: var(--font-size-md);
   line-height: 1;
-  background: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
 }
 
 .btn-outline {
@@ -66,19 +66,43 @@ body {
   color: var(--color-text-reverser);
 }
 
+.btn-outline-secondary {
+  background-color: transparent;
+  color: var(--color-secondary);
+  border: 1px solid var(--color-secondary);
+  font-weight: 400;
+  font-size: 14px;
+  border-radius: 3px;
+  padding: 12px 14px;
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--color-secondary);
+  color: var(--color-text-reverser);
+}
+
 .btn-primary {
   background-color: var(--color-primary);
   color: var(--color-text-reverser);
-  border: 1px solid var(--color-primary);
+  border-color: var(--color-primary);
 }
 
 .btn-primary:hover {
-  background-color: var(--color-secondary);
-  border-color: var(--color-secondary);
+  background-color: var(--color-background);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.btn-sm {
+  padding: 12px 14px;
 }
 
 .btn-lg {
   padding: 16px 28px;
+}
+
+.btn-xl {
+  padding: 14px 36px;
 }
 
 /* Header Styles */
@@ -175,6 +199,7 @@ body {
 .top-nav .nav-item:last-child {
   margin-right: 0;
 }
+
 .top-nav .nav-link:hover {
   color: var(--color-secondary);
 }
@@ -192,14 +217,10 @@ body {
 .icon-images:hover {
   color: var(--color-secondary);
 }
+
 .heart-container {
   position: relative;
   display: inline-block;
-}
-
-.fas.fa-heart {
-  font-size: var(--icon-size-sm);
-  color: var(--color-primary);
 }
 
 .likes-badge {
@@ -215,9 +236,6 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 12px;
-}
-.heart-container:hover .fas.fa-heart {
-  color: var(--color-secondary);
 }
 
 .heart-container:hover .likes-badge {
@@ -283,7 +301,7 @@ body {
 }
 
 /* Main Content Sections */
-.slider-dots {
+.header-dots {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -291,14 +309,14 @@ body {
   margin-top: 20px;
 }
 
-.dot {
+.header-dot {
   width: 2px;
   height: 50px;
   background-color: #ddd;
   cursor: pointer;
 }
 
-.dot.active {
+.header-dot.active {
   background-color: var(--color-primary);
 }
 
@@ -335,39 +353,11 @@ body {
 }
 
 .author-button {
-  padding: 12px 14px;
-  border: 1px solid var(--color-secondary);
   border-radius: 3px;
   display: inline-block;
   margin-bottom: 24px;
-  background: transparent;
-  color: var(--color-secondary);
   font-size: 14px;
   font-weight: 400;
-  transition: background-color 0.3s ease;
-}
-
-.author-button:hover {
-  background-color: var(--color-secondary);
-  color: var(--color-text-reverser);
-  border: 1px solid var(--color-secondary);
-}
-
-.view-books-button {
-  background-color: var(--color-primary);
-  color: var(--color-text-reverser);
-  padding: 14px 36px;
-  border-radius: var(--border-radius);
-  font-size: var(--font-size-md);
-  font-weight: 500;
-  border: 1px solid transparent;
-  transition: background-color 0.3s ease;
-}
-
-.view-books-button:hover {
-  background-color: var(--color-background);
-  color: var(--color-primary);
-  border: 1px solid var(--color-primary);
 }
 
 .right-content {
@@ -445,4 +435,242 @@ body {
   background-color: var(--color-primary);
   color: var(--color-text-reverser);
   outline: none;
+}
+
+/* Features block */
+.features-section {
+  background-color: var(--color-background);
+  padding: 10px 0;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.features-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.feature-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+  position: relative;
+}
+
+.feature-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 50px;
+  width: 1px;
+  background-color: #ddd;
+}
+
+.feature-icon {
+  font-size: var(--font-size-xl);
+  color: #382c2c;
+  margin-right: 12px;
+}
+
+.feature-text {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+}
+
+.feature-text-underline {
+  text-decoration: none;
+}
+
+.feature-text-underline:hover {
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+/* Carousel Section */
+.carousel-section {
+  margin-bottom: 60px;
+  position: relative;
+}
+
+.section-heading {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel {
+  display: flex;
+  gap: 20px;
+}
+
+/* Product Card */
+.product-card {
+  min-width: 275px;
+  padding-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.book-cover {
+  height: 415px;
+  width: 100%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  box-shadow: 0px 0px 60px 0px #00000040 inset;
+  border-radius: 3px;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .book-cover {
+  transform: scale(1.02);
+}
+
+.book-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 7px;
+}
+
+.book-author {
+  font-size: var(--font-size-md);
+  font-weight: 400;
+  color: var(--color-text-product);
+  margin-bottom: 14px;
+}
+
+.price-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 29px;
+}
+
+.book-price {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.fav-button {
+  position: relative;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--color-primary);
+  width: 24px;
+  height: 24px;
+}
+
+.fav-button i {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.3s ease;
+}
+
+.solid-heart {
+  opacity: 0;
+}
+
+.fav-button:hover .regular-heart {
+  opacity: 0;
+}
+
+.fav-button:hover .solid-heart {
+  opacity: 1;
+}
+
+.add-to-cart {
+  background-color: var(--color-primary);
+  color: var(--color-text-reverser);
+  border: none;
+  padding: 12px;
+  border-radius: 2px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-to-cart:hover {
+  background-color: #8f5bba;
+  transform: translateY(-2px);
+}
+
+.add-to-cart:hover {
+  background-color: var(--color-secondary);
+  color: var(--color-text-reverser);
+}
+
+/* Add to product sroll */
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: 1px solid var(--color-primary);
+  padding: 15px 18px;
+  border-radius: 50%;
+  color: var(--color-primary);
+  z-index: 10;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-btn:hover {
+  background-color: var(--color-primary);
+  color: var(--color-text-reverser);
+  outline: none;
+}
+
+.left-btn {
+  left: 60px;
+}
+
+.left-btn i {
+  font-size: 20px;
+}
+
+.right-btn {
+  right: 60px;
+}
+
+.right-btn i {
+  font-size: 20px;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  gap: 12px;
+}
+
+.carousel-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #ddd;
+}
+
+.carousel-dot.active {
+  background-color: var(--color-primary);
 }

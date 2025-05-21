@@ -301,7 +301,7 @@ body {
 }
 
 /* Main Content Sections */
-.slider-dots {
+.header-dots {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -309,14 +309,14 @@ body {
   margin-top: 20px;
 }
 
-.dot {
+.header-dot {
   width: 2px;
   height: 50px;
   background-color: #ddd;
   cursor: pointer;
 }
 
-.dot.active {
+.header-dot.active {
   background-color: var(--color-primary);
 }
 
@@ -442,6 +442,7 @@ body {
   background-color: var(--color-background);
   padding: 10px 0;
   width: 100%;
+  margin-bottom: 30px;
 }
 
 .features-container {
@@ -496,6 +497,7 @@ body {
 /* Carousel Section */
 .carousel-section {
   margin-bottom: 60px;
+  position: relative;
 }
 
 .section-heading {
@@ -529,6 +531,11 @@ body {
   margin-bottom: 10px;
   box-shadow: 0px 0px 60px 0px #00000040 inset;
   border-radius: 3px;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .book-cover {
+  transform: scale(1.02);
 }
 
 .book-title {
@@ -588,7 +595,6 @@ body {
   opacity: 1;
 }
 
-
 .add-to-cart {
   background-color: var(--color-primary);
   color: var(--color-text-reverser);
@@ -596,9 +602,75 @@ body {
   padding: 12px;
   border-radius: 2px;
   font-size: 16px;
-  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 8px;
+}
+
+.add-to-cart:hover {
+  background-color: #8f5bba;
+  transform: translateY(-2px);
+}
+
+.add-to-cart:hover {
+  background-color: var(--color-secondary);
+  color: var(--color-text-reverser);
+}
+
+/* Add to product sroll */
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: 1px solid var(--color-primary);
+  padding: 15px 18px;
+  border-radius: 50%;
+  color: var(--color-primary);
+  z-index: 10;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-btn:hover {
+  background-color: var(--color-primary);
+  color: var(--color-text-reverser);
+  outline: none;
+}
+
+.left-btn {
+  left: 60px;
+}
+
+.left-btn i {
+  font-size: 20px;
+}
+
+.right-btn {
+  right: 60px;
+}
+
+.right-btn i {
+  font-size: 20px;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  gap: 12px;
+}
+
+.carousel-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #ddd;
+}
+
+.carousel-dot.active {
+  background-color: var(--color-primary);
 }

@@ -90,14 +90,14 @@
     <main>
       <section class="hero">
         <div class="container">
-          <div class="slider-dots">
-            <span class="dot active"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
+          <div class="header-dots">
+            <span class="header-dot active"></span>
+            <span class="header-dot"></span>
+            <span class="header-dot"></span>
+            <span class="header-dot"></span>
           </div>
           <div class="left-content">
-            <button class="author-button btn btn-outline-secondary btn-sm " type="button">
+            <button class="author-button btn btn-outline-secondary btn-sm" type="button">
               Author of august
             </button>
             <h1 class="heading-primary">Eric-Emanuel Schmitt</h1>
@@ -132,34 +132,46 @@
         </nav>
       </section>
 
+      <!-- Selected features sectionSection -->
       <section class="features-section">
         <div class="container">
           <div class="features-container">
             <div class="feature-item">
               <i class="feature-icon fas fa-truck"></i>
-              <div class="feature-text feature-text-underline cursor-pointer">Free shiping over 50$</div>
+              <div class="feature-text feature-text-underline cursor-pointer">
+                Free shiping over 50$
+              </div>
             </div>
 
             <div class="feature-item">
               <i class="feature-icon fas fa-star"></i>
-              <div class="feature-text feature-text-underline cursor-pointer">Save with loyalty points</div>
+              <div class="feature-text feature-text-underline cursor-pointer">
+                Save with loyalty points
+              </div>
             </div>
 
             <div class="feature-item">
               <i class="feature-icon fas fa-book-open"></i>
-              <div class="feature-text feature-text-underline cursor-pointer">Read a few pages</div>
+              <div class="feature-text feature-text-underline cursor-pointer">
+                Read a few pages
+              </div>
             </div>
           </div>
         </div>
       </section>
+
+      <!-- Selected For You Section -->
       <section class="carousel-section">
+        <button class="scroll-btn left-btn cursor-pointer">
+          <i class="fas fa-chevron-left"></i>
+        </button>
         <div class="container">
           <h2 class="section-heading">Selected for you</h2>
           <div class="carousel-container">
             <div class="carousel">
               <!-- Book 1 -->
               <div class="product-card">
-                <img src="images/book-two.png" alt="Financial Feminist" class="book-cover">
+                <img src="images/book-two.png" alt="Financial Feminist" class="book-cover" />
                 <h3 class="book-title">Financial Feminist</h3>
                 <p class="book-author">Tori Dunlap</p>
                 <div class="price-container">
@@ -169,13 +181,13 @@
                     <i class="fa-solid fa-heart solid-heart"></i>
                   </button>
                 </div>
-                <button class="add-to-cart">
+                <button class="add-to-cart cursor-pointer">
                   <i class="fas fa-shopping-cart"></i> Add to cart
                 </button>
               </div>
               <!-- Book 2 -->
               <div class="product-card">
-                <img src="images/book-three.png" alt="No More Police" class="book-cover">
+                <img src="images/book-three.png" alt="No More Police" class="book-cover" />
                 <h3 class="book-title">No More Police</h3>
                 <p class="book-author">Andrea Ritchie</p>
                 <div class="price-container">
@@ -185,13 +197,13 @@
                     <i class="fa-solid fa-heart solid-heart"></i>
                   </button>
                 </div>
-                <button class="add-to-cart">
+                <button class="add-to-cart cursor-pointer">
                   <i class="fas fa-shopping-cart"></i> Add to cart
                 </button>
               </div>
               <!-- Book 3 -->
               <div class="product-card">
-                <img src="images/book-four.png" alt="I'm Glad My Mom Died" class="book-cover">
+                <img src="images/book-four.png" alt="I'm Glad My Mom Died" class="book-cover" />
                 <h3 class="book-title">I'm Glad My Mom Died</h3>
                 <p class="book-author">Jennette McCurdy</p>
                 <div class="price-container">
@@ -201,13 +213,13 @@
                     <i class="fa-solid fa-heart solid-heart"></i>
                   </button>
                 </div>
-                <button class="add-to-cart">
+                <button class="add-to-cart cursor-pointer">
                   <i class="fas fa-shopping-cart"></i> Add to cart
                 </button>
               </div>
               <!-- Book 4 -->
               <div class="product-card">
-                <img src="images/book-five.png" alt="Nona the Ninth" class="book-cover">
+                <img src="images/book-five.png" alt="Nona the Ninth" class="book-cover" />
                 <h3 class="book-title">Nona the Ninth</h3>
                 <p class="book-author">Tamsyn Muir</p>
                 <div class="price-container">
@@ -217,86 +229,110 @@
                     <i class="fa-solid fa-heart solid-heart"></i>
                   </button>
                 </div>
-                <button class="add-to-cart">
+                <button class="add-to-cart cursor-pointer">
                   <i class="fas fa-shopping-cart"></i> Add to cart
                 </button>
               </div>
             </div>
           </div>
         </div>
+        <button class="scroll-btn right-btn cursor-pointer">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+        <div class="carousel-dots">
+          <div class="carousel-dot active"></div>
+          <div class="carousel-dot"></div>
+          <div class="carousel-dot"></div>
+          <div class="carousel-dot"></div>
+          <div class="carousel-dot"></div>
+        </div>
       </section>
-      </section>
+
+      <!-- You must buy it now Section -->
       <section class="carousel-section">
+        <button class="scroll-btn left-btn cursor-pointer">
+          <i class="fas fa-chevron-left"></i>
+        </button>
         <div class="container">
-          <h2 class="section-heading">Selected for you</h2>
+          <h2 class="section-heading">You must buy it now</h2>
           <div class="carousel-container">
             <div class="carousel">
               <!-- Book 5 -->
               <div class="product-card">
-                <img src="images/book-six.png" alt="Financial Feminist" class="book-cover">
-                <h3 class="book-title">Financial Feminist</h3>
-                <p class="book-author">Tori Dunlap</p>
+                <img src="images/book-six.png" alt=">Harlem Shuffle" class="book-cover" />
+                <h3 class="book-title">Harlem Shuffle</h3>
+                <p class="book-author">Colson Whitehead</p>
                 <div class="price-container">
-                  <span class="book-price">$20.46</span>
+                  <span class="book-price">$26.92</span>
                   <button class="fav-button">
                     <i class="fa-regular fa-heart regular-heart"></i>
                     <i class="fa-solid fa-heart solid-heart"></i>
                   </button>
                 </div>
-                <button class="add-to-cart">
+                <button class="add-to-cart cursor-pointer">
                   <i class="fas fa-shopping-cart"></i> Add to cart
                 </button>
               </div>
               <!-- Book 6 -->
               <div class="product-card">
-                <img src="images/book-seven.png" alt="No More Police" class="book-cover">
-                <h3 class="book-title">No More Police</h3>
-                <p class="book-author">Andrea Ritchie</p>
+                <img src="images/book-seven.png" alt="Two Old Women" class="book-cover" />
+                <h3 class="book-title">Two Old Women</h3>
+                <p class="book-author">Velma Wallis</p>
                 <div class="price-container">
-                  <span class="book-price">$17.66</span>
+                  <span class="book-price">$13.95</span>
                   <button class="fav-button">
                     <i class="fa-regular fa-heart regular-heart"></i>
                     <i class="fa-solid fa-heart solid-heart"></i>
                   </button>
                 </div>
-                <button class="add-to-cart">
+                <button class="add-to-cart cursor-pointer">
                   <i class="fas fa-shopping-cart"></i> Add to cart
                 </button>
               </div>
               <!-- Book 7 -->
               <div class="product-card">
-                <img src="images/book-eight.png" alt="I'm Glad My Mom Died" class="book-cover">
-                <h3 class="book-title">I'm Glad My Mom Died</h3>
-                <p class="book-author">Jennette McCurdy</p>
+                <img src="images/book-eight.png" alt="Carrie Soto Is Back" class="book-cover" />
+                <h3 class="book-title">Carrie Soto Is Back</h3>
+                <p class="book-author">Taylor Jenkins Reid</p>
                 <div class="price-container">
-                  <span class="book-price">$26.03</span>
+                  <span class="book-price">$26.04</span>
                   <button class="fav-button">
                     <i class="fa-regular fa-heart regular-heart"></i>
                     <i class="fa-solid fa-heart solid-heart"></i>
                   </button>
                 </div>
-                <button class="add-to-cart">
+                <button class="add-to-cart cursor-pointer">
                   <i class="fas fa-shopping-cart"></i> Add to cart
                 </button>
               </div>
               <!-- Book 8 -->
               <div class="product-card">
-                <img src="images/book-nine.png" alt="Nona the Ninth" class="book-cover">
-                <h3 class="book-title">Nona the Ninth</h3>
-                <p class="book-author">Tamsyn Muir</p>
+                <img src="images/book-nine.png" alt="Book Lovers" class="book-cover" />
+                <h3 class="book-title">Book Lovers</h3>
+                <p class="book-author">Emily Henry</p>
                 <div class="price-container">
-                  <span class="book-price">$26.96</span>
+                  <span class="book-price">$15.81</span>
                   <button class="fav-button">
                     <i class="fa-regular fa-heart regular-heart"></i>
                     <i class="fa-solid fa-heart solid-heart"></i>
                   </button>
                 </div>
-                <button class="add-to-cart">
+                <button class="add-to-cart cursor-pointer">
                   <i class="fas fa-shopping-cart"></i> Add to cart
                 </button>
               </div>
             </div>
           </div>
+        </div>
+        <button class="scroll-btn right-btn cursor-pointer">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+        <div class="carousel-dots">
+          <div class="carousel-dot active"></div>
+          <div class="carousel-dot"></div>
+          <div class="carousel-dot"></div>
+          <div class="carousel-dot"></div>
+          <div class="carousel-dot"></div>
         </div>
       </section>
     </main>

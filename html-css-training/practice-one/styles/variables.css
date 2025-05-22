@@ -2,12 +2,20 @@
 :root {
   /* Color  */
   --color-background: #ffffff;
+  --color-background-secondary: #ddd;
   --color-text-product: #4f4c57;
   --color-text-secondary: #4d4c4c;
   --color-primary: #937dc2;
   --color-secondary: #c689c6;
   --color-text-primary: #382c2c;
-  --color-text-reverser: #fff;
+  --color-text-reverse: #fff;
+  --color-text-tertiary: rgba(147, 125, 194, 0.4);
+  --color-icon-search: #231F2D;
+  --color-discount: rgba(32, 31, 31, 0.8);
+  --color-feature:#382c2c;
+  --color-stock-limit:#313131;
+  --color-add-to-cart:#8f5bba;
+;
   /* Font size */
   --font-size-md: 16px; /* font size primary */
   --font-size-sm: 12px;

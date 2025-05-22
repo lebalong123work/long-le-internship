@@ -107,7 +107,7 @@
               Chevalier des Arts et des Lettres. His books have been
               translated into over 40 languages.
             </p>
-            <button class="btn btn-primary btn-xl cursor-pointer" type="button">
+            <button class="btn btn-primary btn-xl" type="button">
               View his boooks
             </button>
           </div>
@@ -162,7 +162,7 @@
 
       <!-- Selected For You Section -->
       <section class="carousel-section">
-        <button class="scroll-btn left-btn cursor-pointer">
+        <button class="scroll-btn prev-btn cursor-pointer">
           <i class="fas fa-chevron-left"></i>
         </button>
         <div class="container">
@@ -236,7 +236,7 @@
             </div>
           </div>
         </div>
-        <button class="scroll-btn right-btn cursor-pointer">
+        <button class="scroll-btn next-btn cursor-pointer">
           <i class="fas fa-chevron-right"></i>
         </button>
         <div class="carousel-dots">
@@ -250,7 +250,7 @@
 
       <!-- You must buy it now Section -->
       <section class="carousel-section">
-        <button class="scroll-btn left-btn cursor-pointer">
+        <button class="scroll-btn prev-btn cursor-pointer">
           <i class="fas fa-chevron-left"></i>
         </button>
         <div class="container">
@@ -324,7 +324,7 @@
             </div>
           </div>
         </div>
-        <button class="scroll-btn right-btn cursor-pointer">
+        <button class="scroll-btn next-btn cursor-pointer">
           <i class="fas fa-chevron-right"></i>
         </button>
         <div class="carousel-dots">
@@ -333,6 +333,33 @@
           <div class="carousel-dot"></div>
           <div class="carousel-dot"></div>
           <div class="carousel-dot"></div>
+        </div>
+      </section>
+      <!-- About Us Section  -->
+      <section class="about-us">
+        <div class="container">
+          <div class="about-us-content">
+            <div class="about-us-text">
+              <h2 class="section-heading">Did you know us?</h2>
+              <p class="text-regular about-us-description">
+                We are a bookstore that loves books and we want to share our
+                passion with you. We have a wide selection of books from all
+                genres and we are always happy to help you find the perfect
+                book for you.
+              </p>
+              <form class="newsletter-form" action="#" method="post">
+                <input type="text" name="name" placeholder="Enter your Name" required aria-label="Name"
+                  pattern="[A-Za-z\s]{2,}" title="Name should contain at least 2 letters and only alphabets." />
+                <input type="email" name="email" placeholder="Enter your Email" required aria-label="Email Address"
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address" />
+                <button class="btn btn-primary btn-xl" type="submit">Subscribe</button>
+              </form>
+
+            </div>
+            <div class="about-us-image">
+              <img src="images/map.png" alt="B-world branch map" class="map-img" />
+            </div>
+          </div>
         </div>
       </section>
     </main>

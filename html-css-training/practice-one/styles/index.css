@@ -611,10 +611,6 @@ body {
 .add-to-cart:hover {
   background-color: #8f5bba;
   transform: translateY(-2px);
-}
-
-.add-to-cart:hover {
-  background-color: var(--color-secondary);
   color: var(--color-text-reverser);
 }
 
@@ -677,55 +673,50 @@ body {
 
 /* About Us*/
 .about-us {
-    padding: 60px 0;
-    background-color: #fff;
+  padding: 60px 0;
+  background-color: var(--color-background);
 }
 
 .about-us-content {
-    display: flex;
-    gap: 40px;
+  display: flex;
+  gap: 40px;
 }
 
 .about-us-text {
-  max-width: 640px;
   flex: 1;
 }
 
 .newsletter-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 30px;
 }
 
 .newsletter-form input {
-    padding: 12px 15px;
-    border: 1px solid rgba(147, 125, 194, 0.4);
-    border-top: hidden;
-    border-left: hidden;
-    border-right: hidden;
-    font-size: 14px;
-    color: var(--color-primary);
+  padding: 12px 15px;
+  border: none;
+  border-bottom: 1px solid var(--color-text-third);
+  font-size: 14px;
+  color: var(--color-primary);
+}
 
-    &:focus {
-        outline: none;
-        border: 1px solid var(--color-primary);
-        border-radius: 3px;
-    }
+.newsletter-form input:focus {
+  outline: none;
+  border: 1px solid var(--color-primary);
+  border-radius: 3px;
 }
+
 .newsletter-form ::placeholder {
-    color: rgba(147, 125, 194, 0.4);
-    
+  color: var(--color-text-third);
 }
+
 .about-us-image {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  flex: 1;
 }
 
 .map-img {
-    max-width: 100%;
-    width: 576px;
-    height: auto;
+  max-width: 100%;
+  width: 576px;
+  height: auto;
 }

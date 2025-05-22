@@ -637,19 +637,19 @@ body {
   outline: none;
 }
 
-.left-btn {
+.prev-btn {
   left: 60px;
 }
 
-.left-btn i {
+.prev-btn i {
   font-size: 20px;
 }
 
-.right-btn {
+.next-btn {
   right: 60px;
 }
 
-.right-btn i {
+.next-btn i {
   font-size: 20px;
 }
 

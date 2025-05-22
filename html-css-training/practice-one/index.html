@@ -348,8 +348,10 @@
                 book for you.
               </p>
               <form class="newsletter-form" action="#" method="post">
-                <input type="text" name="name" placeholder="Enter your Name" required aria-label="Name" />
-                <input type="email" name="email" placeholder="Enter your Email" required aria-label="Email Address" />
+                <input type="text" name="name" placeholder="Enter your Name" required aria-label="Name"
+                  pattern="[A-Za-z\s]{2,}" title="Name should contain at least 2 letters and only alphabets." />
+                <input type="email" name="email" placeholder="Enter your Email" required aria-label="Email Address"
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address" />
                 <button class="btn btn-primary btn-xl btn-cursor-pointer" type="submit">Subscribe</button>
               </form>
 

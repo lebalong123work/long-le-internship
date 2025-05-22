@@ -347,13 +347,12 @@
                 genres and we are always happy to help you find the perfect
                 book for you.
               </p>
-              <from class="newsletter-form">
-                <input type="name" placeholder="Enter your Name" />
-                <input type="email" placeholder="Enter your Email" />
-                <button class="btn btn-primary btn-xl cursor-pointer" type="button">
-                  Subscribe
-                </button>
-              </from>
+              <form class="newsletter-form" action="#" method="post">
+                <input type="text" name="name" placeholder="Enter your Name" required aria-label="Name" />
+                <input type="email" name="email" placeholder="Enter your Email" required aria-label="Email Address" />
+                <button class="btn btn-primary btn-xl btn-cursor-pointer" type="submit">Subscribe</button>
+              </form>
+
             </div>
             <div class="about-us-image">
               <img src="images/map.png" alt="map" class="map-img" />

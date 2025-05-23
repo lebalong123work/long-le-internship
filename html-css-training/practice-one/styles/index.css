@@ -737,10 +737,8 @@ body {
 }
 
 .footer-column {
-  flex: 0 1 auto;
   display: flex;
   flex-direction: column;
-  ;
 }
 
 /* Brand Column */

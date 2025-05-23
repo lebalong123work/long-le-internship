@@ -19,6 +19,7 @@
 ;
   /* Font size */
   --font-size-md: 16px; /* font size primary */
+  --font-size-ms:14px;
   --font-size-sm: 12px;
   --font-size-lg: 24px;
   --font-size-xl: 38px;

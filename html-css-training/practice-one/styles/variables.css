@@ -12,12 +12,13 @@
   --color-text-tertiary: rgba(147, 125, 194, 0.4);
   --color-icon-search: #231F2D;
   --color-discount: rgba(32, 31, 31, 0.8);
-  --color-feature:#382c2c;
-  --color-stock-limit:#313131;
-  --color-add-to-cart:#8f5bba;
-;
+  --color-feature: #382c2c;
+  --color-stock-limit: #313131;
+  --color-add-to-cart: #8f5bba;
+  --color-footer-link: rgba(255, 255, 255, 0.8);
   /* Font size */
   --font-size-md: 16px; /* font size primary */
+  --font-size-ms:14px;
   --font-size-sm: 12px;
   --font-size-lg: 24px;
   --font-size-xl: 38px;

@@ -16,6 +16,7 @@
   --color-stock-limit: #313131;
   --color-add-to-cart: #8f5bba;
   --color-footer-link: rgba(255, 255, 255, 0.8);
+  --color-detail-label:rgba(198, 137, 198, 0.7);
   /* Font size */
   --font-size-md: 16px; /* font size primary */
   --font-size-ms:14px;

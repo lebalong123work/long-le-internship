@@ -638,7 +638,7 @@ body {
 }
 
 .prev-btn {
-  left: 60px;
+  left: -60px;
 }
 
 .prev-btn i {
@@ -646,7 +646,7 @@ body {
 }
 
 .next-btn {
-  right: 60px;
+  right: -60px;
 }
 
 .next-btn i {
@@ -670,6 +670,12 @@ body {
 .carousel-dot.active {
   background-color: var(--color-primary);
 }
+.carousel-content {
+  position: relative;
+  max-width: 1280px; /* hoặc giá trị container đang dùng */
+  margin: 0 auto;
+}
+
 
 /* About Us*/
 .about-us {

@@ -672,7 +672,7 @@ body {
 }
 .carousel-content {
   position: relative;
-  max-width: 1280px; /* hoặc giá trị container đang dùng */
+  max-width: 1280px;
   margin: 0 auto;
 }
 

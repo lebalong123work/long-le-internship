@@ -675,14 +675,12 @@ body {
 .about-us {
   padding: 60px 0;
   background-color: var(--color-background);
+}
+
+.about-us-content {
   display: flex;
   gap: 40px;
 }
-
-/* .about-us-content {
-  display: flex;
-  gap: 40px;
-} */
 
 .about-us-text {
   flex: 1;
@@ -697,17 +695,16 @@ body {
 
 .newsletter-form input {
   padding: 12px 15px;
-  border: 1px solid transparent;
+  border: none;
   border-bottom: 1px solid var(--color-text-tertiary);
   font-size: var(--font-size-ms);
   color: var(--color-primary);
-  transition: border 0.3s ease;
 }
 
 .newsletter-form input:focus {
-  border-color: var(--color-primary);
-  border-radius: 3px;
   outline: none;
+  border: 1px solid var(--color-primary);
+  border-radius: 3px;
 }
 
 .newsletter-form ::placeholder {

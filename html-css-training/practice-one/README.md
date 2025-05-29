@@ -1,14 +1,9 @@
 
 # Practice 1 - HTML & CSS UI Rebuild
 
-This project is a front-end practice to rebuild a web browser UI using **HTML and CSS**, based on a design from Figma. The goal is to improve skills in layout structuring, CSS styling.
+This project is a front-end exercise to rebuild a web browser UI using **HTML5 and CSS3**, based on a Figma design. The goal is to strengthen foundational knowledge of layout structuring and CSS styling.
 
-Related links:
-
-- Practice 1 plan: [link](https://docs.google.com/document/d/1toAsZ9KXnXPr7Mw9hBQYXT3Wa2Id4vw0vF8mL6OMSd4/edit?pli=1&tab=t.chxlu1j1zl17)
-- Analyze document: [link](https://docs.google.com/document/d/1toAsZ9KXnXPr7Mw9hBQYXT3Wa2Id4vw0vF8mL6OMSd4/edit?pli=1&tab=t.nt89t697d8aq)
-- Figma UI design: [link](https://www.figma.com/design/8p6KclP2GuzXknabZrCjoa/E-commerce-%7C-Website-design-%7C-Bookstore--Community-?node-id=1-414&t=Ct2uJTPblmKxzRRF-0)
-- GitHub projects: [link](https://github.com/users/lebalong123work/projects/1/views/1?query=sort%3Aupdated-desc+is%3Aopen)
+## Project Overview
 
 - **Design Source**: 
   - [Figma UI mock-up](https://www.figma.com/design/8p6KclP2GuzXknabZrCjoa/E-commerce-%7C-Website-design-%7C-Bookstore--Community-?node-id=1-414&t=Ct2uJTPblmKxzRRF-0)
@@ -20,6 +15,11 @@ Related links:
   - Slice from Sketch to HTML/CSS.
   - Understand the concepts of Flex.
 
+### Related Resources
+
+- Practice 1 plan: [link](https://docs.google.com/document/d/1toAsZ9KXnXPr7Mw9hBQYXT3Wa2Id4vw0vF8mL6OMSd4/edit?pli=1&tab=t.chxlu1j1zl17)
+- Analyze document: [link](https://docs.google.com/document/d/1toAsZ9KXnXPr7Mw9hBQYXT3Wa2Id4vw0vF8mL6OMSd4/edit?pli=1&tab=t.nt89t697d8aq)
+- GitHub projects: [link](https://github.com/users/lebalong123work/projects/1/views/1?query=sort%3Aupdated-desc+is%3Aopen)
 
 ## Requirement
 

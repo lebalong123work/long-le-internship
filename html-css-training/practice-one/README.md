@@ -26,7 +26,7 @@ Related links:
 - Work fine on Chrome browser latest version (Version 135.0.7049.96).
 - Use the right HTML Tags.
 - Apply Flexbox and Grid.
-- Use W3 validation tool to check code syntax HTML-CSS.
+- Use the W3C Validation Tool to check for syntax errors, ensure semantic structure, and verify compliance with HTML/CSS standards.
 
 ## How to run
 

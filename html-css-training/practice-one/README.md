@@ -10,10 +10,11 @@ Related links:
 - Figma UI design: [link](https://www.figma.com/design/8p6KclP2GuzXknabZrCjoa/E-commerce-%7C-Website-design-%7C-Bookstore--Community-?node-id=1-414&t=Ct2uJTPblmKxzRRF-0)
 - GitHub projects: [link](https://github.com/users/lebalong123work/projects/1/views/1?query=sort%3Aupdated-desc+is%3Aopen)
 
-## Project Overview
-
-- **Design Source**: Figma UI mock-up (not shared publicly)
-- **Tech Stack**: HTML + CSS (no frameworks)
+- **Design Source**: 
+  - [Figma UI mock-up](https://www.figma.com/design/8p6KclP2GuzXknabZrCjoa/E-commerce-%7C-Website-design-%7C-Bookstore--Community-?node-id=1-414&t=Ct2uJTPblmKxzRRF-0)
+- **Tech Stack**:
+  - HTML5 ([MDN HTML5 Guide](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5))
+  - CSS3 ([MDN CSS Reference](https://developer.mozilla.org/en-US/docs/Web/CSS))
 - **Goal**:
   - Understand HTML/CSS properties and use them correctly.
   - Slice from Sketch to HTML/CSS.

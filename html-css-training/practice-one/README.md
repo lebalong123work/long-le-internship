@@ -15,10 +15,9 @@ Related links:
 - **Design Source**: Figma UI mock-up (not shared publicly)
 - **Tech Stack**: HTML + CSS (no frameworks)
 - **Goal**:
-  - Build a website with HTML/CSS from the design.
-  - Familiar with common HTML tags and CSS selectors.
-  - Understand the concepts of Flex and Grid.
-  - Understand about what is the component, how to split 1 the design into component, what is the benefit of split component.
+  - Understand HTML/CSS properties and use them correctly.
+  - Slice from Sketch to HTML/CSS.
+  - Understand the concepts of Flex.
 
 
 ## Requirement

@@ -337,30 +337,27 @@
         </div>
       </section>
       <!-- About Us Section  -->
-      <section class="about-us">
-        <div class="container">
-          <div class="about-us-content">
-            <div class="about-us-text">
-              <h2 class="section-heading">Did you know us?</h2>
-              <p class="text-regular about-us-description">
-                We are a bookstore that loves books and we want to share our
-                passion with you. We have a wide selection of books from all
-                genres and we are always happy to help you find the perfect
-                book for you.
-              </p>
-              <form class="newsletter-form" action="#" method="post">
-                <input type="text" name="name" placeholder="Enter your Name" required aria-label="Name"
-                  pattern="[A-Za-z\s]{2,}" title="Name should contain at least 2 letters and only alphabets.">
-                <input type="email" name="email" placeholder="Enter your Email" required aria-label="Email Address"
-                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address">
-                <button class="btn btn-primary btn-xl" type="submit">Subscribe</button>
-              </form>
-
-            </div>
-            <div class="about-us-image">
-              <img src="images/map.png" alt="B-world branch map" class="map-img">
-            </div>
-          </div>
+      <section class="about-us container">
+        <div class="about-us-text">
+          <h2 class="section-heading">Did you know us?</h2>
+          <p class="text-regular about-us-description">
+            We are a bookstore that loves books and we want to share our
+            passion with you. We have a wide selection of books from all
+            genres and we are always happy to help you find the perfect book
+            for you.
+          </p>
+          <form class="newsletter-form" action="#" method="post">
+            <input type="text" name="name" placeholder="Enter your Name" required aria-label="Name"
+              pattern="[A-Za-z\s]{2,}" title="Name should contain at least 2 letters and only alphabets." >
+            <input type="email" name="email" placeholder="Enter your Email" required aria-label="Email Address"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address" >
+            <button class="btn btn-primary btn-xl" type="submit">
+              Subscribe
+            </button>
+          </form>
+        </div>
+        <div class="about-us-image">
+          <img src="images/map.png" alt="B-world branch map" class="map-img">
         </div>
       </section>
       <!-- Footer Section -->
@@ -439,18 +436,34 @@
             </p>
             <button class="btn btn-outline btn-footer">Request a call</button>
 
-            <!-- Payment Methods -->
-            <div class="payment-methods">
-              <img src="images/paipal-logo.png" alt="PayPal card" class="payment-icon">
-              <img src="images/mastercard-logo.png" alt="MasterCard card" class="payment-icon">
-              <img src="images/visa-logo.png" alt="Visa card" class="payment-icon">
+            <!-- Request Call Column -->
+            <div class="footer-column footer-cta">
+              <p class="footer-cta-text">
+                If you have questions,<br>
+                you can contact us or<br>
+                we will do it for you.
+              </p>
+              <button class="btn btn-outline btn-footer">
+                Request a call
+              </button>
+
+              <!-- Payment Methods -->
+              <div class="payment-methods">
+                <img src="images/paipal-logo.png" alt="PayPal card" class="payment-icon" >
+                <img src="images/mastercard-logo.png" alt="MasterCard card" class="payment-icon" >
+                <img src="images/visa-logo.png" alt="Visa card" class="payment-icon" >
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Footer Bottom -->
         <div class="footer-bottom">
-          <p class="copyright">&copy; All copyrights are reserved. B-World 2022.</p>
+          <div class="container">
+            <p class="copyright">
+              &copy; All copyrights are reserved. B-World 2022.
+            </p>
+          </div>
         </div>
       </footer>
     </main>

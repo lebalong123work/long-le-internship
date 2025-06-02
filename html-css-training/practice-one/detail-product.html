@@ -2,15 +2,15 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>B-World Bookstore</title>
-  <link rel="stylesheet" href="styles/reset.css" />
-  <link rel="stylesheet" href="styles/variables.css" />
-  <link rel="stylesheet" href="styles/index.css" />
-  <link rel="stylesheet" href="styles/detail-product.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="styles/reset.css">
+  <link rel="stylesheet" href="styles/variables.css">
+  <link rel="stylesheet" href="styles/index.css">
+  <link rel="stylesheet" href="styles/detail-product.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
@@ -20,11 +20,11 @@
         <div class="container">
           <div class="header-content">
             <div class="logo">
-              <a href="index.html"><img src="images/logo-text-dark.png" alt="B-World Logo" class="logo-img" /></a>
-              <span class="tagline tagline-padding">We love <br />books</span>
+              <a href="index.html"><img src="images/logo-text-dark.png" alt="B-World Logo" class="logo-img"></a>
+              <span class="tagline tagline-padding">We love <br>books</span>
             </div>
             <form class="search-bar" action="#" method="get">
-              <input type="text" placeholder="Type any book here..." />
+              <input type="text" placeholder="Type any book here...">
               <button type="submit" class="search-button cursor-pointer">
                 <i class="fas fa-search"></i>
               </button>
@@ -92,12 +92,13 @@
       <!-- Breadcrumb -->
       <section class="breadcrumb">
         <div class="container">
+          <h2 class="hidden-title">Breadcrumb</h2>
           <nav aria-label="Breadcrumb">
             <ol class="breadcrumb-list">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-separator">></li>
+              <li class="breadcrumb-separator">&gt;</li>
               <li class="breadcrumb-item"><a href="#">Fantasy books</a></li>
-              <li class="breadcrumb-separator">></li>
+              <li class="breadcrumb-separator">&gt;</li>
               <li class="breadcrumb-item">Chain of Gold</li>
             </ol>
           </nav>
@@ -112,26 +113,26 @@
             <div class="product-images">
               <div class="image-gallery">
                 <!-- Hidden radio buttons for thumbnail selection -->
-                <input type="radio" id="thumb1" name="thumbnail" class="thumbnail-radio" />
-                <input type="radio" id="thumb2" name="thumbnail" class="thumbnail-radio" />
-                <input type="radio" id="thumb3" name="thumbnail" class="thumbnail-radio" />
-                <input type="radio" id="thumb4" name="thumbnail" class="thumbnail-radio" checked />
+                <input type="radio" id="thumb1" name="thumbnail" class="thumbnail-radio">
+                <input type="radio" id="thumb2" name="thumbnail" class="thumbnail-radio">
+                <input type="radio" id="thumb3" name="thumbnail" class="thumbnail-radio">
+                <input type="radio" id="thumb4" name="thumbnail" class="thumbnail-radio" checked>
 
                 <div class="thumbnail-container">
                   <label for="thumb1" class="thumbnail-label">
                     <img src="images/book-ten-right.png" alt="Chain of Gold: The Last Hours #1 book right"
-                      class="thumbnail" />
+                      class="thumbnail">
                   </label>
                   <label for="thumb2" class="thumbnail-label">
                     <img src="images/book-ten-left.png" alt="Chain of Gold: The Last Hours #1 book left"
-                      class="thumbnail" />
+                      class="thumbnail">
                   </label>
                   <label for="thumb3" class="thumbnail-label">
                     <img src="images/book-ten-back.png" alt="Chain of Gold: The Last Hours #1 book back"
-                      class="thumbnail" />
+                      class="thumbnail">
                   </label>
                   <label for="thumb4" class="thumbnail-label">
-                    <img src="images/book-ten.png" alt="Chain of Gold: The Last Hours #1 book" class="thumbnail" />
+                    <img src="images/book-ten.png" alt="Chain of Gold: The Last Hours #1 book" class="thumbnail">
                   </label>
                 </div>
 
@@ -140,17 +141,17 @@
                     <i class="fas fa-book-open"></i>
                     <span>flips a few pages</span>
                   </span>
-                  <img src="images/book-ten-right.png" alt="Chain of Gold: The Last Hours #1" class="main-image" />
-                  <img src="images/book-ten-left.png" alt="Chain of Gold: The Last Hours #1 book" class="main-image" />
-                  <img src="images/book-ten-back.png" alt="Chain of Gold: The Last Hours #1 book" class="main-image" />
-                  <img src="images/book-ten.png" alt="Chain of Gold: The Last Hours #1 book" class="main-image" />
+                  <img src="images/book-ten-right.png" alt="Chain of Gold: The Last Hours #1" class="main-image">
+                  <img src="images/book-ten-left.png" alt="Chain of Gold: The Last Hours #1 book" class="main-image">
+                  <img src="images/book-ten-back.png" alt="Chain of Gold: The Last Hours #1 book" class="main-image">
+                  <img src="images/book-ten.png" alt="Chain of Gold: The Last Hours #1 book" class="main-image">
                   <div class="pagination-controls">
-                    <div class="pagination-btn" aria-label="Previous page">
+                    <button class="pagination-btn" aria-label="Previous page">
                       <i class="fas fa-chevron-left"></i>
-                    </div>
-                    <div class="pagination-btn" aria-label="Next page">
+                    </button>
+                    <button class="pagination-btn" aria-label="Next page">
                       <i class="fas fa-chevron-right"></i>
-                    </div>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -422,7 +423,7 @@
           <div class="footer-content">
             <!-- Brand Column -->
             <div class="footer-column footer-brand">
-              <a href="index.html"><img src="images/logo-text-light.png" alt="B-World Logo" class="logo-img" /></a>
+              <a href="index.html"><img src="images/logo-text-light.png" alt="B-World Logo" class="logo-img"></a>
               <div class="social-media">
                 <a href="#" class="social-link" aria-label="Facebook">
                   <i class="fab fa-facebook-f"></i>
@@ -487,8 +488,8 @@
             <!-- Request Call Column -->
             <div class="footer-column footer-cta">
               <p class="footer-cta-text">
-                If you have questions,<br />
-                you can contact us or<br />
+                If you have questions,<br>
+                you can contact us or<br>
                 we will do it for you.
               </p>
               <button class="btn btn-outline btn-footer">
@@ -497,9 +498,9 @@
 
               <!-- Payment Methods -->
               <div class="payment-methods">
-                <img src="images/paipal-logo.png" alt="PayPal card" class="payment-icon" />
-                <img src="images/mastercard-logo.png" alt="MasterCard card" class="payment-icon" />
-                <img src="images/visa-logo.png" alt="Visa card" class="payment-icon" />
+                <img src="images/paipal-logo.png" alt="PayPal card" class="payment-icon">
+                <img src="images/mastercard-logo.png" alt="MasterCard card" class="payment-icon">
+                <img src="images/visa-logo.png" alt="Visa card" class="payment-icon">
               </div>
             </div>
           </div>

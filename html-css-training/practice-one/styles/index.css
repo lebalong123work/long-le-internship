@@ -704,7 +704,7 @@ body {
 
 .newsletter-form input {
   padding: 12px 15px;
-  border: 1px solid transparent;
+  border: transparent;
   border-bottom: 1px solid var(--color-text-tertiary);
   font-size: var(--font-size-ms);
   color: var(--color-primary);
@@ -713,7 +713,6 @@ body {
 
 .newsletter-form input:focus {
   border-color: var(--color-primary);
-  border-radius: 3px;
   outline: none;
 }
 

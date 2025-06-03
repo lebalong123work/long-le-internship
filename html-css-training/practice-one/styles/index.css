@@ -179,9 +179,10 @@ body {
 .search-bar input {
   width: 100%;
   padding: 8px 40px 8px 15px;
-  border: 1px solid var(--color-background-secondary);
-  border-radius: 0px;
+  border: 1px solid transparent;
+  border-radius: 2px;
   font-size: var(--font-size-ms);
+  background-color: var(--color-background-search);
 }
 
 .search-button {

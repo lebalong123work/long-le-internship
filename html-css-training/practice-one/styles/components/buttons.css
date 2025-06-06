@@ -1,0 +1,191 @@
+/* Button Styles */
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 20px;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  font-size: var(--font-size-md);
+  line-height: 1;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.btn-outline {
+  background-color: var(--color-background);
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-primary);
+  color: var(--color-text-reverse);
+}
+
+.btn-outline-secondary {
+  background-color: transparent;
+  color: var(--color-secondary);
+  border: 1px solid var(--color-secondary);
+  font-weight: 400;
+  font-size: var(--font-size-ms);
+  border-radius: 3px;
+  padding: 12px 14px;
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--color-secondary);
+  color: var(--color-text-reverse);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-reverse);
+  border-color: var(--color-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-background);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.btn-sm {
+  padding: 12px 14px;
+}
+
+.btn-lg {
+  padding: 16px 28px;
+}
+
+.btn-xl {
+  padding: 14px 36px;
+}
+
+.author-button {
+  border-radius: 3px;
+  display: inline-block;
+  margin-bottom: 24px;
+  font-size: var(--font-size-ms);
+  font-weight: 400;
+}
+
+.nav-button {
+  padding: 9px 12px;
+  border-radius: 50%;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-button:hover {
+  background-color: var(--color-primary);
+  color: var(--color-text-reverse);
+  outline: none;
+}
+
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: 1px solid var(--color-primary);
+  padding: 15px 18px;
+  border-radius: 50%;
+  color: var(--color-primary);
+  z-index: 10;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-btn:hover {
+  background-color: var(--color-primary);
+  color: var(--color-text-reverse);
+  outline: none;
+}
+
+.prev-btn {
+  left: -60px;
+}
+
+.prev-btn i {
+  font-size: 20px;
+}
+
+.next-btn {
+  right: -60px;
+}
+
+.next-btn i {
+  font-size: 20px;
+}
+
+.fav-button {
+  position: relative;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--color-primary);
+  width: 24px;
+  height: 24px;
+}
+
+.fav-button i {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.3s ease;
+}
+
+.solid-heart {
+  opacity: 0;
+}
+
+.fav-button:hover .regular-heart {
+  opacity: 0;
+}
+
+.fav-button:hover .solid-heart {
+  opacity: 1;
+}
+
+.add-to-cart {
+  background-color: var(--color-primary);
+  color: var(--color-text-reverse);
+  border: none;
+  padding: 12px;
+  border-radius: 2px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-to-cart:hover {
+  background-color: var(--color-add-to-cart);
+  transform: translateY(-2px);
+  color: var(--color-text-reverse);
+}
+
+.btn-footer {
+  margin-bottom: 30px;
+  color: var(--color-text-reverse);
+  border-color: var(--color-text-reverse);
+  background-color: transparent;
+}
+
+.btn-footer:hover {
+  background-color: var(--color-add-to-cart);
+  color: var(--color-text-reverse);
+}

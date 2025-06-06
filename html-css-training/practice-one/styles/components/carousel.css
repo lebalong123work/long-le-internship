@@ -1,0 +1,46 @@
+/* Carousel Section */
+
+.carousel-section {
+  margin-bottom: 60px;
+  position: relative;
+}
+
+.section-heading {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel {
+  display: flex;
+  gap: 20px;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  gap: 12px;
+}
+
+.carousel-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--color-background-secondary);
+}
+
+.carousel-dot.active {
+  background-color: var(--color-primary);
+}
+
+.carousel-content {
+  position: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+}

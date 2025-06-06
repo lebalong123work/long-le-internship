@@ -1,0 +1,82 @@
+/* Image Gallery Component - CSS-only thumbnail switching */
+.image-gallery {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.thumbnail-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 148px;
+}
+
+.thumbnail-radio {
+  display: none;
+}
+
+.thumbnail-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 148px;
+  height: 148px;
+  cursor: pointer;
+  border: 1px solid var(--color-primary);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.thumbnail {
+  width: 78px;
+  height: 116px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.thumbnail:hover,
+.thumbnail-radio:checked+.thumbnail-label .thumbnail {
+  transform: scale(1.05);
+}
+
+.main-image-container {
+  flex: 1;
+  position: relative;
+}
+
+.main-image {
+  width: 412px;
+  height: 653px;
+  border-radius: 4px;
+  box-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.3s ease;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Hide all images by default */
+.main-image {
+  display: none;
+}
+
+/* Show corresponding main image when thumbnail is selected */
+#thumb1:checked~.main-image-container .main-image:nth-of-type(1),
+#thumb2:checked~.main-image-container .main-image:nth-of-type(2),
+#thumb3:checked~.main-image-container .main-image:nth-of-type(3),
+#thumb4:checked~.main-image-container .main-image:nth-of-type(4) {
+  display: block;
+}
+
+/* Default to first image */
+#thumb4:checked~.main-image-container .main-image:nth-of-type(4) {
+  display: block;
+}
+
+.pagination-controls {
+  display: flex;
+  gap: 12px;
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+}

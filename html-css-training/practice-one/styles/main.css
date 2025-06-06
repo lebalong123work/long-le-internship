@@ -16,6 +16,11 @@
 @import './components/product-card.css';
 @import './components/carousel.css';
 @import './components/forms.css';
+@import 'components/breadcrumb.css';
+@import 'components/image-gallery.css';
+@import 'components/rating.css';
+@import 'components/badge.css';
+@import 'components/quantity-selector.css';
 
 /* Pages */
 @import './pages/index.css';

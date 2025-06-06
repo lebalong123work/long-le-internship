@@ -1,0 +1,15 @@
+/* Quantity Selector Component */
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: Arial, sans-serif;
+  margin-bottom: 10px;
+}
+
+.qty-value {
+  font-size: 16px;
+  color: #444;
+  font-weight: 500;
+  user-select: none;
+}

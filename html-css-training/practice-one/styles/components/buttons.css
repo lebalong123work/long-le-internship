@@ -189,3 +189,54 @@
   background-color: var(--color-add-to-cart);
   color: var(--color-text-reverse);
 }
+
+/* ---------------- */
+.btn-add-cart,
+.btn-favorite {
+  flex: 1;
+  padding: 15px 0;
+  font-size: var(--font-size-md);
+  text-align: center;
+}
+
+.qty-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-text-primary);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  transition: background-color 0.2s;
+}
+
+.qty-btn:hover {
+  background-color: var(--color-detail-label);
+  border: 1px solid var(--color-background);
+  color: var(--color-text-reverse);
+}
+
+.pagination-btn {
+  width: 32px;
+  height: 32px;
+  background-color: rgba(147, 125, 194, 0.4);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  font-size: 14px;
+  transition: background-color 0.2s;
+  border: 1px solid transparent;
+}
+
+.pagination-btn:hover {
+  background-color: var(--color-primary);
+}

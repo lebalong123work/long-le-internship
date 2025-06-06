@@ -1,0 +1,10 @@
+/* components/index.css */
+@import './buttons.css';
+@import './product-card.css';
+@import './carousel.css';
+@import './forms.css';
+@import './breadcrumb.css';
+@import './image-gallery.css';
+@import './rating.css';
+@import './badge.css';
+@import './quantity-selector.css';

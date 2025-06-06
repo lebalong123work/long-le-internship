@@ -6,8 +6,7 @@
 
 .top-header {
   border-bottom: 1px solid var(--color-primary);
-  padding: 15px 0;
-  height: 72px;
+  padding: 19px 0;
   background-color: var(--color-background);
 }
 

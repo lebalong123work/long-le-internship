@@ -1,0 +1,53 @@
+/* Base Styles */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.layout-wrapper {
+  min-width: 1440px;
+}
+
+body {
+  font-family: "Inter";
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
+  font-size: var(--font-size-md);
+  overflow-x: auto;
+}
+
+.list-unstyled {
+  list-style: none;
+}
+
+.link {
+  text-decoration: none;
+  color: var(--color-text-primary);
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: 0 15px;
+  width: 100%;
+}
+
+/* Utility Classes */
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.hidden-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

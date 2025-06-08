@@ -1,0 +1,26 @@
+/* Rating Component */
+.rating-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.stars {
+  display: flex;
+  gap: 2px;
+}
+
+.star {
+  color: var(--color-feature);
+  font-size: 18px;
+}
+
+.star.empty {
+  color: var(--color-background-secondary);
+}
+
+.rating-text {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-ms);
+}

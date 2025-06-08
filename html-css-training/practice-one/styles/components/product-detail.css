@@ -1,0 +1,47 @@
+/* Product Details Component */
+.product-details {
+  padding-top: 36px;
+  border-top: 1px solid #eee;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.detail-item-left {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.detail-item-right {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.detail-item {
+  display: flex;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.detail-item-left .detail-label {
+  color: #c29ec4;
+  font-weight: 500;
+  padding: 2px;
+  width: 33%;
+}
+
+.detail-item-right .detail-label {
+  color: #c29ec4;
+  font-weight: 500;
+  padding: 2px;
+  width: 45%;
+}
+
+.detail-value {
+  color: #2c2c2c;
+  padding: 2px;
+}

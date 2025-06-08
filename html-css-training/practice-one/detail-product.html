@@ -2,29 +2,27 @@
 <html lang="en">
 
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>B-World Bookstore</title>
-    <link rel="stylesheet" href="styles/reset.css">
-    <link rel="stylesheet" href="styles/variables.css">
-    <link rel="stylesheet" href="styles/index.css">
-    <link rel="stylesheet" href="styles/detail-product.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
   </head>
 
   <body>
     <div class="layout-wrapper">
       <header class="header">
-        <div class="top-header">
+        <section class="top-header">
           <div class="container">
             <div class="header-content">
               <div class="logo">
-                <a href="index.html"><img src="images/logos/b-world-logo-dark.png" alt="B-World Logo" class="logo-img"></a>
-                <span class="tagline tagline-padding">We love <br>books</span>
+                <a href="index.html"><img src="images/logos/b-world-logo-dark.png" alt="B-World Logo"
+                    class="logo-img" /></a>
+                <span class="tagline tagline-padding">We love <br />books</span>
               </div>
               <form class="search-bar" action="#" method="get">
-                <input type="text" placeholder="Type any book here...">
+                <input type="text" placeholder="Type any book here..." />
                 <button type="submit" class="search-button cursor-pointer">
                   <i class="fas fa-search"></i>
                 </button>
@@ -45,7 +43,7 @@
                   </li>
                 </ul>
               </nav>
-              <div class="user-actions">
+              <aside class="user-actions">
                 <a href="#" class="icon-images link"><i class="fas fa-shopping-cart"></i></a>
                 <span class="tagline"></span>
                 <a href="#" class="icon-images heart-container"><i class="fas fa-heart"></i>
@@ -53,11 +51,11 @@
                 </a>
                 <span class="tagline"></span>
                 <a href="#" class="icon-images link"><i class="fas fa-user"></i></a>
-              </div>
+              </aside>
             </div>
           </div>
-        </div>
-        <div class="header-navigation-bar">
+        </section>
+        <section class="header-navigation-bar">
           <div class="container">
             <nav class="main-nav">
               <ul class="nav-list list-unstyled">
@@ -78,12 +76,14 @@
                 </li>
               </ul>
             </nav>
-            <div class="contact-info">
+            <address class="contact-info">
               <a href="tel:+4587999000" class="phone link"><i class="fas fa-phone"></i> +45 87 999 000</a>
-              <button class="btn btn-outline btn-lg">Request a call</button>
-            </div>
+              <button type="button" class="btn btn-outline btn-lg">
+                Request a call
+              </button>
+            </address>
           </div>
-        </div>
+        </section>
       </header>
       <main>
         <!-- Breadcrumb -->
@@ -105,61 +105,70 @@
         <!-- Product Section -->
         <section class="product-section">
           <div class="container">
-            <div class="product-container">
+            <article class="product-container">
               <!-- Product Images -->
-              <div class="product-images">
-                <div class="image-gallery">
+              <section class="product-images">
+                <figure class="image-gallery">
                   <!-- Hidden radio buttons for thumbnail selection -->
-                  <input type="radio" id="thumb1" name="thumbnail" class="thumbnail-radio">
-                  <input type="radio" id="thumb2" name="thumbnail" class="thumbnail-radio">
-                  <input type="radio" id="thumb3" name="thumbnail" class="thumbnail-radio">
-                  <input type="radio" id="thumb4" name="thumbnail" class="thumbnail-radio" checked>
+                  <input type="radio" id="thumb1" name="thumbnail" class="thumbnail-radio" />
+                  <input type="radio" id="thumb2" name="thumbnail" class="thumbnail-radio" />
+                  <input type="radio" id="thumb3" name="thumbnail" class="thumbnail-radio" />
+                  <input type="radio" id="thumb4" name="thumbnail" class="thumbnail-radio" checked />
 
-                  <div class="thumbnail-container">
+                  <section class="thumbnail-container">
                     <label for="thumb1" class="thumbnail-label">
-                      <img src="images/books/the-last-hours-volume-1-chain-of-gold-right.png" alt="Chain of Gold: The Last Hours #1 book right"
-                        class="thumbnail">
+                      <img src="images/books/the-last-hours-volume-1-chain-of-gold-right.png"
+                        alt="Chain of Gold: The Last Hours #1 book right" class="thumbnail" />
                     </label>
                     <label for="thumb2" class="thumbnail-label">
-                      <img src="images/books/the-last-hours-volume-1-chain-of-gold-left.png" alt="Chain of Gold: The Last Hours #1 book left"
-                        class="thumbnail">
+                      <img src="images/books/the-last-hours-volume-1-chain-of-gold-left.png"
+                        alt="Chain of Gold: The Last Hours #1 book left" class="thumbnail" />
                     </label>
                     <label for="thumb3" class="thumbnail-label">
-                      <img src="images/books/the-last-hours-volume-1-chain-of-gold-back.png" alt="Chain of Gold: The Last Hours #1 book back"
-                        class="thumbnail">
+                      <img src="images/books/the-last-hours-volume-1-chain-of-gold-back.png"
+                        alt="Chain of Gold: The Last Hours #1 book back" class="thumbnail" />
                     </label>
                     <label for="thumb4" class="thumbnail-label">
-                      <img src="images/books/the-last-hours-volume-1-chain-of-gold.png" alt="Chain of Gold: The Last Hours #1 book" class="thumbnail">
+                      <img src="images/books/the-last-hours-volume-1-chain-of-gold.png"
+                        alt="Chain of Gold: The Last Hours #1 book" class="thumbnail" />
                     </label>
-                  </div>
+                  </section>
 
-                  <div class="main-image-container">
+                  <section class="main-image-container">
                     <span class="badge">
                       <i class="fas fa-book-open"></i>
                       <span>flips a few pages</span>
                     </span>
-                    <img src="images/books/the-last-hours-volume-1-chain-of-gold-right.png" alt="Chain of Gold: The Last Hours #1" class="main-image">
-                    <img src="images/books/the-last-hours-volume-1-chain-of-gold-left.png" alt="Chain of Gold: The Last Hours #1 book" class="main-image">
-                    <img src="images/books/the-last-hours-volume-1-chain-of-gold-back.png" alt="Chain of Gold: The Last Hours #1 book" class="main-image">
-                    <img src="images/books/the-last-hours-volume-1-chain-of-gold.png" alt="Chain of Gold: The Last Hours #1 book" class="main-image">
-                    <div class="pagination-controls">
-                      <button class="pagination-btn" aria-label="Previous page">
+                    <img src="images/books/the-last-hours-volume-1-chain-of-gold-right.png"
+                      alt="Chain of Gold: The Last Hours #1" class="main-image" />
+                    <img src="images/books/the-last-hours-volume-1-chain-of-gold-left.png"
+                      alt="Chain of Gold: The Last Hours #1 book" class="main-image" />
+                    <img src="images/books/the-last-hours-volume-1-chain-of-gold-back.png"
+                      alt="Chain of Gold: The Last Hours #1 book" class="main-image" />
+                    <img src="images/books/the-last-hours-volume-1-chain-of-gold.png"
+                      alt="Chain of Gold: The Last Hours #1 book" class="main-image" />
+                    <nav class="pagination-controls">
+                      <button type="button" class="pagination-btn" aria-label="Previous page">
                         <i class="fas fa-chevron-left"></i>
                       </button>
-                      <button class="pagination-btn" aria-label="Next page">
+                      <button type="button" class="pagination-btn" aria-label="Next page">
                         <i class="fas fa-chevron-right"></i>
                       </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                    </nav>
+                  </section>
+                </figure>
+              </section>
 
               <!-- Product Info -->
-              <div class="product-info">
-                <h1 class="product-title">Chain of Gold: The Last Hours #1</h1>
-                <p class="product-author">Cassandra Clare</p>
+              <section class="product-info">
+                <header>
+                  <h1 class="product-title">
+                    Chain of Gold: The Last Hours #1
+                  </h1>
+                  <p class="product-author">Cassandra Clare</p>
+                </header>
 
-                <div class="rating-section">
+                <section class="rating-section">
                   <div class="stars">
                     <i class="fas fa-star star"></i>
                     <i class="fas fa-star star"></i>
@@ -168,9 +177,9 @@
                     <i class="fas fa-star-half-alt star"></i>
                   </div>
                   <span class="rating-text">4.5</span>
-                </div>
+                </section>
 
-                <div class="product-price">$12.49</div>
+                <p class="product-price">$12.49</p>
 
                 <p class="product-description">
                   From #1 New York Times and USA TODAY bestselling author
@@ -180,250 +189,255 @@
                 </p>
 
                 <!-- Quantity selector -->
-                <div class="quantity-selector">
-                  <button aria-label="Decrease quantity" class="qty-btn">
+                <section class="quantity-selector">
+                  <button type="button" aria-label="Decrease quantity" class="qty-btn">
                     <i class="fas fa-minus"></i>
                   </button>
                   <span class="qty-value">1</span>
-                  <button aria-label="Increase quantity" class="qty-btn">
+                  <button type="button" aria-label="Increase quantity" class="qty-btn">
                     <i class="fas fa-plus"></i>
                   </button>
-                </div>
+                </section>
 
-                <div class="product-actions">
+                <section class="product-actions">
                   <a href="#" class="btn btn-primary btn-add-cart">
                     Add to cart
                   </a>
                   <a href="#" class="btn btn-outline btn-favorite">
                     Favorite
                   </a>
-                </div>
+                </section>
 
-                <div class="product-details">
-                  <div class="details-grid">
+                <section class="product-details">
+                  <dl class="details-grid">
                     <div class="detail-item-left">
                       <div class="detail-item">
-                        <span class="detail-label">Publisher:</span>
-                        <span class="detail-value">Margaret K. Books</span>
+                        <dt class="detail-label">Publisher:</dt>
+                        <dd class="detail-value">Margaret K. Books</dd>
                       </div>
                       <div class="detail-item">
-                        <span class="detail-label">Language:</span>
-                        <span class="detail-value">English</span>
+                        <dt class="detail-label">Language:</dt>
+                        <dd class="detail-value">English</dd>
                       </div>
                       <div class="detail-item">
-                        <span class="detail-label">Print length:</span>
-                        <span class="detail-value">592 pages</span>
+                        <dt class="detail-label">Print length:</dt>
+                        <dd class="detail-value">592 pages</dd>
                       </div>
                     </div>
                     <div class="detail-item-right">
                       <div class="detail-item">
-                        <span class="detail-label">Publication date:</span>
-                        <span class="detail-value">March 3, 2020</span>
+                        <dt class="detail-label">Publication date:</dt>
+                        <dd class="detail-value">March 3, 2020</dd>
                       </div>
                       <div class="detail-item">
-                        <span class="detail-label">Reading age:</span>
-                        <span class="detail-value">14+</span>
+                        <dt class="detail-label">Reading age:</dt>
+                        <dd class="detail-value">14+</dd>
                       </div>
                       <div class="detail-item">
-                        <span class="detail-label">Dimensions:</span>
-                        <span class="detail-value">6 x 1.8 x 9 inches</span>
+                        <dt class="detail-label">Dimensions:</dt>
+                        <dd class="detail-value">6 x 1.8 x 9 inches</dd>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                  </dl>
+                </section>
+              </section>
+            </article>
           </div>
         </section>
 
-        <!-- Colection Section -->
+        <!-- Collection Section -->
         <section class="carousel-section">
-          <div class="carousel-content">
-            <button class="scroll-btn prev-btn cursor-pointer">
+          <article class="carousel-content">
+            <button type="button" class="scroll-btn prev-btn cursor-pointer">
               <i class="fas fa-chevron-left"></i>
             </button>
             <div class="container">
-              <h2 class="section-heading">Colection</h2>
+              <h2 class="section-heading">Collection</h2>
               <div class="carousel-container">
-                <div class="carousel">
+                <ul class="carousel">
                   <!-- Book 9 -->
-                  <div class="product-card">
-                    <img src="images/books/the-last-hours-volume-2-chain-of-iron.png" alt="Chain of Iron: Volume 2 book" class="book-cover">
+                  <li class="product-card">
+                    <img src="images/books/the-last-hours-volume-2-chain-of-iron.png" alt="Chain of Iron: Volume 2 book"
+                      class="book-cover" />
                     <h3 class="book-title">Chain of Iron: Volume 2</h3>
                     <p class="book-author">Cassandra Clare</p>
                     <div class="price-container">
                       <span class="book-price">$23.24</span>
-                      <button class="fav-button">
+                      <button type="button" class="fav-button">
                         <i class="fa-regular fa-heart regular-heart"></i>
                         <i class="fa-solid fa-heart solid-heart"></i>
                       </button>
                     </div>
-                    <button class="add-to-cart cursor-pointer">
+                    <button type="button" class="add-to-cart cursor-pointer">
                       <i class="fas fa-shopping-cart"></i> Add to cart
                     </button>
-                  </div>
+                  </li>
                   <!-- Book 10 -->
-                  <div class="product-card">
-                    <img src="images/books/the-last-hours-volume-3-chain-of-thorns.png" alt="Chain of Thorns book" class="book-cover">
+                  <li class="product-card">
+                    <img src="images/books/the-last-hours-volume-3-chain-of-thorns.png" alt="Chain of Thorns book"
+                      class="book-cover" />
                     <h3 class="book-title">Chain of Thorns</h3>
                     <p class="book-author">Cassandra Clare</p>
                     <div class="price-container">
                       <span class="book-price">$23.24</span>
-                      <button class="fav-button">
+                      <button type="button" class="fav-button">
                         <i class="fa-regular fa-heart regular-heart"></i>
                         <i class="fa-solid fa-heart solid-heart"></i>
                       </button>
                     </div>
-                    <button class="add-to-cart cursor-pointer">
+                    <button type="button" class="add-to-cart cursor-pointer">
                       <i class="fas fa-shopping-cart"></i> Add to cart
                     </button>
-                  </div>
+                  </li>
                   <!-- Book 11 -->
-                  <div class="product-card">
-                    <img src="images/books/the-mortal-instruments-volume-4-city-of-fallen-angles.png" alt="City of Fallen Angels book" class="book-cover">
+                  <li class="product-card">
+                    <img src="images/books/the-mortal-instruments-volume-4-city-of-fallen-angles.png"
+                      alt="City of Fallen Angels book" class="book-cover" />
                     <h3 class="book-title">City of Fallen Angels</h3>
                     <p class="book-author">Cassandra Clare</p>
                     <div class="price-container">
                       <span class="book-price">$13.94</span>
-                      <button class="fav-button">
+                      <button type="button" class="fav-button">
                         <i class="fa-regular fa-heart regular-heart"></i>
                         <i class="fa-solid fa-heart solid-heart"></i>
                       </button>
                     </div>
-                    <button class="add-to-cart cursor-pointer">
+                    <button type="button" class="add-to-cart cursor-pointer">
                       <i class="fas fa-shopping-cart"></i> Add to cart
                     </button>
-                  </div>
+                  </li>
                   <!-- Book 12 -->
-                  <div class="product-card">
-                    <img src="images/books/the-infernal-devices-volume-3-clockwork-princess.png" alt="Clockwork Princess book" class="book-cover">
+                  <li class="product-card">
+                    <img src="images/books/the-infernal-devices-volume-3-clockwork-princess.png"
+                      alt="Clockwork Princess book" class="book-cover" />
                     <h3 class="book-title">Clockwork Princess</h3>
                     <p class="book-author">Cassandra Clare</p>
                     <div class="price-container">
                       <span class="book-price">$16.84</span>
-                      <button class="fav-button">
+                      <button type="button" class="fav-button">
                         <i class="fa-regular fa-heart regular-heart"></i>
                         <i class="fa-solid fa-heart solid-heart"></i>
                       </button>
                     </div>
-                    <button class="add-to-cart cursor-pointer">
+                    <button type="button" class="add-to-cart cursor-pointer">
                       <i class="fas fa-shopping-cart"></i> Add to cart
                     </button>
-                  </div>
-                </div>
+                  </li>
+                </ul>
               </div>
             </div>
-            <button class="scroll-btn next-btn cursor-pointer">
+            <button type="button" class="scroll-btn next-btn cursor-pointer">
               <i class="fas fa-chevron-right"></i>
             </button>
-            <div class="carousel-dots">
+            <nav class="carousel-dots">
               <div class="carousel-dot active"></div>
               <div class="carousel-dot"></div>
               <div class="carousel-dot"></div>
               <div class="carousel-dot"></div>
               <div class="carousel-dot"></div>
-            </div>
-          </div>
+            </nav>
+          </article>
         </section>
 
         <!-- Last viewed Section -->
         <section class="carousel-section">
-          <div class="carousel-content">
-            <button class="scroll-btn prev-btn cursor-pointer">
+          <article class="carousel-content">
+            <button type="button" class="scroll-btn prev-btn cursor-pointer">
               <i class="fas fa-chevron-left"></i>
             </button>
             <div class="container">
               <h2 class="section-heading">Last viewed</h2>
               <div class="carousel-container">
-                <div class="carousel">
+                <ul class="carousel">
                   <!-- Book 13 -->
-                  <div class="product-card">
-                    <img src="images/books/the-librarian-spy.png" alt="The Librarian Spy book" class="book-cover">
+                  <li class="product-card">
+                    <img src="images/books/the-librarian-spy.png" alt="The Librarian Spy book" class="book-cover" />
                     <h3 class="book-title">The Librarian Spy</h3>
                     <p class="book-author">Madeline Martin</p>
                     <div class="price-container">
                       <span class="book-price">$16.73</span>
-                      <button class="fav-button">
+                      <button type="button" class="fav-button">
                         <i class="fa-regular fa-heart regular-heart"></i>
                         <i class="fa-solid fa-heart solid-heart"></i>
                       </button>
                     </div>
-                    <button class="add-to-cart cursor-pointer">
+                    <button type="button" class="add-to-cart cursor-pointer">
                       <i class="fas fa-shopping-cart"></i> Add to cart
                     </button>
-                  </div>
+                  </li>
                   <!-- Book 14 -->
-                  <div class="product-card">
-                    <img src="images/books/other-birds.png" alt="Other Birds book" class="book-cover">
+                  <li class="product-card">
+                    <img src="images/books/other-birds.png" alt="Other Birds book" class="book-cover" />
                     <h3 class="book-title">Other Birds</h3>
                     <p class="book-author">Sarah Addison Allen</p>
                     <div class="price-container">
                       <span class="book-price">$26.03</span>
-                      <button class="fav-button">
+                      <button type="button" class="fav-button">
                         <i class="fa-regular fa-heart regular-heart"></i>
                         <i class="fa-solid fa-heart solid-heart"></i>
                       </button>
                     </div>
-                    <button class="add-to-cart cursor-pointer">
+                    <button type="button" class="add-to-cart cursor-pointer">
                       <i class="fas fa-shopping-cart"></i> Add to cart
                     </button>
-                  </div>
+                  </li>
                   <!-- Book 15 -->
-                  <div class="product-card">
-                    <img src="images/books/the-ways-we-hide.png" alt="The Ways We Hide book" class="book-cover">
+                  <li class="product-card">
+                    <img src="images/books/the-ways-we-hide.png" alt="The Ways We Hide book" class="book-cover" />
                     <h3 class="book-title">The Ways We Hide</h3>
                     <p class="book-author">Kristina McMorris</p>
                     <div class="price-container">
                       <span class="book-price">$27.93</span>
-                      <button class="fav-button">
+                      <button type="button" class="fav-button">
                         <i class="fa-regular fa-heart regular-heart"></i>
                         <i class="fa-solid fa-heart solid-heart"></i>
                       </button>
                     </div>
-                    <button class="add-to-cart cursor-pointer">
+                    <button type="button" class="add-to-cart cursor-pointer">
                       <i class="fas fa-shopping-cart"></i> Add to cart
                     </button>
-                  </div>
+                  </li>
                   <!-- Book 16 -->
-                  <div class="product-card">
-                    <img src="images/books/room-and-board.png" alt="Room and Board book" class="book-cover">
+                  <li class="product-card">
+                    <img src="images/books/room-and-board.png" alt="Room and Board book" class="book-cover" />
                     <h3 class="book-title">Room and Board</h3>
                     <p class="book-author">Miriam Parker</p>
                     <div class="price-container">
                       <span class="book-price">$15.81</span>
-                      <button class="fav-button">
+                      <button type="button" class="fav-button">
                         <i class="fa-regular fa-heart regular-heart"></i>
                         <i class="fa-solid fa-heart solid-heart"></i>
                       </button>
                     </div>
-                    <button class="add-to-cart cursor-pointer">
+                    <button type="button" class="add-to-cart cursor-pointer">
                       <i class="fas fa-shopping-cart"></i> Add to cart
                     </button>
-                  </div>
-                </div>
+                  </li>
+                </ul>
               </div>
             </div>
-            <button class="scroll-btn next-btn cursor-pointer">
+            <button type="button" class="scroll-btn next-btn cursor-pointer">
               <i class="fas fa-chevron-right"></i>
             </button>
-            <div class="carousel-dots">
+            <nav class="carousel-dots">
               <div class="carousel-dot active"></div>
               <div class="carousel-dot"></div>
               <div class="carousel-dot"></div>
               <div class="carousel-dot"></div>
               <div class="carousel-dot"></div>
-            </div>
-          </div>
+            </nav>
+          </article>
         </section>
 
         <!-- Footer Section -->
         <footer class="footer">
           <div class="container">
-            <div class="footer-content">
+            <section class="footer-content">
               <!-- Brand Column -->
-              <div class="footer-column footer-brand">
-                <a href="index.html"><img src="images/logos/b-world-logo-light.png" alt="B-World Logo" class="logo-img"></a>
-                <div class="social-media">
+              <article class="footer-column footer-brand">
+                <a href="index.html"><img src="images/logos/b-world-logo-light.png" alt="B-World Logo"
+                    class="logo-img" /></a>
+                <nav class="social-media">
                   <a href="#" class="social-link" aria-label="Facebook">
                     <i class="fab fa-facebook-f"></i>
                   </a>
@@ -433,84 +447,92 @@
                   <a href="#" class="social-link" aria-label="Twitter">
                     <i class="fab fa-twitter"></i>
                   </a>
-                </div>
-              </div>
+                </nav>
+              </article>
 
               <!-- Categories Column -->
-              <div class="footer-column">
+              <article class="footer-column">
                 <h4 class="footer-heading">Categories</h4>
-                <ul class="footer-links list-unstyled">
-                  <li><a href="#" class="footer-link">Psychology</a></li>
-                  <li><a href="#" class="footer-link">Self-Help</a></li>
-                  <li><a href="#" class="footer-link">Romance</a></li>
-                  <li><a href="#" class="footer-link">Mystery</a></li>
-                </ul>
-              </div>
+                <nav>
+                  <ul class="footer-links list-unstyled">
+                    <li><a href="#" class="footer-link">Psychology</a></li>
+                    <li><a href="#" class="footer-link">Self-Help</a></li>
+                    <li><a href="#" class="footer-link">Romance</a></li>
+                    <li><a href="#" class="footer-link">Mystery</a></li>
+                  </ul>
+                </nav>
+              </article>
 
               <!-- For Kids Column -->
-              <div class="footer-column">
+              <article class="footer-column">
                 <h4 class="footer-heading">For Kids</h4>
-                <ul class="footer-links list-unstyled">
-                  <li><a href="#" class="footer-link">Games</a></li>
-                  <li><a href="#" class="footer-link">Comics</a></li>
-                  <li><a href="#" class="footer-link">Fantasy</a></li>
-                </ul>
-              </div>
+                <nav>
+                  <ul class="footer-links list-unstyled">
+                    <li><a href="#" class="footer-link">Games</a></li>
+                    <li><a href="#" class="footer-link">Comics</a></li>
+                    <li><a href="#" class="footer-link">Fantasy</a></li>
+                  </ul>
+                </nav>
+              </article>
 
               <!-- E-Books Column -->
-              <div class="footer-column">
+              <article class="footer-column">
                 <h4 class="footer-heading">E-Books</h4>
-                <ul class="footer-links list-unstyled">
-                  <li><a href="#" class="footer-link">Fiction</a></li>
-                  <li><a href="#" class="footer-link">Historical</a></li>
-                  <li><a href="#" class="footer-link">Horror</a></li>
-                </ul>
-              </div>
+                <nav>
+                  <ul class="footer-links list-unstyled">
+                    <li><a href="#" class="footer-link">Fiction</a></li>
+                    <li><a href="#" class="footer-link">Historical</a></li>
+                    <li><a href="#" class="footer-link">Horror</a></li>
+                  </ul>
+                </nav>
+              </article>
 
               <!-- Help & Contacts Column -->
-              <div class="footer-column footer-contact">
+              <article class="footer-column footer-contact">
                 <h4 class="footer-heading">Help &amp; Contacts</h4>
-                <div class="contact-item">
+                <address class="contact-item">
                   <i class="fas fa-phone contact-icon"></i>
                   <a href="tel:+4587999000" class="contact-link">+445 87 999 000</a>
-                </div>
-                <div class="contact-item">
+                </address>
+                <p class="contact-item">
                   <i class="fas fa-clock contact-icon"></i>
                   <span class="contact-text">Mo-Fri, 9 AM to 11 PM</span>
-                </div>
-                <div class="contact-item">
+                </p>
+                <address class="contact-item">
                   <i class="fas fa-envelope contact-icon"></i>
                   <a href="mailto:b.world@store.ro" class="contact-link">b.world@store.ro</a>
-                </div>
-              </div>
+                </address>
+              </article>
 
               <!-- Request Call Column -->
-              <div class="footer-column footer-cta">
+              <article class="footer-column footer-cta">
                 <p class="footer-cta-text">
-                  If you have questions,<br>
-                  you can contact us or<br>
+                  If you have questions,<br />
+                  you can contact us or<br />
                   we will do it for you.
                 </p>
-                <button class="btn btn-outline btn-footer">
+                <button type="button" class="btn btn-outline btn-footer">
                   Request a call
                 </button>
 
                 <!-- Payment Methods -->
-                <div class="payment-methods">
-                  <img src="images/logos/paypal-logo.png" alt="PayPal card" class="payment-icon">
-                  <img src="images/logos/mastercard-logo.png" alt="MasterCard card" class="payment-icon">
-                  <img src="images/logos/visa-logo.png" alt="Visa card" class="payment-icon">
-                </div>
-              </div>
-            </div>
+                <section class="payment-methods">
+                  <img src="images/logos/paypal-logo.png" alt="PayPal card" class="payment-icon" />
+                  <img src="images/logos/mastercard-logo.png" alt="MasterCard card" class="payment-icon" />
+                  <img src="images/logos/visa-logo.png" alt="Visa card" class="payment-icon" />
+                </section>
+              </article>
+            </section>
           </div>
 
           <!-- Footer Bottom -->
-          <div class="footer-bottom">
+          <section class="footer-bottom">
             <div class="container">
-              <p class="copyright"> &copy; All copyrights are reserved. B-World 2022. </p>
+              <p class="copyright">
+                &copy; All copyrights are reserved. B-World 2022.
+              </p>
             </div>
-          </div>
+          </section>
         </footer>
       </main>
     </div>

@@ -1,0 +1,7 @@
+.author-button {
+  border-radius: 3px;
+  display: inline-block;
+  margin-bottom: 24px;
+  font-size: var(--font-size-ms);
+  font-weight: 400;
+}

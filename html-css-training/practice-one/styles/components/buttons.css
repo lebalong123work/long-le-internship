@@ -65,14 +65,6 @@
   padding: 14px 36px;
 }
 
-.author-button {
-  border-radius: 3px;
-  display: inline-block;
-  margin-bottom: 24px;
-  font-size: var(--font-size-ms);
-  font-weight: 400;
-}
-
 .nav-button {
   padding: 9px 12px;
   border-radius: 50%;
@@ -127,36 +119,6 @@
 
 .next-btn i {
   font-size: 20px;
-}
-
-.fav-button {
-  position: relative;
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: var(--color-primary);
-  width: 24px;
-  height: 24px;
-}
-
-.fav-button i {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transition: opacity 0.3s ease;
-}
-
-.solid-heart {
-  opacity: 0;
-}
-
-.fav-button:hover .regular-heart {
-  opacity: 0;
-}
-
-.fav-button:hover .solid-heart {
-  opacity: 1;
 }
 
 .add-to-cart {

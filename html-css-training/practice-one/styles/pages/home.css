@@ -14,6 +14,12 @@
   gap: 32px;
 }
 
+.section-heading {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
 /* Left Content */
 .left-content {
   max-width: 640px;

@@ -7,7 +7,7 @@
   flex-direction: column;
 }
 
-.book-cover {
+.product-card-cover {
   height: 415px;
   width: 100%;
   object-fit: cover;
@@ -17,32 +17,32 @@
   transition: transform 0.3s ease;
 }
 
-.product-card:hover .book-cover {
+.product-card:hover .product-card-cover {
   transform: scale(1.02);
 }
 
-.book-title {
+.product-card-title {
   font-size: var(--font-size-lg);
   font-weight: 600;
   color: var(--color-text-primary);
   margin-bottom: 7px;
 }
 
-.book-author {
+.product-card-author {
   font-size: var(--font-size-md);
   font-weight: 400;
   color: var(--color-text-product);
   margin-bottom: 14px;
 }
 
-.price-container {
+.product-card-price-group {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 29px;
 }
 
-.book-price {
+.product-card-price {
   font-size: 20px;
   font-weight: 600;
   color: var(--color-text-primary);

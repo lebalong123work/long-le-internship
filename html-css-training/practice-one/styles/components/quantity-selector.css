@@ -7,6 +7,28 @@
   margin-bottom: 10px;
 }
 
+.qty-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-text-primary);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  transition: background-color 0.2s;
+}
+
+.qty-btn:hover {
+  background-color: var(--color-detail-label);
+  border: 1px solid var(--color-background);
+  color: var(--color-text-reverse);
+}
+
 .qty-value {
   font-size: 16px;
   color: #444;

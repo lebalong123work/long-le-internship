@@ -5,9 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>B-World Bookstore</title>
-    <link rel="stylesheet" href="styles/reset.css">
-    <link rel="stylesheet" href="styles/variables.css">
-    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/main.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   </head>
@@ -15,11 +13,12 @@
   <body>
     <div class="layout-wrapper">
       <header class="header">
-        <div class="top-header">
+        <section class="top-header">
           <div class="container">
             <div class="header-content">
               <div class="logo">
-                <a href="index.html"><img src="images/logos/b-world-logo-dark.png" alt="B-World Logo" class="logo-img"></a>
+                <a href="index.html"><img src="images/logos/b-world-logo-dark.png" alt="B-World Logo"
+                    class="logo-img"></a>
                 <span class="tagline tagline-padding">We love <br>books</span>
               </div>
               <form class="search-bar" action="#" method="get">
@@ -44,7 +43,7 @@
                   </li>
                 </ul>
               </nav>
-              <div class="user-actions">
+              <aside class="user-actions">
                 <a href="#" class="icon-images link"><i class="fas fa-shopping-cart"></i></a>
                 <span class="tagline"></span>
                 <a href="#" class="icon-images heart-container"><i class="fas fa-heart"></i>
@@ -52,11 +51,11 @@
                 </a>
                 <span class="tagline"></span>
                 <a href="#" class="icon-images link"><i class="fas fa-user"></i></a>
-              </div>
+              </aside>
             </div>
           </div>
-        </div>
-        <div class="header-navigation-bar">
+        </section>
+        <section class="header-navigation-bar">
           <div class="container">
             <nav class="main-nav">
               <ul class="nav-list list-unstyled">
@@ -77,23 +76,23 @@
                 </li>
               </ul>
             </nav>
-            <div class="contact-info">
+            <address class="contact-info">
               <a href="tel:+4587999000" class="phone link"><i class="fas fa-phone"></i> +45 87 999 000</a>
-              <button class="btn btn-outline btn-lg">Request a call</button>
-            </div>
+              <button type="button" class="btn btn-outline btn-lg">Request a call</button>
+            </address>
           </div>
-        </div>
+        </section>
       </header>
       <main>
         <section class="hero">
           <div class="container">
-            <div class="header-dots">
+            <nav class="header-dots">
               <span class="header-dot active"></span>
               <span class="header-dot"></span>
               <span class="header-dot"></span>
               <span class="header-dot"></span>
-            </div>
-            <div class="left-content">
+            </nav>
+            <article class="left-content">
               <button class="author-button btn btn-outline-secondary btn-sm" type="button">
                 Author of august
               </button>
@@ -105,239 +104,239 @@
                 translated into over 40 languages.
               </p>
               <a href="detail-product.html" class="btn btn-primary btn-xl">View his books</a>
-            </div>
-            <div class="right-content">
+            </article>
+            <aside class="right-content">
               <span class="discount-text">
                 AUTOGRAPHED<br>BOOKS + 30%<br>DISCOUNT
               </span>
 
-              <div class="book-wrapper">
+              <figure class="book-wrapper">
                 <img src="images/books/eric-emmanuel-schmitt.png" alt="Eric-Emanuel Schmitt Book" class="book-image">
-                <p class="stock-limit">*within the stock limit</p>
-              </div>
-            </div>
+                <figcaption class="stock-limit">*within the stock limit</figcaption>
+              </figure>
+            </aside>
           </div>
           <nav class="nav-buttons" aria-label="Book navigation">
-            <button class="nav-button cursor-pointer" aria-label="Previous" type="button">
+            <button type="button" class="nav-button cursor-pointer" aria-label="Previous">
               <i class="fas fa-chevron-left"></i>
             </button>
-            <button class="nav-button cursor-pointer" aria-label="Next" type="button">
+            <button type="button" class="nav-button cursor-pointer" aria-label="Next">
               <i class="fas fa-chevron-right"></i>
             </button>
           </nav>
         </section>
 
-        <!-- Selected features sectionSection -->
+        <!-- Selected features section -->
         <section class="features-section">
           <div class="container">
             <h2 class="hidden-title">Selected features</h2>
-            <div class="features-container">
-              <div class="feature-item">
+            <ul class="features-container">
+              <li class="feature-item">
                 <i class="feature-icon fas fa-truck"></i>
-                <div class="feature-text feature-text-underline cursor-pointer">
+                <span class="feature-text feature-text-underline cursor-pointer">
                   Free shiping over 50$
-                </div>
-              </div>
+                </span>
+              </li>
 
-              <div class="feature-item">
+              <li class="feature-item">
                 <i class="feature-icon fas fa-star"></i>
-                <div class="feature-text feature-text-underline cursor-pointer">
+                <span class="feature-text feature-text-underline cursor-pointer">
                   Save with loyalty points
-                </div>
-              </div>
+                </span>
+              </li>
 
-              <div class="feature-item">
+              <li class="feature-item">
                 <i class="feature-icon fas fa-book-open"></i>
-                <div class="feature-text feature-text-underline cursor-pointer">
+                <span class="feature-text feature-text-underline cursor-pointer">
                   Read a few pages
-                </div>
-              </div>
-            </div>
+                </span>
+              </li>
+            </ul>
           </div>
         </section>
 
         <!-- Selected For You Section -->
         <section class="carousel-section">
-          <div class="carousel-content">
-            <button class="scroll-btn prev-btn cursor-pointer">
+          <article class="carousel-content">
+            <button type="button" class="scroll-btn prev-btn cursor-pointer">
               <i class="fas fa-chevron-left"></i>
             </button>
             <div class="container">
               <h2 class="section-heading">Selected for you</h2>
               <div class="carousel-container">
-                <div class="carousel">
+                <ul class="carousel">
                   <!-- Book 1 -->
-                  <div class="product-card">
+                  <li class="product-card">
                     <img src="images/books/financial-feminist.png" alt="Financial Feminist book" class="book-cover">
                     <h3 class="book-title">Financial Feminist</h3>
                     <p class="book-author">Tori Dunlap</p>
                     <div class="price-container">
                       <span class="book-price">$20.46</span>
-                      <button class="fav-button">
+                      <button type="button" class="fav-button">
                         <i class="fa-regular fa-heart regular-heart"></i>
                         <i class="fa-solid fa-heart solid-heart"></i>
                       </button>
                     </div>
-                    <button class="add-to-cart cursor-pointer">
+                    <button type="button" class="add-to-cart cursor-pointer">
                       <i class="fas fa-shopping-cart"></i> Add to cart
                     </button>
-                  </div>
+                  </li>
                   <!-- Book 2 -->
-                  <div class="product-card">
+                  <li class="product-card">
                     <img src="images/books/no-more-police.png" alt="No More Police book" class="book-cover">
                     <h3 class="book-title">No More Police</h3>
                     <p class="book-author">Andrea Ritchie</p>
                     <div class="price-container">
                       <span class="book-price">$17.66</span>
-                      <button class="fav-button">
+                      <button type="button" class="fav-button">
                         <i class="fa-regular fa-heart regular-heart"></i>
                         <i class="fa-solid fa-heart solid-heart"></i>
                       </button>
                     </div>
-                    <button class="add-to-cart cursor-pointer">
+                    <button type="button" class="add-to-cart cursor-pointer">
                       <i class="fas fa-shopping-cart"></i> Add to cart
                     </button>
-                  </div>
+                  </li>
                   <!-- Book 3 -->
-                  <div class="product-card">
+                  <li class="product-card">
                     <img src="images/books/i'm-glad-my-mon-died.png" alt="I'm Glad My Mom Died book" class="book-cover">
                     <h3 class="book-title">I'm Glad My Mom Died</h3>
                     <p class="book-author">Jennette McCurdy</p>
                     <div class="price-container">
                       <span class="book-price">$26.03</span>
-                      <button class="fav-button">
+                      <button type="button" class="fav-button">
                         <i class="fa-regular fa-heart regular-heart"></i>
                         <i class="fa-solid fa-heart solid-heart"></i>
                       </button>
                     </div>
-                    <button class="add-to-cart cursor-pointer">
+                    <button type="button" class="add-to-cart cursor-pointer">
                       <i class="fas fa-shopping-cart"></i> Add to cart
                     </button>
-                  </div>
+                  </li>
                   <!-- Book 4 -->
-                  <div class="product-card">
+                  <li class="product-card">
                     <img src="images/books/nova-the-ninth.png" alt="Nona the Ninth book" class="book-cover">
                     <h3 class="book-title">Nona the Ninth</h3>
                     <p class="book-author">Tamsyn Muir</p>
                     <div class="price-container">
                       <span class="book-price">$26.96</span>
-                      <button class="fav-button">
+                      <button type="button" class="fav-button">
                         <i class="fa-regular fa-heart regular-heart"></i>
                         <i class="fa-solid fa-heart solid-heart"></i>
                       </button>
                     </div>
-                    <button class="add-to-cart cursor-pointer">
+                    <button type="button" class="add-to-cart cursor-pointer">
                       <i class="fas fa-shopping-cart"></i> Add to cart
                     </button>
-                  </div>
-                </div>
+                  </li>
+                </ul>
               </div>
             </div>
-            <button class="scroll-btn next-btn cursor-pointer">
+            <button type="button" class="scroll-btn next-btn cursor-pointer">
               <i class="fas fa-chevron-right"></i>
             </button>
-            <div class="carousel-dots">
-              <div class="carousel-dot active"></div>
-              <div class="carousel-dot"></div>
-              <div class="carousel-dot"></div>
-              <div class="carousel-dot"></div>
-              <div class="carousel-dot"></div>
-            </div>
-          </div>
+            <nav class="carousel-dots">
+              <span class="carousel-dot active"></span>
+              <span class="carousel-dot"></span>
+              <span class="carousel-dot"></span>
+              <span class="carousel-dot"></span>
+              <span class="carousel-dot"></span>
+            </nav>
+          </article>
         </section>
 
         <!-- You must buy it now Section -->
         <section class="carousel-section">
-          <div class="carousel-content">
-            <button class="scroll-btn prev-btn cursor-pointer">
+          <article class="carousel-content">
+            <button type="button" class="scroll-btn prev-btn cursor-pointer">
               <i class="fas fa-chevron-left"></i>
             </button>
             <div class="container">
               <h2 class="section-heading">You must buy it now</h2>
               <div class="carousel-container">
-                <div class="carousel">
+                <ul class="carousel">
                   <!-- Book 5 -->
-                  <div class="product-card">
+                  <li class="product-card">
                     <img src="images/books/harlem-shuffle.png" alt=">Harlem Shuffle book" class="book-cover">
                     <h3 class="book-title">Harlem Shuffle</h3>
                     <p class="book-author">Colson Whitehead</p>
                     <div class="price-container">
                       <span class="book-price">$26.92</span>
-                      <button class="fav-button">
+                      <button type="button" class="fav-button">
                         <i class="fa-regular fa-heart regular-heart"></i>
                         <i class="fa-solid fa-heart solid-heart"></i>
                       </button>
                     </div>
-                    <button class="add-to-cart cursor-pointer">
+                    <button type="button" class="add-to-cart cursor-pointer">
                       <i class="fas fa-shopping-cart"></i> Add to cart
                     </button>
-                  </div>
+                  </li>
                   <!-- Book 6 -->
-                  <div class="product-card">
+                  <li class="product-card">
                     <img src="images/books/two-old-women.png" alt="Two Old Women book" class="book-cover">
                     <h3 class="book-title">Two Old Women</h3>
                     <p class="book-author">Velma Wallis</p>
                     <div class="price-container">
                       <span class="book-price">$13.95</span>
-                      <button class="fav-button">
+                      <button type="button" class="fav-button">
                         <i class="fa-regular fa-heart regular-heart"></i>
                         <i class="fa-solid fa-heart solid-heart"></i>
                       </button>
                     </div>
-                    <button class="add-to-cart cursor-pointer">
+                    <button type="button" class="add-to-cart cursor-pointer">
                       <i class="fas fa-shopping-cart"></i> Add to cart
                     </button>
-                  </div>
+                  </li>
                   <!-- Book 7 -->
-                  <div class="product-card">
+                  <li class="product-card">
                     <img src="images/books/carrie-soto-is-back.png" alt="Carrie Soto Is Back book" class="book-cover">
                     <h3 class="book-title">Carrie Soto Is Back</h3>
                     <p class="book-author">Taylor Jenkins Reid</p>
                     <div class="price-container">
                       <span class="book-price">$26.04</span>
-                      <button class="fav-button">
+                      <button type="button" class="fav-button">
                         <i class="fa-regular fa-heart regular-heart"></i>
                         <i class="fa-solid fa-heart solid-heart"></i>
                       </button>
                     </div>
-                    <button class="add-to-cart cursor-pointer">
+                    <button type="button" class="add-to-cart cursor-pointer">
                       <i class="fas fa-shopping-cart"></i> Add to cart
                     </button>
-                  </div>
+                  </li>
                   <!-- Book 8 -->
-                  <div class="product-card">
+                  <li class="product-card">
                     <img src="images/books/book-lovers.png" alt="Book Lovers book" class="book-cover">
                     <h3 class="book-title">Book Lovers</h3>
                     <p class="book-author">Emily Henry</p>
                     <div class="price-container">
                       <span class="book-price">$15.81</span>
-                      <button class="fav-button">
+                      <button type="button" class="fav-button">
                         <i class="fa-regular fa-heart regular-heart"></i>
                         <i class="fa-solid fa-heart solid-heart"></i>
                       </button>
                     </div>
-                    <button class="add-to-cart cursor-pointer">
+                    <button type="button" class="add-to-cart cursor-pointer">
                       <i class="fas fa-shopping-cart"></i> Add to cart
                     </button>
-                  </div>
-                </div>
+                  </li>
+                </ul>
               </div>
             </div>
-            <button class="scroll-btn next-btn cursor-pointer">
+            <button type="button" class="scroll-btn next-btn cursor-pointer">
               <i class="fas fa-chevron-right"></i>
             </button>
-            <div class="carousel-dots">
-              <div class="carousel-dot active"></div>
-              <div class="carousel-dot"></div>
-              <div class="carousel-dot"></div>
-              <div class="carousel-dot"></div>
-              <div class="carousel-dot"></div>
-            </div>
-          </div>
+            <nav class="carousel-dots">
+              <span class="carousel-dot active"></span>
+              <span class="carousel-dot"></span>
+              <span class="carousel-dot"></span>
+              <span class="carousel-dot"></span>
+              <span class="carousel-dot"></span>
+            </nav>
+          </article>
         </section>
         <!-- About Us Section  -->
         <section class="about-us container">
-          <div class="about-us-text">
+          <article class="about-us-text">
             <h2 class="section-heading">Did you know us?</h2>
             <p class="text-regular about-us-description">
               We are a bookstore that loves books and we want to share our
@@ -350,23 +349,24 @@
                 pattern="[A-Za-z\s]{2,}" title="Name should contain at least 2 letters and only alphabets.">
               <input type="email" name="email" placeholder="Enter your Email" required aria-label="Email Address"
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address">
-              <button class="btn btn-primary btn-xl" type="submit">
+              <button type="submit" class="btn btn-primary btn-xl">
                 Subscribe
               </button>
             </form>
-          </div>
-          <div class="about-us-image">
+          </article>
+          <aside class="about-us-image">
             <img src="images/graphics/map.png" alt="B-world branch map" class="map-img">
-          </div>
+          </aside>
         </section>
         <!-- Footer Section -->
         <footer class="footer">
           <div class="container">
-            <div class="footer-content">
+            <section class="footer-content">
               <!-- Brand Column -->
-              <div class="footer-column footer-brand">
-                <a href="index.html"><img src="images/logos/b-world-logo-light.png" alt="B-World Logo" class="logo-img"></a>
-                <div class="social-media">
+              <article class="footer-column footer-brand">
+                <a href="index.html"><img src="images/logos/b-world-logo-light.png" alt="B-World Logo"
+                    class="logo-img"></a>
+                <nav class="social-media">
                   <a href="#" class="social-link" aria-label="Facebook">
                     <i class="fab fa-facebook-f"></i>
                   </a>
@@ -376,84 +376,90 @@
                   <a href="#" class="social-link" aria-label="Twitter">
                     <i class="fab fa-twitter"></i>
                   </a>
-                </div>
-              </div>
+                </nav>
+              </article>
 
               <!-- Categories Column -->
-              <div class="footer-column">
+              <article class="footer-column">
                 <h4 class="footer-heading">Categories</h4>
-                <ul class="footer-links list-unstyled">
-                  <li><a href="#" class="footer-link">Psychology</a></li>
-                  <li><a href="#" class="footer-link">Self-Help</a></li>
-                  <li><a href="#" class="footer-link">Romance</a></li>
-                  <li><a href="#" class="footer-link">Mystery</a></li>
-                </ul>
-              </div>
+                <nav>
+                  <ul class="footer-links list-unstyled">
+                    <li><a href="#" class="footer-link">Psychology</a></li>
+                    <li><a href="#" class="footer-link">Self-Help</a></li>
+                    <li><a href="#" class="footer-link">Romance</a></li>
+                    <li><a href="#" class="footer-link">Mystery</a></li>
+                  </ul>
+                </nav>
+              </article>
 
               <!-- For Kids Column -->
-              <div class="footer-column">
+              <article class="footer-column">
                 <h4 class="footer-heading">For Kids</h4>
-                <ul class="footer-links list-unstyled">
-                  <li><a href="#" class="footer-link">Games</a></li>
-                  <li><a href="#" class="footer-link">Comics</a></li>
-                  <li><a href="#" class="footer-link">Fantasy</a></li>
-                </ul>
-              </div>
+                <nav>
+                  <ul class="footer-links list-unstyled">
+                    <li><a href="#" class="footer-link">Games</a></li>
+                    <li><a href="#" class="footer-link">Comics</a></li>
+                    <li><a href="#" class="footer-link">Fantasy</a></li>
+                  </ul>
+                </nav>
+              </article>
 
               <!-- E-Books Column -->
-              <div class="footer-column">
+              <article class="footer-column">
                 <h4 class="footer-heading">E-Books</h4>
-                <ul class="footer-links list-unstyled">
-                  <li><a href="#" class="footer-link">Fiction</a></li>
-                  <li><a href="#" class="footer-link">Historical</a></li>
-                  <li><a href="#" class="footer-link">Horror</a></li>
-                </ul>
-              </div>
+                <nav>
+                  <ul class="footer-links list-unstyled">
+                    <li><a href="#" class="footer-link">Fiction</a></li>
+                    <li><a href="#" class="footer-link">Historical</a></li>
+                    <li><a href="#" class="footer-link">Horror</a></li>
+                  </ul>
+                </nav>
+              </article>
 
               <!-- Help & Contacts Column -->
-              <div class="footer-column footer-contact">
+              <article class="footer-column footer-contact">
                 <h4 class="footer-heading">Help &amp; Contacts</h4>
-                <div class="contact-item">
+                <address class="contact-item">
                   <i class="fas fa-phone contact-icon"></i>
                   <a href="tel:+4587999000" class="contact-link">+445 87 999 000</a>
-                </div>
-                <div class="contact-item">
+                </address>
+                <p class="contact-item">
                   <i class="fas fa-clock contact-icon"></i>
                   <span class="contact-text">Mo-Fri, 9 AM to 11 PM</span>
-                </div>
-                <div class="contact-item">
+                </p>
+                <address class="contact-item">
                   <i class="fas fa-envelope contact-icon"></i>
                   <a href="mailto:b.world@store.ro" class="contact-link">b.world@store.ro</a>
-                </div>
-              </div>
+                </address>
+              </article>
 
               <!-- Request Call Column -->
-              <div class="footer-column footer-cta">
+              <article class="footer-column footer-cta">
                 <p class="footer-cta-text">
                   If you have questions,<br>
                   you can contact us or<br>
                   we will do it for you.
                 </p>
-                <button class="btn btn-outline btn-footer">
+                <button type="button" class="btn btn-outline btn-footer">
                   Request a call
                 </button>
 
                 <!-- Payment Methods -->
-                <div class="payment-methods">
+                <section class="payment-methods">
                   <img src="images/logos/paypal-logo.png" alt="PayPal card" class="payment-icon">
                   <img src="images/logos/mastercard-logo.png" alt="MasterCard card" class="payment-icon">
                   <img src="images/logos/visa-logo.png" alt="Visa card" class="payment-icon">
-                </div>
-              </div>
-            </div>
+                </section>
+              </article>
+            </section>
           </div>
 
           <!-- Footer Bottom -->
-          <div class="footer-bottom">
+          <section class="footer-bottom">
             <div class="container">
               <p class="copyright"> &copy; All copyrights are reserved. B-World 2022. </p>
             </div>
-          </div>
+          </section>
         </footer>
       </main>
     </div>

@@ -93,8 +93,7 @@
   bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
-  display: flex;
-  gap: 24px;
+  text-align: center;
 }
 
 /* Features block */

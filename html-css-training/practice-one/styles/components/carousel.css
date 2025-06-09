@@ -23,10 +23,12 @@
 }
 
 .carousel-dot {
+  display: inline-block; 
   width: 12px;
   height: 12px;
   border-radius: 50%;
   background-color: var(--color-background-secondary);
+  margin: 0 6px; 
 }
 
 .carousel-dot.active {

@@ -1,0 +1,16 @@
+/* Badge Component */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background-color: var(--color-background);
+  color: var(--color-stock-limit);
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-regular);
+  text-transform: none;
+}

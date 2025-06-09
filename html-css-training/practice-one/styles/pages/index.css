@@ -53,14 +53,14 @@ body {
 
 /* Button Styles */
 .btn {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
   padding: 12px 20px;
   border-radius: var(--border-radius);
   font-weight: 500;
   font-size: var(--font-size-md);
-  line-height: 1;
+  line-height: 1.2;
   cursor: pointer;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -428,20 +428,20 @@ body {
   bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
-  display: flex;
-  gap: 24px;
+  text-align: center;
 }
 
 .nav-button {
+  display: inline-flex;
   padding: 9px 12px;
   border-radius: 50%;
   border: 1px solid var(--color-primary);
   color: var(--color-primary);
-  display: flex;
   align-items: center;
   justify-content: center;
   background: transparent;
   transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 0 12px;
 }
 
 .nav-button:hover {
@@ -674,10 +674,12 @@ body {
 }
 
 .carousel-dot {
+  display: inline-block; 
   width: 12px;
   height: 12px;
   border-radius: 50%;
   background-color: var(--color-background-secondary);
+  margin: 0 6px; 
 }
 
 .carousel-dot.active {

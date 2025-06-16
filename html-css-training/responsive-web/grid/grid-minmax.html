@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grid minmax</title>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 10px;
+      }
+
+      .item {
+        padding: 20px;
+        background-color: #4caf50;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid">
+      <div class="item">Short</div>
+      <div class="item">
+       The content is much longer so it needs to be divided equally by minmax(0, 1fr)
+      </div>
+    </div>
+  </body>
+</html>

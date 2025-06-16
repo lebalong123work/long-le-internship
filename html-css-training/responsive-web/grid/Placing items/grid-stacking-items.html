@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>grid stacking items</title>
+  <style>
+    .container {
+      display: grid;
+      grid-template-columns: 200px;
+      grid-template-rows: 200px;
+      border: 1px solid #ccc;
+      margin: 50px;
+    }
+
+    .item {
+      grid-column: 1 / 2;
+      grid-row: 1 / 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+    }
+
+    .one {
+      background: #3498db;
+      z-index: 1;
+    }
+
+    .two {
+      background: #e74c3c;
+      z-index: 2; 
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="item one">A</div>
+  <div class="item two">B</div>
+</div>
+
+</body>
+</html>

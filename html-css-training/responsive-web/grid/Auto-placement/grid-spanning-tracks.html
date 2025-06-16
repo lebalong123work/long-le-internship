@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Grid Span Demo</title>
+    <style>
+      .container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(3, 100px);
+        gap: 10px;
+        padding: 20px;
+        background: #f0f0f0;
+      }
+
+      .item {
+        background: #3498db;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .span-col {
+        grid-column: span 2;
+      }
+
+      .span-row {
+        grid-row: span 2;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="item">1</div>
+      <div class="item span-col">2 (span 2 columns)</div>
+      <div class="item span-row">3 (span 2 rows)</div>
+      <div class="item">4</div>
+      <div class="item">5</div>
+      <div class="item">6</div>
+      <div class="item">7</div>
+    </div>
+  </body>
+</html>

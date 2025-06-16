@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CSS Grid Template </title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      grid-template-rows: auto auto auto auto;
+      grid-template-areas:
+        "header header header"
+        "nav    main   extra"
+        ".      main   extra"
+        "footer footer footer";
+      gap: 10px;
+      padding: 10px;
+      min-height: 100vh;
+    }
+
+    header {
+      grid-area: header;
+      background: #6495ed;
+      padding: 20px;
+      text-align: center;
+      color: white;
+      font-weight: bold;
+    }
+
+    .nav {
+      grid-area: nav;
+      background: #ffa07a;
+      padding: 20px;
+    }
+
+    .main {
+      grid-area: main;
+      background: #90ee90;
+      padding: 20px;
+    }
+
+    .extra {
+      grid-area: extra;
+      background: #dda0dd;
+      padding: 20px;
+    }
+
+    footer {
+      grid-area: footer;
+      background: #f0e68c;
+      padding: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    /* Responsive layout: 1 cột */
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "header"
+          "nav"
+          "main"
+          "extra"
+          "footer";
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>Header</header>
+    <aside class="nav">Navigation</aside>
+    <section class="main">Main Content</section>
+    <aside class="extra">Extra Info</aside>
+    <footer>Footer</footer>
+  </div>
+</body>
+</html>

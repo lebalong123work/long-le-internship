@@ -4,7 +4,7 @@
   background-color: var(--color-background);
 }
 
-.top-header {
+.header-utility-bar {
   border-bottom: 1px solid var(--color-primary);
   padding: 18px 0;
   background-color: var(--color-background);
@@ -137,13 +137,13 @@
 }
 
 /* Navigation Bar */
-.header-navigation-bar {
+.header-main-nav {
   padding: 16px 0;
   background-color: var(--color-background);
   border-bottom: 1px solid var(--color-primary);
 }
 
-.header-navigation-bar .container {
+.header-main-nav .container {
   display: flex;
   justify-content: space-between;
   align-items: center;

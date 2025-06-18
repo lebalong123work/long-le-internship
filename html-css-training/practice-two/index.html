@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B-World Bookstore</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  </head>
+
+  <body>
+    <div class="layout-wrapper">
+      <header class="header">
+        <section class="top-header">
+          <div class="container">
+            <div class="header-content">
+              <div class="logo">
+                <a href="index.html"><img src="images/logos/b-world-logo-dark.png" alt="B-World Logo"
+                    class="logo-img"></a>
+                <span class="tagline tagline-padding">We love <br>books</span>
+              </div>
+              <form class="search-bar" action="#" method="get">
+                <input type="text" placeholder="Type any book here...">
+                <button type="submit" class="search-button cursor-pointer">
+                  <i class="fas fa-search"></i>
+                </button>
+              </form>
+              <nav class="top-nav">
+                <ul class="nav-list list-unstyled">
+                  <li class="nav-item">
+                    <a href="#" class="nav-link link">Privacy policy</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link link">Warranty</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link link">Shipping</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link link">Returns</a>
+                  </li>
+                </ul>
+              </nav>
+              <aside class="user-actions">
+                <a href="#" class="icon-images link"><i class="fas fa-shopping-cart"></i></a>
+                <span class="tagline"></span>
+                <a href="#" class="icon-images heart-container"><i class="fas fa-heart"></i>
+                  <span class="likes-badge">3</span>
+                </a>
+                <span class="tagline"></span>
+                <a href="#" class="icon-images link"><i class="fas fa-user"></i></a>
+              </aside>
+            </div>
+          </div>
+        </section>
+        <section class="header-navigation-bar">
+          <div class="container">
+            <nav class="main-nav">
+              <ul class="nav-list list-unstyled">
+                <li class="nav-item">
+                  <a href="#" class="nav-link link">The must read</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link link">News</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link link">Promotion of the month</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link link">Publish</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link link">Subscribe to the newsletter</a>
+                </li>
+              </ul>
+            </nav>
+            <address class="contact-info">
+              <a href="tel:+4587999000" class="phone link"><i class="fas fa-phone"></i> +45 87 999 000</a>
+              <button type="button" class="btn btn-outline btn-lg">Request a call</button>
+            </address>
+          </div>
+        </section>
+      </header>
+      <main>
+        <section class="hero">
+          <div class="container">
+            <nav class="header-dots">
+              <span class="header-dot active"></span>
+              <span class="header-dot"></span>
+              <span class="header-dot"></span>
+              <span class="header-dot"></span>
+            </nav>
+            <article class="left-content">
+              <button class="author-button btn btn-outline-secondary btn-sm" type="button">
+                Author of august
+              </button>
+              <h1 class="heading-primary">Eric-Emanuel Schmitt</h1>
+              <p class="text-regular hero-description">
+                Eric-Emmanuel Schmitt has been awarded more than 20 literary
+                prizes and distinctions, and in 2001 he received the title of
+                Chevalier des Arts et des Lettres. His books have been
+                translated into over 40 languages.
+              </p>
+              <a href="detail-product.html" class="btn btn-primary btn-xl">View his books</a>
+            </article>
+            <aside class="right-content">
+              <span class="discount-text">
+                AUTOGRAPHED<br>BOOKS + 30%<br>DISCOUNT
+              </span>
+
+              <figure class="book-wrapper">
+                <img src="images/books/eric-emmanuel-schmitt.png" alt="Eric-Emanuel Schmitt Book" class="book-image">
+                <figcaption class="stock-limit">*within the stock limit</figcaption>
+              </figure>
+            </aside>
+          </div>
+          <nav class="nav-buttons" aria-label="Book navigation">
+            <button type="button" class="nav-button cursor-pointer" aria-label="Previous">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button type="button" class="nav-button cursor-pointer" aria-label="Next">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </nav>
+        </section>
+
+        <!-- Selected features section -->
+        <section class="features-section">
+          <div class="container">
+            <h2 class="hidden-title">Selected features</h2>
+            <ul class="features-container">
+              <li class="feature-item">
+                <i class="feature-icon fas fa-truck"></i>
+                <span class="feature-text feature-text-underline cursor-pointer">
+                  Free shiping over 50$
+                </span>
+              </li>
+
+              <li class="feature-item">
+                <i class="feature-icon fas fa-star"></i>
+                <span class="feature-text feature-text-underline cursor-pointer">
+                  Save with loyalty points
+                </span>
+              </li>
+
+              <li class="feature-item">
+                <i class="feature-icon fas fa-book-open"></i>
+                <span class="feature-text feature-text-underline cursor-pointer">
+                  Read a few pages
+                </span>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Selected For You Section -->
+        <section class="carousel-section">
+          <article class="carousel-content">
+            <button type="button" class="scroll-btn prev-btn cursor-pointer">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="container">
+              <h2 class="section-heading">Selected for you</h2>
+              <div class="carousel-container">
+                <ul class="carousel">
+                  <!-- Book 1 -->
+                  <li class="product-card">
+                    <img src="images/books/financial-feminist.png" alt="Financial Feminist book" class="product-card-cover">
+                    <h3 class="product-card-title">Financial Feminist</h3>
+                    <p class="product-card-author">Tori Dunlap</p>
+                    <div class="product-card-price-group">
+                      <span class="product-card-price">$20.46</span>
+                      <button type="button" class="fav-button">
+                        <i class="fa-regular fa-heart regular-heart"></i>
+                        <i class="fa-solid fa-heart solid-heart"></i>
+                      </button>
+                    </div>
+                    <button type="button" class="add-to-cart cursor-pointer">
+                      <i class="fas fa-shopping-cart"></i> Add to cart
+                    </button>
+                  </li>
+                  <!-- Book 2 -->
+                  <li class="product-card">
+                    <img src="images/books/no-more-police.png" alt="No More Police book" class="product-card-cover">
+                    <h3 class="product-card-title">No More Police</h3>
+                    <p class="product-card-author">Andrea Ritchie</p>
+                    <div class="product-card-price-group">
+                      <span class="product-card-price">$17.66</span>
+                      <button type="button" class="fav-button">
+                        <i class="fa-regular fa-heart regular-heart"></i>
+                        <i class="fa-solid fa-heart solid-heart"></i>
+                      </button>
+                    </div>
+                    <button type="button" class="add-to-cart cursor-pointer">
+                      <i class="fas fa-shopping-cart"></i> Add to cart
+                    </button>
+                  </li>
+                  <!-- Book 3 -->
+                  <li class="product-card">
+                    <img src="images/books/i'm-glad-my-mon-died.png" alt="I'm Glad My Mom Died book" class="product-card-cover">
+                    <h3 class="product-card-title">I'm Glad My Mom Died</h3>
+                    <p class="product-card-author">Jennette McCurdy</p>
+                    <div class="product-card-price-group">
+                      <span class="product-card-price">$26.03</span>
+                      <button type="button" class="fav-button">
+                        <i class="fa-regular fa-heart regular-heart"></i>
+                        <i class="fa-solid fa-heart solid-heart"></i>
+                      </button>
+                    </div>
+                    <button type="button" class="add-to-cart cursor-pointer">
+                      <i class="fas fa-shopping-cart"></i> Add to cart
+                    </button>
+                  </li>
+                  <!-- Book 4 -->
+                  <li class="product-card">
+                    <img src="images/books/nova-the-ninth.png" alt="Nona the Ninth book" class="product-card-cover">
+                    <h3 class="product-card-title">Nona the Ninth</h3>
+                    <p class="product-card-author">Tamsyn Muir</p>
+                    <div class="product-card-price-group">
+                      <span class="product-card-price">$26.96</span>
+                      <button type="button" class="fav-button">
+                        <i class="fa-regular fa-heart regular-heart"></i>
+                        <i class="fa-solid fa-heart solid-heart"></i>
+                      </button>
+                    </div>
+                    <button type="button" class="add-to-cart cursor-pointer">
+                      <i class="fas fa-shopping-cart"></i> Add to cart
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <button type="button" class="scroll-btn next-btn cursor-pointer">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+            <nav class="carousel-dots">
+              <span class="carousel-dot active"></span>
+              <span class="carousel-dot"></span>
+              <span class="carousel-dot"></span>
+              <span class="carousel-dot"></span>
+              <span class="carousel-dot"></span>
+            </nav>
+          </article>
+        </section>
+
+        <!-- You must buy it now Section -->
+        <section class="carousel-section">
+          <article class="carousel-content">
+            <button type="button" class="scroll-btn prev-btn cursor-pointer">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="container">
+              <h2 class="section-heading">You must buy it now</h2>
+              <div class="carousel-container">
+                <ul class="carousel">
+                  <!-- Book 5 -->
+                  <li class="product-card">
+                    <img src="images/books/harlem-shuffle.png" alt=">Harlem Shuffle book" class="product-card-cover">
+                    <h3 class="product-card-title">Harlem Shuffle</h3>
+                    <p class="product-card-author">Colson Whitehead</p>
+                    <div class="product-card-price-group">
+                      <span class="product-card-price">$26.92</span>
+                      <button type="button" class="fav-button">
+                        <i class="fa-regular fa-heart regular-heart"></i>
+                        <i class="fa-solid fa-heart solid-heart"></i>
+                      </button>
+                    </div>
+                    <button type="button" class="add-to-cart cursor-pointer">
+                      <i class="fas fa-shopping-cart"></i> Add to cart
+                    </button>
+                  </li>
+                  <!-- Book 6 -->
+                  <li class="product-card">
+                    <img src="images/books/two-old-women.png" alt="Two Old Women book" class="product-card-cover">
+                    <h3 class="product-card-title">Two Old Women</h3>
+                    <p class="product-card-author">Velma Wallis</p>
+                    <div class="product-card-price-group">
+                      <span class="product-card-price">$13.95</span>
+                      <button type="button" class="fav-button">
+                        <i class="fa-regular fa-heart regular-heart"></i>
+                        <i class="fa-solid fa-heart solid-heart"></i>
+                      </button>
+                    </div>
+                    <button type="button" class="add-to-cart cursor-pointer">
+                      <i class="fas fa-shopping-cart"></i> Add to cart
+                    </button>
+                  </li>
+                  <!-- Book 7 -->
+                  <li class="product-card">
+                    <img src="images/books/carrie-soto-is-back.png" alt="Carrie Soto Is Back book" class="product-card-cover">
+                    <h3 class="product-card-title">Carrie Soto Is Back</h3>
+                    <p class="product-card-author">Taylor Jenkins Reid</p>
+                    <div class="product-card-price-group">
+                      <span class="product-card-price">$26.04</span>
+                      <button type="button" class="fav-button">
+                        <i class="fa-regular fa-heart regular-heart"></i>
+                        <i class="fa-solid fa-heart solid-heart"></i>
+                      </button>
+                    </div>
+                    <button type="button" class="add-to-cart cursor-pointer">
+                      <i class="fas fa-shopping-cart"></i> Add to cart
+                    </button>
+                  </li>
+                  <!-- Book 8 -->
+                  <li class="product-card">
+                    <img src="images/books/book-lovers.png" alt="Book Lovers book" class="product-card-cover">
+                    <h3 class="product-card-title">Book Lovers</h3>
+                    <p class="product-card-author">Emily Henry</p>
+                    <div class="product-card-price-group">
+                      <span class="product-card-price">$15.81</span>
+                      <button type="button" class="fav-button">
+                        <i class="fa-regular fa-heart regular-heart"></i>
+                        <i class="fa-solid fa-heart solid-heart"></i>
+                      </button>
+                    </div>
+                    <button type="button" class="add-to-cart cursor-pointer">
+                      <i class="fas fa-shopping-cart"></i> Add to cart
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <button type="button" class="scroll-btn next-btn cursor-pointer">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+            <nav class="carousel-dots">
+              <span class="carousel-dot active"></span>
+              <span class="carousel-dot"></span>
+              <span class="carousel-dot"></span>
+              <span class="carousel-dot"></span>
+              <span class="carousel-dot"></span>
+            </nav>
+          </article>
+        </section>
+        <!-- About Us Section  -->
+        <section class="about-us container">
+          <article class="about-us-text">
+            <h2 class="section-heading">Did you know us?</h2>
+            <p class="text-regular">
+              We are a bookstore that loves books and we want to share our
+              passion with you. We have a wide selection of books from all
+              genres and we are always happy to help you find the perfect book
+              for you.
+            </p>
+            <form class="newsletter-form" action="#" method="post">
+              <input type="text" name="name" placeholder="Enter your Name" required aria-label="Name"
+                pattern="[A-Za-z\s]{2,}" title="Name should contain at least 2 letters and only alphabets.">
+              <input type="email" name="email" placeholder="Enter your Email" required aria-label="Email Address"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address">
+              <button type="submit" class="btn btn-primary btn-xl">
+                Subscribe
+              </button>
+            </form>
+          </article>
+          <aside class="about-us-image">
+            <img src="images/graphics/map.png" alt="B-world branch map" class="map-img">
+          </aside>
+        </section>
+        <!-- Footer Section -->
+        <footer class="footer">
+          <div class="container">
+            <section class="footer-content">
+              <!-- Brand Column -->
+              <article class="footer-column footer-brand">
+                <a href="index.html"><img src="images/logos/b-world-logo-light.png" alt="B-World Logo"
+                    class="logo-img"></a>
+                <nav class="social-media">
+                  <a href="#" class="social-link" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                  </a>
+                  <a href="#" class="social-link" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                  </a>
+                  <a href="#" class="social-link" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                  </a>
+                </nav>
+              </article>
+
+              <!-- Categories Column -->
+              <article class="footer-column">
+                <h4 class="footer-heading">Categories</h4>
+                <nav>
+                  <ul class="footer-links list-unstyled">
+                    <li><a href="#" class="footer-link">Psychology</a></li>
+                    <li><a href="#" class="footer-link">Self-Help</a></li>
+                    <li><a href="#" class="footer-link">Romance</a></li>
+                    <li><a href="#" class="footer-link">Mystery</a></li>
+                  </ul>
+                </nav>
+              </article>
+
+              <!-- For Kids Column -->
+              <article class="footer-column">
+                <h4 class="footer-heading">For Kids</h4>
+                <nav>
+                  <ul class="footer-links list-unstyled">
+                    <li><a href="#" class="footer-link">Games</a></li>
+                    <li><a href="#" class="footer-link">Comics</a></li>
+                    <li><a href="#" class="footer-link">Fantasy</a></li>
+                  </ul>
+                </nav>
+              </article>
+
+              <!-- E-Books Column -->
+              <article class="footer-column">
+                <h4 class="footer-heading">E-Books</h4>
+                <nav>
+                  <ul class="footer-links list-unstyled">
+                    <li><a href="#" class="footer-link">Fiction</a></li>
+                    <li><a href="#" class="footer-link">Historical</a></li>
+                    <li><a href="#" class="footer-link">Horror</a></li>
+                  </ul>
+                </nav>
+              </article>
+
+              <!-- Help & Contacts Column -->
+              <article class="footer-column footer-contact">
+                <h4 class="footer-heading">Help &amp; Contacts</h4>
+                <address class="contact-item">
+                  <i class="fas fa-phone contact-icon"></i>
+                  <a href="tel:+4587999000" class="contact-link">+445 87 999 000</a>
+                </address>
+                <p class="contact-item">
+                  <i class="fas fa-clock contact-icon"></i>
+                  <span class="contact-text">Mo-Fri, 9 AM to 11 PM</span>
+                </p>
+                <address class="contact-item">
+                  <i class="fas fa-envelope contact-icon"></i>
+                  <a href="mailto:b.world@store.ro" class="contact-link">b.world@store.ro</a>
+                </address>
+              </article>
+
+              <!-- Request Call Column -->
+              <article class="footer-column footer-cta">
+                <p class="footer-cta-text">
+                  If you have questions,<br>
+                  you can contact us or<br>
+                  we will do it for you.
+                </p>
+                <button type="button" class="btn btn-outline btn-footer">
+                  Request a call
+                </button>
+
+                <!-- Payment Methods -->
+                <section class="payment-methods">
+                  <img src="images/logos/paypal-logo.png" alt="PayPal card" class="payment-icon">
+                  <img src="images/logos/mastercard-logo.png" alt="MasterCard card" class="payment-icon">
+                  <img src="images/logos/visa-logo.png" alt="Visa card" class="payment-icon">
+                </section>
+              </article>
+            </section>
+          </div>
+
+          <!-- Footer Bottom -->
+          <section class="footer-bottom">
+            <div class="container">
+              <p class="copyright"> &copy; All copyrights are reserved. B-World 2022. </p>
+            </div>
+          </section>
+        </footer>
+      </main>
+    </div>
+  </body>
+
+</html>

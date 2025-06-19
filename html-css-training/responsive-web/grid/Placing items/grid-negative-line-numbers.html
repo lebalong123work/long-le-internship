@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>gird negative line numbers</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+      }
+
+      h2 {
+        margin-top: 40px;
+        color: #2c3e50;
+      }
+
+      .explicit-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 40px;
+      }
+
+      .explicit-grid div,
+      .implicit-grid div {
+        padding: 10px;
+        background: lightgray;
+        border: 1px solid #999;
+        text-align: center;
+      }
+
+      .full-span {
+        grid-column: 1 / -1;
+        background: #3498db;
+        color: white;
+      }
+
+      .implicit-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .wrong-span {
+        grid-row: 1 / -1;
+        background: tomato;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>grid-column: 1 / -1 (works in explicit grid)</h2>
+    <div class="explicit-grid">
+      <div class="full-span">Item 1 (all rows)</div>
+      <div>Item 2</div>
+      <div>Item 3</div>
+    </div>
+
+    <h2>grid-row: 1 / -1 (not work in implicit grid)</h2>
+    <div class="implicit-grid">
+      <div class="wrong-span">Item 1 (all columns)</div>
+      <div>Item 2</div>
+      <div>Item 3</div>
+    </div>
+  </body>
+</html>

@@ -1,10 +1,10 @@
 /* Product Detail Page Specific Styles */
 .product-section {
-  padding: 40px 0;
+  padding: clamp(2rem, 5vw, 2.5rem) 0;
 }
 
 .product-container {
   display: flex;
-  gap: 60px;
+  gap: clamp(2rem, 5vw, 3.75rem);
   align-items: flex-start;
 }

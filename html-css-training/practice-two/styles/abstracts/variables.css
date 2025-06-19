@@ -32,10 +32,10 @@
   /* Font-weight   */
   --font-weight-regular: 400;
   --font-weight-bold: 700;
-  /* Icon size radius  */
-  --icon-size-sm: 1.25rem; /* icon size phone */
-  --icon-size-md: 1.5rem; /* icon size primary */
-  --icon-size-lg: 1.75rem; /* icon size web */
+  /* Icon size */
+  --icon-size-sm: 20px; /* icon size phone */
+  --icon-size-md: 24px; /* icon size primary */
+  --icon-size-lg: 28px; /* icon size web */
   /* Border radius  */
   --border-radius: 2px;
   /* Breakpoints */

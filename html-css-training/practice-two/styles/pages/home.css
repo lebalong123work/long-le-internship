@@ -3,8 +3,10 @@
 /* Hero Section */
 .hero {
   background-color: var(--color-background);
-  height: 533px;
+  height: auto;
+  min-height: 34rem; /* same 533px */
   position: relative;
+  padding: 2rem 0;
 }
 
 .hero .container {
@@ -55,8 +57,10 @@
 }
 
 .book-image {
-  width: 314px;
+  width: 100%;
+  max-width: 20rem; /*  same 314 px */
   height: 445px;
+  aspect-ratio: 320/445;
   object-fit: cover;
   filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
   display: block;
@@ -173,4 +177,16 @@
   max-width: 100%;
   width: 576px;
   height: auto;
+}
+
+@media (max-width: 768px) {
+  /* Mobile  */
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Tablet  */
+}
+
+@media (min-width: 1025px) {
+  /* Desktop  */
 }

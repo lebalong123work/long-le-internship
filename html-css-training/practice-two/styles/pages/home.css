@@ -181,6 +181,52 @@
 
 @media (max-width: 768px) {
   /* Mobile  */
+  .search-bar input {
+    width: 0;
+    padding: 0;
+    border: none;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .search-bar {
+    max-width: unset;
+    width: auto;
+    margin: 14px;
+    position: relative;
+  }
+
+  .search-button {
+    position: static;
+    transform: none;
+  }
+  .top-nav {
+    display: none;
+  }
+  .user-actions .heart-container,
+  .user-actions .fa-user {
+    display: none;
+  }
+  .user-actions {
+    gap: 20px;
+    align-items: center;
+  }
+  .header-navigation-bar {
+    display: none;
+  }
+  .header-content {
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    flex-shrink: 0;
+  }
+  .tagline {
+    font-size: calc(var(--font-size-sm) - 2px);
+  }
+  .user-actions .fa-shopping-cart {
+    display: inline-block;
+  }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {

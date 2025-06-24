@@ -215,11 +215,7 @@
     gap: 15px;
   }
 
-  .heart-container {
-    display: inline-block;
-  }
-
-  .user-actions .fa-user {
+  .heart-container .user-actions .fa-user {
     display: inline-block;
   }
 

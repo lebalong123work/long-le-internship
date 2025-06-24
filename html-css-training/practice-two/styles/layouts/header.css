@@ -144,9 +144,11 @@
 .heart-container:hover .likes-badge {
   background-color: var(--color-primary);
 }
+
 .user-actions .fa-user {
   display: none;
 }
+
 .user-actions .fa-shopping-cart {
   display: inline-block;
 }
@@ -227,4 +229,10 @@
 
 .header-dot.active {
   background-color: var(--color-primary);
+}
+
+@media (min-width: 769px) {
+  .header-main-nav {
+    display: block;
+  }
 }

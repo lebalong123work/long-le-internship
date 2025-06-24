@@ -142,7 +142,6 @@
 }
 
 .btn-footer {
-  margin-bottom: 30px;
   color: var(--color-text-reverse);
   border-color: var(--color-text-reverse);
   background-color: transparent;

@@ -13,7 +13,7 @@
 
 .star {
   color: var(--color-feature);
-  font-size: 18px;
+  font-size: var(--font-size-ml);
 }
 
 .star.empty {

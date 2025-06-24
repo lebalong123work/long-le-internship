@@ -111,7 +111,7 @@
 }
 
 .prev-btn i {
-  font-size: 20px;
+  font-size: var(--font-size-md-lg);
 }
 
 .next-btn {
@@ -119,7 +119,7 @@
 }
 
 .next-btn i {
-  font-size: 20px;
+  font-size: var(--font-size-md-lg);
 }
 
 .add-to-cart {
@@ -128,7 +128,7 @@
   border: none;
   padding: 12px;
   border-radius: 2px;
-  font-size: 16px;
+  font-size: var(--font-size-md);
   display: flex;
   justify-content: center;
   align-items: center;

@@ -4,8 +4,7 @@
 .hero {
   background-color: var(--color-background);
   height: auto;
-  min-height: 34rem;
-  /* same 533px */
+  min-height: 34rem; 
   position: relative;
   padding: 2rem 0;
 }
@@ -59,8 +58,7 @@
 
 .book-image {
   width: 100%;
-  max-width: 20rem;
-  /*  same 314 px */
+  max-width: 20rem; 
   height: 445px;
   aspect-ratio: 320/445;
   object-fit: cover;
@@ -74,7 +72,7 @@
   right: 300px;
   max-width: 163px;
   color: var(--color-discount);
-  font-size: 18px;
+  font-size: var(--font-size-ml);
   font-weight: var(--font-weight-regular);
   letter-spacing: 1px;
   user-select: none;
@@ -167,11 +165,7 @@
   gap: 40px;
 }
 
-.about-us-text {
-  flex: 1;
-}
-
-.about-us-image {
+.about-us-text, .about-us-image {
   flex: 1;
 }
 

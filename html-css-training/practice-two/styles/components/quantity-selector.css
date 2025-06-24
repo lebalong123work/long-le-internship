@@ -19,7 +19,7 @@
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  font-size: 18px;
+  font-size: var(--font-size-ml);
   transition: background-color 0.2s;
 }
 
@@ -30,7 +30,7 @@
 }
 
 .qty-value {
-  font-size: 16px;
+  font-size: var(--font-size-md);
   color: #444;
   font-weight: 500;
   user-select: none;

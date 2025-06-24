@@ -19,7 +19,7 @@
 }
 
 .product-price {
-  font-size: 36px;
+  font-size: var(--font-size-lg-xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
   margin-bottom: 25px;

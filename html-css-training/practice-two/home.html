@@ -50,11 +50,13 @@
                 </a>
                 <span class="tagline"></span>
                 <a href="#" class="icon-images link"><i class="fas fa-user"></i></a>
+                <input type="checkbox" id="menu-toggle" hidden />
                 <nav class="hamburger-menu">
-                  <button class="hamburger-icon" aria-label="Open menu">
+                  <label for="menu-toggle" class="hamburger-icon" aria-label="Open menu">
                     <i class="fa fa-bars"></i>
-                  </button>
+                  </label>
                   <menu class="mobile-dropdown">
+                    <label for="menu-toggle" class="close-btn">✕</label>
                     <ul class="nav-list list-unstyled">
                       <li class="nav-item">
                         <a href="#" class="nav-link">Privacy policy</a>
@@ -393,6 +395,7 @@
             <img src="images/graphics/map.png" alt="B-world branch map" class="map-img">
           </aside>
         </section>
+
         <!-- Footer Section -->
         <footer class="footer">
           <div class="container">

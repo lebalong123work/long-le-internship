@@ -4,7 +4,8 @@
 .hero {
   background-color: var(--color-background);
   height: auto;
-  min-height: 34rem; /* same 533px */
+  min-height: 34rem;
+  /* same 533px */
   position: relative;
   padding: 2rem 0;
 }
@@ -58,7 +59,8 @@
 
 .book-image {
   width: 100%;
-  max-width: 20rem; /*  same 314 px */
+  max-width: 20rem;
+  /*  same 314 px */
   height: 445px;
   aspect-ratio: 320/445;
   object-fit: cover;
@@ -201,25 +203,30 @@
 
 /* Mobile dropdown menu */
 .mobile-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   background-color: var(--color-background);
-  border: 1px solid var(--color-primary);
-  border-radius: 4px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  min-width: 200px;
-  z-index: 1000;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.3s ease;
+  z-index: 9999;
+  display: none;
+  flex-direction: column;
+  padding: 24px 16px;
+  overflow-y: auto;
 }
 
-.hamburger-menu:hover .mobile-dropdown {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+#menu-toggle:checked~nav .mobile-dropdown {
+  display: flex;
+}
+
+.close-btn {
+  align-self: flex-end;
+  font-size: 24px;
+  color: var(--color-primary);
+  cursor: pointer;
+  padding: 8px;
+  margin-bottom: 16px;
 }
 
 .mobile-dropdown .nav-list {
@@ -290,7 +297,7 @@
     display: none;
   }
 
-  .header-navigation-bar {
+  .header-main-nav {
     display: block;
   }
 

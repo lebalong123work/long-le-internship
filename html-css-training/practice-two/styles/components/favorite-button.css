@@ -2,7 +2,7 @@
   position: relative;
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: var(--font-size-lg);
   cursor: pointer;
   color: var(--color-primary);
   width: 24px;

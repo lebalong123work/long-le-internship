@@ -141,13 +141,15 @@
   color: var(--color-text-reverse);
 }
 
-.btn-footer {
+.btn-request-call {
+  width: 100%;
+  margin-bottom: 30px;
   color: var(--color-text-reverse);
   border-color: var(--color-text-reverse);
   background-color: transparent;
 }
 
-.btn-footer:hover {
+.btn-request-call:hover {
   background-color: var(--color-add-to-cart);
   color: var(--color-text-reverse);
 }

@@ -53,19 +53,6 @@
   grid-row: 5;
 }
 
-.btn-footer {
-  width: 100%;
-  margin-bottom: 30px;
-  color: var(--color-text-reverse);
-  border-color: var(--color-text-reverse);
-  background-color: transparent;
-}
-
-.btn-footer:hover {
-  background-color: var(--color-add-to-cart);
-  color: var(--color-text-reverse);
-}
-
 .payment-methods {
   display: flex;
   justify-content: flex-start;
@@ -273,7 +260,7 @@
     margin-top: auto;
   }
 
-  .btn-footer {
+  .btn-request-call {
     width: auto;
   }
 }

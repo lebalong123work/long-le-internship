@@ -1,5 +1,4 @@
 /* Footer Styles */
-
 .footer {
   background-color: var(--color-primary);
   color: var(--color-text-reverse);
@@ -8,26 +7,103 @@
 }
 
 .footer-content {
-  display: flex;
-  justify-content: space-between;
-  gap: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 30px;
   margin-bottom: 40px;
+}
+
+.footer-logo {
+  grid-column: 1 / 2;
+  grid-row: 1;
+}
+
+.footer-categories {
+  grid-column: 1 / 2;
+  grid-row: 2;
+}
+
+.footer-kids {
+  grid-column: 2 / 3;
+  grid-row: 2;
+}
+
+.footer-ebooks {
+  grid-column: 1 / 2;
+  grid-row: 3;
+}
+
+.footer-contacts {
+  grid-column: 2 / 3;
+  grid-row: 3;
+}
+
+.footer-request {
+  grid-column: 2 / 3;
+  grid-row: 4;
+}
+
+.footer-social-wrapper {
+  grid-column: 1 / 2;
+  grid-row: 5;
+}
+
+.footer-payment-wrapper {
+  grid-column: 2 / 3;
+  grid-row: 5;
+}
+
+.payment-methods {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.payment-icon {
+  height: 30px;
+  width: auto;
+  border-radius: 4px;
+  background-color: var(--color-text-reverse);
+  padding: 4px;
+  transition: transform 0.3s ease;
+}
+
+.payment-icon:hover {
+  transform: scale(1.05);
 }
 
 .footer-column {
   display: flex;
   flex-direction: column;
+  padding: 0;
 }
 
-/* Brand Column */
-.footer-brand {
+.footer-content>* {
+  margin: 0;
+}
+
+.footer-brand-social {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   max-width: 200px;
+}
+
+.footer-brand {
+  margin-bottom: 40px;
+}
+
+.footer-social {
+  display: flex;
+  justify-content: flex-start;
 }
 
 .social-media {
   display: flex;
   gap: 15px;
-  margin-top: 190px;
 }
 
 .social-link {
@@ -52,7 +128,6 @@
   border: 1px solid var(--color-text-reverse);
 }
 
-/* Footer Headings */
 .footer-heading {
   font-size: var(--font-size-md);
   font-weight: 600;
@@ -61,7 +136,6 @@
   margin-top: 14px;
 }
 
-/* Footer Links */
 .footer-links {
   display: flex;
   flex-direction: column;
@@ -83,7 +157,6 @@
   text-underline-offset: 4px;
 }
 
-/* Contact Column */
 .footer-contact .contact-item {
   display: flex;
   align-items: center;
@@ -117,7 +190,6 @@
   opacity: 0.9;
 }
 
-/* CTA Column */
 .footer-cta {
   max-width: 280px;
 }
@@ -130,28 +202,7 @@
   opacity: 0.9;
 }
 
-/* Payment Methods */
-.payment-methods {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.payment-icon {
-  height: 30px;
-  width: auto;
-  border-radius: 4px;
-  background-color: var(--color-text-reverse);
-  padding: 4px;
-  transition: transform 0.3s ease;
-}
-
-.payment-icon:hover {
-  transform: scale(1.05);
-}
-
-/* Footer Bottom */
-.footer-bottom {
+.footer-copyright {
   border-top: 1px solid;
   padding: 25px 0;
   text-align: center;
@@ -162,4 +213,73 @@
   font-size: var(--font-size-ms);
   opacity: 0.8;
   margin: 0;
+}
+
+.social-media,
+.payment-methods {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footer-social-wrapper,
+.footer-payment-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (min-width: 769px) {
+  .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  .footer-logo-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-height: 160px;
+  }
+
+  .footer-logo,
+  .footer-social-wrapper {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .footer-request,
+  .footer-payment-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    max-width: 280px;
+  }
+
+  .footer-logo-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .footer-social-wrapper {
+    order: 1;
+    margin-top: auto;
+  }
+
+  .footer-payment-wrapper {
+    order: 1;
+    margin-top: auto;
+  }
+
+  .btn-secondary {
+    width: auto;
+  }
+
+  .social-media,
+  .payment-methods {
+    flex-direction: row;
+    align-items: center;
+  }
 }

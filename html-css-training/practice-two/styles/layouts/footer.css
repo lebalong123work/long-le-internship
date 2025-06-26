@@ -55,11 +55,12 @@
 
 .payment-methods {
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 10px;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .payment-icon {
@@ -81,7 +82,7 @@
   padding: 0;
 }
 
-.footer-content > * {
+.footer-content>* {
   margin: 0;
 }
 
@@ -103,6 +104,7 @@
 
 .social-media {
   display: flex;
+  flex-direction: column;
   gap: 15px;
 }
 
@@ -262,5 +264,14 @@
 
   .btn-request-call {
     width: auto;
+  }
+
+  .social-media {
+    flex-direction: row;
+  }
+
+  .payment-methods {
+    flex-direction: row;
+    align-items: center;
   }
 }

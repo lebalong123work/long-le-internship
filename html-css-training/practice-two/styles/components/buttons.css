@@ -141,7 +141,7 @@
   color: var(--color-text-reverse);
 }
 
-.btn-request-call {
+.btn-secondary	 {
   width: 100%;
   margin-bottom: 30px;
   color: var(--color-text-reverse);
@@ -149,7 +149,7 @@
   background-color: transparent;
 }
 
-.btn-request-call:hover {
+.btn-secondary	:hover {
   background-color: var(--color-add-to-cart);
   color: var(--color-text-reverse);
 }

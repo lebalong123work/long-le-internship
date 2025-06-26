@@ -219,7 +219,6 @@
 .payment-methods {
   flex-direction: column;
   align-items: flex-start;
-  /* canh trái nếu cần */
 }
 
 .footer-social-wrapper,
@@ -274,7 +273,7 @@
     margin-top: auto;
   }
 
-  .btn-request-call {
+  .btn-secondary	 {
     width: auto;
   }
 

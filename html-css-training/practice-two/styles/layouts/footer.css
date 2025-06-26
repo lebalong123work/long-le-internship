@@ -55,12 +55,11 @@
 
 .payment-methods {
   display: flex;
-  flex-direction: column;
   justify-content: flex-start;
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 10px;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .payment-icon {
@@ -104,7 +103,6 @@
 
 .social-media {
   display: flex;
-  flex-direction: column;
   gap: 15px;
 }
 
@@ -217,6 +215,20 @@
   margin: 0;
 }
 
+.social-media,
+.payment-methods {
+  flex-direction: column;
+  align-items: flex-start;
+  /* canh trái nếu cần */
+}
+
+.footer-social-wrapper,
+.footer-payment-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 @media (min-width: 769px) {
   .footer-content {
     display: flex;
@@ -266,10 +278,7 @@
     width: auto;
   }
 
-  .social-media {
-    flex-direction: row;
-  }
-
+  .social-media,
   .payment-methods {
     flex-direction: row;
     align-items: center;

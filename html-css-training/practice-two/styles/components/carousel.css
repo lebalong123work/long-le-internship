@@ -43,12 +43,14 @@
   max-width: 100%;
   margin: 0 auto;
 }
+
 @media (min-width: 769px) {
   .carousel {
     overflow-x: visible;
     scroll-snap-type: none;
     padding-bottom: 0;
   }
+
   .carousel-content {
     max-width: 1280px;
   }

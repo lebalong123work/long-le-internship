@@ -4,7 +4,7 @@
 .hero {
   background-color: var(--color-background);
   height: auto;
-  min-height: 34rem; 
+  min-height: 34rem;
   position: relative;
   padding: 2rem 0;
 }
@@ -59,7 +59,7 @@
 
 .book-image {
   width: 100%;
-  max-width: 20rem; 
+  max-width: 20rem;
   height: 445px;
   aspect-ratio: 320/445;
   object-fit: cover;
@@ -166,7 +166,8 @@
   gap: 40px;
 }
 
-.about-us-text, .about-us-image {
+.about-us-text,
+.about-us-image {
   flex: 1;
 }
 
@@ -210,7 +211,8 @@
     gap: 15px;
   }
 
-  .heart-container, .user-actions .fa-user {
+  .heart-container,
+  .user-actions .fa-user {
     display: inline-block;
   }
 
@@ -221,6 +223,7 @@
   .logo {
     flex-shrink: 1;
   }
+
   /* Carousel Section */
   .section-heading {
     font-size: var(--font-size-xl);

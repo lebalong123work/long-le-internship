@@ -13,6 +13,9 @@
 .carousel {
   display: flex;
   gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 10px;
 }
 
 .carousel-dots {
@@ -23,12 +26,12 @@
 }
 
 .carousel-dot {
-  display: inline-block; 
+  display: inline-block;
   width: 12px;
   height: 12px;
   border-radius: 50%;
   background-color: var(--color-background-secondary);
-  margin: 0 6px; 
+  margin: 0 6px;
 }
 
 .carousel-dot.active {
@@ -37,6 +40,16 @@
 
 .carousel-content {
   position: relative;
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
+}
+@media (min-width: 769px) {
+  .carousel {
+    overflow-x: visible;
+    scroll-snap-type: none;
+    padding-bottom: 0;
+  }
+  .carousel-content {
+    max-width: 1280px;
+  }
 }

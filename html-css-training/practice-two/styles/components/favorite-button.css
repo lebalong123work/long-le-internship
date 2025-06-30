@@ -2,7 +2,7 @@
   position: relative;
   background: none;
   border: none;
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-md-lg);
   cursor: pointer;
   color: var(--color-primary);
   width: 24px;
@@ -26,4 +26,12 @@
 
 .fav-button:hover .solid-heart {
   opacity: 1;
+}
+
+@media (min-width: 769px) {
+  .fav-button {
+    font-size: var(--font-size-lg);
+    width: 24px;
+    height: 24px;
+  }
 }

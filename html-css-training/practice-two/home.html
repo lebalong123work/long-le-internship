@@ -375,28 +375,30 @@
           </article>
         </section>
         <!-- About Us Section  -->
-        <section class="about-us container">
-          <article class="about-us-text">
-            <h2 class="section-heading">Did you know us?</h2>
-            <p class="text-regular">
-              We are a bookstore that loves books and we want to share our
-              passion with you. We have a wide selection of books from all
-              genres and we are always happy to help you find the perfect book
-              for you.
-            </p>
-            <form class="newsletter-form" action="#" method="post">
-              <input type="text" name="name" placeholder="Enter your Name" required aria-label="Name"
-                pattern="[A-Za-z\s]{2,}" title="Name should contain at least 2 letters and only alphabets.">
-              <input type="email" name="email" placeholder="Enter your Email" required aria-label="Email Address"
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address">
-              <button type="submit" class="btn btn-primary btn-xl">
-                Subscribe
-              </button>
-            </form>
-          </article>
-          <aside class="about-us-image">
-            <img src="images/graphics/map.png" alt="B-world branch map" class="map-img">
-          </aside>
+        <section class="about-us">
+          <div class="container">
+            <article class="about-us-text">
+              <h2 class="section-heading newsletter-title">Did you know us?</h2>
+              <p class="text-regular about-us-description">
+                We are about books and our purpose is to show you the book who can
+                chage your life or distract you from the real world in a better one.
+                BWorld works with the must popular publishs just for your delight.<br />
+                If you are about books, you must to subscribe to <span class="highlight-newsletter">our newsletter</span>.
+              </p>
+              <form class="newsletter-form" action="#" method="post">
+                <input type="text" name="name" placeholder="Enter your Name" required aria-label="Name"
+                  pattern="[A-Za-z\s]{2,}" title="Name should contain at least 2 letters and only alphabets." />
+                <input type="email" name="email" placeholder="Enter your Email" required aria-label="Email Address"
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address" />
+                <button type="submit" class="btn btn-primary btn-xl newsletter-submit">
+                  Subscribe
+                </button>
+              </form>
+            </article>
+            <aside class="about-us-image">
+              <img src="images/graphics/map.png" alt="B-world branch map" class="map-img" />
+            </aside>
+          </div>
         </section>
 
         <!-- Footer Section -->
@@ -497,7 +499,7 @@
                 </section>
               </section>
             </section>
-          
+
           <!-- Footer Bottom -->
           <section class="footer-copyright">
               <p class="copyright">
@@ -505,7 +507,6 @@
               </p>
           </section>
         </footer>
-
       </main>
     </div>
   </body>

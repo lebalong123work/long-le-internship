@@ -17,9 +17,10 @@
 }
 
 .section-heading {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-lg);
   font-weight: 600;
   margin-bottom: 30px;
+  text-align: center;
 }
 
 /* Left Content */
@@ -244,6 +245,12 @@
 
   .logo {
     flex-shrink: 1;
+  }
+
+  /* Carousel Section */
+  .section-heading {
+    font-size: var(--font-size-xl);
+    text-align: left;
   }
 
   /* About Us Section */

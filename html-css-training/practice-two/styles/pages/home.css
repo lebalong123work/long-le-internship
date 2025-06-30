@@ -189,15 +189,18 @@
 }
 
 .about-us-image {
+  width: 100vw;
+  margin-left: -15px;
+  margin-right: -15px;
+  flex: 1;
   display: flex;
   justify-content: center;
 }
 
 .map-img {
-  max-width: 100%;
   width: 100%;
   height: auto;
-  max-width: 350px;
+  max-width: unset;
 }
 
 @media (min-width: 769px) {
@@ -275,10 +278,15 @@
     font-weight: normal;
   }
 
+  .about-us-image {
+    width: auto;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   .map-img {
-    max-width: 100%;
     width: 576px;
-    height: auto;
+    max-width: 576px;
   }
 
   .about-us-text .section-heading {

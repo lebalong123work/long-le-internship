@@ -213,11 +213,7 @@
 }
 
 .header-dots {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 35px;
-  margin-top: 20px;
+  display: none;
 }
 
 .header-dot {
@@ -234,5 +230,13 @@
 @media (min-width: 769px) {
   .header-main-nav {
     display: block;
+  }
+
+  .header-dots {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 35px;
+    margin-top: 20px;
   }
 }

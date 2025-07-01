@@ -296,6 +296,7 @@
   }
 
   .discount-text {
+    display: block;
     position: absolute;
     top: 50px;
     right: 300px;
@@ -311,6 +312,7 @@
   }
 
   .stock-limit {
+    display: block;
     position: absolute;
     bottom: 0;
     right: 0;
@@ -329,6 +331,7 @@
   }
 
   .feature-item:not(:last-child)::after {
+    display: block;
     content: "";
     position: absolute;
     right: 0;

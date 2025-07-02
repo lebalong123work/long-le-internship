@@ -1,7 +1,6 @@
 /* Breadcrumb Component */
 .breadcrumb {
-  padding: 20px 0;
-  background-color: var(--color-background);
+  display: none;
 }
 
 .breadcrumb-list {
@@ -29,4 +28,12 @@
 
 .breadcrumb-separator {
   color: var(--color-text-secondary);
+}
+
+@media (min-width: 769px) {
+  .breadcrumb {
+    display: block;
+    padding: 20px 0;
+    background-color: var(--color-background);
+  }
 }

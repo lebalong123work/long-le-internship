@@ -2,8 +2,8 @@
 .rating-section {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 25px;
+  gap: clamp(0.5rem, 1vw, 0.625rem);
+  margin-bottom: clamp(1.25rem, 2vw, 1.5625rem);
 }
 
 .stars {
@@ -22,5 +22,5 @@
 
 .rating-text {
   color: var(--color-text-secondary);
-  font-size: var(--font-size-ms);
+  font-size: clamp(var(--font-size-sm), 1vw, var(--font-size-ms));
 }

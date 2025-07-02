@@ -1,20 +1,24 @@
 /* Product Gallery Component - CSS-only thumbnail switching */
 .product-images {
-  flex: 1;
-  width: 45%;
+  width: 100%;
+  order: 1;
 }
 
 .image-gallery {
   display: flex;
-  gap: 20px;
-  align-items: flex-start;
+  flex-direction: column;
+  gap: clamp(0.9375rem, 1.2vw, 1.25rem);
+  align-items: center;
 }
 
 .thumbnail-container {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 148px;
+  flex-direction: row;
+  gap: clamp(1.125rem, 1.5vw, 1.25rem);
+  justify-content: center;
+  width: 100%;
+  overflow-x: auto;
+  order: 2;
 }
 
 .thumbnail-radio {
@@ -25,8 +29,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 148px;
-  height: 148px;
+  width: clamp(4.75rem, 10vw, 9.25rem);
+  height: clamp(4.75rem, 10vw, 9.25rem);
   cursor: pointer;
   border: 1px solid var(--color-primary);
   border-radius: 4px;
@@ -34,8 +38,8 @@
 }
 
 .thumbnail {
-  width: 78px;
-  height: 116px;
+  width: clamp(2.5rem, 6vw, 4.875rem);
+  height: clamp(3.75rem, 9vw, 7.25rem);
   object-fit: contain;
   transition: transform 0.3s ease;
 }
@@ -46,15 +50,17 @@
 }
 
 .main-image-container {
-  flex: 1;
   position: relative;
+  width: 100%;
+  order: 1;
 }
 
 .main-image {
-  width: 412px;
-  height: 653px;
+  width: 100%;
+  height: auto;
+  max-height: none;
   border-radius: 4px;
-  box-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
   transition: opacity 0.3s ease;
   object-fit: cover;
   object-position: center;
@@ -79,16 +85,12 @@
 }
 
 .pagination-controls {
-  display: flex;
-  gap: 12px;
-  position: absolute;
-  bottom: 12px;
-  right: 12px;
+  display: none;
 }
 
 .pagination-btn {
-  width: 32px;
-  height: 32px;
+  width: clamp(1.75rem, 2.5vw, 2rem);
+  height: clamp(1.75rem, 2.5vw, 2rem);
   background-color: rgba(147, 125, 194, 0.4);
   color: white;
   border-radius: 50%;
@@ -97,11 +99,52 @@
   justify-content: center;
   cursor: pointer;
   user-select: none;
-  font-size: var(--font-size-ms);
+  font-size: clamp(var(--font-size-sm), 1vw, var(--font-size-ms));
   transition: background-color 0.2s;
   border: 1px solid transparent;
 }
 
 .pagination-btn:hover {
   background-color: var(--color-primary);
+}
+
+@media (min-width: 769px) {
+  .product-images {
+    flex: 1;
+    width: 45%;
+    order: 0;
+  }
+
+  .image-gallery {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .main-image {
+    width: 412px;
+    height: 653px;
+    max-height: none;
+    box-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  .main-image-container {
+    flex: 1;
+    max-width: none;
+  }
+
+  .thumbnail-container {
+    flex-direction: column;
+    width: 148px;
+    overflow: visible;
+    order: 1;
+  }
+
+  .pagination-controls {
+    display: block;
+    gap: 12px;
+    bottom: 12px;
+    right: 12px;
+    display: flex;
+    position: absolute;
+  }
 }

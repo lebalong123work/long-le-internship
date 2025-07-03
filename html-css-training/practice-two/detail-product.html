@@ -21,9 +21,9 @@
                 <span class="tagline tagline-padding">We love <br>books</span>
               </div>
               <form class="search-bar" action="#" method="get">
-                <input type="text" placeholder="Type any book here...">
-                <button type="submit" class="search-button cursor-pointer">
-                  <i class="fas fa-search"></i>
+                <input type="text" placeholder="Type any book here..." aria-label="Search for books">
+                <button type="submit" class="search-button cursor-pointer" aria-label="Search">
+                  <i class="fas fa-search" aria-hidden="true"></i>
                 </button>
               </form>
               <nav class="top-nav">
@@ -43,20 +43,24 @@
                 </ul>
               </nav>
               <aside class="user-actions">
-                <a href="#" class="icon-images link"><i class="fas fa-shopping-cart"></i></a>
+                <a href="#" class="icon-images link" aria-label="View cart">
+                  <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                </a>
                 <span class="tagline"></span>
                 <a href="#" class="icon-images heart-container"><i class="fas fa-heart"></i>
                   <span class="likes-badge">3</span>
                 </a>
                 <span class="tagline"></span>
-                <a href="#" class="icon-images link"><i class="fas fa-user"></i></a>
+                <a href="#" class="icon-images link" aria-label="View profile">
+                  <i class="fas fa-user" aria-hidden="true"></i>
+                </a>
                 <input type="checkbox" id="menu-toggle" hidden>
                 <nav class="hamburger-menu">
-                  <label for="menu-toggle" class="hamburger-icon" aria-label="Open menu">
-                    <i class="fa fa-bars"></i>
+                  <label for="menu-toggle" class="hamburger-icon" aria-label="Toggle menu">
+                    <i class="fa fa-bars open-icon"></i>
+                    <span class="close-icon">✕</span>
                   </label>
                   <menu class="mobile-dropdown">
-                    <label for="menu-toggle" class="close-btn">✕</label>
                     <ul class="nav-list list-unstyled">
                       <li class="nav-item">
                         <a href="#" class="nav-link">Privacy policy</a>
@@ -283,8 +287,8 @@
         <!-- Collection Section -->
         <section class="carousel-section">
           <article class="carousel-content">
-            <button type="button" class="scroll-btn prev-btn cursor-pointer">
-              <i class="fas fa-chevron-left"></i>
+            <button type="button" class="scroll-btn prev-btn cursor-pointer" aria-label="Scroll left">
+              <i class="fas fa-chevron-left" aria-hidden="true"></i>
             </button>
             <div class="container">
               <h2 class="section-heading">Collection</h2>
@@ -298,9 +302,9 @@
                     <p class="product-card-author">Cassandra Clare</p>
                     <div class="product-card-price-group">
                       <span class="product-card-price">$23.24</span>
-                      <button type="button" class="fav-button">
-                        <i class="fa-regular fa-heart regular-heart"></i>
-                        <i class="fa-solid fa-heart solid-heart"></i>
+                      <button type="button" class="fav-button" aria-label="Add to favorites">
+                        <i class="fa-regular fa-heart regular-heart" aria-hidden="true"></i>
+                        <i class="fa-solid fa-heart solid-heart" aria-hidden="true"></i>
                       </button>
                     </div>
                     <button type="button" class="add-to-cart cursor-pointer">
@@ -315,9 +319,9 @@
                     <p class="product-card-author">Cassandra Clare</p>
                     <div class="product-card-price-group">
                       <span class="product-card-price">$23.24</span>
-                      <button type="button" class="fav-button">
-                        <i class="fa-regular fa-heart regular-heart"></i>
-                        <i class="fa-solid fa-heart solid-heart"></i>
+                      <button type="button" class="fav-button" aria-label="Add to favorites">
+                        <i class="fa-regular fa-heart regular-heart" aria-hidden="true"></i>
+                        <i class="fa-solid fa-heart solid-heart" aria-hidden="true"></i>
                       </button>
                     </div>
                     <button type="button" class="add-to-cart cursor-pointer">
@@ -332,9 +336,9 @@
                     <p class="product-card-author">Cassandra Clare</p>
                     <div class="product-card-price-group">
                       <span class="product-card-price">$13.94</span>
-                      <button type="button" class="fav-button">
-                        <i class="fa-regular fa-heart regular-heart"></i>
-                        <i class="fa-solid fa-heart solid-heart"></i>
+                      <button type="button" class="fav-button" aria-label="Add to favorites">
+                        <i class="fa-regular fa-heart regular-heart" aria-hidden="true"></i>
+                        <i class="fa-solid fa-heart solid-heart" aria-hidden="true"></i>
                       </button>
                     </div>
                     <button type="button" class="add-to-cart cursor-pointer">
@@ -349,9 +353,9 @@
                     <p class="product-card-author">Cassandra Clare</p>
                     <div class="product-card-price-group">
                       <span class="product-card-price">$16.84</span>
-                      <button type="button" class="fav-button">
-                        <i class="fa-regular fa-heart regular-heart"></i>
-                        <i class="fa-solid fa-heart solid-heart"></i>
+                      <button type="button" class="fav-button" aria-label="Add to favorites">
+                        <i class="fa-regular fa-heart regular-heart" aria-hidden="true"></i>
+                        <i class="fa-solid fa-heart solid-heart" aria-hidden="true"></i>
                       </button>
                     </div>
                     <button type="button" class="add-to-cart cursor-pointer">
@@ -361,8 +365,8 @@
                 </ul>
               </div>
             </div>
-            <button type="button" class="scroll-btn next-btn cursor-pointer">
-              <i class="fas fa-chevron-right"></i>
+            <button type="button" class="scroll-btn next-btn cursor-pointer" aria-label="Scroll right">
+              <i class="fas fa-chevron-right" aria-hidden="true"></i>
             </button>
             <nav class="carousel-dots">
               <div class="carousel-dot active"></div>
@@ -377,8 +381,8 @@
         <!-- Last viewed Section -->
         <section class="carousel-section">
           <article class="carousel-content">
-            <button type="button" class="scroll-btn prev-btn cursor-pointer">
-              <i class="fas fa-chevron-left"></i>
+            <button type="button" class="scroll-btn prev-btn cursor-pointer" aria-label="Scroll left">
+              <i class="fas fa-chevron-left" aria-hidden="true"></i>
             </button>
             <div class="container">
               <h2 class="section-heading">Last viewed</h2>
@@ -391,9 +395,9 @@
                     <p class="product-card-author">Madeline Martin</p>
                     <div class="product-card-price-group">
                       <span class="product-card-price">$16.73</span>
-                      <button type="button" class="fav-button">
-                        <i class="fa-regular fa-heart regular-heart"></i>
-                        <i class="fa-solid fa-heart solid-heart"></i>
+                      <button type="button" class="fav-button" aria-label="Add to favorites">
+                        <i class="fa-regular fa-heart regular-heart" aria-hidden="true"></i>
+                        <i class="fa-solid fa-heart solid-heart" aria-hidden="true"></i>
                       </button>
                     </div>
                     <button type="button" class="add-to-cart cursor-pointer">
@@ -407,9 +411,9 @@
                     <p class="product-card-author">Sarah Addison Allen</p>
                     <div class="product-card-price-group">
                       <span class="product-card-price">$26.03</span>
-                      <button type="button" class="fav-button">
-                        <i class="fa-regular fa-heart regular-heart"></i>
-                        <i class="fa-solid fa-heart solid-heart"></i>
+                      <button type="button" class="fav-button" aria-label="Add to favorites">
+                        <i class="fa-regular fa-heart regular-heart" aria-hidden="true"></i>
+                        <i class="fa-solid fa-heart solid-heart" aria-hidden="true"></i>
                       </button>
                     </div>
                     <button type="button" class="add-to-cart cursor-pointer">
@@ -423,9 +427,9 @@
                     <p class="product-card-author">Kristina McMorris</p>
                     <div class="product-card-price-group">
                       <span class="product-card-price">$27.93</span>
-                      <button type="button" class="fav-button">
-                        <i class="fa-regular fa-heart regular-heart"></i>
-                        <i class="fa-solid fa-heart solid-heart"></i>
+                      <button type="button" class="fav-button" aria-label="Add to favorites">
+                        <i class="fa-regular fa-heart regular-heart" aria-hidden="true"></i>
+                        <i class="fa-solid fa-heart solid-heart" aria-hidden="true"></i>
                       </button>
                     </div>
                     <button type="button" class="add-to-cart cursor-pointer">
@@ -439,9 +443,9 @@
                     <p class="product-card-author">Miriam Parker</p>
                     <div class="product-card-price-group">
                       <span class="product-card-price">$15.81</span>
-                      <button type="button" class="fav-button">
-                        <i class="fa-regular fa-heart regular-heart"></i>
-                        <i class="fa-solid fa-heart solid-heart"></i>
+                      <button type="button" class="fav-button" aria-label="Add to favorites">
+                        <i class="fa-regular fa-heart regular-heart" aria-hidden="true"></i>
+                        <i class="fa-solid fa-heart solid-heart" aria-hidden="true"></i>
                       </button>
                     </div>
                     <button type="button" class="add-to-cart cursor-pointer">
@@ -451,8 +455,8 @@
                 </ul>
               </div>
             </div>
-            <button type="button" class="scroll-btn next-btn cursor-pointer">
-              <i class="fas fa-chevron-right"></i>
+            <button type="button" class="scroll-btn next-btn cursor-pointer" aria-label="Scroll right">
+              <i class="fas fa-chevron-right" aria-hidden="true"></i>
             </button>
             <nav class="carousel-dots">
               <div class="carousel-dot active"></div>

@@ -12,7 +12,10 @@
   background-color: transparent;
   border: none;
   transition: color 0.3s ease;
+  position: relative;
+  z-index: 10001;
 }
+
 
 .hamburger-icon:hover {
   color: var(--color-secondary);
@@ -31,19 +34,6 @@
   flex-direction: column;
   padding: 24px 16px;
   overflow-y: auto;
-}
-
-#menu-toggle:checked~nav .mobile-dropdown {
-  display: flex;
-}
-
-.close-btn {
-  align-self: flex-end;
-  font-size: var(--font-size-lg);
-  color: var(--color-primary);
-  cursor: pointer;
-  padding: 8px;
-  margin-bottom: 16px;
 }
 
 .mobile-dropdown .nav-list {
@@ -66,4 +56,28 @@
 .mobile-dropdown .nav-link:hover {
   background-color: var(--color-background-secondary);
   color: var(--color-secondary);
+}
+
+.open-icon {
+  display: inline;
+}
+
+.close-icon {
+  display: none;
+  font-size: var(--font-size-lg);
+  color: var(--color-primary);
+  cursor: pointer;
+
+}
+
+#menu-toggle:checked~.hamburger-menu .hamburger-icon .open-icon {
+  display: none;
+}
+
+#menu-toggle:checked~.hamburger-menu .hamburger-icon .close-icon {
+  display: inline;
+}
+
+#menu-toggle:checked~.hamburger-menu .mobile-dropdown {
+  display: flex;
 }

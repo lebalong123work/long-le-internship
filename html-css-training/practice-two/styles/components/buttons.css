@@ -120,7 +120,7 @@
   color: var(--color-text-reverse);
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1024px) {
   .add-to-cart {
     padding: 12px;
     font-size: var(--font-size-md);

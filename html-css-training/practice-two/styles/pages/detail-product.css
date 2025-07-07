@@ -10,7 +10,7 @@
   align-items: flex-start;
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1024px) {
   .product-container {
     flex-direction: row;
   }

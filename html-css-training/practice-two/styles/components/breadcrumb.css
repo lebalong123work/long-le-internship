@@ -30,7 +30,7 @@
   color: var(--color-text-secondary);
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1024px) {
   .breadcrumb {
     display: block;
     padding: 20px 0;

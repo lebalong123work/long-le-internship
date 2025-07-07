@@ -19,8 +19,7 @@
   --color-detail-label: rgba(198, 137, 198, 0.7);
   --color-background-search: #f1f1f1;
   /* Font size */
-  --font-size-md: 1rem;
-  /* font size primary */
+  --font-size-md: 1rem; /* font size primary */
   --font-size-ml: 1.125rem;
   --font-size-ms: 0.875rem;
   --font-size-xs: 0.5rem;
@@ -39,12 +38,9 @@
   --font-weight-regular: 400;
   --font-weight-bold: 700;
   /* Icon size */
-  --icon-size-sm: 20px;
-  /* icon size phone */
-  --icon-size-md: 24px;
-  /* icon size primary */
-  --icon-size-lg: 28px;
-  /* icon size web */
+  --icon-size-sm: 20px; /* icon size phone */
+  --icon-size-md: 24px; /* icon size primary */
+  --icon-size-lg: 28px; /* icon size web */
   /* Border radius  */
   --border-radius: 2px;
   /* Breakpoints */

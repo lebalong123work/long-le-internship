@@ -44,7 +44,7 @@
   margin: 0 auto;
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1024px) {
   .carousel {
     overflow-x: visible;
     scroll-snap-type: none;

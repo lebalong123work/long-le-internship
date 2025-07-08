@@ -44,11 +44,8 @@
   /* Border radius  */
   --border-radius: 2px;
   /* Breakpoints */
-  --breakpoint-xs: 480px;
-  --breakpoint-sm: 768px;
+  --breakpoint-sm: 769px;
   --breakpoint-md: 1024px;
-  --breakpoint-lg: 1200px;
-  --breakpoint-xl: 1440px;
   /* Container max-widths */
   --container-xs: 100%;
   --container-sm: 540px;

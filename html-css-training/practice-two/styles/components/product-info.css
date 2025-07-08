@@ -47,7 +47,7 @@
   text-align: center;
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1024px) {
   .product-info {
     flex: 1;
     width: 45%;

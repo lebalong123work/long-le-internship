@@ -108,7 +108,7 @@
   background-color: var(--color-primary);
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1024px) {
   .product-images {
     flex: 1;
     width: 45%;
@@ -146,5 +146,47 @@
     right: 12px;
     display: flex;
     position: absolute;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .product-images {
+    flex: 1;
+    width: 100%;
+    order: 0;
+  }
+
+  .image-gallery {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .main-image {
+    width: 541px;
+    height: 728px;
+  }
+
+  .main-image-container {
+    flex: 1;
+    max-width: none;
+  }
+
+  .thumbnail-container {
+    flex-direction: column;
+    order: 1;
+    width: 30%;
+    overflow: visible;
+  }
+
+  .thumbnail-label {
+    width: 167px;
+    height: 167px;
+  }
+
+  .thumbnail {
+    width: 50%;
+    height: 80%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
   }
 }

@@ -55,7 +55,7 @@
   color: var(--color-text-primary);
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1024px) {
   .product-card {
     min-width: 275px;
     scroll-snap-align: none;

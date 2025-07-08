@@ -28,7 +28,7 @@
   opacity: 1;
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1024px) {
   .fav-button {
     font-size: var(--font-size-lg);
     width: 24px;

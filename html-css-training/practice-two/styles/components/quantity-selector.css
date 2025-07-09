@@ -31,7 +31,7 @@
 
 .qty-value {
   font-size: var(--font-size-md);
-  color: #444;
+  color: var(--color-text-value);
   font-weight: 500;
   user-select: none;
 }

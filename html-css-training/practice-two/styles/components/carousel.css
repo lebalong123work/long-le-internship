@@ -16,6 +16,7 @@
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   padding-bottom: 10px;
+  scrollbar-width: none;
 }
 
 .carousel-dots {

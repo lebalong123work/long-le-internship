@@ -1,7 +1,7 @@
 /* Product Details Component */
 .product-details {
   padding-top: clamp(1.5625rem, 3vw, 2.25rem);
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--color-boder-top);
 }
 
 .details-grid {

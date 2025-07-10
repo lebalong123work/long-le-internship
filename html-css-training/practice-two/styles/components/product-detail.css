@@ -1,7 +1,7 @@
 /* Product Details Component */
 .product-details {
   padding-top: clamp(1.5625rem, 3vw, 2.25rem);
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--color-boder-top);
 }
 
 .details-grid {
@@ -26,14 +26,14 @@
 
 .detail-item-left .detail-label,
 .detail-item-right .detail-label {
-  color: #c29ec4;
+  color: var(--color-text-detail-iteam);
   font-weight: 500;
   padding: 2px;
   width: 50%;
 }
 
 .detail-value {
-  color: #2c2c2c;
+  color: var(--color-text-detail-value);
   padding: 2px;
 }
 

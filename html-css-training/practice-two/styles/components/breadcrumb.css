@@ -9,6 +9,8 @@
   list-style: none;
   gap: 8px;
   font-size: var(--font-size-ms);
+  line-height: var(--line-height-s);
+  font-weight: var(--font-weight-regular);
 }
 
 .breadcrumb-item {
@@ -31,6 +33,13 @@
 }
 
 @media (min-width: 1024px) {
+  .breadcrumb {
+    display: block;
+    padding: 20px 0;
+    background-color: var(--color-background);
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
   .breadcrumb {
     display: block;
     padding: 20px 0;

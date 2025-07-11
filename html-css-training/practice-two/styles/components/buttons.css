@@ -4,11 +4,11 @@
   display: inline-block;
   text-align: center;
   vertical-align: middle;
-  padding: 12px 20px;
+  padding: 0.75rem 1.25rem; /* 12px 20px */
   border-radius: var(--border-radius);
-  font-weight: 500;
-  font-size: var(--font-size-md);
-  line-height: 1.2;
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-ms);
+  line-height: var(--line-height-rg);
   cursor: pointer;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -93,8 +93,10 @@
   color: var(--color-text-reverse);
   border: none;
   padding: 10px;
-  border-radius: 2px;
-  font-size: var(--font-size-ms);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-md);
+  font-weight: var(--font-weight-medium);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -121,9 +123,13 @@
 }
 
 @media (min-width: 1024px) {
+  .btn {
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-md);
+  }
+
   .add-to-cart {
     padding: 12px;
-    font-size: var(--font-size-md);
   }
 
   .scroll-btn {
@@ -162,5 +168,11 @@
 
   .next-btn i {
     font-size: var(--font-size-md-lg);
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .btn {
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-md);
   }
 }

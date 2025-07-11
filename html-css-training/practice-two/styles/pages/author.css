@@ -1,7 +1,20 @@
 .author-button {
   border-radius: 3px;
   display: inline-block;
-  margin-bottom: 24px;
-  font-size: var(--font-size-ms);
-  font-weight: 400;
+  margin-bottom: 1.5rem;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-s);
+}
+@media (min-width: 1024px) {
+  .author-button {
+    font-size: var(--font-size-ms);
+    line-height: var(--line-height-ms);
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .author-button {
+    font-size: var(--font-size-ms);
+    line-height: var(--line-height-ms);
+  }
 }

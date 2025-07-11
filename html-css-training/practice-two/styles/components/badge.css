@@ -10,7 +10,20 @@
   color: var(--color-stock-limit);
   padding: clamp(0.1875rem, 0.4vw, 0.25rem) clamp(0.5rem, 1vw, 0.75rem);
   border-radius: clamp(0.5rem, 1vw, 0.75rem);
-  font-size: clamp(var(--font-size-xs), 1vw, var(--font-size-sm));
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-xs);
   font-weight: var(--font-weight-regular);
   text-transform: none;
+}
+@media (min-width: 1024px) {
+  .badge {
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-xs);
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .badge {
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-xs);
+  }
 }

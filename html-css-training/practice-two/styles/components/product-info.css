@@ -5,36 +5,40 @@
 }
 
 .product-title {
-  font-size: clamp(var(--font-size-lg), 2.5vw, var(--font-size-xl));
+  font-size: var(--font-size-md-lg);
+  line-height: var(--line-height-ml);
   font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
   margin-bottom: 12px;
-  line-height: 1.2;
 }
 
 .product-author {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-ms);
+  line-height: var(--line-height-md);
+  font-weight: var(--font-weight-regular);
   color: var(--color-text-secondary);
   margin-bottom: clamp(0.9375rem, 1.5vw, 1.25rem);
 }
 
 .product-price {
-  font-size: var(--font-size-lg-xl);
-  font-size: clamp(var(--font-size-xl-lg), 2.5vw, var(--font-size-lg-xl));
-  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-ml);
+  line-height: var(--line-height-ml);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-text-primary);
   margin-bottom: clamp(1.25rem, 2vw, 1.5625rem);
 }
 
 .product-description {
-  font-size: clapm(var(--font-size-sm), 1.2vw, var(--font-size-md));
-  line-height: var(--line-height-md);
+  font-size: var(--font-size-ms);
+  line-height: var(--line-height-rg);
+  font-weight: var(--font-weight-regular);
   color: var(--color-text-secondary);
   margin-bottom: clamp(1.5625rem, 2vw, 1.875rem);
 }
 
 .product-actions {
   display: flex;
+  flex-direction: column;
   gap: clamp(10px, 2vw, 15px);
   margin-bottom: clamp(30px, 3vw, 40px);
 }
@@ -58,5 +62,37 @@
   .btn-add-cart,
   .btn-favorite {
     flex: 1;
+  }
+  .product-title {
+    font-size: var(--font-size-xl-lg);
+    line-height: var(--line-height-xxl);
+  }
+  .product-author {
+    font-size: var(--font-size-ml);
+    line-height: var(--line-height-m);
+  }
+  .product-price {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-xxl);
+  }
+  .product-actions {
+    flex-direction: row;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .product-title {
+    font-size: var(--font-size-xl-lg);
+    line-height: var(--line-height-xxl);
+  }
+  .product-author {
+    font-size: var(--font-size-ml);
+    line-height: var(--line-height-m);
+  }
+  .product-price {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-xxl);
+  }
+  .product-actions {
+    flex-direction: row;
   }
 }

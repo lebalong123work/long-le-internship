@@ -27,13 +27,18 @@
 .detail-item-left .detail-label,
 .detail-item-right .detail-label {
   color: var(--color-text-detail-iteam);
-  font-weight: 500;
+  font-size: var(--font-size-ms);
+  line-height: var(--line-height-ms);
+  font-weight: var(--font-weight-regular);
   padding: 2px;
   width: 50%;
 }
 
 .detail-value {
   color: var(--color-text-detail-value);
+  font-size: var(--font-size-ms);
+  line-height: var(--line-height-rg);
+  font-weight: var(--font-weight-regular);
   padding: 2px;
 }
 
@@ -50,11 +55,31 @@
   .detail-item-right .detail-label {
     width: 45%;
   }
+  .detail-item-left .detail-label,
+  .detail-item-right .detail-label {
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-md);
+  }
+
+  .detail-value {
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-md);
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
   .details-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0;
+  }
+  .detail-item-left .detail-label,
+  .detail-item-right .detail-label {
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-md);
+  }
+
+  .detail-value {
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-md);
   }
 }

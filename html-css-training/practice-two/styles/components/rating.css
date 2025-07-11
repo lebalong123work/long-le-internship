@@ -22,5 +22,7 @@
 
 .rating-text {
   color: var(--color-text-secondary);
-  font-size: clamp(var(--font-size-sm), 1vw, var(--font-size-ms));
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-md);
+  font-weight: var(--font-weight-regular);
 }

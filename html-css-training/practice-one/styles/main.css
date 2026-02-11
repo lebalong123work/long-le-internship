@@ -1,0 +1,7 @@
+/* Main CSS File - Simplified imports */
+
+@import './abstracts/index.css';
+@import './base/index.css';
+@import './layouts/index.css';
+@import './components/index.css';
+@import './pages/index.css';

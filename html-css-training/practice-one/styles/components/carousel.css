@@ -1,0 +1,42 @@
+/* Carousel Section */
+
+.carousel-section {
+  margin-bottom: 60px;
+  position: relative;
+}
+
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel {
+  display: flex;
+  gap: 20px;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  gap: 12px;
+}
+
+.carousel-dot {
+  display: inline-block; 
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--color-background-secondary);
+  margin: 0 6px; 
+}
+
+.carousel-dot.active {
+  background-color: var(--color-primary);
+}
+
+.carousel-content {
+  position: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+}

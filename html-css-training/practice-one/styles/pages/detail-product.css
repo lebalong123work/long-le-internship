@@ -1,0 +1,10 @@
+/* Product Detail Page Specific Styles */
+.product-section {
+  padding: 40px 0;
+}
+
+.product-container {
+  display: flex;
+  gap: 60px;
+  align-items: flex-start;
+}

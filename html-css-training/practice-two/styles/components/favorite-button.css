@@ -1,0 +1,37 @@
+.fav-button {
+  position: relative;
+  background: none;
+  border: none;
+  font-size: var(--font-size-md-lg);
+  cursor: pointer;
+  color: var(--color-primary);
+  width: 24px;
+  height: 24px;
+}
+
+.fav-button i {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.3s ease;
+}
+
+.solid-heart {
+  opacity: 0;
+}
+
+.fav-button:hover .regular-heart {
+  opacity: 0;
+}
+
+.fav-button:hover .solid-heart {
+  opacity: 1;
+}
+
+@media (min-width: 1024px) {
+  .fav-button {
+    font-size: var(--font-size-lg);
+    width: 24px;
+    height: 24px;
+  }
+}

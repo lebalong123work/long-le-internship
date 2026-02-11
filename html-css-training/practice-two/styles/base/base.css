@@ -1,0 +1,45 @@
+/* Base Styles */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.layout-wrapper {
+  width: 100%;
+}
+
+body {
+  font-family: "Inter";
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
+  font-size: var(--font-size-md);
+  overflow-x: auto;
+}
+
+.list-unstyled {
+  list-style: none;
+}
+
+.link {
+  text-decoration: none;
+  color: var(--color-text-primary);
+}
+
+/* Container */
+.container {
+  max-width: var(--container-xl);
+  margin-inline: auto;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+/* Utility Classes */
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.hidden-title {
+  display: none;
+}

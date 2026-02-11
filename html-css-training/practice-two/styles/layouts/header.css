@@ -1,0 +1,274 @@
+/* Header Styles */
+
+.header {
+  background-color: var(--color-background);
+}
+
+.header-utility-bar {
+  padding: 15px 0;
+  height: 72px;
+  background-color: var(--color-background);
+  width: 100%;
+  border-bottom: 1px solid var(--color-primary);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.logo-img {
+  height: auto;
+  padding-top: 7px;
+}
+
+.tagline {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-sm);
+  position: relative;
+}
+
+.tagline::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 100%;
+  width: 1px;
+  background-color: var(--color-primary);
+}
+
+.tagline-padding {
+  padding-left: 8px;
+  margin-left: 8px;
+}
+
+.search-bar {
+  display: flex;
+  flex: 1;
+  max-width: unset;
+  width: auto;
+  margin: 14px;
+  position: relative;
+}
+
+.search-bar input {
+  width: 0;
+  padding: 0;
+  border: none;
+  opacity: 0;
+  pointer-events: none;
+  border-radius: 2px;
+  font-size: var(--font-size-ms);
+  background-color: var(--color-background-search);
+}
+
+.search-button {
+  position: static;
+  transform: none;
+  background: none;
+  border: none;
+  color: var(--color-icon-search);
+}
+
+.top-nav {
+  display: none;
+}
+
+.top-nav .nav-list {
+  display: flex;
+}
+
+.top-nav .nav-item {
+  margin-right: 20px;
+  font-size: var(--font-size-ms);
+}
+
+.top-nav .nav-link {
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+
+.top-nav .nav-item:last-child {
+  margin-right: 0;
+}
+
+.top-nav .nav-link:hover {
+  color: var(--color-secondary);
+}
+
+.user-actions {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.icon-images {
+  font-size: var(--icon-size-sm);
+  color: var(--color-primary);
+}
+
+.icon-images:hover {
+  color: var(--color-secondary);
+}
+
+.heart-container {
+  position: relative;
+  display: none;
+}
+
+.likes-badge {
+  position: absolute;
+  top: -7.5px;
+  right: -4px;
+  background-color: var(--color-secondary);
+  color: var(--color-text-reverse);
+  border-radius: 50%;
+  padding: 1px 3px;
+  box-sizing: content-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm);
+}
+
+.heart-container:hover .likes-badge {
+  background-color: var(--color-primary);
+}
+
+.user-actions .fa-user {
+  display: none;
+}
+
+.user-actions .fa-shopping-cart {
+  display: inline-block;
+}
+
+.contact-info-tablet {
+  display: none;
+}
+
+/* Navigation Bar */
+.header-main-nav {
+  display: none;
+  padding: 16px 0;
+  background-color: var(--color-background);
+  border-bottom: 1px solid var(--color-primary);
+}
+
+.header-main-nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-nav .nav-list {
+  display: flex;
+  gap: 20px;
+}
+
+.main-nav .nav-link {
+  font-size: var(--font-size-ms);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+
+.main-nav .nav-link:hover {
+  color: var(--color-secondary);
+}
+
+.contact-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.phone {
+  font-size: var(--font-size-ms);
+  font-weight: 400;
+  padding: 4px 39px;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.phone:hover {
+  color: var(--color-secondary);
+}
+
+.phone .fa-phone {
+  color: var(--color-primary);
+}
+
+.phone:hover .fa-phone {
+  color: var(--color-secondary);
+}
+
+.header-dots {
+  display: none;
+}
+
+.header-dot {
+  width: 2px;
+  height: 50px;
+  background-color: var(--color-background-secondary);
+  cursor: pointer;
+}
+
+.header-dot.active {
+  background-color: var(--color-primary);
+}
+
+@media (min-width: 1024px) {
+  .header-main-nav {
+    display: block;
+  }
+
+  .header-dots {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 35px;
+    margin-top: 20px;
+  }
+
+  .contact-info-tablet {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .contact-info-tablet {
+    display: block;
+    gap: 0 0 0 20px;
+  }
+
+  .user-actions {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+
+    gap: 15px;
+  }
+
+  .user-actions .fa-user {
+    display: block;
+  }
+
+  .heart-container,
+  .user-actions .fa-user {
+    display: inline-block;
+  }
+}

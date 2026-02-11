@@ -1,0 +1,192 @@
+/* Product Gallery Component - CSS-only thumbnail switching */
+.product-images {
+  width: 100%;
+  order: 1;
+}
+
+.image-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.9375rem, 1.2vw, 1.25rem);
+  align-items: center;
+}
+
+.thumbnail-container {
+  display: flex;
+  flex-direction: row;
+  gap: clamp(1.125rem, 1.5vw, 1.25rem);
+  justify-content: center;
+  width: 100%;
+  overflow-x: auto;
+  order: 2;
+}
+
+.thumbnail-radio {
+  display: none;
+}
+
+.thumbnail-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: clamp(4.75rem, 10vw, 9.25rem);
+  height: clamp(4.75rem, 10vw, 9.25rem);
+  cursor: pointer;
+  border: 1px solid var(--color-primary);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.thumbnail {
+  width: clamp(2.5rem, 6vw, 4.875rem);
+  height: clamp(3.75rem, 9vw, 7.25rem);
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.thumbnail:hover,
+.thumbnail-radio:checked+.thumbnail-label .thumbnail {
+  transform: scale(1.05);
+}
+
+.main-image-container {
+  position: relative;
+  width: 100%;
+  order: 1;
+}
+
+.main-image {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  border-radius: 4px;
+  box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.3s ease;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Hide all images by default */
+.main-image {
+  display: none;
+}
+
+/* Show corresponding main image when thumbnail is selected */
+#thumb1:checked~.main-image-container .main-image:nth-of-type(1),
+#thumb2:checked~.main-image-container .main-image:nth-of-type(2),
+#thumb3:checked~.main-image-container .main-image:nth-of-type(3),
+#thumb4:checked~.main-image-container .main-image:nth-of-type(4) {
+  display: block;
+}
+
+/* Default to first image */
+#thumb4:checked~.main-image-container .main-image:nth-of-type(4) {
+  display: block;
+}
+
+.pagination-controls {
+  display: none;
+}
+
+.pagination-btn {
+  width: clamp(1.75rem, 2.5vw, 2rem);
+  height: clamp(1.75rem, 2.5vw, 2rem);
+  background-color: var(--color-background-pagination-btn);
+  color: var(--color-text-reverse);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  font-size: clamp(var(--font-size-sm), 1vw, var(--font-size-ms));
+  transition: background-color 0.2s;
+  border: 1px solid transparent;
+}
+
+.pagination-btn:hover {
+  background-color: var(--color-primary);
+}
+
+@media (min-width: 1024px) {
+  .product-images {
+    flex: 1;
+    width: 45%;
+    order: 0;
+  }
+
+  .image-gallery {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .main-image {
+    width: 412px;
+    height: 653px;
+    max-height: none;
+    box-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.1);
+  }
+
+  .main-image-container {
+    flex: 1;
+    max-width: none;
+  }
+
+  .thumbnail-container {
+    flex-direction: column;
+    width: 148px;
+    overflow: visible;
+    order: 1;
+  }
+
+  .pagination-controls {
+    display: block;
+    gap: 12px;
+    bottom: 12px;
+    right: 12px;
+    display: flex;
+    position: absolute;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .product-images {
+    flex: 1;
+    width: 100%;
+    order: 0;
+  }
+
+  .image-gallery {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .main-image {
+    width: 541px;
+    height: 728px;
+  }
+
+  .main-image-container {
+    flex: 1;
+    max-width: none;
+  }
+
+  .thumbnail-container {
+    flex-direction: column;
+    order: 1;
+    width: 30%;
+    overflow: visible;
+  }
+
+  .thumbnail-label {
+    width: 167px;
+    height: 167px;
+  }
+
+  .thumbnail {
+    width: 50%;
+    height: 80%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+  }
+}

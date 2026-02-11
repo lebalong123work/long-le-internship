@@ -1,0 +1,17 @@
+/* Product Detail Page Specific Styles */
+.product-section {
+  padding: clamp(1.25rem, 2.5vw, 2.5rem) 0;
+}
+
+.product-container {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.875rem, 3vw, 3.75rem);
+  align-items: flex-start;
+}
+
+@media (min-width: 1024px) {
+  .product-container {
+    flex-direction: row;
+  }
+}

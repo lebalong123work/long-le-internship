@@ -3,6 +3,11 @@
  <head>
   <meta charset="utf-8"/>
   <title>About Me</title>
+  <style>
+    .listitem {
+      color: red;
+    }
+  </style>
 </head>
 <body>
   <h1>About Me</h1>
@@ -19,5 +24,9 @@
   document.getElementById('nickname').innerHTML = 'Long';
   document.getElementById('favorites').innerHTML = '25';
   document.getElementById('hometown').innerHTML = 'Long, VN';
+  var items = document.getElementsByTagName('li');
+  for (var i = 0; i < items.length; i++) {
+      items[i].className = 'listitem';
+   }
  </script>
 </html>

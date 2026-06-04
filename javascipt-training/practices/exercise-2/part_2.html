@@ -9,4 +9,12 @@ Last name: <input type="text" name="lname" value="Beckham"><br>
 <input type="submit" value="Submit">
 </form>
 </body>
+<script>
+  function getFormvalue() {
+    let formname = document.getElementById("form1");
+    let firstname = formname.elements["fname"].value;
+    let lastname = formname.elements["lname"].value;
+    console.log(firstname + " " + lastname);
+  }
+</script>
 </html>

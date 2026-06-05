@@ -15,4 +15,19 @@
       <input type="button" onclick="createTable()" value="Create the table" />
     </form>
   </body>
+  <script>
+    function createTable() {
+      let numbercurent = parseInt(prompt("Enter number of rows and columns"));
+      let numbercolumn = parseInt(prompt("Enter number of columns"));
+      let table = document.getElementById("myTable");
+      table.innerHTML = "";
+      for (let i = 0; i < numbercurent; i++) {
+        let row = table.insertRow(i);
+        for (let j = 0; j < numbercolumn; j++) {
+          let cell = row.insertCell(j);
+          cell.innerHTML = `Row${i + 1} cell${j + 1}`;
+        }
+      }
+    }
+  </script>
 </html>

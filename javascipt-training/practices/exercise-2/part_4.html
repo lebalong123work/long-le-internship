@@ -20,4 +20,31 @@
       Click here to get attributes value
     </button>
   </body>
+  <script>
+    function getAttributes() {
+      let element = document.getElementById("w3r");
+      let type = element.getAttribute("type");
+      let hreflang = element.getAttribute("hreflang");
+      let rel = element.getAttribute("rel");
+      let target = element.getAttribute("target");
+      let href = element.getAttribute("href");
+
+      alert(
+        "type: " +
+          type +
+          "\n" +
+          "hreflang: " +
+          hreflang +
+          "\n" +
+          "rel: " +
+          rel +
+          "\n" +
+          "target: " +
+          target +
+          "\n" +
+          "href: " +
+          href,
+      );
+    }
+  </script>
 </html>

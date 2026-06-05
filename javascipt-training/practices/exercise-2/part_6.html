@@ -23,4 +23,13 @@
       <input type="button" onclick="changeContent()" value="Change content" />
     </form>
   </body>
+  <script>
+    function changeContent(){
+      let row = prompt("Enter row number");
+      let cell = prompt("Enter cell number");
+      let content = prompt("Enter new content");
+      let table = document.getElementById("myTable");
+      table.rows[parseInt(row)].cells[parseInt(cell)].innerHTML = content;
+    }
+  </script>
 </html>

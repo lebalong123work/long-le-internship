@@ -42,3 +42,34 @@ const pomodoroTableBody = document.querySelector( '.js-task-table-body' );
 ---
 **Summary:** These lines help JavaScript connect to the HTML elements and set up a data storage area in memory.
  
+# Code Explanation: addTask
+## 4. Form Submission & `event.preventDefault()`
+* **The Concept:** By default, when an HTML form is submitted, it tries to send data to a server and reload the page. In our modern app, we want to handle the data directly in the browser without reloading.
+* **The Analogy:** Imagine when a customer submits an order, the standard procedure is to run to the Central Kitchen (Server) and reset the whole restaurant (page reload). `event.preventDefault()` is the manager shouting: *"Stop! Do not go to the kitchen. I will process this order right here at the counter!"*
+
+## 5. `javascript:void(0)` vs `preventDefault()`
+* **The Concept:** The HTML attribute `action="javascript:void(0)"` already stops the page from reloading. However, using `preventDefault()` inside JavaScript acts as a safety net in case someone accidentally deletes that HTML code.
+* **The Analogy:** The HTML attribute is a sticky note on the counter saying *"Don't run to the kitchen."* But what if someone accidentally throws the note away? The manager explicitly enforcing `preventDefault()` guarantees the rule is always followed.
+
+## 6. `this.reset()`
+* **The Concept:** Inside the event handler, `this` refers to the form element itself. Calling `.reset()` clears all the input fields.
+* **The Analogy:** After the manager has successfully copied the customer's order into the notebook, `this.reset()` is the manager wiping the counter clean so it is perfectly ready for the next customer.
+
+## 7. Extracting Values: `this.querySelector` vs `document.querySelector`
+```javascript
+const taskName = this.querySelector( '.js-task-name' ).value;
+
+```
+
+* **The Concept:** Inside the form submission handler, `this` refers to the form element. Using `this.querySelector` restricts the search only to the elements inside that specific form, which is faster and safer than searching the entire `document`. The `.value` property is then used to extract the actual text or selection the user inputted.
+* **The Analogy:** `document.querySelector` is like searching the entire restaurant building for a specific item. `this.querySelector` is the manager saying, *"I am standing right at this specific order counter (`this`). I will only look exactly here to find the customer's input."* Looking at the input box just gives you the physical box; `.value` is reading the actual handwriting inside it.
+
+## 8. Updating the State: `tasks.push(...)`
+
+```javascript
+tasks.push( { taskName, pomodoroDone: 0, pomodoroCount, finished: false } );
+
+```
+
+* **The Concept:** We take the extracted values and create a new JavaScript Object representing the task. We then push this object into our `tasks` array (our state). Note the ES6 object property shorthand: writing `taskName` is the same as `taskName: taskName`.
+* **The Analogy:** After reading the customer's input, the manager opens the master notebook (`tasks`) and writes (`push`) a new entry. The manager records the requested name and count, and sets the starting rules: 0 pomodoros done so far, and it is not finished yet (`false`).

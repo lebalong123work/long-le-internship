@@ -256,3 +256,69 @@ JavaScript has a built-in toolset named `Math` to help me solve math problems ea
 * The `.toFixed(4)` tool acts like a pair of scissors. It cuts off the long tail and only keeps exactly 4 digits after the dot. The result becomes a clean 3.1416.
 
 ---
+
+# Understanding `event.preventDefault()` in Simple Words
+
+Let's forget about code for a minute and start with a real-life story.
+
+## 1. A Simple Real-Life Example
+
+Imagine you go to a restaurant. The normal rule here is: when a customer sits at a table (The Event), the waiter automatically brings a glass of ice tea (The Default Action).
+
+But today, your throat hurts. You don't want ice tea. As soon as you sit down, you raise your hand and say: *"Wait, don't bring the tea, I will order water later."*
+
+-> Raising your hand to stop the waiter is exactly what **`event.preventDefault()`** does.
+
+In coding:
+* **event**: The action (like clicking a button, or pressing a key).
+* **prevent**: To stop something from happening.
+* **default**: The normal, automatic reflex.
+
+Together, `event.preventDefault()` is a command that means: *"Stop the normal reflex of the web browser, so I can handle it my way!"*
+
+---
+
+## 2. Why Do We Need It?
+
+Web parts created a long time ago have old, automatic "reflexes".
+
+* **A Form**: When you click the "Submit" button, its reflex is to reload the whole page to send data.
+* **A Link (the `<a>` tag)**: When you click it, its reflex is to jump to a new page immediately.
+
+**What is the problem?**
+In modern websites, we want things to be smooth. We don't want the page to reload and clear all the information the user is typing. We want to check for errors or do math quietly in the background.
+
+If we don't use `event.preventDefault()`, the browser will reload the page and wipe out everything. That is why we must "hit the brakes".
+
+---
+
+## 3. Common Times We Use It
+
+Here are 4 common situations you will see a lot:
+
+### Case 1: Working with Forms
+When a user clicks "Calculate" or "Sign up", you want to check if their email is correct before sending anything.
+* **If we don't stop it:** You click the button, the page reloads, goes blank, and all results disappear.
+* **How to use it:** Stop the reload so you can show an error message or show the math result right there on the screen.
+
+### Case 2: Links That Shouldn't Jump
+Sometimes you make a "Read more" button using a link. You just want it to show some hidden text when clicked, not jump to a new page.
+* **How to use it:**
+
+```javascript
+readMoreLink.addEventListener("click", function(event) {
+    event.preventDefault(); // Stop jumping to a new page
+    hiddenText.style.display = "block"; // Just show the hidden text
+});
+```
+
+### Case 3: Making Your Own Right-Click Menu
+Normally, when you right-click on a website, a boring grey menu appears (with Copy, Paste, etc.). If you are making an app like Google Drive, you want to show your own beautiful menu instead.
+* **How to use it:** Use `preventDefault()` to stop the normal grey menu from showing up, and then show your own custom menu.
+
+### Case 4: Blocking Letters in a Number Box
+You have a box just for phone numbers. If the user presses a letter key (like A, B, or C), you can stop it immediately so the letter never appears in the box.
+
+---
+
+**Summary:** Whenever you use a web part that has an "automatic reflex" (like Forms, Links, or Right-click) and you want to control it yourself, the first thing you need to write is `event.preventDefault()`.

@@ -16,5 +16,16 @@
       <input type="button" onclick="getOptions()" value="Count and Display" />
     </form>
   </body>
-  <script></script>
+  <script>
+    function getOptions() {
+      let listcolor = document.getElementById("colorSelect");
+      let options = listcolor.options;
+      let count = options.length;
+      let text = "The dropdown list has " + count + " options:\n";
+      for (let i = 0; i < count; i++) {
+        text += options[i].text + "\n";
+      }
+      alert(text);
+    }
+  </script>
 </html>

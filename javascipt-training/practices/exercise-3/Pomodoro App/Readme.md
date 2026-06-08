@@ -19,3 +19,26 @@ This technique helps  work better by breaking  time into clear parts. Here is ho
 * **Planning and Tracking:**
     * **Plan:** Write down a list of things want to do today. This helps guess how much time will need.
     * **Track:** As  finish each 25-minute period, write it down. This helps feel like have achieved something and lets look back to see how can do even better next time.
+
+# Code Explanation
+js/pomodoro.js
+```javascript
+let tasks = [];
+const pomodoroForm = document.querySelector( '.js-add-task' );
+const pomodoroTableBody = document.querySelector( '.js-task-table-body' );
+```
+## 1. `let tasks = [];`
+* **What it is:** A blank array to store all your task data.
+* **Analogy:** Think of this as the manager's empty notebook. Every time a user adds a new task, the manager writes the details (task name, pomodoro count) into this notebook. Any changes (marking a task as done, increasing pomodoros, or deleting a task) must be updated in this notebook first.
+
+## 2. `const pomodoroForm = document.querySelector( '.js-add-task' );`
+* **What it is:** A reference to the HTML form used to add new tasks.
+* **Analogy:** This is like the manager pointing to the order counter labeled `.js-add-task`. The manager says: "This is the order counter. Whenever someone submits a new task form here, I need to handle it right away."
+
+## 3. `const pomodoroTableBody = document.querySelector( '.js-task-table-body' );`
+* **What it is:** A reference to the HTML table body where tasks will be displayed as rows.
+* **Analogy:** This is like the manager pointing to the empty bulletin board on the wall labeled `.js-task-table-body`. The manager says: "This is our display board. Later, I will read the data from my notebook, create HTML rows, and pin them here for the user to see."
+
+---
+**Summary:** These lines help JavaScript connect to the HTML elements and set up a data storage area in memory.
+ 

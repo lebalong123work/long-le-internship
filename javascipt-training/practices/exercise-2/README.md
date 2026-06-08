@@ -161,6 +161,7 @@ function getOptions() {
   
   alert(text);
 }
+```
 ##  Line-by-Line Breakdown
 
 ### `let listcolor = document.getElementById("colorSelect");`

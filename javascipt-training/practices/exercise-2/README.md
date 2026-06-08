@@ -228,3 +228,31 @@ Since the operating system handles it, using the special tool `.text` is the mos
 
 * When you want to get text from **normal tags** on a webpage (`<p>`, `<h1>`, `<div>`), use **`.innerText`**.
 * When working with **choice lists** (like `<option>`), use the special tool **`.text`**.
+
+# Part 10: Working with Input Boxes and Math
+
+## 1. Why use .value instead of .innerText or .text?
+* That for normal text tags like `<p>` or `<td>`, I use `.innerText`.
+* For a dropdown choice (`<option>`), I use `.text`.
+* But an input box (`<input>`) is different. It is like an empty box waiting for a user to type things into it. Whatever is typed inside is saved in a secret pocket named `.value`. Therefore, to grab data from a form input, must use `.value`.
+
+---
+
+## 2. Why use parseFloat() instead of parseInt()?
+* In Part 6, used the `parseInt()` machine to pull out whole numbers because row and column positions cannot be decimals like 1.5 or 2.5.
+* But for things like a radius, the number can easily have a dot (for example: 2.5 cm). The `parseFloat()` machine ("Float" means numbers with decimals) helps me grab the entire 2.5 without throwing away the tail.
+
+---
+
+## 3. Math Helpers in JavaScript
+JavaScript has a built-in toolset named `Math` to help me solve math problems easily:
+* `Math.PI`: This is just the pi number (3.14159...).
+* `Math.pow(base, exponent)`: This is for powers. For example, `Math.pow(radius, 3)` means radius cubed (radius multiplied by itself 3 times).
+
+---
+
+## 4. The .toFixed(4) Scissors
+* Sometimes, the calculation results in a giant, messy number like 3.141592653589793. Displaying this whole tail on the screen looks ugly.
+* The `.toFixed(4)` tool acts like a pair of scissors. It cuts off the long tail and only keeps exactly 4 digits after the dot. The result becomes a clean 3.1416.
+
+---

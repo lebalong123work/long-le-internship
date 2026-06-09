@@ -39,3 +39,32 @@ const renderTasks = function (tBodyNode, tasks = []) {
     )
     .join("");
 };
+
+const finishTask = (tasks, taskId) => {
+  tasks[taskId].finished = true;
+};
+
+const increasePomodoroDone = (tasks, taskId) => {
+  tasks[taskId].pomodoroDone += 1;
+};
+
+const deleteTask = (tasks, taskId) => {
+  tasks.splice(taskId, 1);
+};
+
+const handleTaskButtonClick = function (event) {
+  const classList = event.target.className;
+  const taskId = event.target.dataset.id;
+
+  /js-task-done/.test(classList)
+    ? finishTask(tasks, taskId)
+    : /js-increase-pomodoro/.test(classList)
+      ? increasePomodoroDone(tasks, taskId)
+      : /js-delete-task/.test(classList)
+        ? deleteTask(tasks, taskId)
+        : null;
+
+  renderTasks(pomodoroTableBody, tasks);
+};
+
+pomodoroTableBody.addEventListener("click", handleTaskButtonClick);

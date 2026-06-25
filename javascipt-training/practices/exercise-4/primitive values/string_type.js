@@ -12,11 +12,11 @@ console.log("See icon: ", icon);
 console.log("Leght icon: ", icon.length);
 
 // String IMMUTABLE
-let name = "Long"
+let userName = "Long"
 
-name[0] = "B";
+userName[0] = "B";
 
-console.log("Name when change: ", name);
+console.log("Name when change: ", userName);
 
 // Want change: Make new String 
 let oldname = "Khang";
@@ -29,5 +29,5 @@ console.log("Cut: ",newname);
 console.log("See: ",oldname);
 
 // Use + new string
-let finalname = newname + "nh";
-console.log("Final name: ", finalname);
+let finalname = oldname + "Li";
+console.log("Final name: ", finalname)

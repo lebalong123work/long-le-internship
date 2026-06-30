@@ -17,7 +17,7 @@ console.log("Try change name: ", accountgame.name);
 
 //[enumerable: false]
 accountgame.level = 50;
-for (let key in accountgame){
+for (let key in accountgame) {
   console.log("See attribute: ", key)
 }
 
@@ -29,6 +29,6 @@ try {
   Object.defineProperty(accountgame, "name", {
     writable: true // try turn on
   });
-} catch(error){
+} catch (error) {
   console.log(Error);
 }

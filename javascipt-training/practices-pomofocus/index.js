@@ -8,6 +8,7 @@ const taskList = document.getElementById("taskList");
 
 let tasks = [];
 
+// Hide/Show Forms
 taskFormContainer.style.display = "none";
 
 showTaskFormBtn.addEventListener("click", () => {
@@ -21,4 +22,35 @@ cancelTaskBtn.addEventListener("click", () => {
 
   taskNameInput.value = "";
   estPomodorosInput.value = "1";
+});
+
+// Save New Task
+saveTaskBtn.addEventListener('click', () => {
+    const taskName = taskNameInput.value.trim(); 
+    const estPomodoros = parseInt(estPomodorosInput.value); 
+
+    if (taskName === "") {
+        alert("Please enter a task name!");
+        return; 
+    }
+
+    const newId = crypto.randomUUID(); // Random ID 
+
+    const newTask = {
+        id: newId, 
+        name: taskName,
+        est: estPomodoros,
+        act: 0, 
+        isDone: false
+    };
+
+    tasks.push(newTask);
+    
+    console.log("Current Tasks List:", tasks); // Check 
+
+    taskFormContainer.style.display = 'none';
+    showTaskFormBtn.style.display = 'block';
+
+    taskNameInput.value = '';
+    estPomodorosInput.value = '1';
 });

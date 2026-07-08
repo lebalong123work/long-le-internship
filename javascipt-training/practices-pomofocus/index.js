@@ -24,33 +24,49 @@ cancelTaskBtn.addEventListener("click", () => {
   estPomodorosInput.value = "1";
 });
 
+//  Update UI
+
+function renderTasks() {
+  taskList.innerHTML = "";
+
+  tasks.forEach((task) => {
+    const liElement = document.createElement("li");
+
+    liElement.textContent = `${task.name} (Est: ${task.est} | Act: ${task.act})`;
+
+    taskList.appendChild(liElement);
+  });
+}
+
 // Save New Task
-saveTaskBtn.addEventListener('click', () => {
-    const taskName = taskNameInput.value.trim(); 
-    const estPomodoros = parseInt(estPomodorosInput.value); 
+saveTaskBtn.addEventListener("click", () => {
+  const taskName = taskNameInput.value.trim();
+  const estPomodoros = parseInt(estPomodorosInput.value);
 
-    if (taskName === "") {
-        alert("Please enter a task name!");
-        return; 
-    }
+  if (taskName === "") {
+    alert("Please enter a task name!");
+    return;
+  }
 
-    const newId = crypto.randomUUID(); // Random ID 
+  const newId = crypto.randomUUID(); // Random ID
 
-    const newTask = {
-        id: newId, 
-        name: taskName,
-        est: estPomodoros,
-        act: 0, 
-        isDone: false
-    };
+  const newTask = {
+    id: newId,
+    name: taskName,
+    est: estPomodoros,
+    act: 0,
+    isDone: false,
+  };
 
-    tasks.push(newTask);
-    
-    console.log("Current Tasks List:", tasks); // Check 
+  tasks.push(newTask);
 
-    taskFormContainer.style.display = 'none';
-    showTaskFormBtn.style.display = 'block';
+  renderTasks();
 
-    taskNameInput.value = '';
-    estPomodorosInput.value = '1';
+  console.log("Current Tasks List:", tasks); // Check
+
+  taskFormContainer.style.display = "none";
+  showTaskFormBtn.style.display = "block";
+
+  taskNameInput.value = "";
+  estPomodorosInput.value = "1";
 });

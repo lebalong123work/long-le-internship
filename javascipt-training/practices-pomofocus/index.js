@@ -116,3 +116,31 @@ function editTask(id, newName, newAct, newEst) {
   );
   return true;
 }
+
+// Logic: Delete a Task
+function deleteTask(id) {
+  // Block junk ID input
+  if (typeof id !== "string" || id.trim() === "") {
+    console.error("Task Deletion Error: ID task invalid.");
+    return false;
+  }
+
+  // Remember the array length before deleting
+  const initialLength = tasks.length;
+
+  // Filter out tasks with the corresponding ID.
+  tasks = tasks.filter((task) => task.id !== id);
+
+  // Verify that the deletion was actually done.
+  if (tasks.length === initialLength) {
+    console.warn(
+      `Warning: Deleted: No task with ID found [${id}], Nothing was deleted.`,
+    );
+    return false;
+  }
+
+  console.log(
+    `Deletion successful: Task ID [${id}] It has been removed from the system.`,
+  );
+  return true;
+}

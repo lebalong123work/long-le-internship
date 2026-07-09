@@ -49,3 +49,70 @@ function addTask(taskname, estPomodoros) {
   console.log(`More success: "${newTask.name}" (Est: ${newTask.est})`);
   return newTask;
 }
+
+// Logic: Edit Task
+function editTask(id, newName, newAct, newEst) {
+  // Block incoming junk IDs.
+  if (typeof id !== "string" || id.trim() === "") {
+    console.error("Error: Editing Task: Invalid or blank ID.");
+    return false;
+  }
+
+  // Find Task
+  const taskIndex = tasks.findIndex((task) => task.id === id);
+  if (taskIndex === -1) {
+    console.error(`Error: Editing Task: No tasks with ID found [${id}].`);
+    return false;
+  }
+
+  const task = tasks[taskIndex];
+
+  // Check act
+
+  // Block Blank Name
+  if (typeof newName !== "string" || newName.trim() === "") {
+    console.error("Error: Editing Task: Invalid or blank task name.");
+    return false;
+  }
+
+  // Block Blank Act & Decimal Logic Handling
+  if (newAct === undefined || newAct === "" || newAct === null) {
+    console.error("Error: Editing Task: Act Pomodoros cannot be left blank.");
+    return false;
+  }
+  let finalAct = Number(newAct);
+  if (Number.isNaN(finalAct) || finalAct < 0) {
+    console.error(
+      "Error: Editing Task: The Act Pomodoros number must be >= 0.",
+    );
+    return false;
+  }
+  if (finalAct >= 1) {
+    finalAct = Math.floor(finalAct);
+  }
+
+  // Block Blank Est. & Decimal Logic Handling
+  if (newEst === undefined || newEst === "" || newEst === null) {
+    console.error("Error: Editing Task: Est Pomodoros cannot be left blank.");
+    return false;
+  }
+  let finalEst = Number(newEst);
+  if (Number.isNaN(finalEst) || finalEst < 0) {
+    console.error(
+      "Error: Editing Task: The Est Pomodoros number must be >= 0.",
+    );
+    return false;
+  }
+  if (finalEst >= 1) {
+    finalEst = Math.floor(finalEst);
+  }
+
+  task.name = newName.trim();
+  task.act = finalAct;
+  task.est = finalEst;
+
+  console.log(
+    `Edited successfully: Task ID [${id}] has been updated. (Act: ${task.act}, Est: ${task.est})`,
+  );
+  return true;
+}

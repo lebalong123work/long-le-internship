@@ -1,72 +1,51 @@
-const showTaskFormBtn = document.getElementById("showTaskFormBtn");
-const taskFormContainer = document.getElementById("taskFormContainer");
-const cancelTaskBtn = document.getElementById("cancelTaskBtn");
-const saveTaskBtn = document.getElementById("saveTaskBtn");
-const taskNameInput = document.getElementById("taskNameInput");
-const estPomodorosInput = document.getElementById("estPomodorosInput");
-const taskList = document.getElementById("taskList");
-
 let tasks = [];
 
-// Hide/Show Forms
-taskFormContainer.style.display = "none";
+// Logic: Add a new task
+function addTask(taskname, estPomodoros) {
+  // Check Name Task
+  if (typeof taskname !== "string" || taskname.trim() === "") {
+    console.error("Error: Adding Task: Invalid or blank task name.");
+    return false;
+  }
 
-showTaskFormBtn.addEventListener("click", () => {
-  showTaskFormBtn.style.display = "none";
-  taskFormContainer.style.display = "block";
-});
+  // BLOCK BLANK: If no input is entered, enter an empty string, or null. Error will be reported.
+  if (
+    estPomodoros === undefined ||
+    estPomodoros === "" ||
+    estPomodoros === null
+  ) {
+    console.error("Error: Adding Task: Est. Pomodoros cannot be left blank.");
+    return false;
+  }
 
-cancelTaskBtn.addEventListener("click", () => {
-  taskFormContainer.style.display = "none";
-  showTaskFormBtn.style.display = "block";
+  let finalEst = Number(estPomodoros);
 
-  taskNameInput.value = "";
-  estPomodorosInput.value = "1";
-});
+  // Block invalid values ​​(NaN) and negative numbers.
+  if (Number.isNaN(finalEst) || finalEst < 0) {
+    console.error(
+      "Error: Adding Task: The Est. Pomodoros number must be >= 0.",
+    );
+    return false;
+  }
 
-//  Update UI
-
-function renderTasks() {
-  taskList.innerHTML = "";
-
-  tasks.forEach((task) => {
-    const liElement = document.createElement("li");
-
-    liElement.textContent = `${task.name} (Est: ${task.est} | Act: ${task.act})`;
-
-    taskList.appendChild(liElement);
-  });
-}
-
-// Save New Task
-saveTaskBtn.addEventListener("click", () => {
-  const taskName = taskNameInput.value.trim();
-  const estPomodoros = parseInt(estPomodorosInput.value);
-
-  if (taskName === "") {
-    alert("Please enter a task name!");
-    return;
+  // Handling decimal rules:
+  // - If less than 1 (0 to 0.9): Keep as is.
+  // - If 1 or more: Remove the decimal part.
+  if (finalEst >= 1) {
+    finalEst = Math.floor(finalEst);
   }
 
   const newId = crypto.randomUUID(); // Random ID
 
   const newTask = {
     id: newId,
-    name: taskName,
-    est: estPomodoros,
+    name: taskname.trim(),
+    est: finalEst,
     act: 0,
     isDone: false,
   };
 
   tasks.push(newTask);
-
-  renderTasks();
-
-  console.log("Current Tasks List:", tasks); // Check
-
-  taskFormContainer.style.display = "none";
-  showTaskFormBtn.style.display = "block";
-
-  taskNameInput.value = "";
-  estPomodorosInput.value = "1";
-});
+  console.log(`More success: "${newTask.name}" (Est: ${newTask.est})`);
+  return newTask;
+}

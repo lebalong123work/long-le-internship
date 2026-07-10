@@ -170,3 +170,17 @@ function toggleTaskDone(id) {
   return true;
 }
 
+// Logic: Delete All Tasks
+function deleteAllTasks() {
+  // Check if the array is already empty
+  if (tasks.length === 0) {
+    console.warn("Warning: Delete All: The task list is already empty. Nothing to delete.");
+    return false;
+  }
+
+  // Clear the array
+  tasks = [];
+  
+  console.log("Delete All successful: All tasks have been completely cleared.");
+  return true;
+}

@@ -144,3 +144,29 @@ function deleteTask(id) {
   );
   return true;
 }
+
+// Logic: Toggle Task Done Status
+function toggleTaskDone(id) {
+  // Block junk ID input
+  if (typeof id !== "string" || id.trim() === "") {
+    console.error("Error: Toggling Task: Invalid or blank ID.");
+    return false;
+  }
+
+  // Find Task
+  const taskIndex = tasks.findIndex((task) => task.id === id);
+  if (taskIndex === -1) {
+    console.error(`Error: Toggling Task: No tasks with ID found [${id}].`);
+    return false;
+  }
+
+  // Toggle the status
+  const task = tasks[taskIndex];
+  task.isDone = !task.isDone;
+
+  console.log(
+    `Status updated: Task "${task.name}" is now ${task.isDone ? "DONE (True)" : "NOT DONE (False)"}.`,
+  );
+  return true;
+}
+

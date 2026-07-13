@@ -174,13 +174,63 @@ function toggleTaskDone(id) {
 function deleteAllTasks() {
   // Check if the array is already empty
   if (tasks.length === 0) {
-    console.warn("Warning: Delete All: The task list is already empty. Nothing to delete.");
+    console.warn(
+      "Warning: Delete All: The task list is already empty. Nothing to delete.",
+    );
     return false;
   }
 
   // Clear the array
   tasks = [];
-  
+
   console.log("Delete All successful: All tasks have been completely cleared.");
   return true;
+}
+
+function calculateTotals() {
+  return tasks.reduce(
+    (acc, task) => {
+      acc.totalEst += task.est;
+      acc.totalAct += task.act;
+
+      if (!task.isDone && task.est > task.act) {
+        acc.remainingPomos += task.est - task.act;
+      }
+
+      return acc;
+    },
+    { totalEst: 0, totalAct: 0, remainingPomos: 0 },
+  );
+}
+
+function calculateFinishTime(remainingPomos) {
+  if (remainingPomos <= 0) return "";
+
+  const POMO_SECONDS = 25 * 60;
+  const totalSeconds = remainingPomos * POMO_SECONDS;
+
+  const hoursNeeded = (totalSeconds / 3600).toFixed(1);
+
+  const now = new Date();
+
+  now.setSeconds(now.getSeconds() + totalSeconds);
+
+  const hours = now.getHours();
+  const minutes = now.getMinutes().toString().padStart(2, "0");
+
+  return `${hours}:${minutes} (${hoursNeeded}h)`;
+}
+
+function getAggregationData() {
+  const totals = calculateTotals();
+  const finishAtString = calculateFinishTime(totals.remainingPomos);
+
+  const data = {
+    totalEst: totals.totalEst,
+    totalAct: totals.totalAct,
+    finishAt: finishAtString,
+  };
+
+  console.log("Aggregation Data:", data);
+  return data;
 }

@@ -1,31 +1,56 @@
 let tasks = [];
+const POMODORO_MINUTES = 25;
+const SECONDS_PER_HOUR = 3600;
+
+function getTaskIndexById(id, actionName) {
+  if (typeof id !== "string" || id.trim() === "") {
+    console.error(`Error: ${actionName}: Invalid or blank ID.`);
+    return -1;
+  }
+
+  const taskIndex = tasks.findIndex((task) => task.id === id);
+  if (taskIndex === -1) {
+    console.error(`Error: ${actionName}: No tasks with ID found [${id}].`);
+    return -1;
+  }
+
+  return taskIndex;
+}
+
+function parsePomodoro(value, fieldName, actionName) {
+  if (value === undefined || value === "" || value === null) {
+    console.error(`Error: ${actionName}: ${fieldName} cannot be left blank.`);
+    return null;
+  }
+
+  let finalVal = Number(value);
+
+  if (Number.isNaN(finalVal) || finalVal < 0) {
+    console.error(
+      `Error: ${actionName}: The ${fieldName} number must be >= 0.`,
+    );
+    return null;
+  }
+
+  if (finalVal >= 1) {
+    finalVal = Math.floor(finalVal);
+  }
+
+  return finalVal;
+}
 
 // Logic: Add a new task
 function addTask(taskname, estPomodoros) {
   // Check Name Task
   if (typeof taskname !== "string" || taskname.trim() === "") {
     console.error("Error: Adding Task: Invalid or blank task name.");
-    return false;
+    return null;
   }
 
   // BLOCK BLANK: If no input is entered, enter an empty string, or null. Error will be reported.
-  if (
-    estPomodoros === undefined ||
-    estPomodoros === "" ||
-    estPomodoros === null
-  ) {
-    console.error("Error: Adding Task: Est. Pomodoros cannot be left blank.");
-    return false;
-  }
-
-  let finalEst = Number(estPomodoros);
-
-  // Block invalid values ​​(NaN) and negative numbers.
-  if (Number.isNaN(finalEst) || finalEst < 0) {
-    console.error(
-      "Error: Adding Task: The Est. Pomodoros number must be >= 0.",
-    );
-    return false;
+  let finalEst = parsePomodoro(estPomodoros, "Est. Pomodoros", "Adding Task");
+  if (finalEst === null) {
+    return null;
   }
 
   // Handling decimal rules:
@@ -53,17 +78,8 @@ function addTask(taskname, estPomodoros) {
 // Logic: Edit Task
 function editTask(id, newName, newAct, newEst) {
   // Block incoming junk IDs.
-  if (typeof id !== "string" || id.trim() === "") {
-    console.error("Error: Editing Task: Invalid or blank ID.");
-    return false;
-  }
-
-  // Find Task
-  const taskIndex = tasks.findIndex((task) => task.id === id);
-  if (taskIndex === -1) {
-    console.error(`Error: Editing Task: No tasks with ID found [${id}].`);
-    return false;
-  }
+  const taskIndex = getTaskIndexById(id, "Editing Task");
+  if (taskIndex === -1) return false;
 
   const task = tasks[taskIndex];
 
@@ -76,36 +92,12 @@ function editTask(id, newName, newAct, newEst) {
   }
 
   // Block Blank Act & Decimal Logic Handling
-  if (newAct === undefined || newAct === "" || newAct === null) {
-    console.error("Error: Editing Task: Act Pomodoros cannot be left blank.");
-    return false;
-  }
-  let finalAct = Number(newAct);
-  if (Number.isNaN(finalAct) || finalAct < 0) {
-    console.error(
-      "Error: Editing Task: The Act Pomodoros number must be >= 0.",
-    );
-    return false;
-  }
-  if (finalAct >= 1) {
-    finalAct = Math.floor(finalAct);
-  }
+  let finalAct = parsePomodoro(newAct, "Act Pomodoros", "Editing Task");
+  if (finalAct === null) return false;
 
   // Block Blank Est. & Decimal Logic Handling
-  if (newEst === undefined || newEst === "" || newEst === null) {
-    console.error("Error: Editing Task: Est Pomodoros cannot be left blank.");
-    return false;
-  }
-  let finalEst = Number(newEst);
-  if (Number.isNaN(finalEst) || finalEst < 0) {
-    console.error(
-      "Error: Editing Task: The Est Pomodoros number must be >= 0.",
-    );
-    return false;
-  }
-  if (finalEst >= 1) {
-    finalEst = Math.floor(finalEst);
-  }
+  let finalEst = parsePomodoro(newEst, "Est Pomodoros", "Editing Task");
+  if (finalEst === null) return false;
 
   task.name = newName.trim();
   task.act = finalAct;
@@ -119,28 +111,13 @@ function editTask(id, newName, newAct, newEst) {
 
 // Logic: Delete a Task
 function deleteTask(id) {
-  // Block junk ID input
-  if (typeof id !== "string" || id.trim() === "") {
-    console.error("Task Deletion Error: ID task invalid.");
-    return false;
-  }
+  const taskIndex = getTaskIndexById(id, "Deleting Task");
+  if (taskIndex === -1) return false;
 
-  // Remember the array length before deleting
-  const initialLength = tasks.length;
-
-  // Filter out tasks with the corresponding ID.
-  tasks = tasks.filter((task) => task.id !== id);
-
-  // Verify that the deletion was actually done.
-  if (tasks.length === initialLength) {
-    console.warn(
-      `Warning: Deleted: No task with ID found [${id}], Nothing was deleted.`,
-    );
-    return false;
-  }
+  tasks.splice(taskIndex, 1);
 
   console.log(
-    `Deletion successful: Task ID [${id}] It has been removed from the system.`,
+    `Deletion successful: Task ID [${id}] has been removed from the system.`,
   );
   return true;
 }
@@ -148,17 +125,8 @@ function deleteTask(id) {
 // Logic: Toggle Task Done Status
 function toggleTaskDone(id) {
   // Block junk ID input
-  if (typeof id !== "string" || id.trim() === "") {
-    console.error("Error: Toggling Task: Invalid or blank ID.");
-    return false;
-  }
-
-  // Find Task
-  const taskIndex = tasks.findIndex((task) => task.id === id);
-  if (taskIndex === -1) {
-    console.error(`Error: Toggling Task: No tasks with ID found [${id}].`);
-    return false;
-  }
+  const taskIndex = getTaskIndexById(id, "Toggling Task");
+  if (taskIndex === -1) return false;
 
   // Toggle the status
   const task = tasks[taskIndex];
@@ -190,11 +158,13 @@ function deleteAllTasks() {
 function calculateTotals() {
   return tasks.reduce(
     (acc, task) => {
-      acc.totalEst += task.est;
       acc.totalAct += task.act;
+      if (!task.isDone) {
+        acc.totalEst += task.est;
 
-      if (!task.isDone && task.est > task.act) {
-        acc.remainingPomos += task.est - task.act;
+        if (!task.isDone && task.est > task.act) {
+          acc.remainingPomos += task.est - task.act;
+        }
       }
 
       return acc;
@@ -206,10 +176,10 @@ function calculateTotals() {
 function calculateFinishTime(remainingPomos) {
   if (remainingPomos <= 0) return "";
 
-  const POMO_SECONDS = 25 * 60;
+  const POMO_SECONDS = POMODORO_MINUTES * 60;
   const totalSeconds = remainingPomos * POMO_SECONDS;
 
-  const hoursNeeded = (totalSeconds / 3600).toFixed(1);
+  const hoursNeeded = (totalSeconds / SECONDS_PER_HOUR).toFixed(1);
 
   const now = new Date();
 

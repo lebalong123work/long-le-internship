@@ -1,5 +1,8 @@
 let tasks = [];
 const POMODORO_MINUTES = 25;
+const SHORT_BREAK_MINUTES = 5; // Short break: 5 minutes
+const LONG_BREAK_MINUTES = 15; // Long break: 15 minutes
+const LONG_BREAK_INTERVAL = 4; // Long break every 4 sets
 const SECONDS_PER_HOUR = 3600;
 
 function getTaskIndexById(id, actionName) {
@@ -56,9 +59,6 @@ function addTask(taskname, estPomodoros) {
   // Handling decimal rules:
   // - If less than 1 (0 to 0.9): Keep as is.
   // - If 1 or more: Remove the decimal part.
-  if (finalEst >= 1) {
-    finalEst = Math.floor(finalEst);
-  }
 
   const newId = crypto.randomUUID(); // Random ID
 
@@ -177,7 +177,19 @@ function calculateFinishTime(remainingPomos) {
   if (remainingPomos <= 0) return "";
 
   const POMO_SECONDS = POMODORO_MINUTES * 60;
-  const totalSeconds = remainingPomos * POMO_SECONDS;
+  const workSeconds = remainingPomos * POMO_SECONDS;
+
+  const totalPomosForBreak = Math.ceil(remainingPomos);
+  
+  const totalBreaks = totalPomosForBreak > 0 ? totalPomosForBreak - 1 : 0;
+
+  const longBreaks = Math.floor(totalBreaks / LONG_BREAK_INTERVAL);
+  const shortBreaks = totalBreaks - longBreaks;
+  
+  const shortBreakSeconds = shortBreaks * SHORT_BREAK_MINUTES * 60;
+  const longBreakSeconds = longBreaks * LONG_BREAK_MINUTES * 60;
+
+  const totalSeconds = workSeconds + shortBreakSeconds + longBreakSeconds;
 
   const hoursNeeded = (totalSeconds / SECONDS_PER_HOUR).toFixed(1);
 
@@ -185,7 +197,7 @@ function calculateFinishTime(remainingPomos) {
 
   now.setSeconds(now.getSeconds() + totalSeconds);
 
-  const hours = now.getHours();
+  const hours = now.getHours().toString().padStart(2, "0");
   const minutes = now.getMinutes().toString().padStart(2, "0");
 
   return `${hours}:${minutes} (${hoursNeeded}h)`;

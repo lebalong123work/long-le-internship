@@ -1,11 +1,73 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pomodoro Logic Test</title>
-    <script src="index.js" defer></script>
-</head>
-<body>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pomofocus</title>
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="index.js"></script>
+  </head>
+
+  <body>
+    <h1>Pomofocus</h1>
+
+    <!-- Aggregation -->
+    <div id="summaryBoard">
+      <strong>Pomos:</strong> <span id="actCount">0</span> /
+      <span id="estCount">0</span> | <strong>Finish At:</strong>
+      <span id="finishTime">--:--</span>
+    </div>
+
+    <button id="showTaskFormBtn">Add Task</button>
+    <button id="deleteAllBtn" style="color: red">Delete All Tasks</button>
+
+    <!-- Form Add and Edit -->
+    <div
+      id="taskFormContainer"
+      class="hidden"
+      style="margin-top: 15px; padding: 10px; border: 1px solid #ccc"
+    >
+      <h3 id="formTitle">Add Task</h3>
+
+      <div>
+        <label for="taskNameInput">Task:</label>
+        <input
+          type="text"
+          id="taskNameInput"
+          placeholder="What are you working on?"
+        />
+      </div>
+
+      <div style="margin-top: 10px">
+        <label for="estPomodorosInput">Est. Pomodoros:</label>
+        <input
+          type="number"
+          id="estPomodorosInput"
+          value="1"
+          min="1"
+          step="1"
+        />
+      </div>
+
+      <!-- Act Pomodoros  Edit -->
+      <div id="actPomodorosContainer" class="hidden" style="margin-top: 10px">
+        <label for="actPomodorosInput">Act. Pomodoros:</label>
+        <input
+          type="number"
+          id="actPomodorosInput"
+          value="0"
+          min="0"
+          step="1"
+        />
+      </div>
+
+      <div style="margin-top: 15px">
+        <button id="cancelTaskBtn">Cancel</button>
+        <button id="saveTaskBtn">Save</button>
+      </div>
+    </div>
+
+    <h2>Tasks List</h2>
+    <ul id="taskList" style="list-style-type: none; padding: 0"></ul>
+  </body>
 </html>

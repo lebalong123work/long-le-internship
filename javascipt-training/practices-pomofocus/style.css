@@ -1,0 +1,19 @@
+.hidden {
+  display: none;
+}
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.task-done span.task-name {
+  text-decoration: line-through;
+  color: gray;
+}
+#summaryBoard {
+  padding: 10px;
+  background: #f0f0f0;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}

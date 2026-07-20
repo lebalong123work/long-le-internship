@@ -5,8 +5,6 @@ const LONG_BREAK_MINUTES = 15; // Long break: 15 minutes
 const LONG_BREAK_INTERVAL = 4; // Long break every 4 sets
 const SECONDS_PER_HOUR = 3600;
 
-let editingTaskId = null;
-
 function getTaskIndexById(id, actionName) {
   if (typeof id !== "string" || id.trim() === "") {
     console.error(`Error: ${actionName}: Invalid or blank ID.`);
@@ -44,8 +42,12 @@ function parsePomodoro(value, fieldName, actionName) {
   return finalVal;
 }
 
+export function getTasks() {
+  return tasks;
+}
+
 // Logic: Add a new task
-function addTask(taskname, estPomodoros) {
+export function addTask(taskname, estPomodoros) {
   // Check Name Task
   if (typeof taskname !== "string" || taskname.trim() === "") {
     console.error("Error: Adding Task: Invalid or blank task name.");
@@ -78,7 +80,7 @@ function addTask(taskname, estPomodoros) {
 }
 
 // Logic: Edit Task
-function editTask(id, newName, newAct, newEst) {
+export function editTask(id, newName, newAct, newEst) {
   // Block incoming junk IDs.
   const taskIndex = getTaskIndexById(id, "Editing Task");
   if (taskIndex === -1) return false;
@@ -112,7 +114,7 @@ function editTask(id, newName, newAct, newEst) {
 }
 
 // Logic: Delete a Task
-function deleteTask(id) {
+export function deleteTask(id) {
   const taskIndex = getTaskIndexById(id, "Deleting Task");
   if (taskIndex === -1) return false;
 
@@ -125,7 +127,7 @@ function deleteTask(id) {
 }
 
 // Logic: Toggle Task Done Status
-function toggleTaskDone(id) {
+export function toggleTaskDone(id) {
   // Block junk ID input
   const taskIndex = getTaskIndexById(id, "Toggling Task");
   if (taskIndex === -1) return false;
@@ -141,7 +143,7 @@ function toggleTaskDone(id) {
 }
 
 // Logic: Delete All Tasks
-function deleteAllTasks() {
+export function deleteAllTasks() {
   // Check if the array is already empty
   if (tasks.length === 0) {
     console.warn(
@@ -205,7 +207,7 @@ function calculateFinishTime(remainingPomos) {
   return `${hours}:${minutes} (${hoursNeeded}h)`;
 }
 
-function getAggregationData() {
+export function getAggregationData() {
   const totals = calculateTotals();
   const finishAtString = calculateFinishTime(totals.remainingPomos);
 
@@ -218,134 +220,3 @@ function getAggregationData() {
   console.log("Aggregation Data:", data);
   return data;
 }
-// UI
-
-const showTaskFormBtn = document.getElementById("showTaskFormBtn");
-const taskFormContainer = document.getElementById("taskFormContainer");
-const formTitle = document.getElementById("formTitle");
-const taskNameInput = document.getElementById("taskNameInput");
-const estPomodorosInput = document.getElementById("estPomodorosInput");
-const actPomodorosContainer = document.getElementById("actPomodorosContainer");
-const actPomodorosInput = document.getElementById("actPomodorosInput");
-const cancelTaskBtn = document.getElementById("cancelTaskBtn");
-const saveTaskBtn = document.getElementById("saveTaskBtn");
-const taskListUI = document.getElementById("taskList");
-const deleteAllBtn = document.getElementById("deleteAllBtn");
-
-// Elements cho Aggregation
-const actCountUI = document.getElementById("actCount");
-const estCountUI = document.getElementById("estCount");
-const finishTimeUI = document.getElementById("finishTime");
-
-// Form Add Task
-showTaskFormBtn.addEventListener("click", () => {
-  editingTaskId = null;
-  formTitle.textContent = "Add Task";
-  taskNameInput.value = "";
-  estPomodorosInput.value = 1;
-  actPomodorosContainer.classList.add("hidden");
-  taskFormContainer.classList.remove("hidden");
-});
-
-// Cancel
-cancelTaskBtn.addEventListener("click", () => {
-  taskFormContainer.classList.add("hidden");
-});
-
-// Save
-saveTaskBtn.addEventListener("click", () => {
-  const nameVal = taskNameInput.value;
-  const estVal = estPomodorosInput.value;
-  const actVal = actPomodorosInput.value;
-
-  if (editingTaskId) {
-    //Logic Edit Task
-    const success = editTask(editingTaskId, nameVal, actVal, estVal);
-    if (success) taskFormContainer.classList.add("hidden");
-  } else {
-    // Logic Add Task
-    const newTask = addTask(nameVal, estVal);
-    if (newTask) taskFormContainer.classList.add("hidden");
-  }
-
-  renderTasks();
-});
-
-//Delete All
-deleteAllBtn.addEventListener("click", () => {
-  if (confirm("Are you sure you want to delete all tasks?")) {
-    deleteAllTasks();
-    renderTasks();
-  }
-});
-
-// UI list
-function renderTasks() {
-  taskListUI.innerHTML = "";
-
-  tasks.forEach((task) => {
-    const li = document.createElement("li");
-    li.className = "task-item";
-    if (task.isDone) li.classList.add("task-done");
-
-    // Checkbox Done
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.checked = task.isDone;
-    checkbox.addEventListener("change", () => {
-      toggleTaskDone(task.id);
-      renderTasks();
-    });
-
-    // Task Name
-    const nameSpan = document.createElement("span");
-    nameSpan.className = "task-name";
-    nameSpan.textContent = task.name;
-    nameSpan.style.flex = "1";
-
-    //Act / Est Count
-    const countSpan = document.createElement("span");
-    countSpan.textContent = `${task.act} / ${task.est}`;
-    countSpan.style.fontWeight = "bold";
-
-    // Edit Button
-    const editBtn = document.createElement("button");
-    editBtn.textContent = "Edit";
-    editBtn.addEventListener("click", () => {
-      editingTaskId = task.id;
-      formTitle.textContent = "Edit Task";
-      taskNameInput.value = task.name;
-      estPomodorosInput.value = task.est;
-      actPomodorosInput.value = task.act;
-      actPomodorosContainer.classList.remove("hidden");
-      taskFormContainer.classList.remove("hidden");
-    });
-
-    //Delete Button
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Delete";
-    deleteBtn.addEventListener("click", () => {
-      deleteTask(task.id);
-      renderTasks();
-    });
-
-    li.appendChild(checkbox);
-    li.appendChild(nameSpan);
-    li.appendChild(countSpan);
-    li.appendChild(editBtn);
-    li.appendChild(deleteBtn);
-
-    taskListUI.appendChild(li);
-  });
-
-  updateAggregationUI();
-}
-
-function updateAggregationUI() {
-  const data = getAggregationData();
-  actCountUI.textContent = data.totalAct;
-  estCountUI.textContent = data.totalEst;
-  finishTimeUI.textContent = data.finishAt || "--:--";
-}
-
-renderTasks();

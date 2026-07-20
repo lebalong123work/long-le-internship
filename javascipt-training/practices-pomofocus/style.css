@@ -17,3 +17,31 @@
   margin-bottom: 20px;
   border-radius: 5px;
 }
+
+#deleteAllBtn {
+  color: red;
+}
+
+#taskFormContainer {
+  margin-top: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+#taskList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.action-group {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.form-group {
+  margin-top: 10px;
+}
+
+.form-buttons {
+  margin-top: 15px;
+}

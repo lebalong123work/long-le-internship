@@ -5,28 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pomofocus</title>
     <link rel="stylesheet" href="style.css" />
-    <script type="module" src="index.js"></script>
+    <script type="module" src="main.js"></script>
   </head>
 
   <body>
     <h1>Pomofocus</h1>
 
-    <!-- Aggregation -->
+    <!-- Aggregation Summary -->
     <div id="summaryBoard">
       <strong>Pomos:</strong> <span id="actCount">0</span> /
       <span id="estCount">0</span> | <strong>Finish At:</strong>
       <span id="finishTime">--:--</span>
     </div>
 
-    <button id="showTaskFormBtn">Add Task</button>
-    <button id="deleteAllBtn" style="color: red">Delete All Tasks</button>
+    <div class="action-group">
+      <button id="showTaskFormBtn">Add Task</button>
+      <button id="deleteAllBtn">Delete All Tasks</button>
+    </div>
 
     <!-- Form Add and Edit -->
-    <div
-      id="taskFormContainer"
-      class="hidden"
-      style="margin-top: 15px; padding: 10px; border: 1px solid #ccc"
-    >
+    <div id="taskFormContainer" class="hidden">
       <h3 id="formTitle">Add Task</h3>
 
       <div>
@@ -38,7 +36,7 @@
         />
       </div>
 
-      <div style="margin-top: 10px">
+      <div class="form-group">
         <label for="estPomodorosInput">Est. Pomodoros:</label>
         <input
           type="number"
@@ -49,8 +47,7 @@
         />
       </div>
 
-      <!-- Act Pomodoros  Edit -->
-      <div id="actPomodorosContainer" class="hidden" style="margin-top: 10px">
+      <div id="actPomodorosContainer" class="hidden form-group">
         <label for="actPomodorosInput">Act. Pomodoros:</label>
         <input
           type="number"
@@ -61,13 +58,13 @@
         />
       </div>
 
-      <div style="margin-top: 15px">
+      <div class="form-buttons">
         <button id="cancelTaskBtn">Cancel</button>
         <button id="saveTaskBtn">Save</button>
       </div>
     </div>
 
     <h2>Tasks List</h2>
-    <ul id="taskList" style="list-style-type: none; padding: 0"></ul>
+    <ul id="taskList"></ul>
   </body>
 </html>

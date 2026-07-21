@@ -1,11 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pomodoro Logic Test</title>
-    <script src="index.js" defer></script>
-</head>
-<body>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pomofocus</title>
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="main.js"></script>
+  </head>
+
+  <body>
+    <h1>Pomofocus</h1>
+
+    <!-- Aggregation Summary -->
+    <div id="summaryBoard">
+      <strong>Pomos:</strong> <span id="actCount">0</span> /
+      <span id="estCount">0</span> | <strong>Finish At:</strong>
+      <span id="finishTime">--:--</span>
+    </div>
+
+    <div class="action-group">
+      <button id="showTaskFormBtn">Add Task</button>
+      <button id="deleteAllBtn">Delete All Tasks</button>
+    </div>
+
+    <!-- Form Add and Edit -->
+    <div id="taskFormContainer" class="hidden">
+      <h3 id="formTitle">Add Task</h3>
+
+      <div>
+        <label for="taskNameInput">Task:</label>
+        <input
+          type="text"
+          id="taskNameInput"
+          placeholder="What are you working on?"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="estPomodorosInput">Est. Pomodoros:</label>
+        <input
+          type="number"
+          id="estPomodorosInput"
+          value="1"
+          min="1"
+          step="1"
+        />
+      </div>
+
+      <div id="actPomodorosContainer" class="hidden form-group">
+        <label for="actPomodorosInput">Act. Pomodoros:</label>
+        <input
+          type="number"
+          id="actPomodorosInput"
+          value="0"
+          min="0"
+          step="1"
+        />
+      </div>
+
+      <div class="form-buttons">
+        <button id="cancelTaskBtn">Cancel</button>
+        <button id="saveTaskBtn">Save</button>
+      </div>
+    </div>
+
+    <h2>Tasks List</h2>
+    <ul id="taskList"></ul>
+  </body>
 </html>

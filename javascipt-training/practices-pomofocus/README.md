@@ -1,5 +1,4 @@
-```markdown
-# JavaScript Practice - Pomofocus
+# JavaScript Practice - Pomofocus Clone
 
 This project is a front-end exercise focused on building a Pomodoro Web Application, heavily inspired by Pomofocus.io. The purpose is to apply foundational concepts of HTML5, CSS3, and JavaScript (ES6), including DOM manipulation, data management, and asynchronous operations.
 
@@ -51,7 +50,7 @@ This project uses a modular component-based approach to keep the code clean and 
 │   │   └── timer.css        # Styles for the countdown clock and timer buttons
 │   ├── base.css             # Contains CSS variables (colors, fonts) and global resets
 │   └── style.css            # The main CSS file that imports all the files above
-├── 📁 icons/                # Folder containing all image icons
+├── 📁 icons/                # Folder containing all image assets and SVG icons
 ├── index.html               # The main HTML skeleton/layout of the application
 ├── main.js                  # The entry point that initializes the app when loaded
 ├── taskLogic.js             # Core JS logic: Manages arrays, calculations, and data
@@ -80,7 +79,7 @@ This project uses a modular component-based approach to keep the code clean and 
 
 ```bash
 git clone [https://github.com/lebalong123work/long-le-internship.git](https://github.com/lebalong123work/long-le-internship.git)
-cd long-le-internship\javascipt-training\practices-pomofocus
+cd long-le-internship/javascript-training/pomofocus-clone
 ```
 
 *Or download the .zip file directly, then extract it to your project folder.*
@@ -93,5 +92,3 @@ Because this project uses JavaScript ES6 Modules (`type="module"`), you cannot j
 2. Install the **Live Server** extension (if you haven't already).
 3. Right-click on `index.html` and select **"Open with Live Server"**.
 4. The app will automatically open in your default browser (Chrome is recommended).
-
-```

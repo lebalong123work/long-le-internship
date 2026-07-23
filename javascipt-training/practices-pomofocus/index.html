@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pomofocus</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script type="module" src="main.js"></script>
+  </head>
+
+  <body>
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+    </div>
+
+    <div class="container">
+      <header class="app-header">
+        <a href="/app" class="header-brand">
+          <img
+            src="icons/icon-white2.png"
+            alt="pomofocus icon"
+            class="brand-icon"
+          />
+          <h1>Pomofocus</h1>
+        </a>
+
+        <div class="header-actions">
+          <button class="btn-header">
+            <img
+              src="icons/graph-white.png"
+              alt="graph icon"
+              class="btn-icon"
+            />
+            <span>Report</span>
+          </button>
+
+          <button class="btn-header">
+            <img
+              src="icons/config-white.png"
+              alt="config icon"
+              class="btn-icon"
+            />
+            <span>Setting</span>
+          </button>
+
+          <div class="header-user-group">
+            <a href="/signup" style="text-decoration: none">
+              <button class="btn-header">
+                <img
+                  src="icons/user-white.png"
+                  alt="user icon"
+                  class="btn-icon"
+                />
+                <span>Sign In</span>
+              </button>
+            </a>
+
+            <div class="more-options">
+              <button class="btn-header btn-icon-only">
+                <img
+                  src="icons/threedots-white.png"
+                  alt="three dots"
+                  class="btn-icon"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="timer-container">
+        <div class="timer-modes">
+          <button class="mode-btn active" id="pomoBtn">Pomodoro</button>
+          <button class="mode-btn" id="shortBreakBtn">Short Break</button>
+          <button class="mode-btn" id="longBreakBtn">Long Break</button>
+        </div>
+
+        <div class="time-display" id="timeDisplay">25:00</div>
+
+        <div class="timer-controls">
+          <div class="start-btn-wrapper">
+            <button class="start-btn" id="startTimerBtn">START</button>
+          </div>
+          <button class="skip-btn hidden" id="skipTimerBtn">
+            <img src="icons/next-white3.png" alt="next icon" />
+          </button>
+        </div>
+      </div>
+
+      <div class="current-task-status">
+        <div id="currentTaskNumber" class="task-number">#1</div>
+        <div id="currentTaskMessage" class="task-message">Time to focus!</div>
+      </div>
+
+      <div class="tasks-header">
+        <h2>Tasks</h2>
+
+        <div class="tasks-options-wrapper">
+          <button class="btn-task-options" id="taskDropdownBtn">
+            <img src="icons/threedots-white.png" alt="three dots" />
+          </button>
+
+          <div class="tasks-dropdown hidden" id="taskDropdownMenu">
+            <button class="dropdown-item-task" id="deleteAllBtn">
+              <img
+                src="icons/delete-black.png"
+                alt="clear icon"
+                class="dropdown-icon"
+              />
+              Clear all tasks
+            </button>
+          </div>
+        </div>
+      </div>
+      <ul id="taskList"></ul>
+      <div class="action-group">
+        <button id="showTaskFormBtn" class="btn-add-task">
+          <img src="icons/plus-circle-white.png" alt="plus" class="plus-icon" />
+          Add Task
+        </button>
+      </div>
+      <div id="taskFormContainer" class="hidden task-form-container">
+        <h3 id="formTitle" class="form-title">Add Task</h3>
+
+        <div class="form-group">
+          <label for="taskNameInput" class="visually-hidden">Task name</label>
+          <input
+            type="text"
+            id="taskNameInput"
+            placeholder="What are you working on?"
+            class="input-base input-text"
+          />
+        </div>
+
+        <div class="form-group row-group">
+          <div class="input-col">
+            <label for="estPomodorosInput">Est Pomodoros</label>
+            <input
+              type="number"
+              id="estPomodorosInput"
+              value="1"
+              min="1"
+              step="1"
+              class="input-base input-number"
+            />
+          </div>
+
+          <div id="actPomodorosContainer" class="hidden input-col">
+            <label for="actPomodorosInput">Act Pomodoros</label>
+            <input
+              type="number"
+              id="actPomodorosInput"
+              value="0"
+              min="0"
+              step="1"
+              class="input-base input-number"
+            />
+          </div>
+        </div>
+
+        <div class="form-buttons">
+          <button id="deleteTaskBtn" class="btn-delete-task">
+            <img
+              src="icons/delete-black.png"
+              alt="delete icon"
+              class="trash-icon"
+            />
+          </button>
+
+          <div class="right-buttons">
+            <button id="cancelTaskBtn" class="btn-cancel">Cancel</button>
+            <button id="saveTaskBtn" class="btn-save">Save</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="summaryBoard" class="summary-board">
+        <span>
+          Pomos: <span id="actCount" class="summary-number">0</span> /
+          <span id="estCount" class="summary-number">0</span>
+        </span>
+        <span>
+          Finish At: <span id="finishTime" class="summary-number">--:--</span>
+        </span>
+      </div>
+    </div>
+
+    <template id="taskTemplate">
+      <li class="task-item">
+        <div class="task-left">
+          <button class="task-check-btn">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="check-icon"
+            >
+              <path d="M5 12l5 5L20 7"></path>
+            </svg>
+          </button>
+          <span class="task-name"></span>
+        </div>
+
+        <div class="task-right">
+          <span class="task-pomos"></span>
+          <button class="task-edit-btn">
+            <img
+              src="icons/vertical-ellipsis.png"
+              alt="edit task"
+              class="vertical-ellipsis-icon"
+            />
+          </button>
+        </div>
+      </li>
+    </template>
+  </body>
+</html>

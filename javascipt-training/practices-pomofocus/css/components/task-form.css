@@ -1,0 +1,137 @@
+.action-group {
+  max-width: var(--max-width-main);
+  margin: 0 auto 20px;
+}
+.btn-add-task {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  border: 2px dashed rgba(255, 255, 255, 0.4);
+  padding: 18px 0;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-add-task:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: var(--color-white);
+}
+.plus-icon {
+  width: 18px;
+  height: 18px;
+  opacity: 0.8;
+}
+
+.task-form-container {
+  max-width: var(--max-width-main);
+  margin: 0 auto 20px;
+  background-color: var(--color-white);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  animation: slideup 0.2s ease-out;
+  color: var(--text-dark);
+}
+
+.form-title {
+  color: var(--text-dark);
+  margin-bottom: 15px;
+  font-size: var(--fs-lg);
+}
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+.form-group label {
+  font-weight: bold;
+  font-size: var(--fs-sm);
+  margin-bottom: 6px;
+  color: var(--text-dark);
+}
+.row-group {
+  flex-direction: row;
+  gap: 15px;
+}
+
+.input-base {
+  background-color: var(--bg-input);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-dark);
+  font-weight: bold;
+  outline: none;
+}
+.input-text {
+  width: 100%;
+  padding: 12px;
+  font-size: var(--fs-md);
+  font-style: italic;
+}
+.input-number {
+  width: 80px;
+  padding: 10px;
+  font-size: var(--fs-md);
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-input);
+  padding: 15px 20px;
+  margin: 20px -20px -20px -20px;
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+}
+.right-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-delete-task {
+  background: none;
+  padding: 6px;
+  display: flex;
+  opacity: 0.5;
+}
+.btn-delete-task:hover {
+  opacity: 1;
+}
+.trash-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.btn-cancel {
+  background-color: transparent;
+  color: var(--text-muted);
+  padding: 8px 12px;
+  font-weight: bold;
+}
+.btn-cancel:hover {
+  color: var(--text-dark);
+}
+.btn-save {
+  background-color: var(--text-dark);
+  color: var(--color-white);
+  padding: 8px 20px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+}
+.btn-save:hover {
+  background-color: #333;
+}
+
+@keyframes slideup {
+  0% {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}

@@ -1,0 +1,18 @@
+.summary-board {
+  max-width: var(--max-width-main);
+  margin: 20px auto 0;
+  padding: 20px 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: var(--fs-md);
+  color: rgba(255, 255, 255, 0.7);
+}
+.summary-number {
+  font-size: var(--fs-xl);
+  font-weight: bold;
+  color: var(--color-white);
+  margin-left: 4px;
+}

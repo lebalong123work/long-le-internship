@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Exercise 3 - Form</title>
+  </head>
+  <body>
+    <h2>Sign Up Page</h2>
+
+    <form id="signupForm">
+      <table>
+        <tr>
+          <td></td>
+          <td id="emailError" style="color: red"></td>
+        </tr>
+        <tr>
+          <td>Email:</td>
+          <td><input type="text" id="emailInput" /></td>
+        </tr>
+
+        <tr>
+          <td></td>
+          <td id="usernameError" style="color: red"></td>
+        </tr>
+        <tr>
+          <td>Username:</td>
+          <td><input type="text" id="usernameInput" /></td>
+        </tr>
+
+        <tr>
+          <td></td>
+          <td id="passwordError" style="color: red"></td>
+        </tr>
+        <tr>
+          <td>Password:</td>
+          <td><input type="password" id="passwordInput" /></td>
+        </tr>
+
+        <tr>
+          <td></td>
+          <td id="confirmError" style="color: red"></td>
+        </tr>
+        <tr>
+          <td>Confirm Password:</td>
+          <td><input type="password" id="confirmInput" /></td>
+        </tr>
+      </table>
+
+      <br />
+      <button type="submit" id="signupBtn">SignUp</button>
+      <button type="reset">Reset</button>
+    </form>
+
+    <br /><br />
+    <div id="successInfo" style="margin-top: 20px"></div>
+
+    <script src="form.js"></script>
+  </body>
+</html>

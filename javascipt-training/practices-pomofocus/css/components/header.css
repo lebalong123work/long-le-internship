@@ -1,0 +1,61 @@
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 0 auto 41px;
+  max-width: 620px;
+  height: 60px;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+  color: var(--color-white);
+}
+
+.brand-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.header-brand h1 {
+  font-size: var(--fs-xl);
+  font-weight: bold;
+  margin: 0;
+}
+
+.header-actions,
+.header-user-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-header {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: var(--color-white);
+  padding: 6px 12px;
+  font-size: var(--fs-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 32px;
+}
+
+.btn-header:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+.btn-header.btn-icon-only {
+  padding: 6px 8px;
+  justify-content: center;
+}
+.btn-header img {
+  width: 16px;
+  height: 16px;
+  opacity: 0.9;
+}

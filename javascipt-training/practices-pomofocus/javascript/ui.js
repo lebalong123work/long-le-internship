@@ -29,6 +29,7 @@ const taskDropdownBtn = document.getElementById("taskDropdownBtn");
 const taskDropdownMenu = document.getElementById("taskDropdownMenu");
 
 const summaryBoard = document.getElementById("summaryBoard");
+const actCountUI = document.getElementById("actCount");
 const estCountUI = document.getElementById("estCount");
 const finishTimeUI = document.getElementById("finishTime");
 

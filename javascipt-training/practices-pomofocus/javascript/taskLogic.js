@@ -160,14 +160,18 @@ export function deleteAllTasks() {
 }
 
 function calculateTotals() {
-  return tasks.reduce(
+  const totals = tasks.reduce(
     (acc, task) => {
       acc.totalAct += task.act;
-      if (!task.isDone) {
-        acc.totalEst += task.est;
 
-        if (!task.isDone && task.est > task.act) {
-          acc.remainingPomos += task.est - task.act;
+      if (task.isDone) {
+        acc.totalEst += task.act;
+      } else {
+        const effectiveEst = Math.max(task.est, task.act);
+        acc.totalEst += effectiveEst;
+
+        if (effectiveEst > task.act) {
+          acc.remainingPomos += effectiveEst - task.act;
         }
       }
 
@@ -175,16 +179,23 @@ function calculateTotals() {
     },
     { totalEst: 0, totalAct: 0, remainingPomos: 0 },
   );
+
+  totals.totalAct = Number(totals.totalAct.toFixed(1));
+  totals.totalEst = Number(totals.totalEst.toFixed(1));
+  totals.remainingPomos = Number(totals.remainingPomos.toFixed(1));
+
+  return totals;
 }
 
 function calculateFinishTime(remainingPomos) {
-  if (remainingPomos <= 0) return "";
+  if (remainingPomos < 0) {
+    remainingPomos = 0;
+  }
 
   const POMO_SECONDS = POMODORO_MINUTES * 60;
   const workSeconds = remainingPomos * POMO_SECONDS;
 
   const totalPomosForBreak = Math.ceil(remainingPomos);
-
   const totalBreaks = totalPomosForBreak > 0 ? totalPomosForBreak - 1 : 0;
 
   const longBreaks = Math.floor(totalBreaks / LONG_BREAK_INTERVAL);
@@ -195,10 +206,9 @@ function calculateFinishTime(remainingPomos) {
 
   const totalSeconds = workSeconds + shortBreakSeconds + longBreakSeconds;
 
-  const hoursNeeded = (totalSeconds / SECONDS_PER_HOUR).toFixed(1);
+  const hoursNeeded = Number((totalSeconds / SECONDS_PER_HOUR).toFixed(1));
 
   const now = new Date();
-
   now.setSeconds(now.getSeconds() + totalSeconds);
 
   const hours = now.getHours().toString().padStart(2, "0");

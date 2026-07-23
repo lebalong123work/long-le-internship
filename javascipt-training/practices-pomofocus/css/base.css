@@ -1,0 +1,79 @@
+:root {
+  --bg-primary: rgb(175, 73, 73);
+  --color-white: #ffffff;
+  --text-dark: #555555;
+  --text-muted: #888888;
+  --bg-input: #efefef;
+
+  --fs-xs: 13px;
+  --fs-sm: 14px;
+  --fs-md: 16px;
+  --fs-lg: 18px;
+  --fs-xl: 20px;
+  --fs-2xl: 22px;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --max-width-main: 480px;
+}
+
+@font-face {
+  font-family: "ArialRounded";
+  font-display: swap;
+  src: local("Arial Rounded MT Bold"), local("Arial Rounded MT");
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family:
+    "ArialRounded",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--color-white);
+  min-height: 100vh;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.container {
+  max-width: 100%;
+  margin: auto;
+  padding: 0 12px;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-md);
+  font-weight: bold;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    transform 0.1s,
+    opacity 0.2s;
+}
+
+button:focus,
+input:focus {
+  outline: none;
+}

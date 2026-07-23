@@ -1,0 +1,83 @@
+.timer-container {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: 20px 0 30px 0;
+  text-align: center;
+  max-width: var(--max-width-main);
+  margin: 0 auto 25px;
+}
+
+.timer-modes {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.mode-btn {
+  background: transparent;
+  color: var(--color-white);
+  padding: 4px 12px;
+  font-size: var(--fs-md);
+  font-weight: normal;
+}
+.mode-btn.active {
+  background-color: rgba(0, 0, 0, 0.15);
+  font-weight: bold;
+}
+
+.time-display {
+  font-size: 100px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin: 10px 0 20px;
+  line-height: 1;
+}
+
+.timer-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-height: 55px;
+}
+.start-btn {
+  background-color: var(--color-white);
+  color: #ba4949;
+  font-size: var(--fs-2xl);
+  font-weight: bold;
+  width: 200px;
+  padding: 14px 0;
+  box-shadow: 0 6px 0 #ebebeb;
+  text-transform: uppercase;
+}
+.start-btn:active {
+  transform: translateY(6px);
+  box-shadow: 0 0 0 #ebebeb;
+}
+
+.skip-btn {
+  background: none;
+  position: absolute;
+  right: calc(50% - 150px);
+  opacity: 0.9;
+}
+.skip-btn:hover {
+  opacity: 1;
+}
+.skip-btn img {
+  width: 32px;
+}
+
+.current-task-status {
+  text-align: center;
+  margin-bottom: 25px;
+}
+.task-number {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: var(--fs-md);
+  margin-bottom: 4px;
+}
+.task-message {
+  font-size: var(--fs-lg);
+  color: var(--color-white);
+}

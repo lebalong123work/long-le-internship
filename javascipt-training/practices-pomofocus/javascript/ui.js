@@ -75,6 +75,8 @@ function renderTasks() {
       actPomodorosContainer.classList.remove("hidden");
       if (deleteTaskBtn) deleteTaskBtn.classList.remove("hidden");
 
+      actionGroup.classList.add("hidden");
+
       taskFormContainer.classList.remove("hidden");
       taskNameInput.focus();
     };
@@ -115,7 +117,9 @@ export function initUI() {
     actionGroup.classList.remove("hidden");
   });
 
-  saveTaskBtn.addEventListener("click", () => {
+  taskFormContainer.addEventListener("submit", (e) => {
+    e.preventDefault();
+
     const nameVal = taskNameInput.value;
     const estVal = estPomodorosInput.value;
     const actVal = actPomodorosInput.value;

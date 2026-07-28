@@ -5,6 +5,17 @@
   --text-muted: #888888;
   --bg-input: #efefef;
 
+  --text-start-btn: #ba4949;
+  --shadow-start-btn: #ebebeb;
+
+  --bg-hover-gray: #f0f0f0;
+  --border-hover-gray: #ccc;
+  --text-done-gray: #aaa;
+  --color-check-icon: #dfdfdf;
+  --text-pomo-count: #bbb;
+
+  --bg-save-hover: #333333;
+
   --fs-xs: 13px;
   --fs-sm: 14px;
   --fs-md: 16px;
@@ -76,4 +87,16 @@ button {
 button:focus,
 input:focus {
   outline: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

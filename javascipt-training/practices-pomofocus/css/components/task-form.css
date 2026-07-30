@@ -122,7 +122,7 @@
   font-weight: bold;
 }
 .btn-save:hover {
-  background-color: #333;
+  background-color: var(--bg-save-hover);
 }
 
 @keyframes slideup {

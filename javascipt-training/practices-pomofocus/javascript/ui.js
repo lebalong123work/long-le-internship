@@ -35,6 +35,12 @@ const finishTimeUI = document.getElementById("finishTime");
 
 // UI list
 function renderTasks() {
+  if (taskListUI.contains(taskFormContainer)) {
+    actionGroup.after(taskFormContainer);
+    taskFormContainer.classList.add("hidden");
+    actionGroup.classList.remove("hidden");
+  }
+
   taskListUI.innerHTML = "";
   const currentTasks = getTasks();
 
@@ -65,6 +71,10 @@ function renderTasks() {
     const editBtn = li.querySelector(".task-edit-btn");
 
     const openEditForm = (e) => {
+      document.querySelectorAll(".task-item").forEach((item) => {
+        item.classList.remove("hidden");
+      });
+
       e.stopPropagation();
       editingTaskId = task.id;
       formTitle.textContent = "Edit Task";
@@ -74,6 +84,12 @@ function renderTasks() {
 
       actPomodorosContainer.classList.remove("hidden");
       if (deleteTaskBtn) deleteTaskBtn.classList.remove("hidden");
+
+      li.after(taskFormContainer);
+
+      li.classList.add("hidden");
+
+      actionGroup.classList.remove("hidden");
 
       taskFormContainer.classList.remove("hidden");
       taskNameInput.focus();
@@ -97,6 +113,10 @@ function updateAggregationUI() {
 
 export function initUI() {
   showTaskFormBtn.addEventListener("click", () => {
+    document.querySelectorAll(".task-item").forEach((item) => {
+      item.classList.remove("hidden");
+    });
+
     editingTaskId = null;
     formTitle.textContent = "Add Task";
     taskNameInput.value = "";
@@ -105,17 +125,27 @@ export function initUI() {
     actPomodorosContainer.classList.add("hidden");
     if (deleteTaskBtn) deleteTaskBtn.classList.add("hidden");
 
+    actionGroup.after(taskFormContainer);
+
     actionGroup.classList.add("hidden");
     taskFormContainer.classList.remove("hidden");
     taskNameInput.focus();
   });
 
   cancelTaskBtn.addEventListener("click", () => {
+    actionGroup.after(taskFormContainer);
+
     taskFormContainer.classList.add("hidden");
     actionGroup.classList.remove("hidden");
+
+    document.querySelectorAll(".task-item").forEach((item) => {
+      item.classList.remove("hidden");
+    });
   });
 
-  saveTaskBtn.addEventListener("click", () => {
+  taskFormContainer.addEventListener("submit", (e) => {
+    e.preventDefault();
+
     const nameVal = taskNameInput.value;
     const estVal = estPomodorosInput.value;
     const actVal = actPomodorosInput.value;
@@ -123,7 +153,7 @@ export function initUI() {
     if (editingTaskId) {
       const success = editTask(editingTaskId, nameVal, actVal, estVal);
       if (success) {
-        taskFormContainer.classList.add("hidden");
+        editingTaskId = null;
       }
     } else {
       const newTask = addTask(nameVal, estVal);
@@ -141,7 +171,7 @@ export function initUI() {
       if (editingTaskId) {
         const success = deleteTask(editingTaskId);
         if (success) {
-          taskFormContainer.classList.add("hidden");
+          editingTaskId = null;
           renderTasks();
         }
       }

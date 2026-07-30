@@ -62,7 +62,7 @@
   border-radius: 0;
 }
 .dropdown-item-task:hover {
-  background-color: #f0f0f0;
+  background-color: var(--bg-hover-gray);
 }
 .dropdown-icon {
   width: 16px;
@@ -92,14 +92,14 @@
   cursor: pointer;
 }
 .task-item:hover {
-  border-left: 6px solid #ccc;
+  border-left: 6px solid var(--border-hover-gray);
 }
 .task-done {
   border-left: 6px solid var(--text-muted);
 }
 .task-done span.task-name {
   text-decoration: line-through;
-  color: #aaa;
+  color: var(--text-done-gray);
 }
 
 .task-left {
@@ -125,14 +125,14 @@
 .check-icon {
   width: 24px;
   height: 24px;
-  color: #dfdfdf;
-  border: 2px solid #dfdfdf;
+  color: var(--color-check-icon);
+  border: 2px solid var(--color-check-icon);
   border-radius: 50%;
   padding: 3px;
 }
 
 .task-pomos {
-  color: #bbb;
+  color: var(--text-pomo-count);
   font-size: var(--fs-md);
   font-weight: bold;
 }

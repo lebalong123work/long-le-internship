@@ -42,17 +42,17 @@
 }
 .start-btn {
   background-color: var(--color-white);
-  color: #ba4949;
+  color: var(--text-start-btn);
   font-size: var(--fs-2xl);
   font-weight: bold;
   width: 200px;
   padding: 14px 0;
-  box-shadow: 0 6px 0 #ebebeb;
+  box-shadow: 0 6px 0 var(--shadow-start-btn);
   text-transform: uppercase;
 }
 .start-btn:active {
   transform: translateY(6px);
-  box-shadow: 0 0 0 #ebebeb;
+  box-shadow: 0 0 0 var(--shadow-start-btn);
 }
 
 .skip-btn {

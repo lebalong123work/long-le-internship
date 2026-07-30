@@ -35,9 +35,7 @@ function parsePomodoro(value, fieldName, actionName) {
     return null;
   }
 
-  if (finalVal >= 1) {
-    finalVal = Math.floor(finalVal);
-  }
+  finalVal = Math.floor(finalVal);
 
   return finalVal;
 }
@@ -75,7 +73,6 @@ export function addTask(taskname, estPomodoros) {
   };
 
   tasks.push(newTask);
-  console.log(`More success: "${newTask.name}" (Est: ${newTask.est})`);
   return newTask;
 }
 
@@ -107,9 +104,6 @@ export function editTask(id, newName, newAct, newEst) {
   task.act = finalAct;
   task.est = finalEst;
 
-  console.log(
-    `Edited successfully: Task ID [${id}] has been updated. (Act: ${task.act}, Est: ${task.est})`,
-  );
   return true;
 }
 
@@ -120,9 +114,6 @@ export function deleteTask(id) {
 
   tasks.splice(taskIndex, 1);
 
-  console.log(
-    `Deletion successful: Task ID [${id}] has been removed from the system.`,
-  );
   return true;
 }
 
@@ -136,9 +127,6 @@ export function toggleTaskDone(id) {
   const task = tasks[taskIndex];
   task.isDone = !task.isDone;
 
-  console.log(
-    `Status updated: Task "${task.name}" is now ${task.isDone ? "DONE (True)" : "NOT DONE (False)"}.`,
-  );
   return true;
 }
 
@@ -155,7 +143,6 @@ export function deleteAllTasks() {
   // Clear the array
   tasks = [];
 
-  console.log("Delete All successful: All tasks have been completely cleared.");
   return true;
 }
 
@@ -179,10 +166,6 @@ function calculateTotals() {
     },
     { totalEst: 0, totalAct: 0, remainingPomos: 0 },
   );
-
-  totals.totalAct = Number(totals.totalAct.toFixed(1));
-  totals.totalEst = Number(totals.totalEst.toFixed(1));
-  totals.remainingPomos = Number(totals.remainingPomos.toFixed(1));
 
   return totals;
 }

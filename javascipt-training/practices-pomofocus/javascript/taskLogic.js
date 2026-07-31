@@ -1,9 +1,12 @@
-let tasks = [];
+import { saveTasksToStorage, loadTasksFromStorage } from "./storage.js";
+
 const POMODORO_MINUTES = 25;
 const SHORT_BREAK_MINUTES = 5; // Short break: 5 minutes
 const LONG_BREAK_MINUTES = 15; // Long break: 15 minutes
 const LONG_BREAK_INTERVAL = 4; // Long break every 4 sets
 const SECONDS_PER_HOUR = 3600;
+
+let tasks = loadTasksFromStorage();
 
 function getTaskIndexById(id, actionName) {
   if (typeof id !== "string" || id.trim() === "") {
@@ -73,6 +76,7 @@ export function addTask(taskname, estPomodoros) {
   };
 
   tasks.push(newTask);
+  saveTasksToStorage(tasks);
   return newTask;
 }
 
@@ -104,6 +108,8 @@ export function editTask(id, newName, newAct, newEst) {
   task.act = finalAct;
   task.est = finalEst;
 
+  saveTasksToStorage(tasks);
+
   return true;
 }
 
@@ -113,6 +119,8 @@ export function deleteTask(id) {
   if (taskIndex === -1) return false;
 
   tasks.splice(taskIndex, 1);
+
+  saveTasksToStorage(tasks);
 
   return true;
 }
@@ -126,6 +134,8 @@ export function toggleTaskDone(id) {
   // Toggle the status
   const task = tasks[taskIndex];
   task.isDone = !task.isDone;
+
+  saveTasksToStorage(tasks);
 
   return true;
 }
@@ -142,6 +152,8 @@ export function deleteAllTasks() {
 
   // Clear the array
   tasks = [];
+
+  saveTasksToStorage(tasks);
 
   return true;
 }

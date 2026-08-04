@@ -8,8 +8,22 @@ import {
   getAggregationData,
 } from "./taskLogic.js";
 
+import {
+  toggleTimer,
+  setTimerCallback,
+  setMode,
+  setTimerCompleteCallback,
+} from "./timerLogic.js";
 let editingTaskId = null;
 
+// Timer UI
+const timeDisplay = document.getElementById("timeDisplay");
+const startTimerBtn = document.getElementById("startTimerBtn");
+const pomoBtn = document.getElementById("pomoBtn");
+const shortBreakBtn = document.getElementById("shortBreakBtn");
+const longBreakBtn = document.getElementById("longBreakBtn");
+
+// Task UI
 const showTaskFormBtn = document.getElementById("showTaskFormBtn");
 const taskFormContainer = document.getElementById("taskFormContainer");
 const formTitle = document.getElementById("formTitle");
@@ -28,6 +42,7 @@ const deleteTaskBtn = document.getElementById("deleteTaskBtn");
 const taskDropdownBtn = document.getElementById("taskDropdownBtn");
 const taskDropdownMenu = document.getElementById("taskDropdownMenu");
 
+//Summary Board UI
 const summaryBoard = document.getElementById("summaryBoard");
 const actCountUI = document.getElementById("actCount");
 const estCountUI = document.getElementById("estCount");
@@ -111,7 +126,48 @@ function updateAggregationUI() {
   finishTimeUI.textContent = data.finishAt || "--:--";
 }
 
-export function initUI() {
+function initTimerEvents() {
+  setTimerCallback((timeString) => {
+    timeDisplay.textContent = timeString;
+  });
+
+  setTimerCompleteCallback(() => {
+    startTimerBtn.textContent = "START";
+    alert("Time up, task completed");
+  });
+
+  startTimerBtn.addEventListener("click", () => {
+    const isNowRunning = toggleTimer();
+    if (isNowRunning) {
+      startTimerBtn.textContent = "PAUSE";
+    } else {
+      startTimerBtn.textContent = "START";
+    }
+  });
+
+  function updateActiveButton(clickedBtn) {
+    pomoBtn.classList.remove("active");
+    shortBreakBtn.classList.remove("active");
+    longBreakBtn.classList.remove("active");
+    clickedBtn.classList.add("active");
+    startTimerBtn.textContent = "START";
+  }
+
+  pomoBtn.addEventListener("click", () => {
+    updateActiveButton(pomoBtn);
+    setMode(25);
+  });
+  shortBreakBtn.addEventListener("click", () => {
+    updateActiveButton(shortBreakBtn);
+    setMode(5);
+  });
+  longBreakBtn.addEventListener("click", () => {
+    updateActiveButton(longBreakBtn);
+    setMode(15);
+  });
+}
+
+function initTaskEvents() {
   showTaskFormBtn.addEventListener("click", () => {
     document.querySelectorAll(".task-item").forEach((item) => {
       item.classList.remove("hidden");
@@ -207,5 +263,11 @@ export function initUI() {
     });
   }
 
+  renderTasks();
+}
+
+export function initUI() {
+  initTimerEvents();
+  initTaskEvents();
   renderTasks();
 }

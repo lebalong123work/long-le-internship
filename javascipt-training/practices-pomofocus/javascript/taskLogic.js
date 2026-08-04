@@ -10,13 +10,11 @@ let tasks = loadTasksFromStorage();
 
 function getTaskIndexById(id, actionName) {
   if (typeof id !== "string" || id.trim() === "") {
-    console.error(`Error: ${actionName}: Invalid or blank ID.`);
     return -1;
   }
 
   const taskIndex = tasks.findIndex((task) => task.id === id);
   if (taskIndex === -1) {
-    console.error(`Error: ${actionName}: No tasks with ID found [${id}].`);
     return -1;
   }
 
@@ -25,16 +23,12 @@ function getTaskIndexById(id, actionName) {
 
 function parsePomodoro(value, fieldName, actionName) {
   if (value === undefined || value === "" || value === null) {
-    console.error(`Error: ${actionName}: ${fieldName} cannot be left blank.`);
     return null;
   }
 
   let finalVal = Number(value);
 
   if (Number.isNaN(finalVal) || finalVal < 0) {
-    console.error(
-      `Error: ${actionName}: The ${fieldName} number must be >= 0.`,
-    );
     return null;
   }
 
@@ -51,7 +45,6 @@ export function getTasks() {
 export function addTask(taskname, estPomodoros) {
   // Check Name Task
   if (typeof taskname !== "string" || taskname.trim() === "") {
-    console.error("Error: Adding Task: Invalid or blank task name.");
     return null;
   }
 
@@ -88,7 +81,6 @@ export function editTask(id, newName, newAct, newEst) {
 
   // Block Blank Name
   if (typeof newName !== "string" || newName.trim() === "") {
-    console.error("Error: Editing Task: Invalid or blank task name.");
     return false;
   }
 
@@ -140,9 +132,6 @@ export function toggleTaskDone(id) {
 export function deleteAllTasks() {
   // Check if the array is already empty
   if (tasks.length === 0) {
-    console.warn(
-      "Warning: Delete All: The task list is already empty. Nothing to delete.",
-    );
     return false;
   }
 
@@ -217,7 +206,5 @@ export function getAggregationData() {
     totalAct: totals.totalAct,
     finishAt: finishAtString,
   };
-
-  console.log("Aggregation Data:", data);
   return data;
 }

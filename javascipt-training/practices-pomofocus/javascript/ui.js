@@ -14,49 +14,20 @@ import {
   setMode,
   setTimerCompleteCallback,
 } from "./timerLogic.js";
+
 let editingTaskId = null;
-
-// Timer UI
-const timeDisplay = document.getElementById("timeDisplay");
-const startTimerBtn = document.getElementById("startTimerBtn");
-const pomoBtn = document.getElementById("pomoBtn");
-const shortBreakBtn = document.getElementById("shortBreakBtn");
-const longBreakBtn = document.getElementById("longBreakBtn");
-
-// Task UI
-const showTaskFormBtn = document.getElementById("showTaskFormBtn");
-const taskFormContainer = document.getElementById("taskFormContainer");
-const formTitle = document.getElementById("formTitle");
-const taskNameInput = document.getElementById("taskNameInput");
-const estPomodorosInput = document.getElementById("estPomodorosInput");
-const actPomodorosContainer = document.getElementById("actPomodorosContainer");
-const actPomodorosInput = document.getElementById("actPomodorosInput");
-const cancelTaskBtn = document.getElementById("cancelTaskBtn");
-const saveTaskBtn = document.getElementById("saveTaskBtn");
-const taskListUI = document.getElementById("taskList");
 
 const actionGroup = document.querySelector(".action-group");
 
-const deleteAllBtn = document.getElementById("deleteAllBtn");
-const deleteTaskBtn = document.getElementById("deleteTaskBtn");
-const taskDropdownBtn = document.getElementById("taskDropdownBtn");
-const taskDropdownMenu = document.getElementById("taskDropdownMenu");
-
-//Summary Board UI
-const summaryBoard = document.getElementById("summaryBoard");
-const actCountUI = document.getElementById("actCount");
-const estCountUI = document.getElementById("estCount");
-const finishTimeUI = document.getElementById("finishTime");
-
 // UI list
 function renderTasks() {
-  if (taskListUI.contains(taskFormContainer)) {
+  if (taskList.contains(taskFormContainer)) {
     actionGroup.after(taskFormContainer);
     taskFormContainer.classList.add("hidden");
     actionGroup.classList.remove("hidden");
   }
 
-  taskListUI.innerHTML = "";
+  taskList.innerHTML = "";
   const currentTasks = getTasks();
 
   if (currentTasks.length === 0) {
@@ -65,10 +36,9 @@ function renderTasks() {
     summaryBoard.classList.remove("hidden");
   }
 
-  const template = document.getElementById("taskTemplate");
-
   currentTasks.forEach((task) => {
-    const clone = template.content.cloneNode(true);
+    const clone = taskTemplate.content.cloneNode(true);
+
     const li = clone.querySelector("li");
 
     if (task.isDone) li.classList.add("task-done");
@@ -98,6 +68,7 @@ function renderTasks() {
       actPomodorosInput.value = task.act;
 
       actPomodorosContainer.classList.remove("hidden");
+
       if (deleteTaskBtn) deleteTaskBtn.classList.remove("hidden");
 
       li.after(taskFormContainer);
@@ -113,7 +84,7 @@ function renderTasks() {
     editBtn.addEventListener("click", openEditForm);
     li.addEventListener("click", openEditForm);
 
-    taskListUI.appendChild(clone);
+    taskList.appendChild(clone);
   });
 
   updateAggregationUI();
@@ -121,9 +92,10 @@ function renderTasks() {
 
 function updateAggregationUI() {
   const data = getAggregationData();
-  actCountUI.textContent = data.totalAct;
-  estCountUI.textContent = data.totalEst;
-  finishTimeUI.textContent = data.finishAt || "--:--";
+
+  actCount.textContent = data.totalAct;
+  estCount.textContent = data.totalEst;
+  finishTime.textContent = data.finishAt || "--:--";
 }
 
 function initTimerEvents() {
@@ -144,14 +116,6 @@ function initTimerEvents() {
       startTimerBtn.textContent = "START";
     }
   });
-
-  function updateActiveButton(clickedBtn) {
-    pomoBtn.classList.remove("active");
-    shortBreakBtn.classList.remove("active");
-    longBreakBtn.classList.remove("active");
-    clickedBtn.classList.add("active");
-    startTimerBtn.textContent = "START";
-  }
 
   pomoBtn.addEventListener("click", () => {
     updateActiveButton(pomoBtn);

@@ -61,10 +61,6 @@ export function addTask(taskname, estPomodoros) {
     return null;
   }
 
-  // Handling decimal rules:
-  // - If less than 1 (0 to 0.9): Keep as is.
-  // - If 1 or more: Remove the decimal part.
-
   const newId = crypto.randomUUID(); // Random ID
 
   const newTask = {

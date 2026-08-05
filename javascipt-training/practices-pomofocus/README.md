@@ -86,9 +86,52 @@ cd long-le-internship/javascript-training/pomofocus-clone
 
 ### 2. Open the project in a browser using VSCode
 
-Because this project uses JavaScript ES6 Modules (`type="module"`), you cannot just double-click the `index.html` file to run it.
+This project uses **[Parcel](https://parceljs.org/)** as the development server and code bundler instead of the traditional Live Server. Parcel is more powerful; it supports code splitting (modules) and automatically updates the interface instantly whenever you modify the code.
+## Prerequisites
+To run Parcel, you need to have **Node.js** installed on your computer.
+1. Check if it is already installed by opening your Terminal (or CMD/PowerShell) and typing: `node -v`
+2. If you encounter an error or it is not installed, visit the [Node.js](https://nodejs.org/) homepage, download the **LTS (Long Term Support)** version, and install it just like any other software (simply click "Next" to complete the process).
+## Project Installation & Execution Guide
 
-1. Open the project folder in Visual Studio Code.
-2. Install the **Live Server** extension (if you haven't already).
-3. Right-click on `index.html` and select **"Open with Live Server"**.
-4. The app will automatically open in your default browser (Chrome is recommended).
+**Step 1: Open the project in the Terminal**
+- Open the project folder in Visual Studio Code (VS Code).
+- Open the integrated terminal in VS Code using the shortcut: `` Ctrl + ` `` (the backtick key located below the ESC key).
+
+**Step 2: Install necessary libraries**
+In the terminal window, type the following command and press Enter to automatically download Parcel and related tools to the project folder (this process takes about a few dozen seconds):
+```bash
+npm install
+```
+*(Note: You only need to run this command once after downloading the code to your machine).*
+
+**Step 3: Start the Server with Parcel**
+After installation is complete, enter the following command to run the project:
+
+```bash
+npx parcel index.html
+
+```
+
+**Step 4: View the Result**
+
+* When the Terminal displays a green line saying `Server running at http://localhost:1234`, it means the setup was successful!
+* Keep the Terminal window open (do not close it).
+* Open your web browser (Chrome/Edge/Safari) and visit the link: **http://localhost:1234**
+
+You have successfully launched the project. Now, whenever you modify and save your HTML/CSS/JS code, the browser will automatically update to reflect the changes immediately.
+
+---
+
+##Build Instructions (For Deployment)
+
+When the project is complete and you want to export the code for deployment to a hosting service (such as Vercel, Netlify, or GitHub Pages), follow these steps:
+
+1. Stop the running server by pressing `Ctrl + C` in the Terminal.
+2. Run the command:
+
+```bash
+npx parcel build index.html
+
+```
+
+Parcel will automatically optimize and compress your code, outputting the result to a folder named `dist/`. You simply need to use the files in this `dist/` folder for your online deployment.

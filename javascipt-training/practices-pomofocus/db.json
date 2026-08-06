@@ -1,0 +1,16 @@
+{
+  "users": [
+    {
+      "id": "u1",
+      "username": "thanhnguyen",
+      "password": "thanhnguyen@123"
+    },
+    {
+      "id": "u2",
+      "username": "hungdo",
+      "password": "hungdo@123"
+    }
+  ],
+  "tasks": [],
+  "$schema": "./node_modules/json-server/schema.json"
+}

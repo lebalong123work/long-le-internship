@@ -6,6 +6,7 @@ import {
   toggleTaskDone,
   deleteAllTasks,
   getAggregationData,
+  initTasksData,
 } from "./taskLogic.js";
 
 import {
@@ -47,10 +48,12 @@ function renderTasks() {
     li.querySelector(".task-pomos").textContent = `${task.act} / ${task.est}`;
 
     const checkBtn = li.querySelector(".task-check-btn");
-    checkBtn.addEventListener("click", (e) => {
+    checkBtn.addEventListener("click", async (e) => {
       e.stopPropagation();
-      toggleTaskDone(task.id);
-      renderTasks();
+      const success = await toggleTaskDone(task.id);
+      if (success) {
+        renderTasks();
+      }
     });
 
     const editBtn = li.querySelector(".task-edit-btn");
@@ -163,7 +166,7 @@ function initTaskEvents() {
     });
   });
 
-  taskFormContainer.addEventListener("submit", (e) => {
+  taskFormContainer.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const nameVal = taskNameInput.value;
@@ -171,25 +174,29 @@ function initTaskEvents() {
     const actVal = actPomodorosInput.value;
 
     if (editingTaskId) {
-      const success = editTask(editingTaskId, nameVal, actVal, estVal);
+      const success = await editTask(editingTaskId, nameVal, actVal, estVal);
       if (success) {
         editingTaskId = null;
+      } else {
+        return;
       }
     } else {
-      const newTask = addTask(nameVal, estVal);
+      const newTask = await addTask(nameVal, estVal);
       if (newTask) {
         taskNameInput.value = "";
         estPomodorosInput.value = 1;
         taskNameInput.focus();
+      } else {
+        return;
       }
     }
     renderTasks();
   });
 
   if (deleteTaskBtn) {
-    deleteTaskBtn.addEventListener("click", () => {
+    deleteTaskBtn.addEventListener("click", async () => {
       if (editingTaskId) {
-        const success = deleteTask(editingTaskId);
+        const success = await deleteTask(editingTaskId);
         if (success) {
           editingTaskId = null;
           renderTasks();
@@ -216,13 +223,15 @@ function initTaskEvents() {
   }
 
   if (deleteAllBtn) {
-    deleteAllBtn.addEventListener("click", () => {
+    deleteAllBtn.addEventListener("click", async () => {
       if (confirm("Are you sure you want to delete all tasks?")) {
-        deleteAllTasks();
-        if (taskDropdownMenu) {
-          taskDropdownMenu.classList.add("hidden");
+        const success = await deleteAllTasks();
+        if (success) {
+          if (taskDropdownMenu) {
+            taskDropdownMenu.classList.add("hidden");
+          }
+          renderTasks();
         }
-        renderTasks();
       }
     });
   }
@@ -230,8 +239,9 @@ function initTaskEvents() {
   renderTasks();
 }
 
-export function initUI() {
+export async function initUI() {
   initTimerEvents();
   initTaskEvents();
+  await initTasksData();
   renderTasks();
 }

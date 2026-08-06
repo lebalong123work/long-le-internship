@@ -1,4 +1,9 @@
-import { saveTasksToStorage, loadTasksFromStorage } from "./storage.js";
+import {
+  saveTasksToAPI,
+  loadTasksFromAPI,
+  deleteTaskFromAPI,
+  updateTaskInAPI,
+} from "./storage.js";
 
 const POMODORO_MINUTES = 25;
 const SHORT_BREAK_MINUTES = 5; // Short break: 5 minutes
@@ -6,9 +11,16 @@ const LONG_BREAK_MINUTES = 15; // Long break: 15 minutes
 const LONG_BREAK_INTERVAL = 4; // Long break every 4 sets
 const SECONDS_PER_HOUR = 3600;
 
-let tasks = loadTasksFromStorage();
+let tasks = [];
 
-function getTaskIndexById(id, actionName) {
+export async function initTasksData() {
+  const apiData = await loadTasksFromAPI();
+
+  tasks = apiData;
+  return true;
+}
+
+function getTaskIndexById(id) {
   if (typeof id !== "string" || id.trim() === "") {
     return -1;
   }
@@ -21,7 +33,7 @@ function getTaskIndexById(id, actionName) {
   return taskIndex;
 }
 
-function parsePomodoro(value, fieldName, actionName) {
+function parsePomodoro(value) {
   if (value === undefined || value === "" || value === null) {
     return null;
   }
@@ -42,19 +54,17 @@ export function getTasks() {
 }
 
 // Logic: Add a new task
-export function addTask(taskname, estPomodoros) {
-  // Check Name Task
+export async function addTask(taskname, estPomodoros) {
   if (typeof taskname !== "string" || taskname.trim() === "") {
     return null;
   }
 
-  // BLOCK BLANK: If no input is entered, enter an empty string, or null. Error will be reported.
-  let finalEst = parsePomodoro(estPomodoros, "Est. Pomodoros", "Adding Task");
+  let finalEst = parsePomodoro(estPomodoros);
   if (finalEst === null) {
     return null;
   }
 
-  const newId = crypto.randomUUID(); // Random ID
+  const newId = crypto.randomUUID();
 
   const newTask = {
     id: newId,
@@ -64,83 +74,123 @@ export function addTask(taskname, estPomodoros) {
     isDone: false,
   };
 
-  tasks.push(newTask);
-  saveTasksToStorage(tasks);
-  return newTask;
+  const savedTask = await saveTasksToAPI(newTask);
+  if (savedTask) {
+    tasks.push(savedTask);
+    return savedTask;
+  } else {
+    return null;
+  }
 }
 
 // Logic: Edit Task
-export function editTask(id, newName, newAct, newEst) {
+export async function editTask(id, newName, newAct, newEst) {
   // Block incoming junk IDs.
-  const taskIndex = getTaskIndexById(id, "Editing Task");
+  const taskIndex = getTaskIndexById(id);
   if (taskIndex === -1) return false;
 
   const task = tasks[taskIndex];
 
-  // Check act
-
-  // Block Blank Name
   if (typeof newName !== "string" || newName.trim() === "") {
     return false;
   }
 
-  // Block Blank Act & Decimal Logic Handling
-  let finalAct = parsePomodoro(newAct, "Act Pomodoros", "Editing Task");
+  let finalAct = parsePomodoro(newAct);
   if (finalAct === null) return false;
 
-  // Block Blank Est. & Decimal Logic Handling
-  let finalEst = parsePomodoro(newEst, "Est Pomodoros", "Editing Task");
+  let finalEst = parsePomodoro(newEst);
   if (finalEst === null) return false;
 
-  task.name = newName.trim();
-  task.act = finalAct;
-  task.est = finalEst;
+  const draftUpdatedTask = {};
+  let hasChanges = false;
 
-  saveTasksToStorage(tasks);
+  if (task.name !== newName.trim()) {
+    draftUpdatedTask.name = newName.trim();
+    hasChanges = true;
+  }
+  if (task.act !== finalAct) {
+    draftUpdatedTask.act = finalAct;
+    hasChanges = true;
+  }
+  if (task.est !== finalEst) {
+    draftUpdatedTask.est = finalEst;
+    hasChanges = true;
+  }
 
-  return true;
+  if (!hasChanges) {
+    return true;
+  }
+
+  const updatedTask = await updateTaskInAPI(id, draftUpdatedTask);
+
+  if (updatedTask) {
+    if (draftUpdatedTask.name !== undefined) {
+      task.name = updatedTask.name;
+    }
+    if (draftUpdatedTask.act !== undefined) {
+      task.act = updatedTask.act;
+    }
+    if (draftUpdatedTask.est !== undefined) {
+      task.est = updatedTask.est;
+    }
+    return true;
+  } else {
+    return false;
+  }
 }
 
 // Logic: Delete a Task
-export function deleteTask(id) {
-  const taskIndex = getTaskIndexById(id, "Deleting Task");
+export async function deleteTask(id) {
+  const taskIndex = getTaskIndexById(id);
   if (taskIndex === -1) return false;
 
-  tasks.splice(taskIndex, 1);
-
-  saveTasksToStorage(tasks);
-
-  return true;
+  const deleteTask = await deleteTaskFromAPI(id);
+  if (deleteTask) {
+    tasks.splice(taskIndex, 1);
+    return true;
+  } else {
+    return false;
+  }
 }
 
 // Logic: Toggle Task Done Status
-export function toggleTaskDone(id) {
-  // Block junk ID input
-  const taskIndex = getTaskIndexById(id, "Toggling Task");
+export async function toggleTaskDone(id) {
+  const taskIndex = getTaskIndexById(id);
   if (taskIndex === -1) return false;
 
-  // Toggle the status
   const task = tasks[taskIndex];
-  task.isDone = !task.isDone;
 
-  saveTasksToStorage(tasks);
+  const drafToggleTask = { isDone: !task.isDone };
+  const updatedTask = await updateTaskInAPI(id, {
+    isDone: drafToggleTask.isDone,
+  });
 
-  return true;
+  if (updatedTask) {
+    task.isDone = updatedTask.isDone;
+    return true;
+  } else {
+    return false;
+  }
 }
 
 // Logic: Delete All Tasks
-export function deleteAllTasks() {
-  // Check if the array is already empty
+export async function deleteAllTasks() {
   if (tasks.length === 0) {
     return false;
   }
+  const deleteAll = tasks.map((task) => deleteTaskFromAPI(task.id));
 
-  // Clear the array
-  tasks = [];
+  const allDeleted = await Promise.all(deleteAll);
 
-  saveTasksToStorage(tasks);
+  const deleteAllSuccess = allDeleted.every((result) => result === true);
 
-  return true;
+  if (deleteAllSuccess) {
+    tasks = [];
+    return true;
+  } else {
+    await initTasksData();
+    return false;
+  }
 }
 
 function calculateTotals() {

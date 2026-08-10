@@ -15,6 +15,7 @@ import {
   setTimerCallback,
   setMode,
   setTimerCompleteCallback,
+  resetTimer,
 } from "./timerLogic.js";
 
 let editingTaskId = null;
@@ -131,6 +132,7 @@ function initTimerEvents() {
     setMode(5);
     updateActiveButton(shortBreakBtn);
     startTimerBtn.textContent = "START";
+    if (skipTimerBtn) skipTimerBtn.classList.remove("hidden");
   };
 
   setTimerCallback((timeString) => {
@@ -151,6 +153,7 @@ function initTimerEvents() {
     const isNowRunning = toggleTimer();
     if (isNowRunning) {
       startTimerBtn.textContent = "PAUSE";
+      if (skipTimerBtn) skipTimerBtn.classList.remove("hidden");
     } else {
       startTimerBtn.textContent = "START";
     }
@@ -168,6 +171,15 @@ function initTimerEvents() {
     updateActiveButton(longBreakBtn);
     setMode(15);
   });
+
+  const resetTimerBtn = document.getElementById("resetTimerBtn");
+  if (resetTimerBtn) {
+    resetTimerBtn.addEventListener("click", () => {
+      resetTimer();
+      startTimerBtn.textContent = "START";
+      if (skipTimerBtn) skipTimerBtn.classList.remove("hidden");
+    });
+  }
 }
 
 function initTaskEvents() {

@@ -7,6 +7,7 @@ import {
   deleteAllTasks,
   getAggregationData,
   initTasksData,
+  increaseActualPomodoros,
 } from "./taskLogic.js";
 
 import {
@@ -67,7 +68,6 @@ function renderTasks() {
     const editBtn = li.querySelector(".task-edit-btn");
 
     const openEditForm = (e) => {
-
       e.stopPropagation();
       document.querySelectorAll(".task-item").forEach((item) => {
         item.classList.remove("hidden");
@@ -121,15 +121,32 @@ function updateAggregationUI() {
 }
 
 function initTimerEvents() {
+  const handleSessionComplete = async () => {
+    if (selectedTaskId !== null) {
+      const success = await increaseActualPomodoros(selectedTaskId);
+      if (success) {
+        renderTasks();
+      }
+    }
+    setMode(5);
+    updateActiveButton(shortBreakBtn);
+    startTimerBtn.textContent = "START";
+  };
+
   setTimerCallback((timeString) => {
     timeDisplay.textContent = timeString;
   });
 
-  setTimerCompleteCallback(() => {
-    startTimerBtn.textContent = "START";
-    alert("Time up, task completed");
+  setTimerCompleteCallback(async () => {
+    await handleSessionComplete();
   });
 
+  const skipTimerBtn = document.getElementById("skipTimerBtn");
+  if (skipTimerBtn) {
+    skipTimerBtn.addEventListener("click", async () => {
+      await handleSessionComplete();
+    });
+  }
   startTimerBtn.addEventListener("click", () => {
     const isNowRunning = toggleTimer();
     if (isNowRunning) {

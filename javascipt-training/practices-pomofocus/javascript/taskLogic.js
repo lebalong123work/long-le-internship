@@ -258,3 +258,24 @@ export function getAggregationData() {
   };
   return data;
 }
+
+export async function increaseActualPomodoros(id) {
+  const taskIndex = getTaskIndexById(id);
+  if (taskIndex === -1) {
+    return false;
+  }
+
+  const task = tasks[taskIndex];
+  const newAct = task.act + 1;
+  const draftAct = {
+    act: newAct,
+  };
+  const updatedTask = await updateTaskInAPI(id, draftAct);
+
+  if (updatedTask) {
+    task.act = updatedTask.act;
+    return true;
+  } else {
+    return false;
+  }
+}

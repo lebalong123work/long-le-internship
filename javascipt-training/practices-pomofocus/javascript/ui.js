@@ -18,7 +18,11 @@ import {
 
 let editingTaskId = null;
 
+let selectedTaskId = null;
+
 const actionGroup = document.querySelector(".action-group");
+
+const currentTaskMessage = document.getElementById("currentTaskMessage");
 
 // UI list
 function renderTasks() {
@@ -44,6 +48,10 @@ function renderTasks() {
 
     if (task.isDone) li.classList.add("task-done");
 
+    if (task.id === selectedTaskId) {
+      li.classList.add("active-task");
+    }
+
     li.querySelector(".task-name").textContent = task.name;
     li.querySelector(".task-pomos").textContent = `${task.act} / ${task.est}`;
 
@@ -59,11 +67,12 @@ function renderTasks() {
     const editBtn = li.querySelector(".task-edit-btn");
 
     const openEditForm = (e) => {
+
+      e.stopPropagation();
       document.querySelectorAll(".task-item").forEach((item) => {
         item.classList.remove("hidden");
       });
 
-      e.stopPropagation();
       editingTaskId = task.id;
       formTitle.textContent = "Edit Task";
       taskNameInput.value = task.name;
@@ -85,7 +94,17 @@ function renderTasks() {
     };
 
     editBtn.addEventListener("click", openEditForm);
-    li.addEventListener("click", openEditForm);
+
+    li.addEventListener("click", () => {
+      if (selectedTaskId === task.id) {
+        selectedTaskId = null;
+        currentTaskMessage.textContent = "Time to focus!";
+      } else {
+        selectedTaskId = task.id;
+        currentTaskMessage.textContent = task.name;
+      }
+      renderTasks();
+    });
 
     taskList.appendChild(clone);
   });

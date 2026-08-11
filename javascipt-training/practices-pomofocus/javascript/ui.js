@@ -26,6 +26,41 @@ const actionGroup = document.querySelector(".action-group");
 
 const currentTaskMessage = document.getElementById("currentTaskMessage");
 
+const pomoBtn = document.getElementById("pomoBtn");
+const shortBreakBtn = document.getElementById("shortBreakBtn");
+const longBreakBtn = document.getElementById("longBreakBtn");
+
+function updateActiveButton(clickedBtn) {
+  const allModeBtns = document.querySelectorAll(".mode-btn");
+
+  allModeBtns.forEach((btn) => {
+    btn.classList.remove("active");
+  });
+  if (clickedBtn) {
+    clickedBtn.classList.add("active");
+  }
+}
+
+function getSavedPomoCount() {
+  const saved = localStorage.getItem("pomoCount");
+  if (saved) {
+    return Number.parseInt(saved, 10);
+  } else {
+    return 0;
+  }
+}
+
+let currentMode = "pomo";
+let pomodorosCompleted = getSavedPomoCount();
+
+const currentTaskNumber = document.getElementById("currentTaskNumber");
+
+function updatePomodoroCountUI() {
+  if (!currentTaskNumber) return;
+  const currentCycle = (pomodorosCompleted % 4) + 1;
+  currentTaskNumber.textContent = `#${currentCycle}`;
+}
+
 // UI list
 function renderTasks() {
   if (taskList.contains(taskFormContainer)) {
@@ -123,16 +158,33 @@ function updateAggregationUI() {
 
 function initTimerEvents() {
   const handleSessionComplete = async () => {
-    if (selectedTaskId !== null) {
-      const success = await increaseActualPomodoros(selectedTaskId);
-      if (success) {
-        renderTasks();
+    if (currentMode === "pomo") {
+      if (selectedTaskId !== null) {
+        const success = await increaseActualPomodoros(selectedTaskId);
+        if (success) {
+          renderTasks();
+        }
       }
+      pomodorosCompleted++;
+      localStorage.setItem("pomoCount", pomodorosCompleted);
+
+      if (pomodorosCompleted % 4 === 0) {
+        setMode(15);
+        updateActiveButton(longBreakBtn);
+        currentMode = "longBreak";
+      } else {
+        setMode(5);
+        updateActiveButton(shortBreakBtn);
+        currentMode = "shortBreak";
+      }
+    } else {
+      setMode(25);
+      updateActiveButton(pomoBtn);
+      currentMode = "pomo";
+      updatePomodoroCountUI();
     }
-    setMode(5);
-    updateActiveButton(shortBreakBtn);
     startTimerBtn.textContent = "START";
-    if (skipTimerBtn) skipTimerBtn.classList.remove("hidden");
+    if (skipTimerBtn) skipTimerBtn.classList.add("hidden");
   };
 
   setTimerCallback((timeString) => {
@@ -162,14 +214,18 @@ function initTimerEvents() {
   pomoBtn.addEventListener("click", () => {
     updateActiveButton(pomoBtn);
     setMode(25);
+    currentMode = "pomo";
+    updatePomodoroCountUI();
   });
   shortBreakBtn.addEventListener("click", () => {
     updateActiveButton(shortBreakBtn);
     setMode(5);
+    currentMode = "shortBreak";
   });
   longBreakBtn.addEventListener("click", () => {
     updateActiveButton(longBreakBtn);
     setMode(15);
+    currentMode = "longBreak";
   });
 
   const resetTimerBtn = document.getElementById("resetTimerBtn");
@@ -177,7 +233,7 @@ function initTimerEvents() {
     resetTimerBtn.addEventListener("click", () => {
       resetTimer();
       startTimerBtn.textContent = "START";
-      if (skipTimerBtn) skipTimerBtn.classList.remove("hidden");
+      if (skipTimerBtn) skipTimerBtn.classList.add("hidden");
     });
   }
 }
@@ -291,5 +347,6 @@ export async function initUI() {
   initTimerEvents();
   initTaskEvents();
   await initTasksData();
+  updatePomodoroCountUI();
   renderTasks();
 }

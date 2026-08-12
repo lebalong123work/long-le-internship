@@ -18,6 +18,19 @@ import {
   resetTimer,
 } from "./timerLogic.js";
 
+import { getCurrentUserId, logoutUser } from "./authLogic.js";
+
+const guestBlock = document.getElementById("guestBlock");
+const userBlock = document.getElementById("userBlock");
+
+const guestMenuBtn = document.getElementById("guestMenuBtn");
+const guestDropdown = document.getElementById("guestDropdown");
+
+const avatarMenuBtn = document.getElementById("avatarMenuBtn");
+const userDropdown = document.getElementById("userDropdown");
+
+const logoutBtn = document.getElementById("logoutBtn");
+
 let editingTaskId = null;
 
 let selectedTaskId = null;
@@ -343,7 +356,50 @@ function initTaskEvents() {
   renderTasks();
 }
 
+function initHeaderEvents() {
+  const userId = getCurrentUserId();
+
+  if (userId) {
+    if (guestBlock) guestBlock.classList.add("hidden");
+    if (userBlock) userBlock.classList.remove("hidden");
+  } else {
+    if (guestBlock) guestBlock.classList.remove("hidden");
+    if (userBlock) userBlock.classList.add("hidden");
+  }
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      logoutUser();
+      window.location.reload();
+    });
+  }
+
+  if (guestMenuBtn && guestDropdown) {
+    guestMenuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      guestDropdown.classList.toggle("hidden");
+    });
+  }
+
+  if (avatarMenuBtn && userDropdown) {
+    avatarMenuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      userDropdown.classList.toggle("hidden");
+    });
+  }
+
+  document.addEventListener("click", () => {
+    if (guestDropdown && !guestDropdown.classList.contains("hidden")) {
+      guestDropdown.classList.add("hidden");
+    }
+    if (userDropdown && !userDropdown.classList.contains("hidden")) {
+      userDropdown.classList.add("hidden");
+    }
+  });
+}
+
 export async function initUI() {
+  initHeaderEvents();
   initTimerEvents();
   initTaskEvents();
   await initTasksData();

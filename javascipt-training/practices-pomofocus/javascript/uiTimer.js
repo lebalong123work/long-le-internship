@@ -8,7 +8,7 @@ import {
 } from "./timerLogic.js";
 import { increaseActualPomodoros } from "./taskLogic.js";
 
-import { renderTasks, getSelectedTaskId } from "./ui_tasks.js";
+import { renderTasks, getSelectedTaskId } from "./uiTasks.js";
 
 let currentMode = "pomo";
 

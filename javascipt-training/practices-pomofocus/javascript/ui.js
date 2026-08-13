@@ -7,6 +7,7 @@ import {
   deleteAllTasks,
   getAggregationData,
   initTasksData,
+  increaseActualPomodoros,
 } from "./taskLogic.js";
 
 import {
@@ -14,11 +15,64 @@ import {
   setTimerCallback,
   setMode,
   setTimerCompleteCallback,
+  resetTimer,
 } from "./timerLogic.js";
+
+import { getCurrentUserId, logoutUser } from "./authLogic.js";
+
+const guestBlock = document.getElementById("guestBlock");
+const userBlock = document.getElementById("userBlock");
+
+const guestMenuBtn = document.getElementById("guestMenuBtn");
+const guestDropdown = document.getElementById("guestDropdown");
+
+const avatarMenuBtn = document.getElementById("avatarMenuBtn");
+const userDropdown = document.getElementById("userDropdown");
+
+const logoutBtn = document.getElementById("logoutBtn");
 
 let editingTaskId = null;
 
+let selectedTaskId = null;
+
 const actionGroup = document.querySelector(".action-group");
+
+const currentTaskMessage = document.getElementById("currentTaskMessage");
+
+const pomoBtn = document.getElementById("pomoBtn");
+const shortBreakBtn = document.getElementById("shortBreakBtn");
+const longBreakBtn = document.getElementById("longBreakBtn");
+
+function updateActiveButton(clickedBtn) {
+  const allModeBtns = document.querySelectorAll(".mode-btn");
+
+  allModeBtns.forEach((btn) => {
+    btn.classList.remove("active");
+  });
+  if (clickedBtn) {
+    clickedBtn.classList.add("active");
+  }
+}
+
+function getSavedPomoCount() {
+  const saved = localStorage.getItem("pomoCount");
+  if (saved) {
+    return Number.parseInt(saved, 10);
+  } else {
+    return 0;
+  }
+}
+
+let currentMode = "pomo";
+let pomodorosCompleted = getSavedPomoCount();
+
+const currentTaskNumber = document.getElementById("currentTaskNumber");
+
+function updatePomodoroCountUI() {
+  if (!currentTaskNumber) return;
+  const currentCycle = (pomodorosCompleted % 4) + 1;
+  currentTaskNumber.textContent = `#${currentCycle}`;
+}
 
 // UI list
 function renderTasks() {
@@ -44,6 +98,10 @@ function renderTasks() {
 
     if (task.isDone) li.classList.add("task-done");
 
+    if (task.id === selectedTaskId) {
+      li.classList.add("active-task");
+    }
+
     li.querySelector(".task-name").textContent = task.name;
     li.querySelector(".task-pomos").textContent = `${task.act} / ${task.est}`;
 
@@ -59,11 +117,11 @@ function renderTasks() {
     const editBtn = li.querySelector(".task-edit-btn");
 
     const openEditForm = (e) => {
+      e.stopPropagation();
       document.querySelectorAll(".task-item").forEach((item) => {
         item.classList.remove("hidden");
       });
 
-      e.stopPropagation();
       editingTaskId = task.id;
       formTitle.textContent = "Edit Task";
       taskNameInput.value = task.name;
@@ -85,7 +143,17 @@ function renderTasks() {
     };
 
     editBtn.addEventListener("click", openEditForm);
-    li.addEventListener("click", openEditForm);
+
+    li.addEventListener("click", () => {
+      if (selectedTaskId === task.id) {
+        selectedTaskId = null;
+        currentTaskMessage.textContent = "Time to focus!";
+      } else {
+        selectedTaskId = task.id;
+        currentTaskMessage.textContent = task.name;
+      }
+      renderTasks();
+    });
 
     taskList.appendChild(clone);
   });
@@ -102,19 +170,55 @@ function updateAggregationUI() {
 }
 
 function initTimerEvents() {
+  const handleSessionComplete = async () => {
+    if (currentMode === "pomo") {
+      if (selectedTaskId !== null) {
+        const success = await increaseActualPomodoros(selectedTaskId);
+        if (success) {
+          renderTasks();
+        }
+      }
+      pomodorosCompleted++;
+      localStorage.setItem("pomoCount", pomodorosCompleted);
+
+      if (pomodorosCompleted % 4 === 0) {
+        setMode(15);
+        updateActiveButton(longBreakBtn);
+        currentMode = "longBreak";
+      } else {
+        setMode(5);
+        updateActiveButton(shortBreakBtn);
+        currentMode = "shortBreak";
+      }
+    } else {
+      setMode(25);
+      updateActiveButton(pomoBtn);
+      currentMode = "pomo";
+      updatePomodoroCountUI();
+    }
+    startTimerBtn.textContent = "START";
+    if (skipTimerBtn) skipTimerBtn.classList.add("hidden");
+  };
+
   setTimerCallback((timeString) => {
     timeDisplay.textContent = timeString;
   });
 
-  setTimerCompleteCallback(() => {
-    startTimerBtn.textContent = "START";
-    alert("Time up, task completed");
+  setTimerCompleteCallback(async () => {
+    await handleSessionComplete();
   });
 
+  const skipTimerBtn = document.getElementById("skipTimerBtn");
+  if (skipTimerBtn) {
+    skipTimerBtn.addEventListener("click", async () => {
+      await handleSessionComplete();
+    });
+  }
   startTimerBtn.addEventListener("click", () => {
     const isNowRunning = toggleTimer();
     if (isNowRunning) {
       startTimerBtn.textContent = "PAUSE";
+      if (skipTimerBtn) skipTimerBtn.classList.remove("hidden");
     } else {
       startTimerBtn.textContent = "START";
     }
@@ -123,15 +227,28 @@ function initTimerEvents() {
   pomoBtn.addEventListener("click", () => {
     updateActiveButton(pomoBtn);
     setMode(25);
+    currentMode = "pomo";
+    updatePomodoroCountUI();
   });
   shortBreakBtn.addEventListener("click", () => {
     updateActiveButton(shortBreakBtn);
     setMode(5);
+    currentMode = "shortBreak";
   });
   longBreakBtn.addEventListener("click", () => {
     updateActiveButton(longBreakBtn);
     setMode(15);
+    currentMode = "longBreak";
   });
+
+  const resetTimerBtn = document.getElementById("resetTimerBtn");
+  if (resetTimerBtn) {
+    resetTimerBtn.addEventListener("click", () => {
+      resetTimer();
+      startTimerBtn.textContent = "START";
+      if (skipTimerBtn) skipTimerBtn.classList.add("hidden");
+    });
+  }
 }
 
 function initTaskEvents() {
@@ -239,9 +356,53 @@ function initTaskEvents() {
   renderTasks();
 }
 
+function initHeaderEvents() {
+  const userId = getCurrentUserId();
+
+  if (userId) {
+    if (guestBlock) guestBlock.classList.add("hidden");
+    if (userBlock) userBlock.classList.remove("hidden");
+  } else {
+    if (guestBlock) guestBlock.classList.remove("hidden");
+    if (userBlock) userBlock.classList.add("hidden");
+  }
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      logoutUser();
+      window.location.reload();
+    });
+  }
+
+  if (guestMenuBtn && guestDropdown) {
+    guestMenuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      guestDropdown.classList.toggle("hidden");
+    });
+  }
+
+  if (avatarMenuBtn && userDropdown) {
+    avatarMenuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      userDropdown.classList.toggle("hidden");
+    });
+  }
+
+  document.addEventListener("click", () => {
+    if (guestDropdown && !guestDropdown.classList.contains("hidden")) {
+      guestDropdown.classList.add("hidden");
+    }
+    if (userDropdown && !userDropdown.classList.contains("hidden")) {
+      userDropdown.classList.add("hidden");
+    }
+  });
+}
+
 export async function initUI() {
+  initHeaderEvents();
   initTimerEvents();
   initTaskEvents();
   await initTasksData();
+  updatePomodoroCountUI();
   renderTasks();
 }

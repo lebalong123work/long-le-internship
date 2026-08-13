@@ -71,3 +71,12 @@ export function setMode(minutes) {
     onTickCallback(formatTime(timeLeft));
   }
 }
+
+export function resetTimer() {
+  clearInterval(timerId); 
+  isRunning = false;
+  timeLeft = currentDuration;
+  if (onTickCallback) {
+    onTickCallback(formatTime(timeLeft));
+  }
+}

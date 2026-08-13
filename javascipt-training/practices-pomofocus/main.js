@@ -1,9 +1,9 @@
-import { initHeaderEvents } from "./javascript/ui_header.js";
-import { initTaskEvents, renderTasks } from "./javascript/ui_tasks.js";
+import { initHeaderEvents } from "./javascript/uiHeader.js";
+import { initTaskEvents, renderTasks } from "./javascript/uiTasks.js";
 import {
   initTimerEvents,
   updatePomodoroCountUI,
-} from "./javascript/ui_timer.js";
+} from "./javascript/uiTimer.js";
 
 import { initTasksData } from "./javascript/taskLogic.js";
 

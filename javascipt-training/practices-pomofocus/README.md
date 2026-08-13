@@ -38,8 +38,7 @@ This project is a front-end exercise focused on building a Pomodoro Web Applicat
 
 This project uses a modular component-based approach to keep the code clean and easy to maintain.
 
-```text
-📁 pomofocus-app/
+📁 practices-pomofocus/
 ├── 📁 css/
 │   ├── 📁 components/
 │   │   ├── header.css       # Styles for the top navigation bar and logo
@@ -49,13 +48,23 @@ This project uses a modular component-based approach to keep the code clean and 
 │   │   ├── tasks.css        # Styles for the task list and menu options
 │   │   └── timer.css        # Styles for the countdown clock and timer buttons
 │   ├── base.css             # Contains CSS variables (colors, fonts) and global resets
-│   └── style.css            # The main CSS file that imports all the files above
+│   ├── login.css            # Styles specific to the login page
+│   └── style.css            # The main CSS file that imports all the components
 ├── 📁 icons/                # Folder containing all image assets and SVG icons
+├── 📁 javascript/           # Core Logic & UI Components
+│   ├── authLogic.js         # Logic: User authentication (login/logout) state
+│   ├── dom.js               # Dictionary: Centralized DOM elements selection
+│   ├── storage.js           # API: Handles all fetch requests and localStorage
+│   ├── taskLogic.js         # Logic: Manages arrays, Pomodoro calculations
+│   ├── timerLogic.js        # Logic: Countdown intervals and time math
+│   ├── ui_header.js         # UI: Handles Avatar/Sign In toggles and dropdowns
+│   ├── ui_tasks.js          # UI: Handles task forms, editing, and list rendering
+│   └── ui_timer.js          # UI: Handles Timer buttons and mode switching
+├── db.json                  # Fake Database for JSON Server
 ├── index.html               # The main HTML skeleton/layout of the application
-├── main.js                  # The entry point that initializes the app when loaded
-├── taskLogic.js             # Core JS logic: Manages arrays, calculations, and data
-└── ui.js                    # Core JS UI: Handles DOM updates, clicks, and rendering HTML
-```
+├── login.html               # The login page layout
+├── login.js                 # Handles the login form submission
+└── main.js                  # The Entry Point that coordinates and boots the app
 
 ## File Roles & Responsibilities
 

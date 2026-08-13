@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pomofocus -Login</title>
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/login.css" />
+  </head>
+  <body class="login-body">
+    <div class="login-wrapper">
+      <a href="index.html" class="login-brand">
+        <img
+          src="icons/icon-white2.png"
+          alt="pomofocus icon"
+          class="login-logo-img"
+        />
+        <span class="login-logo-text">Pomofocus</span>
+      </a>
+
+      <div class="login-card">
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="usernameInput" class="login-label">USERNAME</label>
+            <input
+              type="text"
+              id="usernameInput"
+              class="login-input"
+              placeholder="example: thanhnguyen"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="passwordInput" class="login-label">PASSWORD</label>
+            <input
+              type="password"
+              id="passwordInput"
+              class="login-input"
+              required
+            />
+          </div>
+
+          <button type="submit" class="login-btn-submit">Log in</button>
+        </form>
+      </div>
+    </div>
+    <script type="module" src="login.js"></script>
+  </body>
+</html>

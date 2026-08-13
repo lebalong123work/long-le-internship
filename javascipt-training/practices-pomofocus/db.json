@@ -11,6 +11,47 @@
       "password": "hungdo@123"
     }
   ],
-  "tasks": [],
+  "tasks": [
+    {
+      "id": "o4kwMqhBtBU",
+      "name": "Test 1",
+      "est": 2,
+      "act": 0,
+      "isDone": false,
+      "userId": "u1"
+    },
+    {
+      "id": "8kmlJfAfR3g",
+      "name": "Test 2",
+      "est": 1,
+      "act": 0,
+      "isDone": false,
+      "userId": "u1"
+    },
+    {
+      "id": "ddw-Y1UDX5Y",
+      "name": "tttttttttttttttttttttttttttt",
+      "est": 1,
+      "act": 0,
+      "isDone": false,
+      "userId": "u2"
+    },
+    {
+      "id": "qfQR3SCGZt0",
+      "name": "long3",
+      "est": 1,
+      "act": 0,
+      "isDone": false,
+      "userId": "u2"
+    },
+    {
+      "id": "1SL507UD4gY",
+      "name": "long2",
+      "est": 1,
+      "act": 0,
+      "isDone": false,
+      "userId": "u2"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

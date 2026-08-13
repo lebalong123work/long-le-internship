@@ -44,26 +44,71 @@
           </button>
 
           <div class="header-user-group">
-            <a href="/signup" style="text-decoration: none">
-              <button class="btn-header">
-                <img
-                  src="icons/user-white.png"
-                  alt="user icon"
-                  class="btn-icon"
-                />
-                <span>Sign In</span>
-              </button>
-            </a>
+            <div id="guestBlock" class="auth-group-wrapper">
+              <a href="login.html" style="text-decoration: none">
+                <button class="btn-header">
+                  <img
+                    src="icons/user-white.png"
+                    alt="user icon"
+                    class="btn-icon"
+                  />
+                  <span>Sign In</span>
+                </button>
+              </a>
 
-            <div class="more-options">
-              <button class="btn-header btn-icon-only">
-                <img
-                  src="icons/threedots-white.png"
-                  alt="three dots"
-                  class="btn-icon"
-                />
-              </button>
+              <div class="dropdown-wrapper">
+                <button class="btn-header btn-icon-only" id="guestMenuBtn">
+                  <img
+                    src="icons/threedots-white.png"
+                    alt="three dots"
+                    class="btn-icon"
+                  />
+                </button>
+
+                <div class="header-dropdown-menu hidden" id="guestDropdown">
+                  <a href="login.html" class="dropdown-item">
+                    <img
+                      src="icons/login-black.png"
+                      class="dropdown-icon"
+                      alt="login icon"
+                    />
+                    Login
+                  </a>
+                </div>
+              </div>
             </div>
+
+            <div id="userBlock" class="auth-group-wrapper hidden">
+              <div class="dropdown-wrapper">
+                <button class="btn-avatar" id="avatarMenuBtn">
+                  <img
+                    src="icons/avatar.png"
+                    alt="User Avatar"
+                    class="avatar-img"
+                  />
+                </button>
+
+                <div class="header-dropdown-menu hidden" id="userDropdown">
+                  <button class="dropdown-item">
+                    <img
+                      src="icons/user-black.png"
+                      class="dropdown-icon"
+                      alt="account icon"
+                    />
+                    Account
+                  </button>
+                  <button class="dropdown-item" id="logoutBtn">
+                    <img
+                      src="icons/logout-black.png"
+                      class="dropdown-icon"
+                      alt="logout icon"
+                    />
+                    Logout
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- Kết thúc Cụm 2 -->
           </div>
         </div>
       </header>
@@ -78,6 +123,9 @@
         <div class="time-display" id="timeDisplay">25:00</div>
 
         <div class="timer-controls">
+          <button class="skip-btn" id="resetTimerBtn">
+            <img src="icons/reset-white.png" alt="reset icon" />
+          </button>
           <div class="start-btn-wrapper">
             <button class="start-btn" id="startTimerBtn">START</button>
           </div>

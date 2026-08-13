@@ -81,3 +81,7 @@
   font-size: var(--fs-lg);
   color: var(--color-white);
 }
+#resetTimerBtn {
+  left: calc(50% - 150px);
+  right: auto;
+}

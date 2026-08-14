@@ -139,8 +139,6 @@ export function initTaskEvents() {
         DOM.taskNameInput.value = "";
         DOM.estPomodorosInput.value = 1;
         DOM.taskNameInput.focus();
-        renderTasks();
-        return;
       }
     }
     renderTasks();

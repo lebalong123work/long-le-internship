@@ -37,7 +37,7 @@ This project is a front-end exercise focused on building a Pomodoro Web Applicat
 ## Folder Structure
 
 This project uses a modular component-based approach to keep the code clean and easy to maintain.
-
+```
 📁 practices-pomofocus/
 ├── 📁 css/
 │   ├── 📁 components/
@@ -65,15 +65,22 @@ This project uses a modular component-based approach to keep the code clean and 
 ├── login.html               # The login page layout
 ├── login.js                 # Handles the login form submission
 └── main.js                  # The Entry Point that coordinates and boots the app
-
+```
 ## File Roles & Responsibilities
 
-- **`index.html`**: Acts as the main frame. It holds empty container tags where JavaScript will inject the content.
-- **`css/base.css`**: Defines the theme colors and font sizes using CSS Variables (`:root`), making it easy to change the app's look in one place.
-- **`taskLogic.js`**: The "brain" of the app. It does not touch the HTML. It only handles the math, array filtering, and logic rules.
-- **`ui.js`**: The "hands" of the app. It listens for user clicks (Event Listeners), reads data from `taskLogic.js`, and prints the results onto the HTML screen.
-- **`main.js`**: The starter file. It links everything together and tells `ui.js` to start running when the web page finishes loading.
+* **Data & API Layer (`db.json`, `storage.js`)**:
+  Manages how data is saved and retrieved, using either a REST API (`json-server`) or `localStorage` as a fallback. It completely isolates network requests from the rest of the app.
 
+* **Business Logic Layer (`taskLogic.js`, `timerLogic.js`, `authLogic.js`)**:
+  The **"brain"** of the app. These files contain zero HTML or DOM references. They strictly handle array operations, countdown timers, math calculations, and state management in memory.
+
+* **UI & Presentation Layer (`ui_*.js`, `dom.js`)**:
+  The **"hands and eyes"** of the app.
+  * `dom.js`: Acts as the single source of truth for selecting DOM elements, preventing unwanted global variables.
+  * `ui_*.js`: Listens for user interactions, triggers the Logic Layer, and safely updates the user interface.
+
+* **The Orchestrator (`main.js`)**:
+  The main controller that connects all independent UI modules together and initializes the application sequentially once the DOM is fully loaded.
 ## Requirements
 
 - Build a static UI and integrate JavaScript logic.
@@ -88,7 +95,7 @@ This project uses a modular component-based approach to keep the code clean and 
 
 ```bash
 git clone [https://github.com/lebalong123work/long-le-internship.git](https://github.com/lebalong123work/long-le-internship.git)
-cd long-le-internship/javascript-training/pomofocus-clone
+cd long-le-internship/javascript-training/pomofocus
 ```
 
 *Or download the .zip file directly, then extract it to your project folder.*
@@ -103,32 +110,68 @@ To run Parcel, you need to have **Node.js** installed on your computer.
 ## Project Installation & Execution Guide
 
 **Step 1: Open the project in the Terminal**
-- Open the project folder in Visual Studio Code (VS Code).
-- Open the integrated terminal in VS Code using the shortcut: `` Ctrl + ` `` (the backtick key located below the ESC key).
+You need to install the following two tools to read the code and run the project:
 
-**Step 2: Install necessary libraries**
-In the terminal window, type the following command and press Enter to automatically download Parcel and related tools to the project folder (this process takes about a few dozen seconds):
+## 1. Visual Studio Code (VS Code)
+* **What it is:** A tool used to open and edit code.
+* **How to install:**
+  1. Go to [code.visualstudio.com](https://code.visualstudio.com).
+  2. Download the installer for your operating system (Windows, Mac, or Linux).
+  3. Run the installer and click **Next** until it completes.
+
+---
+
+## 2. Node.js
+* **What it is:** A required environment to run package commands (like `npm`).
+* **How to install:**
+  1. Go to [nodejs.org](https://nodejs.org).
+  2. Download the **LTS (Long Term Support)** version.
+  3. Open the file and follow the standard installation steps.
+
+## Step 2: Download Code
+
+1. Download the project code folder (`practices-pomofocus`) to your computer.
+2. Open **VS Code**.
+3. On the top menu, click **File > Open Folder...** and select the `practices-pomofocus` folder to open it.
+
+## Step 3: Install Project Dependencies
+
+1. In **VS Code**, open the Terminal (command window) by pressing **Ctrl + `** (the backtick key right below **Esc** on your keyboard).
+2. In the Terminal window at the bottom, type the following command and press **Enter**:
 ```bash
-npm install
+   npm install
 ```
-*(Note: You only need to run this command once after downloading the code to your machine).*
 
-**Step 3: Start the Server with Parcel**
-After installation is complete, enter the following command to run the project:
+## Step 4: Run the Project (Important)
 
+To run the project smoothly, you need to run two parts at the same time: the **Database (Backend)** and the **Web Interface (Frontend)**. You will need two Terminal windows.
+
+### 1. Start the Database (JSON Server)
+In your open Terminal, type the following command and press **Enter**:
 ```bash
-npx parcel index.html
-
+   npm run server
 ```
+* **Success Indicator:** You will see the text `JSON Server started on PORT :3000` and `Watching db.json...`. Keep this Terminal running—**do not close it!**
 
-**Step 4: View the Result**
+---
 
-* When the Terminal displays a green line saying `Server running at http://localhost:1234`, it means the setup was successful!
-* Keep the Terminal window open (do not close it).
-* Open your web browser (Chrome/Edge/Safari) and visit the link: **http://localhost:1234**
+### 2. Start the Web Interface (Parcel)
+1. Look at the top-right corner of the Terminal panel in **VS Code** and click the **`+` (plus)** icon to open a second Terminal window.
+2. In this second Terminal, type the following command and press **Enter**:
+```bash
+   npx parcel index.html
+```
+* **Success Indicator:** The Terminal will show a green message saying `Server running at http://localhost:1234` (or a similar port).
 
-You have successfully launched the project. Now, whenever you modify and save your HTML/CSS/JS code, the browser will automatically update to reflect the changes immediately.
+---
 
+## Step 5: View the Result
+
+1. Open your web browser (Chrome, Edge, etc.).
+2. Go to: `http://localhost:1234`
+3. Your web interface should now appear! The task data is fetched from `http://localhost:3000` (the JSON Server you started in Step 4.1).
+
+> **Note:** Whenever you edit the code and save it (**Ctrl + S**), the browser will automatically update immediately.
 ---
 
 ##Build Instructions (For Deployment)

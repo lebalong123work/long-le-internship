@@ -50,6 +50,7 @@ body {
     Arial,
     sans-serif;
   background-color: var(--bg-primary);
+  transition: background-color 0.5s ease;
   color: var(--color-white);
   min-height: 100vh;
   -webkit-tap-highlight-color: transparent;
@@ -99,4 +100,11 @@ input:focus {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+body.theme-short-break {
+  background-color: rgb(41, 116, 121);
+}
+
+body.theme-long-break {
+  background-color: rgb(47, 106, 149);
 }

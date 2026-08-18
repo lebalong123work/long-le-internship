@@ -24,12 +24,6 @@ export function updateAggregationUI() {
 }
 
 export function renderTasks() {
-  if (DOM.taskList.contains(DOM.taskFormContainer)) {
-    DOM.actionGroup.after(DOM.taskFormContainer);
-    DOM.taskFormContainer.classList.add("hidden");
-    DOM.actionGroup.classList.remove("hidden");
-  }
-
   DOM.taskList.innerHTML = "";
   const currentTasks = getTasks();
 
@@ -119,9 +113,9 @@ export function initTaskEvents() {
     DOM.actionGroup.after(DOM.taskFormContainer);
     DOM.taskFormContainer.classList.add("hidden");
     DOM.actionGroup.classList.remove("hidden");
-    document
-      .querySelectorAll(".task-item")
-      .forEach((item) => item.classList.remove("hidden"));
+    document.querySelectorAll(".task-item").forEach((item) => {
+      item.classList.remove("hidden");
+    });
   });
 
   DOM.taskFormContainer.addEventListener("submit", async (e) => {
@@ -132,7 +126,12 @@ export function initTaskEvents() {
 
     if (editingTaskId) {
       const success = await editTask(editingTaskId, nameVal, actVal, estVal);
-      if (success) editingTaskId = null;
+      if (success) {
+        editingTaskId = null;
+        DOM.actionGroup.after(DOM.taskFormContainer);
+        DOM.taskFormContainer.classList.add("hidden");
+        DOM.actionGroup.classList.remove("hidden");
+      }
     } else {
       const newTask = await addTask(nameVal, estVal);
       if (newTask) {
@@ -141,6 +140,7 @@ export function initTaskEvents() {
         DOM.taskNameInput.focus();
       }
     }
+
     renderTasks();
   });
 

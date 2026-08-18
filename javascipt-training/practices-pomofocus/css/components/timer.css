@@ -85,3 +85,11 @@
   left: calc(50% - 150px);
   right: auto;
 }
+
+body.theme-short-break .start-btn {
+  color: rgb(41, 116, 121);
+}
+
+body.theme-long-break .start-btn {
+  color: rgb(47, 106, 149);
+}

@@ -46,16 +46,21 @@ export function initTimerEvents() {
         setMode(15);
         updateActiveButton(DOM.longBreakBtn);
         currentMode = "longBreak";
+        document.body.classList.add("theme-long-break");
+        document.body.classList.remove("theme-short-break");
       } else {
         setMode(5);
         updateActiveButton(DOM.shortBreakBtn);
         currentMode = "shortBreak";
+        document.body.classList.add("theme-short-break");
+        document.body.classList.remove("theme-long-break");
       }
     } else {
       setMode(25);
       updateActiveButton(DOM.pomoBtn);
       currentMode = "pomo";
       updatePomodoroCountUI();
+      document.body.classList.remove("theme-short-break", "theme-long-break");
     }
     DOM.startTimerBtn.textContent = "START";
     if (DOM.skipTimerBtn) DOM.skipTimerBtn.classList.add("hidden");
@@ -86,6 +91,7 @@ export function initTimerEvents() {
 
   DOM.pomoBtn.addEventListener("click", () => {
     updateActiveButton(DOM.pomoBtn);
+    document.body.classList.remove("theme-short-break", "theme-long-break");
     setMode(25);
     currentMode = "pomo";
     updatePomodoroCountUI();
@@ -93,12 +99,16 @@ export function initTimerEvents() {
 
   DOM.shortBreakBtn.addEventListener("click", () => {
     updateActiveButton(DOM.shortBreakBtn);
+    document.body.classList.add("theme-short-break");
+    document.body.classList.remove("theme-long-break");
     setMode(5);
     currentMode = "shortBreak";
   });
 
   DOM.longBreakBtn.addEventListener("click", () => {
     updateActiveButton(DOM.longBreakBtn);
+    document.body.classList.add("theme-long-break");
+    document.body.classList.remove("theme-short-break");
     setMode(15);
     currentMode = "longBreak";
   });

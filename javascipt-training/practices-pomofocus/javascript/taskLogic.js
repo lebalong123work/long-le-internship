@@ -1,43 +1,50 @@
-let tasks = [];
+import {
+  saveTasksToAPI,
+  loadTasksFromAPI,
+  deleteTaskFromAPI,
+  updateTaskInAPI,
+} from "./storage.js";
+
 const POMODORO_MINUTES = 25;
 const SHORT_BREAK_MINUTES = 5; // Short break: 5 minutes
 const LONG_BREAK_MINUTES = 15; // Long break: 15 minutes
 const LONG_BREAK_INTERVAL = 4; // Long break every 4 sets
 const SECONDS_PER_HOUR = 3600;
 
-function getTaskIndexById(id, actionName) {
+let tasks = [];
+
+export async function initTasksData() {
+  const apiData = await loadTasksFromAPI();
+
+  tasks = apiData;
+  return true;
+}
+
+function getTaskIndexById(id) {
   if (typeof id !== "string" || id.trim() === "") {
-    console.error(`Error: ${actionName}: Invalid or blank ID.`);
     return -1;
   }
 
   const taskIndex = tasks.findIndex((task) => task.id === id);
   if (taskIndex === -1) {
-    console.error(`Error: ${actionName}: No tasks with ID found [${id}].`);
     return -1;
   }
 
   return taskIndex;
 }
 
-function parsePomodoro(value, fieldName, actionName) {
+function parsePomodoro(value) {
   if (value === undefined || value === "" || value === null) {
-    console.error(`Error: ${actionName}: ${fieldName} cannot be left blank.`);
     return null;
   }
 
   let finalVal = Number(value);
 
   if (Number.isNaN(finalVal) || finalVal < 0) {
-    console.error(
-      `Error: ${actionName}: The ${fieldName} number must be >= 0.`,
-    );
     return null;
   }
 
-  if (finalVal >= 1) {
-    finalVal = Math.floor(finalVal);
-  }
+  finalVal = Math.floor(finalVal);
 
   return finalVal;
 }
@@ -47,24 +54,17 @@ export function getTasks() {
 }
 
 // Logic: Add a new task
-export function addTask(taskname, estPomodoros) {
-  // Check Name Task
+export async function addTask(taskname, estPomodoros) {
   if (typeof taskname !== "string" || taskname.trim() === "") {
-    console.error("Error: Adding Task: Invalid or blank task name.");
     return null;
   }
 
-  // BLOCK BLANK: If no input is entered, enter an empty string, or null. Error will be reported.
-  let finalEst = parsePomodoro(estPomodoros, "Est. Pomodoros", "Adding Task");
+  let finalEst = parsePomodoro(estPomodoros);
   if (finalEst === null) {
     return null;
   }
 
-  // Handling decimal rules:
-  // - If less than 1 (0 to 0.9): Keep as is.
-  // - If 1 or more: Remove the decimal part.
-
-  const newId = crypto.randomUUID(); // Random ID
+  const newId = crypto.randomUUID();
 
   const newTask = {
     id: newId,
@@ -74,89 +74,123 @@ export function addTask(taskname, estPomodoros) {
     isDone: false,
   };
 
-  tasks.push(newTask);
-  console.log(`More success: "${newTask.name}" (Est: ${newTask.est})`);
-  return newTask;
+  const savedTask = await saveTasksToAPI(newTask);
+  if (savedTask) {
+    tasks.push(savedTask);
+    return savedTask;
+  } else {
+    return null;
+  }
 }
 
 // Logic: Edit Task
-export function editTask(id, newName, newAct, newEst) {
+export async function editTask(id, newName, newAct, newEst) {
   // Block incoming junk IDs.
-  const taskIndex = getTaskIndexById(id, "Editing Task");
+  const taskIndex = getTaskIndexById(id);
   if (taskIndex === -1) return false;
 
   const task = tasks[taskIndex];
 
-  // Check act
-
-  // Block Blank Name
   if (typeof newName !== "string" || newName.trim() === "") {
-    console.error("Error: Editing Task: Invalid or blank task name.");
     return false;
   }
 
-  // Block Blank Act & Decimal Logic Handling
-  let finalAct = parsePomodoro(newAct, "Act Pomodoros", "Editing Task");
+  let finalAct = parsePomodoro(newAct);
   if (finalAct === null) return false;
 
-  // Block Blank Est. & Decimal Logic Handling
-  let finalEst = parsePomodoro(newEst, "Est Pomodoros", "Editing Task");
+  let finalEst = parsePomodoro(newEst);
   if (finalEst === null) return false;
 
-  task.name = newName.trim();
-  task.act = finalAct;
-  task.est = finalEst;
+  const draftUpdatedTask = {};
+  let hasChanges = false;
 
-  console.log(
-    `Edited successfully: Task ID [${id}] has been updated. (Act: ${task.act}, Est: ${task.est})`,
-  );
-  return true;
+  if (task.name !== newName.trim()) {
+    draftUpdatedTask.name = newName.trim();
+    hasChanges = true;
+  }
+  if (task.act !== finalAct) {
+    draftUpdatedTask.act = finalAct;
+    hasChanges = true;
+  }
+  if (task.est !== finalEst) {
+    draftUpdatedTask.est = finalEst;
+    hasChanges = true;
+  }
+
+  if (!hasChanges) {
+    return true;
+  }
+
+  const updatedTask = await updateTaskInAPI(id, draftUpdatedTask);
+
+  if (updatedTask) {
+    if (draftUpdatedTask.name !== undefined) {
+      task.name = updatedTask.name;
+    }
+    if (draftUpdatedTask.act !== undefined) {
+      task.act = updatedTask.act;
+    }
+    if (draftUpdatedTask.est !== undefined) {
+      task.est = updatedTask.est;
+    }
+    return true;
+  } else {
+    return false;
+  }
 }
 
 // Logic: Delete a Task
-export function deleteTask(id) {
-  const taskIndex = getTaskIndexById(id, "Deleting Task");
+export async function deleteTask(id) {
+  const taskIndex = getTaskIndexById(id);
   if (taskIndex === -1) return false;
 
-  tasks.splice(taskIndex, 1);
-
-  console.log(
-    `Deletion successful: Task ID [${id}] has been removed from the system.`,
-  );
-  return true;
+  const deleteTask = await deleteTaskFromAPI(id);
+  if (deleteTask) {
+    tasks.splice(taskIndex, 1);
+    return true;
+  } else {
+    return false;
+  }
 }
 
 // Logic: Toggle Task Done Status
-export function toggleTaskDone(id) {
-  // Block junk ID input
-  const taskIndex = getTaskIndexById(id, "Toggling Task");
+export async function toggleTaskDone(id) {
+  const taskIndex = getTaskIndexById(id);
   if (taskIndex === -1) return false;
 
-  // Toggle the status
   const task = tasks[taskIndex];
-  task.isDone = !task.isDone;
 
-  console.log(
-    `Status updated: Task "${task.name}" is now ${task.isDone ? "DONE (True)" : "NOT DONE (False)"}.`,
-  );
-  return true;
+  const drafToggleTask = { isDone: !task.isDone };
+  const updatedTask = await updateTaskInAPI(id, {
+    isDone: drafToggleTask.isDone,
+  });
+
+  if (updatedTask) {
+    task.isDone = updatedTask.isDone;
+    return true;
+  } else {
+    return false;
+  }
 }
 
 // Logic: Delete All Tasks
-export function deleteAllTasks() {
-  // Check if the array is already empty
+export async function deleteAllTasks() {
   if (tasks.length === 0) {
-    console.warn(
-      "Warning: Delete All: The task list is already empty. Nothing to delete.",
-    );
     return false;
   }
+  const deleteAll = tasks.map((task) => deleteTaskFromAPI(task.id));
 
-  // Clear the array
-  tasks = [];
+  const allDeleted = await Promise.all(deleteAll);
 
-  console.log("Delete All successful: All tasks have been completely cleared.");
-  return true;
+  const deleteAllSuccess = allDeleted.every((result) => result === true);
+
+  if (deleteAllSuccess) {
+    tasks = [];
+    return true;
+  } else {
+    await initTasksData();
+    return false;
+  }
 }
 
 function calculateTotals() {
@@ -179,10 +213,6 @@ function calculateTotals() {
     },
     { totalEst: 0, totalAct: 0, remainingPomos: 0 },
   );
-
-  totals.totalAct = Number(totals.totalAct.toFixed(1));
-  totals.totalEst = Number(totals.totalEst.toFixed(1));
-  totals.remainingPomos = Number(totals.remainingPomos.toFixed(1));
 
   return totals;
 }
@@ -226,7 +256,26 @@ export function getAggregationData() {
     totalAct: totals.totalAct,
     finishAt: finishAtString,
   };
-
-  console.log("Aggregation Data:", data);
   return data;
+}
+
+export async function increaseActualPomodoros(id) {
+  const taskIndex = getTaskIndexById(id);
+  if (taskIndex === -1) {
+    return false;
+  }
+
+  const task = tasks[taskIndex];
+  const newAct = task.act + 1;
+  const draftAct = {
+    act: newAct,
+  };
+  const updatedTask = await updateTaskInAPI(id, draftAct);
+
+  if (updatedTask) {
+    task.act = updatedTask.act;
+    return true;
+  } else {
+    return false;
+  }
 }

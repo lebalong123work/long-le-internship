@@ -13,92 +13,60 @@
   ],
   "tasks": [
     {
-      "id": "o4kwMqhBtBU",
-      "name": "Test 1",
-      "est": 2,
-      "act": 0,
-      "isDone": false,
-      "userId": "u1"
-    },
-    {
-      "id": "8kmlJfAfR3g",
-      "name": "Test 2",
+      "id": "D-xDdxmJNOo",
+      "name": "Task 1",
       "est": 1,
       "act": 0,
-      "isDone": false,
-      "userId": "u1"
-    },
-    {
-      "id": "ddw-Y1UDX5Y",
-      "name": "tttttttttttttttttttttttttttt",
-      "est": 1,
-      "act": 6,
       "isDone": false,
       "userId": "u2"
     },
     {
-      "id": "qfQR3SCGZt0",
+      "id": "BVnGVPrP9PY",
+      "name": "Task 2",
+      "est": 2,
+      "act": 1,
+      "isDone": false,
+      "userId": "u2"
+    },
+    {
+      "id": "ZIK9Va_gaFU",
+      "name": "k",
+      "est": 1,
+      "act": 0,
+      "isDone": false,
+      "userId": "u1"
+    },
+    {
+      "id": "cLDhtkMGqNQ",
       "name": "long3",
       "est": 1,
       "act": 0,
       "isDone": false,
-      "userId": "u2"
+      "userId": "u1"
     },
     {
-      "id": "1SL507UD4gY",
-      "name": "long2",
-      "est": 1,
-      "act": 0,
-      "isDone": false,
-      "userId": "u2"
-    },
-    {
-      "id": "R_3Y6XzZKLc",
-      "name": "test 3",
+      "id": "ceZ1wEoEzeA",
+      "name": "l",
       "est": 1,
       "act": 0,
       "isDone": false,
       "userId": "u1"
     },
     {
-      "id": "HiDn18rMddE",
-      "name": "gggggggggg",
+      "id": "yiZQ7mRdV-4",
+      "name": "l",
       "est": 1,
       "act": 0,
       "isDone": false,
-      "userId": "u2"
+      "userId": "u1"
     },
     {
-      "id": "B3voYW_Z9qs",
-      "name": "ggggggggggggggg",
+      "id": "Nd95uD03a4M",
+      "name": "long",
       "est": 1,
       "act": 0,
       "isDone": false,
-      "userId": "u2"
-    },
-    {
-      "id": "oRLzRtsLsYY",
-      "name": "long2",
-      "est": 1,
-      "act": 0,
-      "isDone": false,
-      "userId": "u2"
-    },
-    {
-      "id": "C41gmjTsJQI",
-      "name": "dddđ",
-      "est": 1,
-      "act": 0,
-      "isDone": false,
-      "userId": "u2"
-    },
-    {
-      "id": "klG4tVUEspg",
-      "name": "g",
-      "est": 6,
-      "act": 0,
-      "isDone": false,
-      "userId": "u2"
+      "userId": "u1"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

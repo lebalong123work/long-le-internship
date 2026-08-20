@@ -23,7 +23,10 @@ export async function loadTasksFromAPI() {
       }
     }
   } catch (error) {
-    return [];
+    throw new Error(
+      "Network error: Unable to connect. Please check internet connection",
+      { cause: error },
+    );
   }
 }
 
@@ -66,7 +69,7 @@ export async function saveTasksToAPI(newtask) {
       return newtask;
     }
   } catch (error) {
-    return null;
+    throw new Error("Network error: Unable to save", { cause: error });
   }
 }
 
@@ -97,7 +100,7 @@ export async function deleteTaskFromAPI(taskId) {
       return true;
     }
   } catch (error) {
-    return false;
+    throw new Error("Network error: Unable to delete", { cause: error });
   }
 }
 
@@ -148,6 +151,6 @@ export async function updateTaskInAPI(taskId, updatedTask) {
       return currentTasks[taskIndex];
     }
   } catch (error) {
-    return null;
+    throw new Error("Network error: Unable to update", { cause: error });
   }
 }

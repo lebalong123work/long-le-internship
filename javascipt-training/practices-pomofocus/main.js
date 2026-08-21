@@ -7,6 +7,7 @@ import {
 
 import { initTasksData } from "./javascript/taskLogic.js";
 import { initGlobalErrorHandler } from "./javascript/errorHandler.js";
+import { removeInitialLoader } from "./javascript/uiLoader.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   initGlobalErrorHandler();
@@ -15,9 +16,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   initTimerEvents();
 
   initTaskEvents();
-
-  await initTasksData();
-
+  try {
+    await initTasksData();
+  } finally {
+    removeInitialLoader();
+  }
   updatePomodoroCountUI();
   renderTasks();
 });

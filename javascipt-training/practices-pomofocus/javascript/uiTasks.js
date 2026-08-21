@@ -8,6 +8,7 @@ import {
   deleteAllTasks,
   getAggregationData,
 } from "./taskLogic.js";
+import { withButtonLoading } from "./uiButtonState.js";
 
 let editingTaskId = null;
 let selectedTaskId = null;
@@ -124,24 +125,34 @@ export function initTaskEvents() {
     const estVal = DOM.estPomodorosInput.value;
     const actVal = DOM.actPomodorosInput.value;
 
-    if (editingTaskId) {
-      const success = await editTask(editingTaskId, nameVal, actVal, estVal);
-      if (success) {
-        editingTaskId = null;
-        DOM.actionGroup.after(DOM.taskFormContainer);
-        DOM.taskFormContainer.classList.add("hidden");
-        DOM.actionGroup.classList.remove("hidden");
-      }
-    } else {
-      const newTask = await addTask(nameVal, estVal);
-      if (newTask) {
-        DOM.taskNameInput.value = "";
-        DOM.estPomodorosInput.value = 1;
-        DOM.taskNameInput.focus();
-      }
-    }
-
-    renderTasks();
+    await withButtonLoading(
+      "saveTaskBtn",
+      async () => {
+        if (editingTaskId) {
+          const success = await editTask(
+            editingTaskId,
+            nameVal,
+            actVal,
+            estVal,
+          );
+          if (success) {
+            editingTaskId = null;
+            DOM.actionGroup.after(DOM.taskFormContainer);
+            DOM.taskFormContainer.classList.add("hidden");
+            DOM.actionGroup.classList.remove("hidden");
+          }
+        } else {
+          const newTask = await addTask(nameVal, estVal);
+          if (newTask) {
+            DOM.taskNameInput.value = "";
+            DOM.estPomodorosInput.value = 1;
+            DOM.taskNameInput.focus();
+          }
+        }
+        renderTasks();
+      },
+      "Saving...",
+    );
   });
 
   if (DOM.deleteTaskBtn) {

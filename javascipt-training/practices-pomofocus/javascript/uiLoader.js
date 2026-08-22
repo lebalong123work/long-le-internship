@@ -1,5 +1,3 @@
-// uiLoader.js
-
 export function removeInitialLoader() {
   const initialLoader = document.getElementById("initial-loader");
 
@@ -8,6 +6,6 @@ export function removeInitialLoader() {
 
     setTimeout(() => {
       initialLoader.remove();
-    }, 300);
+    }, CONFIG.UI.LOADER_FADE_TIME);
   }
 }

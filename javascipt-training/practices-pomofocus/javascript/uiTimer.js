@@ -7,7 +7,6 @@ import {
   resetTimer,
 } from "./timerLogic.js";
 import { increaseActualPomodoros } from "./taskLogic.js";
-
 import { renderTasks, getSelectedTaskId } from "./uiTasks.js";
 
 let currentMode = "pomo";
@@ -43,20 +42,20 @@ export function initTimerEvents() {
       localStorage.setItem("pomoCount", pomodorosCompleted);
 
       if (pomodorosCompleted % 4 === 0) {
-        setMode(15);
+        setMode("longBreak");
         updateActiveButton(DOM.longBreakBtn);
         currentMode = "longBreak";
         document.body.classList.add("theme-long-break");
         document.body.classList.remove("theme-short-break");
       } else {
-        setMode(5);
+        setMode("shortBreak");
         updateActiveButton(DOM.shortBreakBtn);
         currentMode = "shortBreak";
         document.body.classList.add("theme-short-break");
         document.body.classList.remove("theme-long-break");
       }
     } else {
-      setMode(25);
+      setMode("pomo");
       updateActiveButton(DOM.pomoBtn);
       currentMode = "pomo";
       updatePomodoroCountUI();
@@ -92,7 +91,7 @@ export function initTimerEvents() {
   DOM.pomoBtn.addEventListener("click", () => {
     updateActiveButton(DOM.pomoBtn);
     document.body.classList.remove("theme-short-break", "theme-long-break");
-    setMode(25);
+    setMode("pomo");
     currentMode = "pomo";
     updatePomodoroCountUI();
   });
@@ -101,7 +100,7 @@ export function initTimerEvents() {
     updateActiveButton(DOM.shortBreakBtn);
     document.body.classList.add("theme-short-break");
     document.body.classList.remove("theme-long-break");
-    setMode(5);
+    setMode("shortBreak");
     currentMode = "shortBreak";
   });
 
@@ -109,7 +108,7 @@ export function initTimerEvents() {
     updateActiveButton(DOM.longBreakBtn);
     document.body.classList.add("theme-long-break");
     document.body.classList.remove("theme-short-break");
-    setMode(15);
+    setMode("longBreak");
     currentMode = "longBreak";
   });
 

@@ -1,3 +1,4 @@
+import { CONFIG } from "./config.js";
 function getToastContainer() {
   let container = document.getElementById("toast-container");
   if (!container) {
@@ -10,7 +11,6 @@ function getToastContainer() {
 
 export function showToast(message, type = "error") {
   const container = getToastContainer();
-
   const toast = document.createElement("div");
 
   toast.classList.add("toast", type);
@@ -18,5 +18,5 @@ export function showToast(message, type = "error") {
   container.appendChild(toast);
   setTimeout(() => {
     toast.remove();
-  }, 3000);
+  }, CONFIG.UI.TOAST_DURATION);
 }

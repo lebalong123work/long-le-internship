@@ -21,14 +21,6 @@
       "userId": "u2"
     },
     {
-      "id": "BVnGVPrP9PY",
-      "name": "Task 2",
-      "est": 2,
-      "act": 1,
-      "isDone": false,
-      "userId": "u2"
-    },
-    {
       "id": "ZIK9Va_gaFU",
       "name": "k",
       "est": 1,
@@ -67,6 +59,14 @@
       "act": 0,
       "isDone": false,
       "userId": "u1"
+    },
+    {
+      "id": "OXmOj-ekJrk",
+      "name": "ô",
+      "est": 1,
+      "act": 0,
+      "isDone": false,
+      "userId": "u2"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

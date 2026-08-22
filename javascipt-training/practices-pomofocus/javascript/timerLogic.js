@@ -1,16 +1,14 @@
+import { CONFIG } from "./config.js";
+
 export function formatTime(totalSeconds) {
   const minutes = Math.floor(totalSeconds / 60);
-
   const seconds = totalSeconds % 60;
-
   const stringMinutes = minutes.toString().padStart(2, "0");
-
   const stringSeconds = seconds.toString().padStart(2, "0");
-
   return `${stringMinutes}:${stringSeconds}`;
 }
 
-let currentDuration = 25 * 60;
+let currentDuration = CONFIG.TIMER.POMO * 60;
 let timeLeft = currentDuration;
 let isRunning = false;
 let timerId = null;
@@ -32,7 +30,6 @@ export function toggleTimer() {
     isRunning = false;
   } else {
     isRunning = true;
-
     timerId = setInterval(() => {
       timeLeft--;
 
@@ -60,11 +57,17 @@ export function toggleTimer() {
   return isRunning;
 }
 
-export function setMode(minutes) {
+export function setMode(modeName) {
   clearInterval(timerId);
   isRunning = false;
+  if (modeName === "pomo") {
+    currentDuration = CONFIG.TIMER.POMO * 60;
+  } else if (modeName === "shortBreak") {
+    currentDuration = CONFIG.TIMER.SHORT_BREAK * 60;
+  } else if (modeName === "longBreak") {
+    currentDuration = CONFIG.TIMER.LONG_BREAK * 60;
+  }
 
-  currentDuration = minutes * 60;
   timeLeft = currentDuration;
 
   if (onTickCallback) {
@@ -73,7 +76,7 @@ export function setMode(minutes) {
 }
 
 export function resetTimer() {
-  clearInterval(timerId); 
+  clearInterval(timerId);
   isRunning = false;
   timeLeft = currentDuration;
   if (onTickCallback) {

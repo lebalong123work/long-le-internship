@@ -11,6 +11,55 @@ import {
 import { withButtonLoading } from "./uiButtonState.js";
 
 let editingTaskId = null;
+
+export function hideTaskForm() {
+  DOM.actionGroup.after(DOM.taskFormContainer);
+
+  DOM.taskFormContainer.classList.add("hidden");
+
+  DOM.actionGroup.classList.remove("hidden");
+  document.querySelectorAll(".task-item").forEach((item) => {
+    item.classList.remove("hidden");
+  });
+}
+
+export function openAddTaskForm() {
+  hideTaskForm();
+
+  editingTaskId = null;
+  DOM.formTitle.textContent = "Add Task";
+  DOM.taskNameInput.value = "";
+  DOM.estPomodorosInput.value = 1;
+
+  DOM.actPomodorosContainer.classList.add("hidden");
+  if (DOM.deleteTaskBtn) DOM.deleteTaskBtn.classList.add("hidden");
+
+  DOM.actionGroup.classList.add("hidden");
+  DOM.taskFormContainer.classList.remove("hidden");
+
+  DOM.taskNameInput.focus();
+}
+
+export function openEditTaskForm(task, liElement) {
+  hideTaskForm();
+
+  editingTaskId = task.id;
+  DOM.formTitle.textContent = "Edit Task";
+  DOM.taskNameInput.value = task.name;
+  DOM.estPomodorosInput.value = task.est;
+  DOM.actPomodorosInput.value = task.act;
+
+  DOM.actPomodorosContainer.classList.remove("hidden");
+  if (DOM.deleteTaskBtn) DOM.deleteTaskBtn.classList.remove("hidden");
+
+  liElement.after(DOM.taskFormContainer);
+
+  liElement.classList.add("hidden");
+
+  DOM.taskFormContainer.classList.remove("hidden");
+  DOM.taskNameInput.focus();
+}
+
 let selectedTaskId = null;
 
 export function getSelectedTaskId() {
@@ -54,25 +103,7 @@ export function renderTasks() {
     const editBtn = li.querySelector(".task-edit-btn");
     editBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-      document
-        .querySelectorAll(".task-item")
-        .forEach((item) => item.classList.remove("hidden"));
-
-      editingTaskId = task.id;
-      DOM.formTitle.textContent = "Edit Task";
-      DOM.taskNameInput.value = task.name;
-      DOM.estPomodorosInput.value = task.est;
-      DOM.actPomodorosInput.value = task.act;
-
-      DOM.actPomodorosContainer.classList.remove("hidden");
-      if (DOM.deleteTaskBtn) DOM.deleteTaskBtn.classList.remove("hidden");
-
-      li.after(DOM.taskFormContainer);
-      li.classList.add("hidden");
-
-      DOM.actionGroup.classList.remove("hidden");
-      DOM.taskFormContainer.classList.remove("hidden");
-      DOM.taskNameInput.focus();
+      openEditTaskForm(task, li);
     });
 
     li.addEventListener("click", () => {
@@ -93,32 +124,8 @@ export function renderTasks() {
 }
 
 export function initTaskEvents() {
-  DOM.showTaskFormBtn.addEventListener("click", () => {
-    document
-      .querySelectorAll(".task-item")
-      .forEach((item) => item.classList.remove("hidden"));
-    editingTaskId = null;
-    DOM.formTitle.textContent = "Add Task";
-    DOM.taskNameInput.value = "";
-    DOM.estPomodorosInput.value = 1;
-    DOM.actPomodorosContainer.classList.add("hidden");
-    if (DOM.deleteTaskBtn) DOM.deleteTaskBtn.classList.add("hidden");
-
-    DOM.actionGroup.after(DOM.taskFormContainer);
-    DOM.actionGroup.classList.add("hidden");
-    DOM.taskFormContainer.classList.remove("hidden");
-    DOM.taskNameInput.focus();
-  });
-
-  DOM.cancelTaskBtn.addEventListener("click", () => {
-    DOM.actionGroup.after(DOM.taskFormContainer);
-    DOM.taskFormContainer.classList.add("hidden");
-    DOM.actionGroup.classList.remove("hidden");
-    document.querySelectorAll(".task-item").forEach((item) => {
-      item.classList.remove("hidden");
-    });
-  });
-
+  DOM.showTaskFormBtn.addEventListener("click", openAddTaskForm);
+  DOM.cancelTaskBtn.addEventListener("click", hideTaskForm);
   DOM.taskFormContainer.addEventListener("submit", async (e) => {
     e.preventDefault();
     const nameVal = DOM.taskNameInput.value;
@@ -136,10 +143,7 @@ export function initTaskEvents() {
             estVal,
           );
           if (success) {
-            editingTaskId = null;
-            DOM.actionGroup.after(DOM.taskFormContainer);
-            DOM.taskFormContainer.classList.add("hidden");
-            DOM.actionGroup.classList.remove("hidden");
+            hideTaskForm();
           }
         } else {
           const newTask = await addTask(nameVal, estVal);

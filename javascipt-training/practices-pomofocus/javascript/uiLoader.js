@@ -1,3 +1,4 @@
+import { CONFIG } from "./config.js";
 export function removeInitialLoader() {
   const initialLoader = document.getElementById("initial-loader");
 

@@ -1,17 +1,12 @@
 import { CONFIG } from "./config.js";
-
-export function formatTime(totalSeconds) {
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
-  const stringMinutes = minutes.toString().padStart(2, "0");
-  const stringSeconds = seconds.toString().padStart(2, "0");
-  return `${stringMinutes}:${stringSeconds}`;
-}
+import { formatTime } from "./utils/timeUtils.js";
 
 let currentDuration = CONFIG.TIMER.POMO * 60;
 let timeLeft = currentDuration;
 let isRunning = false;
 let timerId = null;
+
+let expectedEndTime = null;
 
 let onTickCallback = null;
 let onCompleteCallback = null;
@@ -28,27 +23,30 @@ export function toggleTimer() {
   if (isRunning) {
     clearInterval(timerId);
     isRunning = false;
+
+    if (expectedEndTime) {
+      timeLeft = Math.max(0, Math.round((expectedEndTime - Date.now()) / 1000));
+    }
   } else {
     isRunning = true;
+    expectedEndTime = Date.now() + timeLeft * 1000;
+
     timerId = setInterval(() => {
-      timeLeft--;
+      const secondsLeft = Math.round((expectedEndTime - Date.now()) / 1000);
+      timeLeft = secondsLeft;
 
       if (onTickCallback) {
-        onTickCallback(formatTime(timeLeft));
+        onTickCallback(formatTime(timeLeft > 0 ? timeLeft : 0));
       }
 
       if (timeLeft <= 0) {
         clearInterval(timerId);
         isRunning = false;
+        expectedEndTime = null;
+        timeLeft = currentDuration;
 
         if (onCompleteCallback) {
           onCompleteCallback();
-        }
-
-        timeLeft = currentDuration;
-
-        if (onTickCallback) {
-          onTickCallback(formatTime(timeLeft));
         }
       }
     }, 1000);
@@ -60,6 +58,8 @@ export function toggleTimer() {
 export function setMode(modeName) {
   clearInterval(timerId);
   isRunning = false;
+  expectedEndTime = null;
+
   if (modeName === "pomo") {
     currentDuration = CONFIG.TIMER.POMO * 60;
   } else if (modeName === "shortBreak") {
@@ -78,6 +78,7 @@ export function setMode(modeName) {
 export function resetTimer() {
   clearInterval(timerId);
   isRunning = false;
+  expectedEndTime = null;
   timeLeft = currentDuration;
   if (onTickCallback) {
     onTickCallback(formatTime(timeLeft));

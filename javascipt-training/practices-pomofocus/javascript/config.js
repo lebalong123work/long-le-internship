@@ -5,6 +5,7 @@ export const CONFIG = {
   },
   STORAGE: {
     ANONYMOUS_KEY: "anonymous_tasks",
+    POMO_COUNT_KEY: "pomo_count",
   },
   TIMER: {
     POMO: 25,
@@ -14,5 +15,5 @@ export const CONFIG = {
   UI: {
     TOAST_DURATION: 3000,
     LOADER_FADE_TIME: 300,
-  }
+  },
 };

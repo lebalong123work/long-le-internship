@@ -9,5 +9,5 @@ export const LocalDB = {
   saveTasks: (tasksArray) => {
     const stringifiedData = JSON.stringify(tasksArray);
     localStorage.setItem(CONFIG.STORAGE.ANONYMOUS_KEY, stringifiedData);
-  }
+  },
 };

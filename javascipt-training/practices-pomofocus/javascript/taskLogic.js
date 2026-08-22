@@ -1,15 +1,10 @@
+import { calculateFinishTime } from "./utils/timeUtils.js";
 import {
   saveTasksToAPI,
   loadTasksFromAPI,
   deleteTaskFromAPI,
   updateTaskInAPI,
 } from "./storage.js";
-
-const POMODORO_MINUTES = 25;
-const SHORT_BREAK_MINUTES = 5; // Short break: 5 minutes
-const LONG_BREAK_MINUTES = 15; // Long break: 15 minutes
-const LONG_BREAK_INTERVAL = 4; // Long break every 4 sets
-const SECONDS_PER_HOUR = 3600;
 
 let tasks = [];
 
@@ -215,36 +210,6 @@ function calculateTotals() {
   );
 
   return totals;
-}
-
-function calculateFinishTime(remainingPomos) {
-  if (remainingPomos < 0) {
-    remainingPomos = 0;
-  }
-
-  const POMO_SECONDS = POMODORO_MINUTES * 60;
-  const workSeconds = remainingPomos * POMO_SECONDS;
-
-  const totalPomosForBreak = Math.ceil(remainingPomos);
-  const totalBreaks = totalPomosForBreak > 0 ? totalPomosForBreak - 1 : 0;
-
-  const longBreaks = Math.floor(totalBreaks / LONG_BREAK_INTERVAL);
-  const shortBreaks = totalBreaks - longBreaks;
-
-  const shortBreakSeconds = shortBreaks * SHORT_BREAK_MINUTES * 60;
-  const longBreakSeconds = longBreaks * LONG_BREAK_MINUTES * 60;
-
-  const totalSeconds = workSeconds + shortBreakSeconds + longBreakSeconds;
-
-  const hoursNeeded = Number((totalSeconds / SECONDS_PER_HOUR).toFixed(1));
-
-  const now = new Date();
-  now.setSeconds(now.getSeconds() + totalSeconds);
-
-  const hours = now.getHours().toString().padStart(2, "0");
-  const minutes = now.getMinutes().toString().padStart(2, "0");
-
-  return `${hours}:${minutes} (${hoursNeeded}h)`;
 }
 
 export function getAggregationData() {

@@ -6,7 +6,7 @@ import {
   deleteTask,
   toggleTaskDone,
   deleteAllTasks,
-  getAggregationData,
+  getSummaryData,
 } from "../logic/taskLogic.js";
 import { withButtonLoading } from "./uiButtonState.js";
 
@@ -66,8 +66,8 @@ export function getSelectedTaskId() {
   return selectedTaskId;
 }
 
-export function updateAggregationUI() {
-  const data = getAggregationData();
+export function updateSummaryUI() {
+  const data = getSummaryData();
   DOM.actCount.textContent = data.totalAct;
   DOM.estCount.textContent = data.totalEst;
   DOM.finishTime.textContent = data.finishAt || "--:--";
@@ -125,7 +125,7 @@ export function renderTasks() {
     DOM.taskList.appendChild(clone);
   });
 
-  updateAggregationUI();
+  updateSummaryUI();
 }
 
 export function initTaskEvents() {

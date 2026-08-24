@@ -208,7 +208,7 @@ function calculateTotals() {
   return totals;
 }
 
-export function getAggregationData() {
+export function getSummaryData() {
   const totals = calculateTotals();
   const finishAtString = calculateFinishTime(totals.remainingPomos);
 

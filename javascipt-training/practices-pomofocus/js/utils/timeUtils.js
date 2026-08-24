@@ -1,6 +1,4 @@
-// javascript/utils/timeUtils.js
-
-import { CONFIG } from "../config.js";
+import { CONFIG } from "../config/config.js";
 
 export function formatTime(totalSeconds) {
   const minutes = Math.floor(totalSeconds / 60);

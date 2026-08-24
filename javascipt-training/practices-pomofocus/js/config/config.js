@@ -1,4 +1,3 @@
-// Trạm cấu hình toàn cục cho Frontend
 export const CONFIG = {
   API: {
     BASE_URL: "http://localhost:3000",

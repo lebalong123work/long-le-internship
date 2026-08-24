@@ -1,5 +1,5 @@
-import { CONFIG } from "./config.js";
-import { formatTime } from "./utils/timeUtils.js";
+import { CONFIG } from "../config/config.js";
+import { formatTime } from "../utils/timeUtils.js";
 
 let currentDuration = CONFIG.TIMER.POMO * 60;
 let timeLeft = currentDuration;

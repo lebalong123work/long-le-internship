@@ -1,4 +1,4 @@
-import { CONFIG } from "./config.js";
+import { CONFIG } from "../config/config.js";
 function getToastContainer() {
   let container = document.getElementById("toast-container");
   if (!container) {

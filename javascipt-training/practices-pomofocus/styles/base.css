@@ -108,3 +108,11 @@ body.theme-short-break {
 body.theme-long-break {
   background-color: rgb(47, 106, 149);
 }
+
+#progressBar { 
+  width: 0%; 
+}
+
+.guest-login-link { 
+  text-decoration: none; 
+}

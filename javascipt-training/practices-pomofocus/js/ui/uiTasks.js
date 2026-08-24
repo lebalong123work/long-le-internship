@@ -1,4 +1,4 @@
-import { DOM } from "./dom.js";
+import { DOM } from "../ui/dom.js";
 import {
   getTasks,
   addTask,
@@ -7,7 +7,7 @@ import {
   toggleTaskDone,
   deleteAllTasks,
   getAggregationData,
-} from "./taskLogic.js";
+} from "../logic/taskLogic.js";
 import { withButtonLoading } from "./uiButtonState.js";
 
 let editingTaskId = null;

@@ -1,13 +1,13 @@
 import { DOM } from "./dom.js";
-import { CONFIG } from "./config.js";
+import { CONFIG } from "../config/config.js";
 import {
   toggleTimer,
   setTimerCallback,
   setMode,
   setTimerCompleteCallback,
   resetTimer,
-} from "./timerLogic.js";
-import { increaseActualPomodoros } from "./taskLogic.js";
+} from "../logic/timerLogic.js";
+import { increaseActualPomodoros } from "../logic/taskLogic.js";
 import { renderTasks, getSelectedTaskId } from "./uiTasks.js";
 
 let currentMode = "pomo";

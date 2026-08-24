@@ -1,10 +1,10 @@
-import { calculateFinishTime } from "./utils/timeUtils.js";
+import { calculateFinishTime } from "../utils/timeUtils.js";
 import {
   saveTasksToAPI,
   loadTasksFromAPI,
   deleteTaskFromAPI,
   updateTaskInAPI,
-} from "./storage.js";
+} from "../api/storage.js";
 
 let tasks = [];
 

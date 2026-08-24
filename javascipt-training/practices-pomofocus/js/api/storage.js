@@ -1,6 +1,6 @@
-import { getCurrentUserId } from "./authLogic.js";
-import { fetchAPI } from "./utils/apiClient.js";
-import { LocalDB } from "./utils/localDB.js";
+import { getCurrentUserId } from "../logic/authLogic.js";
+import { fetchAPI } from "../api/apiClient.js";
+import { LocalDB } from "./localDB.js";
 
 export async function loadTasksFromAPI() {
   try {

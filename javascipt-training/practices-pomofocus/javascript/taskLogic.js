@@ -192,15 +192,11 @@ function calculateTotals() {
   const totals = tasks.reduce(
     (acc, task) => {
       acc.totalAct += task.act;
-
-      if (task.isDone) {
-        acc.totalEst += task.act;
-      } else {
-        const effectiveEst = Math.max(task.est, task.act);
-        acc.totalEst += effectiveEst;
-
-        if (effectiveEst > task.act) {
-          acc.remainingPomos += effectiveEst - task.act;
+      acc.totalEst += task.est;
+      if (!task.isDone) {
+        const remaining = task.est - task.act;
+        if (remaining > 0) {
+          acc.remainingPomos += remaining;
         }
       }
 

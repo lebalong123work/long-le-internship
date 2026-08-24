@@ -76,6 +76,13 @@ export function updateAggregationUI() {
 export function renderTasks() {
   DOM.taskList.innerHTML = "";
   const currentTasks = getTasks();
+  const activeTask = currentTasks.find((t) => t.id === selectedTaskId);
+  if (activeTask) {
+    DOM.currentTaskMessage.textContent = activeTask.name;
+  } else {
+    selectedTaskId = null;
+    DOM.currentTaskMessage.textContent = "Time to focus!";
+  }
 
   if (currentTasks.length === 0) {
     DOM.summaryBoard.classList.add("hidden");
@@ -109,10 +116,8 @@ export function renderTasks() {
     li.addEventListener("click", () => {
       if (selectedTaskId === task.id) {
         selectedTaskId = null;
-        DOM.currentTaskMessage.textContent = "Time to focus!";
       } else {
         selectedTaskId = task.id;
-        DOM.currentTaskMessage.textContent = task.name;
       }
       renderTasks();
     });

@@ -51,14 +51,6 @@
       "act": 0,
       "isDone": false,
       "userId": "u1"
-    },
-    {
-      "id": "JHoLaUEosyk",
-      "name": "long",
-      "est": 1,
-      "act": 6,
-      "isDone": false,
-      "userId": "u2"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

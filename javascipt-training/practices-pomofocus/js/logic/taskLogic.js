@@ -80,58 +80,34 @@ export async function addTask(taskname, estPomodoros) {
 
 // Logic: Edit Task
 export async function editTask(id, newName, newAct, newEst) {
-  // Block incoming junk IDs.
   const taskIndex = getTaskIndexById(id);
   if (taskIndex === -1) return false;
-
   const task = tasks[taskIndex];
 
-  if (typeof newName !== "string" || newName.trim() === "") {
-    return false;
-  }
-
-  let finalAct = parsePomodoro(newAct);
+  if (typeof newName !== "string" || newName.trim() === "") return false;
+  const finalAct = parsePomodoro(newAct);
   if (finalAct === null) return false;
-
-  let finalEst = parsePomodoro(newEst);
+  const finalEst = parsePomodoro(newEst);
   if (finalEst === null) return false;
 
+  const parsedName = newName.trim();
   const draftUpdatedTask = {};
-  let hasChanges = false;
 
-  if (task.name !== newName.trim()) {
-    draftUpdatedTask.name = newName.trim();
-    hasChanges = true;
-  }
-  if (task.act !== finalAct) {
-    draftUpdatedTask.act = finalAct;
-    hasChanges = true;
-  }
-  if (task.est !== finalEst) {
-    draftUpdatedTask.est = finalEst;
-    hasChanges = true;
-  }
+  if (task.name !== parsedName) draftUpdatedTask.name = parsedName;
+  if (task.act !== finalAct) draftUpdatedTask.act = finalAct;
+  if (task.est !== finalEst) draftUpdatedTask.est = finalEst;
 
-  if (!hasChanges) {
+  if (Object.keys(draftUpdatedTask).length === 0) {
     return true;
   }
 
   const updatedTask = await updateTaskInAPI(id, draftUpdatedTask);
 
-  if (updatedTask) {
-    if (draftUpdatedTask.name !== undefined) {
-      task.name = updatedTask.name;
-    }
-    if (draftUpdatedTask.act !== undefined) {
-      task.act = updatedTask.act;
-    }
-    if (draftUpdatedTask.est !== undefined) {
-      task.est = updatedTask.est;
-    }
-    return true;
-  } else {
-    return false;
-  }
+  if (!updatedTask) return false;
+
+  Object.assign(task, draftUpdatedTask);
+
+  return true;
 }
 
 // Logic: Delete a Task
@@ -189,15 +165,16 @@ export async function deleteAllTasks() {
 }
 
 function calculateTotals() {
-  const totals = tasks.reduce(
+  const activeTasks = tasks.filter((task) => !task.isDone);
+
+  const totals = activeTasks.reduce(
     (acc, task) => {
       acc.totalAct += task.act;
       acc.totalEst += task.est;
-      if (!task.isDone) {
-        const remaining = task.est - task.act;
-        if (remaining > 0) {
-          acc.remainingPomos += remaining;
-        }
+
+      const remaining = task.est - task.act;
+      if (remaining > 0) {
+        acc.remainingPomos += remaining;
       }
 
       return acc;

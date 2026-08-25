@@ -36,7 +36,7 @@ export function toggleTimer() {
       timeLeft = secondsLeft;
 
       if (onTickCallback) {
-        onTickCallback(formatTime(timeLeft > 0 ? timeLeft : 0));
+        onTickCallback(formatTime(Math.max(0, timeLeft)));
       }
 
       if (timeLeft <= 0) {

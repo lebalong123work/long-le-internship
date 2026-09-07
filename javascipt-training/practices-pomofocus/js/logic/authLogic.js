@@ -1,23 +1,31 @@
+import { CONFIG } from "../config/config.js";
+
 export function getCurrentUserId() {
-  const userId = localStorage.getItem("userId");
-  return userId;
+  return localStorage.getItem("userId");
 }
 
-export async function loginUser(username, password) {
+export async function loginUser(email, password) {
   try {
-    const response = await fetch(
-      `http://localhost:3000/users?username=${username}&password=${password}`
-    );
+    const response = await fetch(`${CONFIG.API.BASE_URL}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
 
-    const user = await response.json();
+    if (!response.ok) return false;
 
-    if (user.length > 0) {
-      const matchedUser = user[0];
-      localStorage.setItem("userId", matchedUser.id);
+    const data = await response.json();
+
+    if (data.accessToken) {
+      localStorage.setItem("accessToken", data.accessToken);
+      if (data.user?.id) {
+        localStorage.setItem("userId", data.user.id);
+      }
       return true;
-    } else {
-      return false;
     }
+    return false;
   } catch (error) {
     console.error("Error logging in:", error);
     return false;
@@ -25,6 +33,6 @@ export async function loginUser(username, password) {
 }
 
 export function logoutUser() {
+  localStorage.removeItem("accessToken");
   localStorage.removeItem("userId");
 }
-

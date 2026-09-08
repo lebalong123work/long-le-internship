@@ -1,15 +1,15 @@
 import { calculateFinishTime } from "../utils/timeUtils.js";
 import {
-  saveTasksToAPI,
-  loadTasksFromAPI,
-  deleteTaskFromAPI,
-  updateTaskInAPI,
+  createTask,
+  fetchTasks,
+  removeTask,
+  updateTask,
 } from "../api/storage.js";
 
 let tasks = [];
 
 export async function initTasksData() {
-  const apiData = await loadTasksFromAPI();
+  const apiData = await fetchTasks();
 
   tasks = apiData;
   return true;
@@ -49,8 +49,8 @@ export function getTasks() {
 }
 
 // Logic: Add a new task
-export async function addTask(taskname, estPomodoros) {
-  if (typeof taskname !== "string" || taskname.trim() === "") {
+export async function addTask(taskName, estPomodoros) {
+  if (typeof taskName !== "string" || taskName.trim() === "") {
     return null;
   }
 
@@ -63,13 +63,13 @@ export async function addTask(taskname, estPomodoros) {
 
   const newTask = {
     id: newId,
-    name: taskname.trim(),
+    name: taskName.trim(),
     est: finalEst,
     act: 0,
     isDone: false,
   };
 
-  const savedTask = await saveTasksToAPI(newTask);
+  const savedTask = await createTask(newTask);
   if (savedTask) {
     tasks.push(savedTask);
     return savedTask;
@@ -101,7 +101,7 @@ export async function editTask(id, newName, newAct, newEst) {
     return true;
   }
 
-  const updatedTask = await updateTaskInAPI(id, draftUpdatedTask);
+  const updatedTask = await updateTask(id, draftUpdatedTask);
 
   if (!updatedTask) return false;
 
@@ -115,8 +115,8 @@ export async function deleteTask(id) {
   const taskIndex = getTaskIndexById(id);
   if (taskIndex === -1) return false;
 
-  const deleteTask = await deleteTaskFromAPI(id);
-  if (deleteTask) {
+  const isDeleted = await removeTask(id);
+  if (isDeleted) {
     tasks.splice(taskIndex, 1);
     return true;
   } else {
@@ -131,9 +131,9 @@ export async function toggleTaskDone(id) {
 
   const task = tasks[taskIndex];
 
-  const drafToggleTask = { isDone: !task.isDone };
-  const updatedTask = await updateTaskInAPI(id, {
-    isDone: drafToggleTask.isDone,
+  const draftToggleTask = { isDone: !task.isDone };
+  const updatedTask = await updateTask(id, {
+    isDone: draftToggleTask.isDone,
   });
 
   if (updatedTask) {
@@ -149,7 +149,7 @@ export async function deleteAllTasks() {
   if (tasks.length === 0) {
     return false;
   }
-  const deleteAll = tasks.map((task) => deleteTaskFromAPI(task.id));
+  const deleteAll = tasks.map((task) => removeTask(task.id));
 
   const allDeleted = await Promise.all(deleteAll);
 
@@ -208,7 +208,7 @@ export async function increaseActualPomodoros(id) {
   const draftAct = {
     act: newAct,
   };
-  const updatedTask = await updateTaskInAPI(id, draftAct);
+  const updatedTask = await updateTask(id, draftAct);
 
   if (updatedTask) {
     task.act = updatedTask.act;

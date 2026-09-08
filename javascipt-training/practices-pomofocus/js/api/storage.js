@@ -2,7 +2,7 @@ import { getCurrentUserId } from "../logic/authLogic.js";
 import { fetchAPI } from "../api/apiClient.js";
 import { LocalDB } from "./localDB.js";
 
-export async function loadTasksFromAPI() {
+export async function fetchTasks() {
   try {
     const userId = getCurrentUserId();
     if (userId) {
@@ -18,12 +18,11 @@ export async function loadTasksFromAPI() {
   }
 }
 
-export async function saveTasksToAPI(newtask) {
+export async function createTask(newTask) {
   try {
     const userId = getCurrentUserId();
     if (userId) {
-      const taskToSave = Object.assign({}, newtask);
-      taskToSave.userId = userId;
+      const taskToSave = { ...newTask, userId };
       return await fetchAPI("/tasks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -31,16 +30,16 @@ export async function saveTasksToAPI(newtask) {
       });
     } else {
       const currentTasks = LocalDB.getTasks();
-      currentTasks.push(newtask);
+      currentTasks.push(newTask);
       LocalDB.saveTasks(currentTasks);
-      return newtask;
+      return newTask;
     }
   } catch (error) {
     throw new Error("Network error: Unable to save", { cause: error });
   }
 }
 
-export async function deleteTaskFromAPI(taskId) {
+export async function removeTask(taskId) {
   try {
     const userId = getCurrentUserId();
     if (userId) {
@@ -59,7 +58,7 @@ export async function deleteTaskFromAPI(taskId) {
   }
 }
 
-export async function updateTaskInAPI(taskId, updatedTask) {
+export async function updateTask(taskId, updatedTask) {
   try {
     const userId = getCurrentUserId();
     if (userId) {

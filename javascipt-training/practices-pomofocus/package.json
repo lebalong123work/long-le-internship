@@ -5,7 +5,7 @@
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html",
-    "server": "json-server --watch db.json --port 3000"
+    "server": "json-server-auth db.json --port 3000"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +15,7 @@
     "parcel": "^2.16.4"
   },
   "dependencies": {
-    "json-server": "^1.0.0-beta.15"
+    "json-server": "^0.17.4",
+    "json-server-auth": "^2.1.0"
   }
 }

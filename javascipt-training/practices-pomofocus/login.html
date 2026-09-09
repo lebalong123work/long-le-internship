@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pomofocus -Login</title>
-    <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/login.css" />
+    <link rel="icon" type="image/png" href="icons/icon-white2.png" />
+    <link rel="stylesheet" href="styles/base.css" />
+    <link rel="stylesheet" href="styles/login.css" />
   </head>
   <body class="login-body">
     <div class="login-wrapper">
@@ -21,12 +22,12 @@
       <div class="login-card">
         <form id="loginForm">
           <div class="form-group">
-            <label for="usernameInput" class="login-label">USERNAME</label>
+            <label for="emailInput" class="login-label">EMAIL</label>
             <input
-              type="text"
-              id="usernameInput"
+              type="email"
+              id="emailInput"
               class="login-input"
-              placeholder="example: thanhnguyen"
+              placeholder="example: thanhnguyen@gmail.com"
               required
             />
           </div>
@@ -36,6 +37,7 @@
             <input
               type="password"
               id="passwordInput"
+              autocomplete="current-password"
               class="login-input"
               required
             />
@@ -45,6 +47,6 @@
         </form>
       </div>
     </div>
-    <script type="module" src="login.js"></script>
+    <script type="module" src="js/login.js"></script>
   </body>
 </html>

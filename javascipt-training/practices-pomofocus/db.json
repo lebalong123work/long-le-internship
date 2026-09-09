@@ -1,104 +1,56 @@
 {
   "users": [
     {
-      "id": "u1",
-      "username": "thanhnguyen",
-      "password": "thanhnguyen@123"
+      "email": "thanhnguyen@gmail.com",
+      "password": "$2a$10$oXUfsWOTVRHVAmKbXIXTv.HPQyO9YU0b7OsZcWQ.GzKSJJOCYjipy",
+      "id": 1
     },
     {
-      "id": "u2",
-      "username": "hungdo",
-      "password": "hungdo@123"
+      "email": "hungdo@gmail.com",
+      "password": "$2a$10$Yi9MR14cXdbIfobKTFXuPOmPTksOB5qm4hgYiwQrigXMAKxWjD59K",
+      "id": 2
     }
   ],
   "tasks": [
     {
-      "id": "o4kwMqhBtBU",
-      "name": "Test 1",
-      "est": 2,
-      "act": 0,
-      "isDone": false,
-      "userId": "u1"
-    },
-    {
-      "id": "8kmlJfAfR3g",
-      "name": "Test 2",
-      "est": 1,
-      "act": 0,
-      "isDone": false,
-      "userId": "u1"
-    },
-    {
-      "id": "ddw-Y1UDX5Y",
+      "id": "70eac773-eb03-4b67-8358-e1267b99b477",
       "name": "tttttttttttttttttttttttttttt",
       "est": 1,
-      "act": 6,
+      "act": 0,
       "isDone": false,
-      "userId": "u2"
+      "userId": "1"
     },
     {
-      "id": "qfQR3SCGZt0",
-      "name": "long3",
+      "id": "97ac491d-ff76-4db9-b72e-ba69eadd1a11",
+      "name": "d",
       "est": 1,
       "act": 0,
       "isDone": false,
-      "userId": "u2"
+      "userId": "1"
     },
     {
-      "id": "1SL507UD4gY",
-      "name": "long2",
+      "id": "354776b4-9279-4b00-81d8-42ca816c641d",
+      "name": "fffffffffffffffffffffffffffffff",
       "est": 1,
       "act": 0,
       "isDone": false,
-      "userId": "u2"
+      "userId": "1"
     },
     {
-      "id": "R_3Y6XzZKLc",
-      "name": "test 3",
+      "id": "6f2bcfe9-5bd1-43b6-9174-4c47e27c7f18",
+      "name": "fffffffffffffffffffffffffff",
       "est": 1,
       "act": 0,
       "isDone": false,
-      "userId": "u1"
+      "userId": "1"
     },
     {
-      "id": "HiDn18rMddE",
-      "name": "gggggggggg",
+      "id": "a9a4b8fe-fad4-46c0-8f5e-a6ba8ef0fb8b",
+      "name": "ffffffffffffffffffffffffffffffffffff",
       "est": 1,
       "act": 0,
       "isDone": false,
-      "userId": "u2"
-    },
-    {
-      "id": "B3voYW_Z9qs",
-      "name": "ggggggggggggggg",
-      "est": 1,
-      "act": 0,
-      "isDone": false,
-      "userId": "u2"
-    },
-    {
-      "id": "oRLzRtsLsYY",
-      "name": "long2",
-      "est": 1,
-      "act": 0,
-      "isDone": false,
-      "userId": "u2"
-    },
-    {
-      "id": "C41gmjTsJQI",
-      "name": "dddđ",
-      "est": 1,
-      "act": 0,
-      "isDone": false,
-      "userId": "u2"
-    },
-    {
-      "id": "klG4tVUEspg",
-      "name": "g",
-      "est": 6,
-      "act": 0,
-      "isDone": false,
-      "userId": "u2"
+      "userId": "1"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

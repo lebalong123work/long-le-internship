@@ -1,4 +1,4 @@
-import { DOM } from "./dom.js";
+import { DOM } from "../ui/dom.js";
 import {
   getTasks,
   addTask,
@@ -6,18 +6,68 @@ import {
   deleteTask,
   toggleTaskDone,
   deleteAllTasks,
-  getAggregationData,
-} from "./taskLogic.js";
+  getSummaryData,
+} from "../logic/taskLogic.js";
+import { withButtonLoading } from "./uiButtonState.js";
 
 let editingTaskId = null;
+
+export function hideTaskForm() {
+  DOM.actionGroup.after(DOM.taskFormContainer);
+
+  DOM.taskFormContainer.classList.add("hidden");
+
+  DOM.actionGroup.classList.remove("hidden");
+  document.querySelectorAll(".task-item").forEach((item) => {
+    item.classList.remove("hidden");
+  });
+}
+
+export function openAddTaskForm() {
+  hideTaskForm();
+
+  editingTaskId = null;
+  DOM.formTitle.textContent = "Add Task";
+  DOM.taskNameInput.value = "";
+  DOM.estPomodorosInput.value = 1;
+
+  DOM.actPomodorosContainer.classList.add("hidden");
+  if (DOM.deleteTaskBtn) DOM.deleteTaskBtn.classList.add("hidden");
+
+  DOM.actionGroup.classList.add("hidden");
+  DOM.taskFormContainer.classList.remove("hidden");
+
+  DOM.taskNameInput.focus();
+}
+
+export function openEditTaskForm(task, liElement) {
+  hideTaskForm();
+
+  editingTaskId = task.id;
+  DOM.formTitle.textContent = "Edit Task";
+  DOM.taskNameInput.value = task.name;
+  DOM.estPomodorosInput.value = task.est;
+  DOM.actPomodorosInput.value = task.act;
+
+  DOM.actPomodorosContainer.classList.remove("hidden");
+  if (DOM.deleteTaskBtn) DOM.deleteTaskBtn.classList.remove("hidden");
+
+  liElement.after(DOM.taskFormContainer);
+
+  liElement.classList.add("hidden");
+
+  DOM.taskFormContainer.classList.remove("hidden");
+  DOM.taskNameInput.focus();
+}
+
 let selectedTaskId = null;
 
 export function getSelectedTaskId() {
   return selectedTaskId;
 }
 
-export function updateAggregationUI() {
-  const data = getAggregationData();
+export function updateSummaryUI() {
+  const data = getSummaryData();
   DOM.actCount.textContent = data.totalAct;
   DOM.estCount.textContent = data.totalEst;
   DOM.finishTime.textContent = data.finishAt || "--:--";
@@ -26,6 +76,13 @@ export function updateAggregationUI() {
 export function renderTasks() {
   DOM.taskList.innerHTML = "";
   const currentTasks = getTasks();
+  const activeTask = currentTasks.find((t) => t.id === selectedTaskId);
+  if (activeTask) {
+    DOM.currentTaskMessage.textContent = activeTask.name;
+  } else {
+    selectedTaskId = null;
+    DOM.currentTaskMessage.textContent = "Time to focus!";
+  }
 
   if (currentTasks.length === 0) {
     DOM.summaryBoard.classList.add("hidden");
@@ -53,34 +110,14 @@ export function renderTasks() {
     const editBtn = li.querySelector(".task-edit-btn");
     editBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-      document
-        .querySelectorAll(".task-item")
-        .forEach((item) => item.classList.remove("hidden"));
-
-      editingTaskId = task.id;
-      DOM.formTitle.textContent = "Edit Task";
-      DOM.taskNameInput.value = task.name;
-      DOM.estPomodorosInput.value = task.est;
-      DOM.actPomodorosInput.value = task.act;
-
-      DOM.actPomodorosContainer.classList.remove("hidden");
-      if (DOM.deleteTaskBtn) DOM.deleteTaskBtn.classList.remove("hidden");
-
-      li.after(DOM.taskFormContainer);
-      li.classList.add("hidden");
-
-      DOM.actionGroup.classList.remove("hidden");
-      DOM.taskFormContainer.classList.remove("hidden");
-      DOM.taskNameInput.focus();
+      openEditTaskForm(task, li);
     });
 
     li.addEventListener("click", () => {
       if (selectedTaskId === task.id) {
         selectedTaskId = null;
-        DOM.currentTaskMessage.textContent = "Time to focus!";
       } else {
         selectedTaskId = task.id;
-        DOM.currentTaskMessage.textContent = task.name;
       }
       renderTasks();
     });
@@ -88,60 +125,43 @@ export function renderTasks() {
     DOM.taskList.appendChild(clone);
   });
 
-  updateAggregationUI();
+  updateSummaryUI();
 }
 
 export function initTaskEvents() {
-  DOM.showTaskFormBtn.addEventListener("click", () => {
-    document
-      .querySelectorAll(".task-item")
-      .forEach((item) => item.classList.remove("hidden"));
-    editingTaskId = null;
-    DOM.formTitle.textContent = "Add Task";
-    DOM.taskNameInput.value = "";
-    DOM.estPomodorosInput.value = 1;
-    DOM.actPomodorosContainer.classList.add("hidden");
-    if (DOM.deleteTaskBtn) DOM.deleteTaskBtn.classList.add("hidden");
-
-    DOM.actionGroup.after(DOM.taskFormContainer);
-    DOM.actionGroup.classList.add("hidden");
-    DOM.taskFormContainer.classList.remove("hidden");
-    DOM.taskNameInput.focus();
-  });
-
-  DOM.cancelTaskBtn.addEventListener("click", () => {
-    DOM.actionGroup.after(DOM.taskFormContainer);
-    DOM.taskFormContainer.classList.add("hidden");
-    DOM.actionGroup.classList.remove("hidden");
-    document.querySelectorAll(".task-item").forEach((item) => {
-      item.classList.remove("hidden");
-    });
-  });
-
+  DOM.showTaskFormBtn.addEventListener("click", openAddTaskForm);
+  DOM.cancelTaskBtn.addEventListener("click", hideTaskForm);
   DOM.taskFormContainer.addEventListener("submit", async (e) => {
     e.preventDefault();
     const nameVal = DOM.taskNameInput.value;
     const estVal = DOM.estPomodorosInput.value;
     const actVal = DOM.actPomodorosInput.value;
 
-    if (editingTaskId) {
-      const success = await editTask(editingTaskId, nameVal, actVal, estVal);
-      if (success) {
-        editingTaskId = null;
-        DOM.actionGroup.after(DOM.taskFormContainer);
-        DOM.taskFormContainer.classList.add("hidden");
-        DOM.actionGroup.classList.remove("hidden");
-      }
-    } else {
-      const newTask = await addTask(nameVal, estVal);
-      if (newTask) {
-        DOM.taskNameInput.value = "";
-        DOM.estPomodorosInput.value = 1;
-        DOM.taskNameInput.focus();
-      }
-    }
-
-    renderTasks();
+    await withButtonLoading(
+      "saveTaskBtn",
+      async () => {
+        if (editingTaskId) {
+          const success = await editTask(
+            editingTaskId,
+            nameVal,
+            actVal,
+            estVal,
+          );
+          if (success) {
+            hideTaskForm();
+          }
+        } else {
+          const newTask = await addTask(nameVal, estVal);
+          if (newTask) {
+            DOM.taskNameInput.value = "";
+            DOM.estPomodorosInput.value = 1;
+            DOM.taskNameInput.focus();
+          }
+        }
+        renderTasks();
+      },
+      "Saving...",
+    );
   });
 
   if (DOM.deleteTaskBtn) {

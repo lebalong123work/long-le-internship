@@ -1,5 +1,5 @@
 import { DOM } from "./dom.js";
-import { getCurrentUserId, logoutUser } from "./authLogic.js";
+import { getCurrentUserId, logoutUser } from "../logic/authLogic.js";
 
 export function initHeaderEvents() {
   const userId = getCurrentUserId();

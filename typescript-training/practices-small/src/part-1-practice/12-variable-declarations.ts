@@ -17,7 +17,10 @@
 //      and try calling this function to observe the log order.
 
 function logSummary() {
-  const totals = { totalEst: 10, totalAct: 5 };
+  const totals: { totalEst: number; totalAct: number; remainingPomos?: number } = { 
+    totalEst: 10, 
+    totalAct: 5 
+  };
 
   const { 
     totalEst: estimated, 
@@ -40,6 +43,7 @@ const baseTask: Task = {
 };
 
 const cloudTask = { ...baseTask, userId: "user-123" };
+
 class DbConnection implements Disposable {
   constructor() {
     console.log("Open connection");
@@ -53,6 +57,7 @@ class DbConnection implements Disposable {
 function syncTasks() {
   using conn = new DbConnection();
   console.log("Syncing...");
-syncTasks();
+} 
+syncTasks(); 
 
 export {};

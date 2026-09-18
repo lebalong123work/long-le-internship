@@ -37,7 +37,7 @@ function getSummaryData() {
 type Summary = ReturnType<typeof getSummaryData>;
 
 const taskDictionary: Record<string, Task> = {
-  "task-1": { id: "task-1", name: "Đọc sách", est: 2, act: 0, isDone: false }
+  "task-1": { id: "task-1", name: "Read", est: 2, act: 0, isDone: false }
 };
 
 const strictTask: Readonly<Task> = {

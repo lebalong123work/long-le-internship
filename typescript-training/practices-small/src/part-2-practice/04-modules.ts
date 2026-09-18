@@ -14,19 +14,9 @@
 // 4. Declare a variable `const myTask: Task = { id: "1", name: "Learn Modules" };`.
 // 5. Call `formatTime(1500)` and print the result to the console.
 
-declare module "./types" {
-  export interface Task { 
-    id: string; 
-    name: string; 
-  }
-}
+import type { Task } from "./types.js";
+import formatTime from "./timeUtils.js";
 
-declare module "./timeUtils" {
-  export default function formatTime(totalSeconds: number): string;
-}
-import type { Task } from "./04-modules/types";
-
-import formatTime from "./timeUtils";
 const myTask: Task = { 
   id: "1", 
   name: "Learn Modules" 

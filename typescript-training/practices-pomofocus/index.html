@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pomofocus</title>
+    <link rel="icon" type="image/png" href="icons/icon-white2.png" />
+    <link rel="stylesheet" href="styles/style.css" />
+    <script type="module" src="js/main.js"></script>
+  </head>
+
+  <body>
+    <div id="initial-loader" class="initial-loader">
+      <h2 class="blinking-text">Loading...</h2>
+    </div>
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+      <header class="app-header">
+        <a href="/app" class="header-brand">
+          <img
+            src="icons/icon-white2.png"
+            alt="pomofocus icon"
+            class="brand-icon"
+          />
+          <h1>Pomofocus</h1>
+        </a>
+
+        <div class="header-actions">
+          <button class="btn-header">
+            <img
+              src="icons/graph-white.png"
+              alt="graph icon"
+              class="btn-icon"
+            />
+            <span>Report</span>
+          </button>
+
+          <button class="btn-header">
+            <img
+              src="icons/config-white.png"
+              alt="config icon"
+              class="btn-icon"
+            />
+            <span>Setting</span>
+          </button>
+
+          <div class="header-user-group">
+            <div id="guestBlock" class="auth-group-wrapper">
+              <a href="login.html" class="guest-login-link">
+                <button class="btn-header">
+                  <img
+                    src="icons/user-white.png"
+                    alt="user icon"
+                    class="btn-icon"
+                  />
+                  <span>Sign In</span>
+                </button>
+              </a>
+
+              <div class="dropdown-wrapper">
+                <button class="btn-header btn-icon-only" id="guestMenuBtn">
+                  <img
+                    src="icons/threedots-white.png"
+                    alt="three dots"
+                    class="btn-icon"
+                  />
+                </button>
+
+                <div class="header-dropdown-menu hidden" id="guestDropdown">
+                  <a href="login.html" class="dropdown-item">
+                    <img
+                      src="icons/login-black.png"
+                      class="dropdown-icon"
+                      alt="login icon"
+                    />
+                    Login
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div id="userBlock" class="auth-group-wrapper hidden">
+              <div class="dropdown-wrapper">
+                <button class="btn-avatar" id="avatarMenuBtn">
+                  <img
+                    src="icons/avatar.png"
+                    alt="User Avatar"
+                    class="avatar-img"
+                  />
+                </button>
+
+                <div class="header-dropdown-menu hidden" id="userDropdown">
+                  <button class="dropdown-item">
+                    <img
+                      src="icons/user-black.png"
+                      class="dropdown-icon"
+                      alt="account icon"
+                    />
+                    Account
+                  </button>
+                  <button class="dropdown-item" id="logoutBtn">
+                    <img
+                      src="icons/logout-black.png"
+                      class="dropdown-icon"
+                      alt="logout icon"
+                    />
+                    Logout
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="timer-container">
+        <div class="timer-modes">
+          <button class="mode-btn active" id="pomoBtn">Pomodoro</button>
+          <button class="mode-btn" id="shortBreakBtn">Short Break</button>
+          <button class="mode-btn" id="longBreakBtn">Long Break</button>
+        </div>
+
+        <div class="time-display" id="timeDisplay"></div>
+
+        <div class="timer-controls">
+          <button class="skip-btn" id="resetTimerBtn">
+            <img src="icons/reset-white.png" alt="reset icon" />
+          </button>
+          <div class="start-btn-wrapper">
+            <button class="start-btn" id="startTimerBtn">START</button>
+          </div>
+          <button class="skip-btn hidden" id="skipTimerBtn">
+            <img src="icons/next-white3.png" alt="next icon" />
+          </button>
+        </div>
+      </div>
+
+      <div class="current-task-status">
+        <div id="currentTaskNumber" class="task-number"></div>
+        <div id="currentTaskMessage" class="task-message"></div>
+      </div>
+
+      <div class="tasks-header">
+        <h2>Tasks</h2>
+
+        <div class="tasks-options-wrapper">
+          <button class="btn-task-options" id="taskDropdownBtn">
+            <img src="icons/threedots-white.png" alt="three dots" />
+          </button>
+
+          <div class="tasks-dropdown hidden" id="taskDropdownMenu">
+            <button class="dropdown-item-task" id="deleteAllBtn">
+              <img
+                src="icons/delete-black.png"
+                alt="clear icon"
+                class="dropdown-icon"
+              />
+              Clear all tasks
+            </button>
+          </div>
+        </div>
+      </div>
+      <ul id="taskList"></ul>
+      <div class="action-group">
+        <button id="showTaskFormBtn" class="btn-add-task">
+          <img src="icons/plus-circle-white.png" alt="plus" class="plus-icon" />
+          Add Task
+        </button>
+      </div>
+      <form id="taskFormContainer" class="hidden task-form-container">
+        <h3 id="formTitle" class="form-title">Add Task</h3>
+
+        <div class="form-group">
+          <label for="taskNameInput" class="visually-hidden">Task name</label>
+          <input
+            type="text"
+            id="taskNameInput"
+            placeholder="What are you working on?"
+            class="input-base input-text"
+            required
+          />
+        </div>
+
+        <div class="form-group row-group">
+          <div class="input-col">
+            <label for="estPomodorosInput">Est Pomodoros</label>
+            <input
+              type="number"
+              id="estPomodorosInput"
+              value="1"
+              min="1"
+              step="1"
+              class="input-base input-number"
+            />
+          </div>
+
+          <div id="actPomodorosContainer" class="hidden input-col">
+            <label for="actPomodorosInput">Act Pomodoros</label>
+            <input
+              type="number"
+              id="actPomodorosInput"
+              value="0"
+              min="0"
+              step="1"
+              class="input-base input-number"
+            />
+          </div>
+        </div>
+
+        <div class="form-buttons">
+          <button type="button" id="deleteTaskBtn" class="btn-delete-task">
+            <img
+              src="icons/delete-black.png"
+              alt="delete icon"
+              class="trash-icon"
+            />
+          </button>
+
+          <div class="right-buttons">
+            <button type="button" id="cancelTaskBtn" class="btn-cancel">
+              Cancel
+            </button>
+            <button type="submit" id="saveTaskBtn" class="btn-save">
+              Save
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div id="summaryBoard" class="summary-board">
+        <span>
+          Pomos: <span id="actCount" class="summary-number">0</span> /
+          <span id="estCount" class="summary-number">0</span>
+        </span>
+        <span>
+          Finish At: <span id="finishTime" class="summary-number">--:--</span>
+        </span>
+      </div>
+    </div>
+
+    <template id="taskTemplate">
+      <li class="task-item">
+        <div class="task-left">
+          <button class="task-check-btn">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="check-icon"
+            >
+              <path d="M5 12l5 5L20 7"></path>
+            </svg>
+          </button>
+          <span class="task-name"></span>
+        </div>
+
+        <div class="task-right">
+          <span class="task-pomos"></span>
+          <button class="task-edit-btn">
+            <img
+              src="icons/vertical-ellipsis.png"
+              alt="edit task"
+              class="vertical-ellipsis-icon"
+            />
+          </button>
+        </div>
+      </li>
+    </template>
+  </body>
+</html>

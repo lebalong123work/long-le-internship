@@ -1,4 +1,7 @@
 import { CONFIG } from "../config/config.ts";
+
+export type ToastType = "error" | "success" | "warning";
+
 function getToastContainer() {
   let container = document.getElementById("toast-container");
   if (!container) {

@@ -15,4 +15,6 @@ export const CONFIG = {
     TOAST_DURATION: 3000,
     LOADER_FADE_TIME: 300,
   },
-};
+} as const;
+
+export type AppConfig = typeof CONFIG;

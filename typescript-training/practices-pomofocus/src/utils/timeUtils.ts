@@ -1,6 +1,6 @@
 import { CONFIG } from "../config/config.ts";
 
-export function formatTime(totalSeconds) {
+export function formatTime(totalSeconds:number):string {
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
 
@@ -10,7 +10,7 @@ export function formatTime(totalSeconds) {
   return `${stringMinutes}:${stringSeconds}`;
 }
 
-export function calculateFinishTime(remainingPomos) {
+export function calculateFinishTime(remainingPomos:number):string {
   if (remainingPomos <= 0) return "--:--";
 
   const pomoSecs = CONFIG.TIMER.POMO * 60;

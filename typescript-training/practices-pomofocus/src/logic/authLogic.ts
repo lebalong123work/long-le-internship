@@ -1,5 +1,13 @@
 import { CONFIG } from "../config/config.ts";
 
+export interface AuthResponse {
+  accessToken: string;
+  user?: {
+    id: string;
+    email: string;
+  };
+}
+
 export function getCurrentUserId() {
   return localStorage.getItem("userId");
 }

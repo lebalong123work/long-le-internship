@@ -4,7 +4,22 @@ import {
   fetchTasks,
   removeTask,
   updateTask,
-} from "../api/storage.js";
+} from "../api/storage.ts";
+
+export interface Task {
+  id: string;
+  name: string;
+  est: number;
+  act: number;
+  isDone: boolean;
+  userId?: string; 
+}
+
+export interface SummaryData {
+  totalEst: number;
+  totalAct: number;
+  finishAt: string;
+}
 
 let tasks = [];
 

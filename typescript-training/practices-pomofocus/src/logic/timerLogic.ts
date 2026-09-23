@@ -1,6 +1,8 @@
 import { CONFIG } from "../config/config.ts";
 import { formatTime } from "../utils/timeUtils.ts";
 
+export type TimerMode = "pomo" | "shortBreak" | "longBreak";
+
 let currentDuration = CONFIG.TIMER.POMO * 60;
 let timeLeft = currentDuration;
 let isRunning = false;

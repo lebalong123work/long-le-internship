@@ -12,7 +12,7 @@ export interface Task {
   est: number;
   act: number;
   isDone: boolean;
-  userId?: string; 
+  userId?: string;
 }
 
 export interface SummaryData {
@@ -43,7 +43,9 @@ function getTaskIndexById(id) {
   return taskIndex;
 }
 
-function parsePomodoro(value: string | number | undefined | null): number | null {
+function parsePomodoro(
+  value: string | number | undefined | null,
+): number | null {
   if (value === undefined || value === "" || value === null) {
     return null;
   }
@@ -64,7 +66,7 @@ export function getTasks() {
 }
 
 // Logic: Add a new task
-export async function addTask(taskName, estPomodoros) {
+export async function addTask(taskName: string, estPomodoros: string | number) {
   if (typeof taskName !== "string" || taskName.trim() === "") {
     return null;
   }
@@ -76,7 +78,7 @@ export async function addTask(taskName, estPomodoros) {
 
   const newId = crypto.randomUUID();
 
-  const newTask = {
+  const newTask: Task = {
     id: newId,
     name: taskName.trim(),
     est: finalEst,
@@ -94,7 +96,12 @@ export async function addTask(taskName, estPomodoros) {
 }
 
 // Logic: Edit Task
-export async function editTask(id, newName, newAct, newEst) {
+export async function editTask(
+  id: string,
+  newName: string,
+  newAct: string | number,
+  newEst: string | number,
+): Promise<boolean> {
   const taskIndex = getTaskIndexById(id);
   if (taskIndex === -1) return false;
   const task = tasks[taskIndex];
@@ -106,7 +113,7 @@ export async function editTask(id, newName, newAct, newEst) {
   if (finalEst === null) return false;
 
   const parsedName = newName.trim();
-  const draftUpdatedTask = {};
+  const draftUpdatedTask: Partial<Task> = {};
 
   if (task.name !== parsedName) draftUpdatedTask.name = parsedName;
   if (task.act !== finalAct) draftUpdatedTask.act = finalAct;

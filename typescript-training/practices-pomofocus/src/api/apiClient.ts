@@ -1,16 +1,21 @@
 import { CONFIG } from "../config/config.ts";
 
-export async function fetchAPI(endpoint, options = {}) {
+export async function fetchAPI<T>(
+  endpoint: string,
+  options: RequestInit = {},
+): Promise<T | boolean> {
   const url = `${CONFIG.API.BASE_URL}${endpoint}`;
   const token = localStorage.getItem("accessToken");
 
-  if (!options.headers) {
-    options.headers = {};
-  }
+  const headers: Record<string, string> = {
+    ...((options.headers as Record<string, string>) || {}),
+  };
 
   if (token) {
-    options.headers["Authorization"] = `Bearer ${token}`;
+    headers["Authorization"] = `Bearer ${token}`;
   }
+
+  options.headers = headers;
 
   const response = await fetch(url, options);
 
@@ -22,5 +27,5 @@ export async function fetchAPI(endpoint, options = {}) {
     return response.ok;
   }
 
-  return response.json();
+  return (await response.json()) as T;
 }

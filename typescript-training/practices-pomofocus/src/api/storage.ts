@@ -1,12 +1,13 @@
 import { getCurrentUserId } from "../logic/authLogic.ts";
 import { fetchAPI } from "./apiClient.ts";
 import { LocalDB } from "./localDB.ts";
+import { Task } from "../logic/taskLogic.ts";
 
-export async function fetchTasks() {
+export async function fetchTasks(): Promise<Task[]> {
   try {
     const userId = getCurrentUserId();
     if (userId) {
-      return await fetchAPI(`/tasks?userId=${userId}`);
+      return await fetchAPI<Task[]>(`/tasks?userId=${userId}`);
     } else {
       return LocalDB.getTasks();
     }
@@ -18,12 +19,12 @@ export async function fetchTasks() {
   }
 }
 
-export async function createTask(newTask) {
+export async function createTask(newTask: Task): Promise<Task> {
   try {
     const userId = getCurrentUserId();
     if (userId) {
       const taskToSave = { ...newTask, userId };
-      return await fetchAPI("/tasks", {
+      return await fetchAPI<Task>("/tasks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(taskToSave),
@@ -39,11 +40,11 @@ export async function createTask(newTask) {
   }
 }
 
-export async function removeTask(taskId) {
+export async function removeTask(taskId: string): Promise<boolean> {
   try {
     const userId = getCurrentUserId();
     if (userId) {
-      return await fetchAPI(`/tasks/${taskId}`, {
+      return await fetchAPI<boolean>(`/tasks/${taskId}`, {
         method: "DELETE",
       });
     } else {
@@ -58,11 +59,14 @@ export async function removeTask(taskId) {
   }
 }
 
-export async function updateTask(taskId, updatedTask) {
+export async function updateTask(
+  taskId: string,
+  updatedTask: Partial<Task>,
+): Promise<Task | null> {
   try {
     const userId = getCurrentUserId();
     if (userId) {
-      return await fetchAPI(`/tasks/${taskId}`, {
+      return await fetchAPI<Task>(`/tasks/${taskId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedTask),

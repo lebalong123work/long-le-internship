@@ -8,11 +8,14 @@ export interface AuthResponse {
   };
 }
 
-export function getCurrentUserId() {
+export function getCurrentUserId(): string | null {
   return localStorage.getItem("userId");
 }
 
-export async function loginUser(email, password) {
+export async function loginUser(
+  email: string,
+  password: string,
+): Promise<boolean> {
   try {
     const response = await fetch(`${CONFIG.API.BASE_URL}/login`, {
       method: "POST",
@@ -24,23 +27,30 @@ export async function loginUser(email, password) {
 
     if (!response.ok) return false;
 
-    const data = await response.json();
-
-    if (data.accessToken) {
+    const data = (await response.json()) as AuthResponse;
+    if (
+      data !== null &&
+      typeof data === "object" &&
+      typeof data.accessToken === "string"
+    ) {
       localStorage.setItem("accessToken", data.accessToken);
-      if (data.user?.id) {
+      if (
+        data.user !== undefined &&
+        typeof data.user === "object" &&
+        typeof data.user.id === "string"
+      ) {
         localStorage.setItem("userId", data.user.id);
       }
       return true;
     }
     return false;
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error logging in:", error);
     return false;
   }
 }
 
-export function logoutUser() {
+export function logoutUser(): void {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("userId");
 }

@@ -30,7 +30,7 @@ export async function initTasksData() {
   return true;
 }
 
-function getTaskIndexById(id) {
+function getTaskIndexById(id: string): number {
   if (typeof id !== "string" || id.trim() === "") {
     return -1;
   }
@@ -133,7 +133,7 @@ export async function editTask(
 }
 
 // Logic: Delete a Task
-export async function deleteTask(id) {
+export async function deleteTask(id: string): Promise<boolean> {
   const taskIndex = getTaskIndexById(id);
   if (taskIndex === -1) return false;
 
@@ -147,7 +147,7 @@ export async function deleteTask(id) {
 }
 
 // Logic: Toggle Task Done Status
-export async function toggleTaskDone(id) {
+export async function toggleTaskDone(id: string): Promise<boolean> {
   const taskIndex = getTaskIndexById(id);
   if (taskIndex === -1) return false;
 
@@ -167,7 +167,7 @@ export async function toggleTaskDone(id) {
 }
 
 // Logic: Delete All Tasks
-export async function deleteAllTasks() {
+export async function deleteAllTasks(): Promise<boolean> {
   if (tasks.length === 0) {
     return false;
   }
@@ -219,7 +219,7 @@ export function getSummaryData(): SummaryData {
   return data;
 }
 
-export async function increaseActualPomodoros(id) {
+export async function increaseActualPomodoros(id: string): Promise<boolean> {
   const taskIndex = getTaskIndexById(id);
   if (taskIndex === -1) {
     return false;

@@ -6,9 +6,9 @@ export type TimerMode = "pomo" | "shortBreak" | "longBreak";
 let currentDuration = CONFIG.TIMER.POMO * 60;
 let timeLeft = currentDuration;
 let isRunning = false;
-let timerId = null;
+let timerId: ReturnType<typeof setInterval> | null = null;
 
-let expectedEndTime = null;
+let expectedEndTime: number | null = null;
 
 let onTickCallback = null;
 let onCompleteCallback = null;

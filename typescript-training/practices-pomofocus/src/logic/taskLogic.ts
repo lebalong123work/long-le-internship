@@ -21,7 +21,7 @@ export interface SummaryData {
   finishAt: string;
 }
 
-let tasks = [];
+let tasks: Task[] = [];
 
 export async function initTasksData() {
   const apiData = await fetchTasks();

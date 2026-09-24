@@ -12,7 +12,7 @@ export interface Task {
   est: number;
   act: number;
   isDone: boolean;
-  userId?: string; 
+  userId?: string;
 }
 
 export interface SummaryData {
@@ -21,7 +21,7 @@ export interface SummaryData {
   finishAt: string;
 }
 
-let tasks = [];
+let tasks: Task[] = [];
 
 export async function initTasksData() {
   const apiData = await fetchTasks();
@@ -30,7 +30,7 @@ export async function initTasksData() {
   return true;
 }
 
-function getTaskIndexById(id) {
+function getTaskIndexById(id: string): number {
   if (typeof id !== "string" || id.trim() === "") {
     return -1;
   }
@@ -43,7 +43,9 @@ function getTaskIndexById(id) {
   return taskIndex;
 }
 
-function parsePomodoro(value) {
+function parsePomodoro(
+  value: string | number | undefined | null,
+): number | null {
   if (value === undefined || value === "" || value === null) {
     return null;
   }
@@ -64,7 +66,7 @@ export function getTasks() {
 }
 
 // Logic: Add a new task
-export async function addTask(taskName, estPomodoros) {
+export async function addTask(taskName: string, estPomodoros: string | number) {
   if (typeof taskName !== "string" || taskName.trim() === "") {
     return null;
   }
@@ -76,7 +78,7 @@ export async function addTask(taskName, estPomodoros) {
 
   const newId = crypto.randomUUID();
 
-  const newTask = {
+  const newTask: Task = {
     id: newId,
     name: taskName.trim(),
     est: finalEst,
@@ -94,7 +96,12 @@ export async function addTask(taskName, estPomodoros) {
 }
 
 // Logic: Edit Task
-export async function editTask(id, newName, newAct, newEst) {
+export async function editTask(
+  id: string,
+  newName: string,
+  newAct: string | number,
+  newEst: string | number,
+): Promise<boolean> {
   const taskIndex = getTaskIndexById(id);
   if (taskIndex === -1) return false;
   const task = tasks[taskIndex];
@@ -106,7 +113,7 @@ export async function editTask(id, newName, newAct, newEst) {
   if (finalEst === null) return false;
 
   const parsedName = newName.trim();
-  const draftUpdatedTask = {};
+  const draftUpdatedTask: Partial<Task> = {};
 
   if (task.name !== parsedName) draftUpdatedTask.name = parsedName;
   if (task.act !== finalAct) draftUpdatedTask.act = finalAct;
@@ -126,7 +133,7 @@ export async function editTask(id, newName, newAct, newEst) {
 }
 
 // Logic: Delete a Task
-export async function deleteTask(id) {
+export async function deleteTask(id: string): Promise<boolean> {
   const taskIndex = getTaskIndexById(id);
   if (taskIndex === -1) return false;
 
@@ -140,7 +147,7 @@ export async function deleteTask(id) {
 }
 
 // Logic: Toggle Task Done Status
-export async function toggleTaskDone(id) {
+export async function toggleTaskDone(id: string): Promise<boolean> {
   const taskIndex = getTaskIndexById(id);
   if (taskIndex === -1) return false;
 
@@ -160,7 +167,7 @@ export async function toggleTaskDone(id) {
 }
 
 // Logic: Delete All Tasks
-export async function deleteAllTasks() {
+export async function deleteAllTasks(): Promise<boolean> {
   if (tasks.length === 0) {
     return false;
   }
@@ -200,11 +207,11 @@ function calculateTotals() {
   return totals;
 }
 
-export function getSummaryData() {
+export function getSummaryData(): SummaryData {
   const totals = calculateTotals();
   const finishAtString = calculateFinishTime(totals.remainingPomos);
 
-  const data = {
+  const data: SummaryData = {
     totalEst: totals.totalEst,
     totalAct: totals.totalAct,
     finishAt: finishAtString,
@@ -212,7 +219,7 @@ export function getSummaryData() {
   return data;
 }
 
-export async function increaseActualPomodoros(id) {
+export async function increaseActualPomodoros(id: string): Promise<boolean> {
   const taskIndex = getTaskIndexById(id);
   if (taskIndex === -1) {
     return false;

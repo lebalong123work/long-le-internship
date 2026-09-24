@@ -3,30 +3,36 @@ import { formatTime } from "../utils/timeUtils.ts";
 
 export type TimerMode = "pomo" | "shortBreak" | "longBreak";
 
-let currentDuration = CONFIG.TIMER.POMO * 60;
-let timeLeft = currentDuration;
-let isRunning = false;
+type TickCallback = (timeString: string) => void;
+type CompleteCallback = () => void;
+
+let currentDuration: number = CONFIG.TIMER.POMO * 60;
+let timeLeft: number = currentDuration;
+let isRunning: boolean = false;
 let timerId: ReturnType<typeof setInterval> | null = null;
 
 let expectedEndTime: number | null = null;
 
-let onTickCallback = null;
-let onCompleteCallback = null;
+let onTickCallback: TickCallback | null = null;
+let onCompleteCallback: CompleteCallback | null = null;
 
-export function setTimerCallback(callback) {
+export function setTimerCallback(callback: TickCallback): void {
   onTickCallback = callback;
 }
 
-export function setTimerCompleteCallback(callback) {
+export function setTimerCompleteCallback(callback: CompleteCallback): void {
   onCompleteCallback = callback;
 }
 
-export function toggleTimer() {
+export function toggleTimer(): boolean {
   if (isRunning) {
-    clearInterval(timerId);
+    if (timerId !== null) {
+      clearInterval(timerId);
+      timerId = null;
+    }
     isRunning = false;
 
-    if (expectedEndTime) {
+    if (expectedEndTime !== null) {
       timeLeft = Math.max(0, Math.round((expectedEndTime - Date.now()) / 1000));
     }
   } else {
@@ -34,20 +40,25 @@ export function toggleTimer() {
     expectedEndTime = Date.now() + timeLeft * 1000;
 
     timerId = setInterval(() => {
-      const secondsLeft = Math.round((expectedEndTime - Date.now()) / 1000);
-      timeLeft = secondsLeft;
+      if (expectedEndTime !== null) {
+        const secondsLeft = Math.round((expectedEndTime - Date.now()) / 1000);
+        timeLeft = secondsLeft;
+      }
 
-      if (onTickCallback) {
+      if (onTickCallback !== null) {
         onTickCallback(formatTime(Math.max(0, timeLeft)));
       }
 
       if (timeLeft <= 0) {
-        clearInterval(timerId);
+        if (timerId !== null) {
+          clearInterval(timerId);
+          timerId = null;
+        }
         isRunning = false;
         expectedEndTime = null;
         timeLeft = currentDuration;
 
-        if (onCompleteCallback) {
+        if (onCompleteCallback !== null) {
           onCompleteCallback();
         }
       }
@@ -57,8 +68,11 @@ export function toggleTimer() {
   return isRunning;
 }
 
-export function setMode(modeName) {
-  clearInterval(timerId);
+export function setMode(modeName: TimerMode): void {
+  if (timerId !== null) {
+    clearInterval(timerId);
+    timerId = null;
+  }
   isRunning = false;
   expectedEndTime = null;
 
@@ -72,17 +86,21 @@ export function setMode(modeName) {
 
   timeLeft = currentDuration;
 
-  if (onTickCallback) {
+  if (onTickCallback !== null) {
     onTickCallback(formatTime(timeLeft));
   }
 }
 
-export function resetTimer() {
-  clearInterval(timerId);
+export function resetTimer(): void {
+  if (timerId !== null) {
+    clearInterval(timerId);
+    timerId = null;
+  }
   isRunning = false;
   expectedEndTime = null;
   timeLeft = currentDuration;
-  if (onTickCallback) {
+
+  if (onTickCallback !== null) {
     onTickCallback(formatTime(timeLeft));
   }
 }

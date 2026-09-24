@@ -43,7 +43,7 @@ function getTaskIndexById(id) {
   return taskIndex;
 }
 
-function parsePomodoro(value) {
+function parsePomodoro(value: string | number | undefined | null): number | null {
   if (value === undefined || value === "" || value === null) {
     return null;
   }

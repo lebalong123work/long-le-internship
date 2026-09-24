@@ -207,11 +207,11 @@ function calculateTotals() {
   return totals;
 }
 
-export function getSummaryData() {
+export function getSummaryData(): SummaryData {
   const totals = calculateTotals();
   const finishAtString = calculateFinishTime(totals.remainingPomos);
 
-  const data = {
+  const data: SummaryData = {
     totalEst: totals.totalEst,
     totalAct: totals.totalAct,
     finishAt: finishAtString,

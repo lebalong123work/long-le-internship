@@ -13,7 +13,7 @@ function getToastContainer(): HTMLElement {
   return container;
 }
 
-export function showToast(message: string, type = "error"): void {
+export function showToast(message: string, type: ToastType = "error"): void {
   const container: HTMLElement = getToastContainer();
   const toast: HTMLDivElement = document.createElement("div");
 

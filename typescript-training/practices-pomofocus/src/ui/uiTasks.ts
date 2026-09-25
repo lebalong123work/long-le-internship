@@ -1,4 +1,4 @@
-import { DOM } from "./dom.ts";
+import { DOM } from "./dom.js";
 import {
   getTasks,
   addTask,
@@ -7,113 +7,179 @@ import {
   toggleTaskDone,
   deleteAllTasks,
   getSummaryData,
-} from "../logic/taskLogic.ts";
-import { withButtonLoading } from "./uiButtonState.ts";
+  Task,
+  SummaryData,
+} from "../logic/taskLogic.js";
+import { withButtonLoading } from "./uiButtonState.js";
 
-let editingTaskId = null;
+let editingTaskId: string | null = null;
 
-export function hideTaskForm() {
-  DOM.actionGroup.after(DOM.taskFormContainer);
-
-  DOM.taskFormContainer.classList.add("hidden");
-
-  DOM.actionGroup.classList.remove("hidden");
+export function hideTaskForm(): void {
+  if (DOM.actionGroup !== null && DOM.taskFormContainer !== null) {
+    DOM.actionGroup.after(DOM.taskFormContainer);
+    DOM.taskFormContainer.classList.add("hidden");
+    DOM.actionGroup.classList.remove("hidden");
+  }
   document.querySelectorAll(".task-item").forEach((item) => {
     item.classList.remove("hidden");
   });
 }
 
-export function openAddTaskForm() {
+export function openAddTaskForm(): void {
   hideTaskForm();
 
   editingTaskId = null;
-  DOM.formTitle.textContent = "Add Task";
-  DOM.taskNameInput.value = "";
-  DOM.estPomodorosInput.value = 1;
+  if (DOM.formTitle !== null) {
+    DOM.formTitle.textContent = "Add Task";
+  }
+  if (DOM.taskNameInput !== null) {
+    DOM.taskNameInput.value = "";
+  }
+  if (DOM.estPomodorosInput !== null) {
+    DOM.estPomodorosInput.value = "1";
+  }
 
-  DOM.actPomodorosContainer.classList.add("hidden");
-  if (DOM.deleteTaskBtn) DOM.deleteTaskBtn.classList.add("hidden");
+  if (DOM.actPomodorosContainer !== null) {
+    DOM.actPomodorosContainer.classList.add("hidden");
+  }
+  if (DOM.deleteTaskBtn !== null) {
+    DOM.deleteTaskBtn.classList.add("hidden");
+  }
 
-  DOM.actionGroup.classList.add("hidden");
-  DOM.taskFormContainer.classList.remove("hidden");
+  if (DOM.actionGroup !== null) {
+    DOM.actionGroup.classList.add("hidden");
+  }
+  if (DOM.taskFormContainer !== null) {
+    DOM.taskFormContainer.classList.remove("hidden");
+  }
 
-  DOM.taskNameInput.focus();
+  if (DOM.taskNameInput !== null) {
+    DOM.taskNameInput.focus();
+  }
 }
 
-export function openEditTaskForm(task, liElement) {
+export function openEditTaskForm(task: Task, liElement: HTMLLIElement): void {
   hideTaskForm();
 
   editingTaskId = task.id;
-  DOM.formTitle.textContent = "Edit Task";
-  DOM.taskNameInput.value = task.name;
-  DOM.estPomodorosInput.value = task.est;
-  DOM.actPomodorosInput.value = task.act;
+  if (DOM.formTitle !== null) {
+    DOM.formTitle.textContent = "Edit Task";
+  }
+  if (DOM.taskNameInput !== null) {
+    DOM.taskNameInput.value = task.name;
+  }
+  if (DOM.estPomodorosInput !== null) {
+    DOM.estPomodorosInput.value = String(task.est);
+  }
+  if (DOM.actPomodorosInput !== null) {
+    DOM.actPomodorosInput.value = String(task.act);
+  }
 
-  DOM.actPomodorosContainer.classList.remove("hidden");
-  if (DOM.deleteTaskBtn) DOM.deleteTaskBtn.classList.remove("hidden");
+  if (DOM.actPomodorosContainer !== null) {
+    DOM.actPomodorosContainer.classList.remove("hidden");
+  }
+  if (DOM.deleteTaskBtn !== null) {
+    DOM.deleteTaskBtn.classList.remove("hidden");
+  }
 
-  liElement.after(DOM.taskFormContainer);
+  if (DOM.taskFormContainer !== null) {
+    liElement.after(DOM.taskFormContainer);
+    liElement.classList.add("hidden");
+    DOM.taskFormContainer.classList.remove("hidden");
+  }
 
-  liElement.classList.add("hidden");
-
-  DOM.taskFormContainer.classList.remove("hidden");
-  DOM.taskNameInput.focus();
+  if (DOM.taskNameInput !== null) {
+    DOM.taskNameInput.focus();
+  }
 }
 
-let selectedTaskId = null;
+let selectedTaskId: string | null = null;
 
-export function getSelectedTaskId() {
+export function getSelectedTaskId(): string | null {
   return selectedTaskId;
 }
 
-export function updateSummaryUI() {
-  const data = getSummaryData();
-  DOM.actCount.textContent = data.totalAct;
-  DOM.estCount.textContent = data.totalEst;
-  DOM.finishTime.textContent = data.finishAt || "--:--";
+export function updateSummaryUI(): void {
+  const data: SummaryData = getSummaryData();
+  if (DOM.actCount !== null) {
+    DOM.actCount.textContent = String(data.totalAct);
+  }
+  if (DOM.estCount !== null) {
+    DOM.estCount.textContent = String(data.totalEst);
+  }
+  if (DOM.finishTime !== null) {
+    DOM.finishTime.textContent = data.finishAt || "--:--";
+  }
 }
 
-export function renderTasks() {
+export function renderTasks(): void {
+  if (DOM.taskList === null) return;
   DOM.taskList.innerHTML = "";
-  const currentTasks = getTasks();
-  const activeTask = currentTasks.find((t) => t.id === selectedTaskId);
-  if (activeTask) {
-    DOM.currentTaskMessage.textContent = activeTask.name;
+
+  const currentTasks: Task[] = getTasks();
+  const activeTask: Task | undefined = currentTasks.find(
+    (t): boolean => t.id === selectedTaskId,
+  );
+
+  if (activeTask !== undefined) {
+    if (DOM.currentTaskMessage !== null) {
+      DOM.currentTaskMessage.textContent = activeTask.name;
+    }
   } else {
     selectedTaskId = null;
-    DOM.currentTaskMessage.textContent = "Time to focus!";
+    if (DOM.currentTaskMessage !== null) {
+      DOM.currentTaskMessage.textContent = "Time to focus!";
+    }
   }
 
-  if (currentTasks.length === 0) {
-    DOM.summaryBoard.classList.add("hidden");
-  } else {
-    DOM.summaryBoard.classList.remove("hidden");
+  if (DOM.summaryBoard !== null) {
+    if (currentTasks.length === 0) {
+      DOM.summaryBoard.classList.add("hidden");
+    } else {
+      DOM.summaryBoard.classList.remove("hidden");
+    }
   }
 
-  currentTasks.forEach((task) => {
-    const clone = DOM.taskTemplate.content.cloneNode(true);
-    const li = clone.querySelector("li");
+  currentTasks.forEach((task: Task): void => {
+    if (DOM.taskTemplate === null || DOM.taskList === null) return;
+
+    const clone: Node = DOM.taskTemplate.content.cloneNode(true);
+    if (!(clone instanceof DocumentFragment)) return;
+
+    const li: HTMLLIElement | null = clone.querySelector("li");
+    if (li === null) return;
 
     if (task.isDone) li.classList.add("task-done");
     if (task.id === selectedTaskId) li.classList.add("active-task");
 
-    li.querySelector(".task-name").textContent = task.name;
-    li.querySelector(".task-pomos").textContent = `${task.act} / ${task.est}`;
+    const taskNameEl: Element | null = li.querySelector(".task-name");
+    if (taskNameEl !== null) {
+      taskNameEl.textContent = task.name;
+    }
 
-    const checkBtn = li.querySelector(".task-check-btn");
-    checkBtn.addEventListener("click", async (e) => {
-      e.stopPropagation();
-      const success = await toggleTaskDone(task.id);
-      if (success) renderTasks();
-    });
+    const taskPomosEl: Element | null = li.querySelector(".task-pomos");
+    if (taskPomosEl !== null) {
+      taskPomosEl.textContent = `${task.act} / ${task.est}`;
+    }
 
-    const editBtn = li.querySelector(".task-edit-btn");
-    editBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      openEditTaskForm(task, li);
-    });
+    const checkBtn: Element | null = li.querySelector(".task-check-btn");
+    if (checkBtn !== null) {
+      checkBtn.addEventListener("click", async (e): Promise<void> => {
+        e.stopPropagation();
+        const success: boolean = await toggleTaskDone(task.id);
+        if (success) renderTasks();
+      });
+    }
 
-    li.addEventListener("click", () => {
+    const editBtn: Element | null = li.querySelector(".task-edit-btn");
+    if (editBtn !== null) {
+      editBtn.addEventListener("click", (e): void => {
+        e.stopPropagation();
+        openEditTaskForm(task, li);
+      });
+    }
+
+    li.addEventListener("click", (): void => {
       if (selectedTaskId === task.id) {
         selectedTaskId = null;
       } else {
@@ -128,46 +194,70 @@ export function renderTasks() {
   updateSummaryUI();
 }
 
-export function initTaskEvents() {
-  DOM.showTaskFormBtn.addEventListener("click", openAddTaskForm);
-  DOM.cancelTaskBtn.addEventListener("click", hideTaskForm);
-  DOM.taskFormContainer.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const nameVal = DOM.taskNameInput.value;
-    const estVal = DOM.estPomodorosInput.value;
-    const actVal = DOM.actPomodorosInput.value;
+export function initTaskEvents(): void {
+  if (DOM.showTaskFormBtn !== null) {
+    DOM.showTaskFormBtn.addEventListener("click", openAddTaskForm);
+  }
+  if (DOM.cancelTaskBtn !== null) {
+    DOM.cancelTaskBtn.addEventListener("click", hideTaskForm);
+  }
 
-    await withButtonLoading(
-      "saveTaskBtn",
-      async () => {
-        if (editingTaskId) {
-          const success = await editTask(
-            editingTaskId,
-            nameVal,
-            actVal,
-            estVal,
-          );
-          if (success) {
-            hideTaskForm();
-          }
-        } else {
-          const newTask = await addTask(nameVal, estVal);
-          if (newTask) {
-            DOM.taskNameInput.value = "";
-            DOM.estPomodorosInput.value = 1;
-            DOM.taskNameInput.focus();
-          }
+  if (DOM.taskFormContainer !== null) {
+    DOM.taskFormContainer.addEventListener(
+      "submit",
+      async (e): Promise<void> => {
+        e.preventDefault();
+        if (
+          DOM.taskNameInput === null ||
+          DOM.estPomodorosInput === null ||
+          DOM.actPomodorosInput === null
+        ) {
+          return;
         }
-        renderTasks();
-      },
-      "Saving...",
-    );
-  });
 
-  if (DOM.deleteTaskBtn) {
-    DOM.deleteTaskBtn.addEventListener("click", async () => {
-      if (editingTaskId) {
-        const success = await deleteTask(editingTaskId);
+        const nameVal: string = DOM.taskNameInput.value;
+        const estVal: string = DOM.estPomodorosInput.value;
+        const actVal: string = DOM.actPomodorosInput.value;
+
+        await withButtonLoading(
+          "saveTaskBtn",
+          async (): Promise<void> => {
+            if (editingTaskId !== null) {
+              const success: boolean = await editTask(
+                editingTaskId,
+                nameVal,
+                actVal,
+                estVal,
+              );
+              if (success) {
+                hideTaskForm();
+              }
+            } else {
+              const newTask: Task | null = await addTask(nameVal, estVal);
+              if (newTask !== null) {
+                if (DOM.taskNameInput !== null) {
+                  DOM.taskNameInput.value = "";
+                }
+                if (DOM.estPomodorosInput !== null) {
+                  DOM.estPomodorosInput.value = "1";
+                }
+                if (DOM.taskNameInput !== null) {
+                  DOM.taskNameInput.focus();
+                }
+              }
+            }
+            renderTasks();
+          },
+          "Saving...",
+        );
+      },
+    );
+  }
+
+  if (DOM.deleteTaskBtn !== null) {
+    DOM.deleteTaskBtn.addEventListener("click", async (): Promise<void> => {
+      if (editingTaskId !== null) {
+        const success: boolean = await deleteTask(editingTaskId);
         if (success) {
           editingTaskId = null;
           renderTasks();
@@ -176,13 +266,19 @@ export function initTaskEvents() {
     });
   }
 
-  if (DOM.taskDropdownBtn && DOM.taskDropdownMenu) {
-    DOM.taskDropdownBtn.addEventListener("click", (e) => {
+  if (DOM.taskDropdownBtn !== null && DOM.taskDropdownMenu !== null) {
+    DOM.taskDropdownBtn.addEventListener("click", (e): void => {
       e.stopPropagation();
-      DOM.taskDropdownMenu.classList.toggle("hidden");
+      if (DOM.taskDropdownMenu !== null) {
+        DOM.taskDropdownMenu.classList.toggle("hidden");
+      }
     });
-    document.addEventListener("click", (e) => {
+
+    document.addEventListener("click", (e): void => {
       if (
+        DOM.taskDropdownMenu !== null &&
+        DOM.taskDropdownBtn !== null &&
+        e.target instanceof Node &&
         !DOM.taskDropdownMenu.classList.contains("hidden") &&
         !DOM.taskDropdownMenu.contains(e.target) &&
         !DOM.taskDropdownBtn.contains(e.target)
@@ -192,13 +288,14 @@ export function initTaskEvents() {
     });
   }
 
-  if (DOM.deleteAllBtn) {
-    DOM.deleteAllBtn.addEventListener("click", async () => {
+  if (DOM.deleteAllBtn !== null) {
+    DOM.deleteAllBtn.addEventListener("click", async (): Promise<void> => {
       if (confirm("Are you sure you want to delete all tasks?")) {
-        const success = await deleteAllTasks();
+        const success: boolean = await deleteAllTasks();
         if (success) {
-          if (DOM.taskDropdownMenu)
+          if (DOM.taskDropdownMenu !== null) {
             DOM.taskDropdownMenu.classList.add("hidden");
+          }
           renderTasks();
         }
       }

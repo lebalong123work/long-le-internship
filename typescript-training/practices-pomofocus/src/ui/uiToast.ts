@@ -1,10 +1,11 @@
-import { CONFIG } from "../config/config.ts";
+import { CONFIG } from "../config/config.js";
 
 export type ToastType = "error" | "success" | "warning";
 
-function getToastContainer() {
-  let container = document.getElementById("toast-container");
-  if (!container) {
+function getToastContainer(): HTMLElement {
+  let container: HTMLElement | null =
+    document.getElementById("toast-container");
+  if (container === null) {
     container = document.createElement("div");
     container.id = "toast-container";
     document.body.appendChild(container);
@@ -12,9 +13,9 @@ function getToastContainer() {
   return container;
 }
 
-export function showToast(message, type = "error") {
-  const container = getToastContainer();
-  const toast = document.createElement("div");
+export function showToast(message: string, type: ToastType = "error"): void {
+  const container: HTMLElement = getToastContainer();
+  const toast: HTMLDivElement = document.createElement("div");
 
   toast.classList.add("toast", type);
   toast.textContent = message;

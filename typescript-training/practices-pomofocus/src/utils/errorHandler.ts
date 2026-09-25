@@ -1,4 +1,4 @@
-import { showToast } from "../ui/uiToast.ts";
+import { showToast } from "../ui/uiToast.js";
 
 export function initGlobalErrorHandler() {
   window.addEventListener("unhandledrejection", (event: PromiseRejectionEvent) => {

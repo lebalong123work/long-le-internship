@@ -1,23 +1,24 @@
-import { CONFIG } from "../config/config.ts";
+import { CONFIG } from "../config/config.js";
+export interface ApiRequestOptions extends RequestInit {
+  headers?: Record<string, string>;
+}
 
 export async function fetchAPI<T>(
   endpoint: string,
-  options: RequestInit = {},
+  options: ApiRequestOptions = {},
 ): Promise<T | boolean> {
-  const url = `${CONFIG.API.BASE_URL}${endpoint}`;
-  const token = localStorage.getItem("accessToken");
+  const url: string = `${CONFIG.API.BASE_URL}${endpoint}`;
+  const token: string | null = localStorage.getItem("accessToken");
 
-  const headers: Record<string, string> = {
-    ...((options.headers as Record<string, string>) || {}),
-  };
-
-  if (token) {
-    headers["Authorization"] = `Bearer ${token}`;
+  if (options.headers === undefined) {
+    options.headers = {};
   }
 
-  options.headers = headers;
+  if (token !== null) {
+    options.headers["Authorization"] = `Bearer ${token}`;
+  }
 
-  const response = await fetch(url, options);
+  const response: Response = await fetch(url, options);
 
   if (!response.ok) {
     throw new Error(`API Request Failed: ${response.status}`);

@@ -1,13 +1,13 @@
-import { initHeaderEvents } from "./ui/uiHeader.ts";
-import { initTaskEvents, renderTasks } from "./ui/uiTasks.ts";
+import { initHeaderEvents } from "./ui/uiHeader.js";
+import { initTaskEvents, renderTasks } from "./ui/uiTasks.js";
 import {
   initTimerEvents,
   updatePomodoroCountUI,
-} from "./ui/uiTimer.ts";
+} from "./ui/uiTimer.js";
 
-import { initTasksData } from "./logic/taskLogic.ts";
-import { initGlobalErrorHandler } from "./utils/errorHandler.ts";
-import { removeInitialLoader } from "./ui/uiLoader.ts";
+import { initTasksData } from "./logic/taskLogic.js";
+import { initGlobalErrorHandler } from "./utils/errorHandler.js";
+import { removeInitialLoader } from "./ui/uiLoader.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   initGlobalErrorHandler();

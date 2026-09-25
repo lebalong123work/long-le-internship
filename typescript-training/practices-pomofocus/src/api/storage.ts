@@ -1,17 +1,23 @@
-import { getCurrentUserId } from "../logic/authLogic.ts";
-import { fetchAPI } from "./apiClient.ts";
-import { LocalDB } from "./localDB.ts";
-import { Task } from "../logic/taskLogic.ts";
+import { getCurrentUserId } from "../logic/authLogic.js";
+import { fetchAPI } from "./apiClient.js";
+import { LocalDB } from "./localDB.js";
+import { Task } from "../logic/taskLogic.js";
 
 export async function fetchTasks(): Promise<Task[]> {
   try {
-    const userId = getCurrentUserId();
-    if (userId) {
-      return await fetchAPI<Task[]>(`/tasks?userId=${userId}`);
+    const userId: string | null = getCurrentUserId();
+    if (userId !== null) {
+      const data: Task[] | boolean = await fetchAPI<Task[]>(
+        `/tasks?userId=${userId}`,
+      );
+      if (Array.isArray(data)) {
+        return data;
+      }
+      return [];
     } else {
       return LocalDB.getTasks();
     }
-  } catch (error) {
+  } catch (error: unknown) {
     throw new Error(
       "Network error: Unable to connect. Please check internet connection",
       { cause: error },
@@ -21,40 +27,47 @@ export async function fetchTasks(): Promise<Task[]> {
 
 export async function createTask(newTask: Task): Promise<Task> {
   try {
-    const userId = getCurrentUserId();
-    if (userId) {
-      const taskToSave = { ...newTask, userId };
-      return await fetchAPI<Task>("/tasks", {
+    const userId: string | null = getCurrentUserId();
+    if (userId !== null) {
+      const taskToSave: Task = { ...newTask, userId };
+      const data: Task | boolean = await fetchAPI<Task>("/tasks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(taskToSave),
       });
+      if (typeof data === "boolean") {
+        throw new Error("Invalid response format");
+      }
+      return data;
     } else {
-      const currentTasks = LocalDB.getTasks();
+      const currentTasks: Task[] = LocalDB.getTasks();
       currentTasks.push(newTask);
       LocalDB.saveTasks(currentTasks);
       return newTask;
     }
-  } catch (error) {
+  } catch (error: unknown) {
     throw new Error("Network error: Unable to save", { cause: error });
   }
 }
 
 export async function removeTask(taskId: string): Promise<boolean> {
   try {
-    const userId = getCurrentUserId();
-    if (userId) {
-      return await fetchAPI<boolean>(`/tasks/${taskId}`, {
+    const userId: string | null = getCurrentUserId();
+    if (userId !== null) {
+      await fetchAPI<unknown>(`/tasks/${taskId}`, {
         method: "DELETE",
       });
+      return true;
     } else {
-      let currentTasks = LocalDB.getTasks();
+      const currentTasks: Task[] = LocalDB.getTasks();
       if (currentTasks.length === 0) return false;
-      let filteredTasks = currentTasks.filter((task) => task.id !== taskId);
+      const filteredTasks: Task[] = currentTasks.filter(
+        (task: Task): boolean => task.id !== taskId,
+      );
       LocalDB.saveTasks(filteredTasks);
       return true;
     }
-  } catch (error) {
+  } catch (error: unknown) {
     throw new Error("Network error: Unable to delete", { cause: error });
   }
 }
@@ -64,22 +77,28 @@ export async function updateTask(
   updatedTask: Partial<Task>,
 ): Promise<Task | null> {
   try {
-    const userId = getCurrentUserId();
-    if (userId) {
-      return await fetchAPI<Task>(`/tasks/${taskId}`, {
+    const userId: string | null = getCurrentUserId();
+    if (userId !== null) {
+      const data: Task | boolean = await fetchAPI<Task>(`/tasks/${taskId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedTask),
       });
+      if (typeof data === "boolean") {
+        return null;
+      }
+      return data;
     } else {
-      let currentTasks = LocalDB.getTasks();
-      const taskIndex = currentTasks.findIndex((task) => task.id === taskId);
+      let currentTasks: Task[] = LocalDB.getTasks();
+      const taskIndex: number = currentTasks.findIndex(
+        (task: Task): boolean => task.id === taskId,
+      );
       if (taskIndex === -1) return null;
       Object.assign(currentTasks[taskIndex], updatedTask);
       LocalDB.saveTasks(currentTasks);
       return currentTasks[taskIndex];
     }
-  } catch (error) {
+  } catch (error: unknown) {
     throw new Error("Network error: Unable to update", { cause: error });
   }
 }

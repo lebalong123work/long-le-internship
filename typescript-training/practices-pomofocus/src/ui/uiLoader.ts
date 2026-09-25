@@ -1,6 +1,7 @@
 import { CONFIG } from "../config/config.ts";
 export function removeInitialLoader(): void {
-  const initialLoader: HTMLElement | null = document.getElementById("initial-loader");
+  const initialLoader: HTMLElement | null =
+    document.getElementById("initial-loader");
 
   if (initialLoader !== null) {
     initialLoader.style.opacity = "0";

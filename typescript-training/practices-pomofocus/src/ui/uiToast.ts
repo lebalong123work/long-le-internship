@@ -3,7 +3,8 @@ import { CONFIG } from "../config/config.ts";
 export type ToastType = "error" | "success" | "warning";
 
 function getToastContainer(): HTMLElement {
-  let container: HTMLElement | null = document.getElementById("toast-container");
+  let container: HTMLElement | null =
+    document.getElementById("toast-container");
   if (container === null) {
     container = document.createElement("div");
     container.id = "toast-container";

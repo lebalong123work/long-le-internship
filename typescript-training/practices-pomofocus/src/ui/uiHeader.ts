@@ -26,18 +26,20 @@ export function initHeaderEvents() {
     });
   }
 
-  if (DOM.avatarMenuBtn && DOM.userDropdown) {
-    DOM.avatarMenuBtn.addEventListener("click", (e) => {
+  if (DOM.avatarMenuBtn !== null && DOM.userDropdown) {
+    DOM.avatarMenuBtn.addEventListener("click", (e): void => {
       e.stopPropagation();
-      DOM.userDropdown.classList.toggle("hidden");
+      if (DOM.userDropdown !== null) {
+        DOM.userDropdown.classList.toggle("hidden");
+      }
     });
   }
 
-  document.addEventListener("click", () => {
-    if (DOM.guestDropdown && !DOM.guestDropdown.classList.contains("hidden")) {
+  document.addEventListener("click", (): void => {
+    if (DOM.guestDropdown !== null && !DOM.guestDropdown.classList.contains("hidden")) {
       DOM.guestDropdown.classList.add("hidden");
     }
-    if (DOM.userDropdown && !DOM.userDropdown.classList.contains("hidden")) {
+    if (DOM.userDropdown !== null && !DOM.userDropdown.classList.contains("hidden")) {
       DOM.userDropdown.classList.add("hidden");
     }
   });

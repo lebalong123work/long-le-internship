@@ -6,57 +6,80 @@ import {
   setMode,
   setTimerCompleteCallback,
   resetTimer,
+  TimerMode,
 } from "../logic/timerLogic.ts";
 import { increaseActualPomodoros } from "../logic/taskLogic.ts";
 import { renderTasks, getSelectedTaskId } from "./uiTasks.ts";
 
-let currentMode = "pomo";
+let currentMode: TimerMode = "pomo";
 
-function getSavedPomoCount() {
-  const saved = localStorage.getItem(CONFIG.STORAGE.POMO_COUNT_KEY);
-  return saved ? Number.parseInt(saved, 10) : 0;
+function getSavedPomoCount(): number {
+  const saved: string | null = localStorage.getItem(
+    CONFIG.STORAGE.POMO_COUNT_KEY,
+  );
+  if (saved === null) {
+    return 0;
+  }
+
+  const parsed: number = Number.parseInt(saved, 10);
+  if (Number.isNaN(parsed) || parsed < 0) {
+    return 0;
+  }
+
+  return parsed;
 }
 
-let pomodorosCompleted = getSavedPomoCount();
+let pomodorosCompleted: number = getSavedPomoCount();
 
-export function updatePomodoroCountUI() {
-  if (!DOM.currentTaskNumber) return;
+export function updatePomodoroCountUI(): void {
+  if (DOM.currentTaskNumber === null) return;
   const currentCycle = (pomodorosCompleted % 4) + 1;
   DOM.currentTaskNumber.textContent = `#${currentCycle}`;
 }
 
-function switchUIMode(modeName) {
+function switchUIMode(modeName: TimerMode): void {
   currentMode = modeName;
 
   setMode(modeName);
 
   const allModeBtns = document.querySelectorAll(".mode-btn");
-  allModeBtns.forEach((btn) => btn.classList.remove("active"));
-
+  allModeBtns.forEach((btn): void => {
+    btn.classList.remove("active");
+  });
   document.body.classList.remove("theme-short-break", "theme-long-break");
 
   if (modeName === "pomo") {
-    DOM.pomoBtn.classList.add("active");
+    if (DOM.pomoBtn !== null) {
+      DOM.pomoBtn.classList.add("active");
+    }
     updatePomodoroCountUI();
   } else if (modeName === "shortBreak") {
-    DOM.shortBreakBtn.classList.add("active");
+    if (DOM.shortBreakBtn !== null) {
+      DOM.shortBreakBtn.classList.add("active");
+    }
     document.body.classList.add("theme-short-break");
   } else if (modeName === "longBreak") {
-    DOM.longBreakBtn.classList.add("active");
+    if (DOM.longBreakBtn !== null) {
+      DOM.longBreakBtn.classList.add("active");
+    }
     document.body.classList.add("theme-long-break");
   }
 }
 
-export function initTimerEvents() {
-  const handleSessionComplete = async () => {
+export function initTimerEvents(): void {
+  const handleSessionComplete = async (): Promise<void> => {
     if (currentMode === "pomo") {
-      const selectedId = getSelectedTaskId();
+      const selectedId: string | null = getSelectedTaskId();
       if (selectedId !== null) {
-        const success = await increaseActualPomodoros(selectedId);
+        const success: boolean = await increaseActualPomodoros(selectedId);
         if (success) renderTasks();
       }
       pomodorosCompleted++;
-      localStorage.setItem(CONFIG.STORAGE.POMO_COUNT_KEY, pomodorosCompleted);
+
+      localStorage.setItem(
+        CONFIG.STORAGE.POMO_COUNT_KEY,
+        String(pomodorosCompleted),
+      );
 
       if (pomodorosCompleted % 4 === 0) {
         switchUIMode("longBreak");
@@ -66,48 +89,76 @@ export function initTimerEvents() {
     } else {
       switchUIMode("pomo");
     }
-    DOM.startTimerBtn.textContent = "START";
-    if (DOM.skipTimerBtn) DOM.skipTimerBtn.classList.add("hidden");
+    if (DOM.startTimerBtn !== null) {
+      DOM.startTimerBtn.textContent = "START";
+    }
+    if (DOM.skipTimerBtn !== null) {
+      DOM.skipTimerBtn.classList.add("hidden");
+    }
   };
 
-  setTimerCallback((timeString) => {
-    DOM.timeDisplay.textContent = timeString;
+  setTimerCallback((timeString): void => {
+    if (DOM.timeDisplay !== null) {
+      DOM.timeDisplay.textContent = timeString;
+    }
   });
 
-  setTimerCompleteCallback(async () => {
-    await handleSessionComplete();
+  setTimerCompleteCallback((): void => {
+    void handleSessionComplete();
   });
 
-  if (DOM.skipTimerBtn) {
-    DOM.skipTimerBtn.addEventListener("click", async () => {
+  if (DOM.skipTimerBtn !== null) {
+    DOM.skipTimerBtn.addEventListener("click", async (): Promise<void> => {
       await handleSessionComplete();
     });
   }
 
-  DOM.startTimerBtn.addEventListener("click", () => {
-    const isNowRunning = toggleTimer();
-    if (isNowRunning) {
-      DOM.startTimerBtn.textContent = "PAUSE";
-      if (DOM.skipTimerBtn) DOM.skipTimerBtn.classList.remove("hidden");
-    } else {
-      DOM.startTimerBtn.textContent = "START";
-    }
-  });
+  if (DOM.startTimerBtn !== null) {
+    DOM.startTimerBtn.addEventListener("click", (): void => {
+      const isNowRunning: boolean = toggleTimer();
+      if (isNowRunning) {
+        if (DOM.startTimerBtn !== null) {
+          DOM.startTimerBtn.textContent = "PAUSE";
+        }
+        if (DOM.skipTimerBtn !== null) {
+          DOM.skipTimerBtn.classList.remove("hidden");
+        }
+      } else {
+        if (DOM.startTimerBtn !== null) {
+          DOM.startTimerBtn.textContent = "START";
+        }
+      }
+    });
+  }
 
-  DOM.pomoBtn.addEventListener("click", () => switchUIMode("pomo"));
-  DOM.shortBreakBtn.addEventListener("click", () => switchUIMode("shortBreak"));
-  DOM.longBreakBtn.addEventListener("click", () => switchUIMode("longBreak"));
+  if (DOM.pomoBtn !== null) {
+    DOM.pomoBtn.addEventListener("click", (): void => switchUIMode("pomo"));
+  }
+  if (DOM.shortBreakBtn !== null) {
+    DOM.shortBreakBtn.addEventListener("click", (): void =>
+      switchUIMode("shortBreak"),
+    );
+  }
+  if (DOM.longBreakBtn !== null) {
+    DOM.longBreakBtn.addEventListener("click", (): void =>
+      switchUIMode("longBreak"),
+    );
+  }
 
-  if (DOM.resetTimerBtn) {
-    DOM.resetTimerBtn.addEventListener("click", () => {
+  if (DOM.resetTimerBtn !== null) {
+    DOM.resetTimerBtn.addEventListener("click", (): void => {
       resetTimer();
-      DOM.startTimerBtn.textContent = "START";
-      if (DOM.skipTimerBtn) DOM.skipTimerBtn.classList.add("hidden");
+      if (DOM.startTimerBtn !== null) {
+        DOM.startTimerBtn.textContent = "START";
+      }
+      if (DOM.skipTimerBtn !== null) {
+        DOM.skipTimerBtn.classList.add("hidden");
+      }
     });
   }
 
   switchUIMode("pomo");
-  if (DOM.currentTaskMessage) {
+  if (DOM.currentTaskMessage !== null) {
     DOM.currentTaskMessage.textContent = "Time to focus!";
   }
 }

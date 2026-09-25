@@ -14,8 +14,8 @@ function getToastContainer(): HTMLElement {
 }
 
 export function showToast(message: string, type = "error"): void {
-  const container = getToastContainer();
-  const toast = document.createElement("div");
+  const container: HTMLElement = getToastContainer();
+  const toast: HTMLDivElement = document.createElement("div");
 
   toast.classList.add("toast", type);
   toast.textContent = message;

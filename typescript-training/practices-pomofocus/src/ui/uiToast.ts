@@ -1,4 +1,4 @@
-import { CONFIG } from "../config/config.ts";
+import { CONFIG } from "../config/config.js";
 
 export type ToastType = "error" | "success" | "warning";
 

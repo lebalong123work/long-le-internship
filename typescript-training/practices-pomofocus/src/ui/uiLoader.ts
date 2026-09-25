@@ -1,4 +1,4 @@
-import { CONFIG } from "../config/config.ts";
+import { CONFIG } from "../config/config.js";
 export function removeInitialLoader(): void {
   const initialLoader: HTMLElement | null =
     document.getElementById("initial-loader");

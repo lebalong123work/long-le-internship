@@ -1,4 +1,4 @@
-import { loginUser } from "./logic/authLogic.ts";
+import { loginUser } from "./logic/authLogic.js";
 
 const loginForm = document.getElementById("loginForm");
 const emailInput = document.getElementById("emailInput");

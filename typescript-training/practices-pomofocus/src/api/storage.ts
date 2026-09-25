@@ -1,7 +1,7 @@
-import { getCurrentUserId } from "../logic/authLogic.ts";
-import { fetchAPI } from "./apiClient.ts";
-import { LocalDB } from "./localDB.ts";
-import { Task } from "../logic/taskLogic.ts";
+import { getCurrentUserId } from "../logic/authLogic.js";
+import { fetchAPI } from "./apiClient.js";
+import { LocalDB } from "./localDB.js";
+import { Task } from "../logic/taskLogic.js";
 
 export async function fetchTasks(): Promise<Task[]> {
   try {
@@ -42,19 +42,22 @@ export async function createTask(newTask: Task): Promise<Task> {
 
 export async function removeTask(taskId: string): Promise<boolean> {
   try {
-    const userId = getCurrentUserId();
-    if (userId) {
-      return await fetchAPI<boolean>(`/tasks/${taskId}`, {
+    const userId: string | null = getCurrentUserId();
+    if (userId !== null) {
+      await fetchAPI<unknown>(`/tasks/${taskId}`, {
         method: "DELETE",
       });
+      return true;
     } else {
-      let currentTasks = LocalDB.getTasks();
+      const currentTasks: Task[] = LocalDB.getTasks();
       if (currentTasks.length === 0) return false;
-      let filteredTasks = currentTasks.filter((task) => task.id !== taskId);
+      const filteredTasks: Task[] = currentTasks.filter(
+        (task: Task): boolean => task.id !== taskId,
+      );
       LocalDB.saveTasks(filteredTasks);
       return true;
     }
-  } catch (error) {
+  } catch (error: unknown) {
     throw new Error("Network error: Unable to delete", { cause: error });
   }
 }

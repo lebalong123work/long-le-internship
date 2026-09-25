@@ -1,3 +1,25 @@
+function getSafeElement<T extends HTMLElement>(
+  id: string,
+  expectedClass: new () => T,
+): T | null {
+  const element = document.getElementById(id);
+  if (element instanceof expectedClass) {
+    return element;
+  }
+  return null;
+}
+
+function querySafeElement<T extends HTMLElement>(
+  selector: string,
+  expectedClass: new () => T,
+): T | null {
+  const element = document.querySelector(selector);
+  if (element instanceof expectedClass) {
+    return element;
+  }
+  return null;
+}
+
 export const DOM = {
   //HEADER & AUTH
   guestBlock: document.getElementById("guestBlock"),
@@ -22,9 +44,8 @@ export const DOM = {
 
   //TASKS CONTAINER
   taskList: document.getElementById("taskList"),
-  taskTemplate: document.getElementById("taskTemplate"),
-
-  actionGroup: document.querySelector(".action-group"),
+  taskTemplate: getSafeElement("taskTemplate", HTMLTemplateElement),
+  actionGroup: querySafeElement(".action-group", HTMLElement),
   showTaskFormBtn: document.getElementById("showTaskFormBtn"),
 
   taskDropdownBtn: document.getElementById("taskDropdownBtn"),
@@ -34,9 +55,10 @@ export const DOM = {
   //TASK FORM
   taskFormContainer: document.getElementById("taskFormContainer"),
   formTitle: document.getElementById("formTitle"),
-  taskNameInput: document.getElementById("taskNameInput"),
-  estPomodorosInput: document.getElementById("estPomodorosInput"),
-  actPomodorosInput: document.getElementById("actPomodorosInput"),
+  taskNameInput: getSafeElement("taskNameInput", HTMLInputElement),
+  estPomodorosInput: getSafeElement("estPomodorosInput", HTMLInputElement),
+  actPomodorosInput: getSafeElement("actPomodorosInput", HTMLInputElement),
+
   actPomodorosContainer: document.getElementById("actPomodorosContainer"),
   cancelTaskBtn: document.getElementById("cancelTaskBtn"),
   deleteTaskBtn: document.getElementById("deleteTaskBtn"),

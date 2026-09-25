@@ -1,11 +1,11 @@
 import { CONFIG } from "../config/config.ts";
-export function removeInitialLoader() {
-  const initialLoader = document.getElementById("initial-loader");
+export function removeInitialLoader(): void {
+  const initialLoader: HTMLElement | null = document.getElementById("initial-loader");
 
-  if (initialLoader) {
+  if (initialLoader !== null) {
     initialLoader.style.opacity = "0";
 
-    setTimeout(() => {
+    setTimeout((): void => {
       initialLoader.remove();
     }, CONFIG.UI.LOADER_FADE_TIME);
   }

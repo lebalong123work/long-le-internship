@@ -1,17 +1,25 @@
 import { loginUser } from "./logic/authLogic.js";
 
-const loginForm = document.getElementById("loginForm");
-const emailInput = document.getElementById("emailInput");
-const passwordInput = document.getElementById("passwordInput");
+const loginForm: HTMLElement | null = document.getElementById("loginForm");
+const emailInput: HTMLElement | null = document.getElementById("emailInput");
+const passwordInput: HTMLElement | null =
+  document.getElementById("passwordInput");
 
-if (loginForm) {
-  loginForm.addEventListener("submit", async (e) => {
+if (loginForm !== null) {
+  loginForm.addEventListener("submit", async (e): Promise<void> => {
     e.preventDefault();
 
-    const emailVal = emailInput.value.trim();
-    const passwordVal = passwordInput.value.trim();
+    if (
+      !(emailInput instanceof HTMLInputElement) ||
+      !(passwordInput instanceof HTMLInputElement)
+    ) {
+      return;
+    }
 
-    const isSuccess = await loginUser(emailVal, passwordVal);
+    const emailVal: string = emailInput.value.trim();
+    const passwordVal: string = passwordInput.value.trim();
+
+    const isSuccess: boolean = await loginUser(emailVal, passwordVal);
 
     if (isSuccess === true) {
       window.location.href = "index.html";

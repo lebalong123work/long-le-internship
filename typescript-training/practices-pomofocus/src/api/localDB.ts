@@ -1,5 +1,5 @@
-import { CONFIG } from "../config/config.ts";
-import { Task } from "../logic/taskLogic.ts";
+import { CONFIG } from "@/config";
+import { Task } from "@/logic/taskLogic";
 
 export const LocalDB = {
   getTasks: (): Task[] => {

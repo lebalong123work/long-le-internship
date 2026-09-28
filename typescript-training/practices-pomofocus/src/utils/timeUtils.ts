@@ -1,4 +1,4 @@
-import { CONFIG } from "../config/config.js";
+import { CONFIG } from "@/config";
 
 export function formatTime(totalSeconds:number):string {
   const minutes = Math.floor(totalSeconds / 60);

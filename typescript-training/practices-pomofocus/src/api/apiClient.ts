@@ -1,4 +1,4 @@
-import { CONFIG } from "../config/config.js";
+import { CONFIG } from "@/config";
 export interface ApiRequestOptions extends RequestInit {
   headers?: Record<string, string>;
 }
@@ -10,11 +10,11 @@ export async function fetchAPI<T>(
   const url: string = `${CONFIG.API.BASE_URL}${endpoint}`;
   const token: string | null = localStorage.getItem("accessToken");
 
-  if (options.headers === undefined) {
+  if (!options.headers) {
     options.headers = {};
   }
 
-  if (token !== null) {
+  if (token) {
     options.headers["Authorization"] = `Bearer ${token}`;
   }
 

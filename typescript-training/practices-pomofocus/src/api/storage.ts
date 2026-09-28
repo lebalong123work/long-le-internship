@@ -1,7 +1,7 @@
-import { getCurrentUserId } from "../logic/authLogic.js";
-import { fetchAPI } from "./apiClient.js";
-import { LocalDB } from "./localDB.js";
-import { Task } from "../logic/taskLogic.js";
+import { getCurrentUserId } from "@/logic/authLogic";
+import { fetchAPI } from "@/api/apiClient";
+import { LocalDB } from "@/api/localDB";
+import { Task } from "@/logic/taskLogic";
 
 export async function fetchTasks(): Promise<Task[]> {
   try {

@@ -1,4 +1,4 @@
-import { DOM } from "./dom.js";
+import { DOM } from "@/ui/dom";
 import {
   getTasks,
   addTask,
@@ -9,8 +9,8 @@ import {
   getSummaryData,
   Task,
   SummaryData,
-} from "../logic/taskLogic.js";
-import { withButtonLoading } from "./uiButtonState.js";
+} from "@/logic/taskLogic";
+import { withButtonLoading } from "@/ui/uiButtonState";
 
 let editingTaskId: string | null = null;
 

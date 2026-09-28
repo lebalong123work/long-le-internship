@@ -1,5 +1,5 @@
-import { DOM } from "./dom.js";
-import { CONFIG } from "../config/config.js";
+import { DOM } from "@/ui/dom";
+import { CONFIG } from "@/config";
 import {
   toggleTimer,
   setTimerCallback,
@@ -7,9 +7,9 @@ import {
   setTimerCompleteCallback,
   resetTimer,
   TimerMode,
-} from "../logic/timerLogic.js";
-import { increaseActualPomodoros } from "../logic/taskLogic.js";
-import { renderTasks, getSelectedTaskId } from "./uiTasks.js";
+} from "@/logic/timerLogic";
+import { increaseActualPomodoros } from "@/logic/taskLogic";
+import { renderTasks, getSelectedTaskId } from "@/ui/uiTasks";
 
 let currentMode: TimerMode = "pomo";
 

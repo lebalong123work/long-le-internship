@@ -1,10 +1,10 @@
-import { calculateFinishTime } from "../utils/timeUtils.js";
+import { calculateFinishTime } from "@/utils/timeUtils";
 import {
-  createTask,
   fetchTasks,
+  createTask,
   removeTask,
   updateTask,
-} from "../api/storage.js";
+} from "@/api/storage";
 
 export interface Task {
   id: string;

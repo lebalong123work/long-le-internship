@@ -9,7 +9,7 @@ import { initTasksData } from "./logic/taskLogic.js";
 import { initGlobalErrorHandler } from "./utils/errorHandler.js";
 import { removeInitialLoader } from "./ui/uiLoader.js";
 
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", async (): Promise<void> => {
   initGlobalErrorHandler();
   initHeaderEvents();
 

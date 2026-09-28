@@ -1,258 +1,220 @@
-# JavaScript Practice - Pomofocus Clone
+# TypeScript Practice - Pomofocus Clone
 
-This project is a front-end exercise focused on building a Pomodoro Web Application, heavily inspired by Pomofocus.io. The purpose is to apply foundational concepts of HTML5, CSS3, and JavaScript (ES6), including DOM manipulation, data management, and asynchronous operations.
+This project is a front-end application focused on building a Pomodoro Web Application inspired by Pomofocus.io. Originally built with Vanilla JavaScript (ES6), the project has been fully migrated to **TypeScript (Strict Mode)** with **Path Aliases (`@/`)**, **ESLint**, and **Husky Git Hooks** to ensure type safety, clean architecture, and code quality.
 
 ## Project Overview
 
 - **Design Source**:
   - Pomofocus.io UI reference
 - **Tech Stack**:
-  - HTML5 & CSS3
-  - JavaScript (ES6 syntax)
-  - JSON Server (for mocking a full REST API)
-  - JSON Server Auth (for JWT Authentication & Bcrypt Password Hashing)
-  - localStorage (for saving user data in the browser)
-- **Goal**:
-  - Apply knowledge of HTML5, CSS3, and modern JavaScript.
-  - Practice DOM manipulation and form validation.
-  - Understand and apply `localStorage` for data persistence.
-  - Handle asynchronous code (mocking API calls).
-  - Use Chrome DevTools effectively for debugging issues.
+  - **HTML5 & CSS3** (Component-based CSS architecture)
+  - **TypeScript** (Strict Mode, ES2022, Custom Path Aliases `@/*`)
+  - **Parcel** (Web application bundler & development server)
+  - **tsc-alias** (Transforms TypeScript path aliases `@/` into relative paths after compilation)
+  - **ESLint & typescript-eslint** (Static code analysis for catching syntax and logic issues)
+  - **Husky** (Git hooks automating TypeScript type-checking and ESLint verification before committing/pushing code)
+  - **JSON Server & JSON Server Auth** (Mock REST API with JWT Authentication & Bcrypt password hashing)
+  - **localStorage** (Client-side fallback data persistence)
+- **Goals**:
+  - Migrate a modular JavaScript codebase to strict TypeScript (`strict`, `noImplicitAny`, `strictNullChecks`).
+  - Define clear `interface` and `type` contracts across API, Business Logic, and UI layers.
+  - Configure clean import statements using Path Aliases (`@/config`, `@/logic/...`, `@/ui/...`) without file extensions.
+  - Enforce automated code quality checks (TypeScript + ESLint) via Git Hooks prior to pushing code.
 
 ### Related Resources
 
 - **Timeline**: Started July 6th, 2026.
-- **Team size**: 1 developer (Lê Bá Long).
-- **Editor**: VSCode.
+- **Developer**: Lê Bá Long.
+- **Editor**: Visual Studio Code (VS Code).
+
+---
 
 ## Features
 
-- **Task Management (CRUD)**: Add, edit, and delete tasks easily.
-- **Task Status**: Mark tasks as done (visualized with a red checkbox and a crossed-out line).
-- **Clear Data**: A "Delete all" option to quickly clear the task list.
+- **Task Management (CRUD)**: Add, edit, and delete tasks seamlessly.
+- **Task Status**: Mark tasks as completed (visualized with a red checkbox and strikethrough text).
+- **Clear Data**: "Delete all" action to quickly clear the entire task list.
 - **Dynamic Aggregation Data**:
-  - Automatically calculates total Estimated (Est) Pomodoros.
-  - Tracks Actual (Act) Pomodoros completed.
-  - Dynamically calculates the "Finish At" time based on current time and remaining Pomodoros.
-- **Security**: Secure authentication flow using JWT (JSON Web Tokens) and automatic Bearer token injection.
+  - Automatically calculates total Estimated (`Est`) Pomodoros.
+  - Tracks Actual (`Act`) Pomodoros completed.
+  - Dynamically calculates the `"Finish At"` timestamp based on current time and remaining Pomodoros.
+- **Security & Authentication**: Secure login flow using JWT (JSON Web Tokens) and automatic Bearer token injection via an API interceptor.
+
+---
 
 ## Folder Structure
 
-```
+~~~text
 📁 practices-pomofocus/
-├── 📁 .vscode/              # VS Code editor configurations
-├── 📁 icons/                # Folder containing all image assets and SVG icons
-├── 📁 js/                   # Core JavaScript Logic & Architecture
-│   ├── 📁 api/              # Network & Data Layer
-│   │   ├── apiClient.js     # API Interceptor: Automatically injects JWT Bearer tokens
-│   │   ├── localDB.js       # Fallback localStorage database operations
-│   │   └── storage.js       # Handles API requests (fetch, create, update, remove tasks)
-│   ├── 📁 config/           # Configuration Layer
-│   │   └── config.js        # Environment variables (e.g., API BASE_URL)
-│   ├── 📁 logic/            # Business Logic Layer (No DOM manipulation)
-│   │   ├── authLogic.js     # User authentication, JWT validation, and login state
-│   │   ├── taskLogic.js     # Manages task arrays and Pomodoro calculations
-│   │   └── timerLogic.js    # Handles countdown intervals and time math
-│   ├── 📁 ui/               # Presentation Layer (DOM manipulation)
-│   │   ├── dom.js           # Centralized DOM elements selection dictionary
-│   │   ├── uiButtonState.js # Handles dynamic button states (active/disabled)
-│   │   ├── uiHeader.js      # Handles Avatar/Sign In toggles and dropdowns
-│   │   ├── uiLoader.js      # Controls loading spinners and transitions
-│   │   ├── uiTasks.js       # Handles task forms, editing, and list rendering
-│   │   ├── uiTimer.js       # Handles Timer buttons and mode switching
-│   │   └── uiToast.js       # Displays toast notifications
-│   ├── 📁 utils/            # Utilities Layer
-│   │   ├── errorHandler.js  # Centralized error handling logic
-│   │   └── timeUtils.js     # Helper functions (e.g., finish time string formatting)
-│   ├── login.js             # Entry point for the login page events
-│   └── main.js              # Main Entry Point orchestrating the application boot process
-├── 📁 styles/               # CSS styling files
-│   ├── 📁 components/       # Component-specific styles
-│   │   ├── header.css       # Styles for the top navigation bar and logo
-│   │   ├── loader.css       # Styles for the loading animations
-│   │   ├── progress.css     # Styles for the top progress bar
-│   │   ├── summary.css      # Styles for the bottom data aggregation board
-│   │   ├── task-form.css    # Styles for the Add/Edit task input forms
-│   │   ├── tasks.css        # Styles for the task list and menu options
-│   │   ├── timer.css        # Styles for the countdown clock and timer buttons
-│   │   └── toast.css        # Styles for the toast notifications
-│   ├── base.css             # Contains CSS variables (colors, fonts) and global resets
-│   ├── login.css            # Styles specific to the login page
-│   └── style.css            # The main CSS file that imports all the components
-├── .env                     # Environment variables file
-├── .gitignore               # Files and folders ignored by Git
-├── db.json                  # Fake Database for JSON Server (with Bcrypt hashed passwords)
-├── index.html               # The main HTML skeleton/layout of the application
-├── login.html               # The secure login page layout
-├── package-lock.json        # Automatically generated exact dependency tree
-├── package.json             # Project configuration, scripts, and dependencies
-└── README.md                # Project documentation
-```
+├── 📁 .husky/                # Husky Git hooks (runs type-check & lint before commit/push)
+├── 📁 .vscode/               # VS Code editor configurations
+├── 📁 icons/                 # Image assets and SVG icons
+├── 📁 src/                   # Core TypeScript Source Code
+│   ├── 📁 api/               # Network & Data Layer
+│   │   ├── apiClient.ts      # API Interceptor: Automatically injects JWT Bearer tokens
+│   │   ├── localDB.ts        # Fallback localStorage database operations
+│   │   └── storage.ts        # Handles API requests (fetch, create, update, remove tasks)
+│   ├── 📁 config/            # Configuration Layer
+│   │   └── config.ts         # Application constants and environment configurations
+│   ├── 📁 logic/             # Business Logic Layer (Pure TypeScript, zero DOM manipulation)
+│   │   ├── authLogic.ts      # User authentication, JWT decoding, and login state
+│   │   ├── taskLogic.ts      # Task state management, interfaces, and Pomodoro calculations
+│   │   └── timerLogic.ts     # Countdown intervals, timer modes, and time math
+│   ├── 📁 ui/                # Presentation Layer (DOM manipulation & event binding)
+│   │   ├── dom.ts            # Centralized DOM element selectors with strict HTML types
+│   │   ├── uiButtonState.ts  # Handles dynamic button loading/disabled states
+│   │   ├── uiHeader.ts       # Handles user avatar, Sign In/Out toggles, and dropdowns
+│   │   ├── uiLoader.ts       # Controls initial loading spinners and transitions
+│   │   ├── uiTasks.ts        # Handles task forms, inline editing, and list rendering
+│   │   ├── uiTimer.ts        # Handles timer controls and mode switching UI
+│   │   └── uiToast.ts        # Displays toast notifications
+│   ├── 📁 utils/             # Utilities Layer
+│   │   ├── errorHandler.ts   # Centralized global error handling
+│   │   └── timeUtils.ts      # Time formatting and finish-time calculation helpers
+│   ├── login.ts              # Entry point for the login page (login.html)
+│   └── main.ts               # Main entry point orchestrating the application boot process
+├── 📁 styles/                # CSS styling files
+│   ├── 📁 components/        # Component-specific styles (header, timer, tasks, toast, etc.)
+│   ├── base.css              # CSS variables (colors, fonts) and global resets
+│   ├── login.css             # Styles specific to the login page
+│   └── style.css             # Main stylesheet importing all component styles
+├── .env                      # Environment variables file
+├── .gitignore                # Files and directories ignored by Git
+├── db.json                   # Mock database for JSON Server (with Bcrypt hashed passwords)
+├── eslint.config.mjs         # ESLint Flat Configuration for TypeScript
+├── index.html                # Main application layout
+├── login.html                # Login page layout
+├── package.json              # Project scripts, dependencies, and devDependencies
+├── tsconfig.json             # TypeScript compiler and Path Alias (@/*) configuration
+└── README.md                 # Project documentation
+~~~
 
-## File Roles & Responsibilities
+---
 
-- **Data & API Layer (`apiClient.js`, `storage.js`, `localDB.js`)**:
-  Manages how data is saved and retrieved. `apiClient.js` acts as an Interceptor to automatically attach JWT Bearer tokens. `storage.js` handles API requests, using `localDB.js` (`localStorage`) as a fallback.
+## Architecture & File Responsibilities
 
-- **Business Logic Layer (`authLogic.js`, `taskLogic.js`, `timerLogic.js`)**:
-  The "brain" of the app. These files contain zero HTML or DOM references. They strictly handle array operations, countdown timers, math calculations, and state management.
+- **Data & API Layer (`@/api/*`)**:
+  Manages data retrieval and persistence. `apiClient.ts` acts as an HTTP interceptor that attaches JWT Bearer tokens automatically. `storage.ts` coordinates REST API calls and falls back to `localDB.ts` (`localStorage`) when offline or unauthenticated.
 
-- **UI & Presentation Layer (`ui*.js`, `dom.js`)**:
-  The "hands and eyes" of the app.
-  - `dom.js`: Acts as the single source of truth for selecting DOM elements.
-  - `ui*.js` (e.g., `uiTasks.js`, `uiTimer.js`, `uiHeader.js`): Listens for user interactions, triggers the Logic Layer, and safely updates the UI.
+- **Business Logic Layer (`@/logic/*`)**:
+  The core domain layer containing zero HTML or DOM references. It defines core data structures (`Task`, `SummaryData`, `TimerMode`) and handles array mutations, countdown intervals, and time calculations.
 
-- **The Orchestrator (`main.js`)**:
-  The main controller that connects all independent UI modules together and initializes the application sequentially once the DOM is fully loaded.
+- **UI & Presentation Layer (`@/ui/*`)**:
+  - `dom.ts`: Single source of truth for DOM queries, cast to specific TypeScript DOM interfaces (`HTMLInputElement`, `HTMLButtonElement`, `HTMLElement`).
+  - `ui*.ts`: Listens for user events, invokes functions from the Logic Layer, and updates the DOM safely.
 
-## Requirements
+- **The Orchestrator (`src/main.ts` & `src/login.ts`)**:
+  Connects independent UI and logic modules together and initializes the application once the DOM is ready.
 
-- Build a static UI and integrate JavaScript logic.
-- Work fine on the latest versions of Chrome and MS Edge browsers.
-- Use ES6 module syntax (`import`/`export`).
-
-## How to run
-
-### 1. Clone or download the project to your computer
-
-**Clone by Git:**
-
-```bash
-git clone [https://github.com/lebalong123work/long-le-internship.git](https://github.com/lebalong123work/long-le-internship.git)
-cd long-le-internship/javascript-training/pomofocus
-```
-
-_Or download the .zip file directly, then extract it to your project folder._
-
-### 2. Open the project in a browser using VSCode
-
-This project uses **[Parcel](https://parceljs.org/)** as the development server and code bundler instead of the traditional Live Server. Parcel is more powerful; it supports code splitting (modules) and automatically updates the interface instantly whenever you modify the code.
+---
 
 ## Prerequisites
 
-To run Parcel, you need to have **Node.js** installed on your computer.
+Make sure you have the following tools installed on your computer:
 
-1. Check if it is already installed by opening your Terminal (or CMD/PowerShell) and typing: `node -v`
-2. If you encounter an error or it is not installed, visit the [Node.js](https://nodejs.org/) homepage, download the **LTS (Long Term Support)** version, and install it just like any other software (simply click "Next" to complete the process).
-
-## Project Installation & Execution Guide
-
-**Step 1: Open the project in the Terminal**
-You need to install the following two tools to read the code and run the project:
-
-## 1. Visual Studio Code (VS Code)
-
-- **What it is:** A tool used to open and edit code.
-- **How to install:**
-  1. Go to [code.visualstudio.com](https://code.visualstudio.com).
-  2. Download the installer for your operating system (Windows, Mac, or Linux).
-  3. Run the installer and click **Next** until it completes.
+1. **Visual Studio Code (VS Code)**: Download from [code.visualstudio.com](https://code.visualstudio.com/).
+2. **Node.js (LTS Version)**: Download from [nodejs.org](https://nodejs.org/).
+   - Verify installation by opening your Terminal and running:
+     ~~~bash
+     node -v
+     npm -v
+     ~~~
 
 ---
 
-## 2. Node.js
+## Installation & Execution Guide
 
-- **What it is:** A required environment to run package commands (like `npm`).
-- **How to install:**
-  1. Go to [nodejs.org](https://nodejs.org).
-  2. Download the **LTS (Long Term Support)** version.
-  3. Open the file and follow the standard installation steps.
+### Step 1: Clone the Repository
 
-## Step 2: Download Code
+Open your Terminal and run the following commands to clone the repository and navigate to the project directory:
 
-1. Download the project code folder (`practices-pomofocus`) to your computer.
-2. Open **VS Code**.
-3. On the top menu, click **File > Open Folder...** and select the `practices-pomofocus` folder to open it.
+~~~bash
+git clone [https://github.com/lebalong123work/long-le-internship.git](https://github.com/lebalong123work/long-le-internship.git)
+cd long-le-internship/typescript-training/practices-pomofocus
+~~~
 
-## Step 3: Install Project Dependencies
+### Step 2: Install Dependencies
 
-1. In **VS Code**, open the Terminal (command window) by pressing **Ctrl + `** (the backtick key right below **Esc** on your keyboard).
-2. In the Terminal window at the bottom, type the following command and press **Enter**:
+Install all required packages (including TypeScript, Parcel, ESLint, Husky, and JSON Server):
 
-```bash
-   npm install
-```
+~~~bash
+npm install
+~~~
 
-## Step 4: Run the Project (Important)
+### Step 3: Run the Project (Requires 2 Terminal Windows)
 
-To run the project smoothly, you need to run two parts at the same time: the **Database (Backend)** and the **Web Interface (Frontend)**. You will need two Terminal windows.
+To run the application with full functionality, run the **Mock Backend Server** and the **Frontend Bundler** simultaneously in two separate Terminal windows:
 
-### 1. Start the Database (JSON Server)
+#### Terminal 1: Start the Database (JSON Server Auth)
 
-In your open Terminal, type the following command and press **Enter**:
+~~~bash
+npm run server
+~~~
+- **Success Indicator**: You will see the `json-server-auth` banner running on `http://localhost:3000`. Keep this Terminal open.
 
-```bash
-   npm run server
-```
+#### Terminal 2: Start the Web Application (Parcel)
 
-- **Success Indicator: You will see a blue banner with "JWT Auth" and JSON Server started on PORT 3000. Keep this Terminal running—do not close it**
+Click the **`+`** icon in the VS Code Terminal panel to open a second Terminal, then run:
 
----
-
-### 2. Start the Web Interface (Parcel)
-
-1. Look at the top-right corner of the Terminal panel in **VS Code** and click the **`+` (plus)** icon to open a second Terminal window.
-2. In this second Terminal, type the following command and press **Enter**:
-
-```bash
-   npx parcel index.html
-```
-
-- **Success Indicator:** The Terminal will show a green message saying `Server running at http://localhost:1234` (or a similar port).
+~~~bash
+npm start
+~~~
+- **Success Indicator**: Parcel will bundle the TypeScript modules and start a development server at `http://localhost:1234`. Open `http://localhost:1234` in your browser.
 
 ---
 
-## Step 5: View the Result
+## Available Scripts (`package.json`)
 
-1. Open your web browser (Chrome, Edge, etc.).
-2. Go to: `http://localhost:1234`
-3. Your web interface should now appear! The task data is fetched from `http://localhost:3000` (the JSON Server you started in Step 4.1).
+Below is the list of configured scripts for development, compilation, and code quality verification:
 
-> **Note:** Whenever you edit the code and save it (**Ctrl + S**), the browser will automatically update immediately.
+| Script Command | Underlying Execution | Description |
+| :--- | :--- | :--- |
+| `npm start` | `parcel index.html` | Starts the Parcel development server with Hot Module Replacement at `http://localhost:1234`. |
+| `npm run server` | `json-server-auth db.json --port 3000` | Starts the mock REST API server with JWT authentication on port `3000`. |
+| `npm run build` | `parcel build index.html` | Bundles and minifies the application for production into the `dist/` directory. |
+| `npm run tsc` | `tsc` | Compiles TypeScript files from `./src` into JavaScript files in `./js`. |
+| `npm run watch` | `tsc -w` | Runs the TypeScript compiler in watch mode to monitor changes in real time. |
+| `npm run alias` | `tsc-alias` | Replaces `@/` path aliases in the compiled `./js` output with relative paths and `.js` extensions. |
+| `npm run type-check` | `tsc --noEmit` | Performs a full TypeScript strict type check across the project without emitting `.js` files. |
+| `npm run lint` | `eslint src/` | Runs ESLint across all `.ts` files in `src/` to catch code style and logic errors. |
 
 ---
 
-##Build Instructions (For Deployment)
+## Automated Code Quality Checks (Git Hooks)
 
-When the project is complete and you want to export the code for deployment to a hosting service (such as Vercel, Netlify, or GitHub Pages), follow these steps:
+This project uses **Husky** to enforce code quality before changes are committed/pushed to the repository:
 
-1. Stop the running server by pressing `Ctrl + C` in the Terminal.
-2. Run the command:
+1. **`npm run type-check` (`tsc --noEmit`)**: Ensures zero TypeScript type errors exist.
+2. **`npm run lint` (`eslint src/`)**: Ensures all TypeScript files adhere to ESLint rules (`no-explicit-any`, `no-unused-vars`, `prefer-const`).
 
-```bash
-npx parcel build index.html
+If either check fails, Husky automatically aborts the Git operation until all errors are resolved.
 
-```
+---
 
-Parcel will automatically optimize and compress your code, outputting the result to a folder named `dist/`. You simply need to use the files in this `dist/` folder for your online deployment.
+## Test Authentication (JSON Server Auth)
 
-## Step 6: Test Authentication (JSON Server Auth)
+This project uses `json-server-auth` to protect task endpoints. You can log in to synchronize tasks with `db.json`.
 
-This project uses `json-server-auth` to secure API requests. You must log in to fetch or manage tasks.
+### 1. Register a New Account (Via Browser Console)
 
-**How to create a new account (Using Console):**
-Because the Registration UI is not yet built, you can register a new user directly using the browser's DevTools.
+1. Ensure both `npm run server` (port 3000) and `npm start` (port 1234) are running.
+2. Open `http://localhost:1234` in your browser and press **F12** to open **Developer Tools** -> **Console** tab.
+3. Paste the following snippet and press **Enter** to create a test account:
 
-1. Open the project in your browser (`http://localhost:1234`).
-2. Press **F12** to open Developer Tools, and click on the **Console** tab.
-3. Copy and paste the following code into the Console, then press **Enter**:
-
-```
+~~~javascript
 fetch("http://localhost:3000/register", {
-method: "POST",
-headers: { "Content-Type": "application/json" },
-body: JSON.stringify({ email: "namegmail.com", password: "name@123" })
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ email: "name@gmail.com", password: "name@123" }),
 })
-.then(res => res.json())
-.then(data => console.log("Successful registration of the Magnetic Card is:", data));
-```
+  .then((res) => res.json())
+  .then((data) => console.log("Registration successful:", data));
+~~~
 
-**How to log in:**
+### 2. Log In on the Web Interface
 
-1. Once the console shows "Successful registration...", go to the **Sign In** page on the web interface.
-2. Log in using the account you just created:
-
-- **Email:** name@gmail.com
-- **Password:** name@123
-
-3. Once logged in, an `accessToken` is securely saved in `localStorage`. The `apiClient.js` will automatically attach this token (`Bearer <token>`) to all API requests. If you don't log in, the API will return a `401 Unauthorized` error.
+1. Click **Sign In** on the top header to navigate to `login.html`.
+2. Enter the registered credentials:
+   - **Email**: `name@gmail.com`
+   - **Password**: `name@123`
+3. Upon login, the `accessToken` is stored in `localStorage`, and `apiClient.ts` automatically attaches `Authorization: Bearer <token>` to subsequent API requests.

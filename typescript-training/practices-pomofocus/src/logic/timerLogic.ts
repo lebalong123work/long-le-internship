@@ -1,5 +1,5 @@
-import { CONFIG } from "../config/config.ts";
-import { formatTime } from "../utils/timeUtils.ts";
+import { CONFIG } from "@/config";
+import { formatTime } from "@/utils/timeUtils";
 
 export type TimerMode = "pomo" | "shortBreak" | "longBreak";
 

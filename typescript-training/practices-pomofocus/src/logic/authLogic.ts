@@ -1,4 +1,4 @@
-import { CONFIG } from "../config/config.ts";
+import { CONFIG } from "@/config";
 
 export interface AuthResponse {
   accessToken: string;

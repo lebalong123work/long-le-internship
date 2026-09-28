@@ -1,8 +1,14 @@
-import { CONFIG } from "../config/config.ts";
+import { CONFIG } from "@/config";
+export interface ApiRequestOptions extends RequestInit {
+  headers?: Record<string, string>;
+}
 
-export async function fetchAPI(endpoint, options = {}) {
-  const url = `${CONFIG.API.BASE_URL}${endpoint}`;
-  const token = localStorage.getItem("accessToken");
+export async function fetchAPI<T>(
+  endpoint: string,
+  options: ApiRequestOptions = {},
+): Promise<T | boolean> {
+  const url: string = `${CONFIG.API.BASE_URL}${endpoint}`;
+  const token: string | null = localStorage.getItem("accessToken");
 
   if (!options.headers) {
     options.headers = {};
@@ -12,7 +18,7 @@ export async function fetchAPI(endpoint, options = {}) {
     options.headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const response = await fetch(url, options);
+  const response: Response = await fetch(url, options);
 
   if (!response.ok) {
     throw new Error(`API Request Failed: ${response.status}`);
@@ -22,5 +28,5 @@ export async function fetchAPI(endpoint, options = {}) {
     return response.ok;
   }
 
-  return response.json();
+  return (await response.json()) as T;
 }

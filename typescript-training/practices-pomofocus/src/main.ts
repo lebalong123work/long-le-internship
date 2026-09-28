@@ -1,15 +1,12 @@
-import { initHeaderEvents } from "./ui/uiHeader.ts";
-import { initTaskEvents, renderTasks } from "./ui/uiTasks.ts";
-import {
-  initTimerEvents,
-  updatePomodoroCountUI,
-} from "./ui/uiTimer.ts";
+import { initHeaderEvents } from "@/ui/uiHeader";
+import { initTaskEvents, renderTasks } from "@/ui/uiTasks";
+import { initTimerEvents, updatePomodoroCountUI } from "@/ui/uiTimer";
 
-import { initTasksData } from "./logic/taskLogic.ts";
-import { initGlobalErrorHandler } from "./utils/errorHandler.ts";
-import { removeInitialLoader } from "./ui/uiLoader.ts";
+import { initTasksData } from "@/logic/taskLogic";
+import { initGlobalErrorHandler } from "@/utils/errorHandler";
+import { removeInitialLoader } from "@/ui/uiLoader";
 
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", async (): Promise<void> => {
   initGlobalErrorHandler();
   initHeaderEvents();
 

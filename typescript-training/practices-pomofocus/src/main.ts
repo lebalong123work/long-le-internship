@@ -1,9 +1,6 @@
 import { initHeaderEvents } from "@/ui/uiHeader";
 import { initTaskEvents, renderTasks } from "@/ui/uiTasks";
-import {
-  initTimerEvents,
-  updatePomodoroCountUI,
-} from "@/ui/uiTimer";
+import { initTimerEvents, updatePomodoroCountUI } from "@/ui/uiTimer";
 
 import { initTasksData } from "@/logic/taskLogic";
 import { initGlobalErrorHandler } from "@/utils/errorHandler";

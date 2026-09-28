@@ -89,7 +89,7 @@ export async function updateTask(
       }
       return data;
     } else {
-      let currentTasks: Task[] = LocalDB.getTasks();
+      const currentTasks: Task[] = LocalDB.getTasks();
       const taskIndex: number = currentTasks.findIndex(
         (task: Task): boolean => task.id === taskId,
       );

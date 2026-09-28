@@ -1,10 +1,5 @@
 import { calculateFinishTime } from "@/utils/timeUtils";
-import {
-  fetchTasks,
-  createTask,
-  removeTask,
-  updateTask,
-} from "@/api/storage";
+import { fetchTasks, createTask, removeTask, updateTask } from "@/api/storage";
 
 export interface Task {
   id: string;
@@ -71,7 +66,7 @@ export async function addTask(taskName: string, estPomodoros: string | number) {
     return null;
   }
 
-  let finalEst = parsePomodoro(estPomodoros);
+  const finalEst = parsePomodoro(estPomodoros);
   if (finalEst === null) {
     return null;
   }

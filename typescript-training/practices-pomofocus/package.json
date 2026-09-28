@@ -8,16 +8,23 @@
     "server": "json-server-auth db.json --port 3000",
     "tsc": "tsc",
     "watch": "tsc -w",
-    "alias": "tsc-alias"
+    "alias": "tsc-alias",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src/",
+    "prepare": "cd ../.. && husky typescript-training/practices-pomofocus/.husky"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.11.0",
+    "husky": "^9.1.7",
     "parcel": "^2.16.4",
     "tsc-alias": "^1.9.5",
-    "typescript": "~6.0.0"
+    "typescript": "~6.0.0",
+    "typescript-eslint": "^8.70.1"
   },
   "dependencies": {
     "json-server": "^0.17.4",

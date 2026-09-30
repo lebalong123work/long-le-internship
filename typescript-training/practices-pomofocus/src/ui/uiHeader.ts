@@ -23,7 +23,8 @@ export function initHeaderEvents(): void {
     DOM.guestMenuBtn.addEventListener("click", (e): void => {
       e.stopPropagation();
       if (DOM.guestDropdown !== null) {
-        DOM.guestDropdown.classList.toggle("hidden");
+        const isExpanded = DOM.guestDropdown.classList.toggle("hidden") === false;
+        DOM.guestMenuBtn?.setAttribute("aria-expanded", String(isExpanded));
       }
     });
   }
@@ -32,7 +33,8 @@ export function initHeaderEvents(): void {
     DOM.avatarMenuBtn.addEventListener("click", (e): void => {
       e.stopPropagation();
       if (DOM.userDropdown !== null) {
-        DOM.userDropdown.classList.toggle("hidden");
+        const isExpanded = DOM.userDropdown.classList.toggle("hidden") === false;
+        DOM.avatarMenuBtn?.setAttribute("aria-expanded", String(isExpanded));
       }
     });
   }
@@ -43,12 +45,14 @@ export function initHeaderEvents(): void {
       !DOM.guestDropdown.classList.contains("hidden")
     ) {
       DOM.guestDropdown.classList.add("hidden");
+      DOM.guestMenuBtn?.setAttribute("aria-expanded", "false");
     }
     if (
       DOM.userDropdown !== null &&
       !DOM.userDropdown.classList.contains("hidden")
     ) {
       DOM.userDropdown.classList.add("hidden");
+      DOM.avatarMenuBtn?.setAttribute("aria-expanded", "false");
     }
   });
 }

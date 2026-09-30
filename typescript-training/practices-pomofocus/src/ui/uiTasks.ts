@@ -122,7 +122,15 @@ function updateTaskListSummary(): void {
 function updateSelectedTaskUI(task: Task | undefined): void {
   if (DOM.taskList !== null) {
     DOM.taskList.querySelectorAll<HTMLLIElement>(".task-item").forEach((item) => {
-      item.classList.toggle("active-task", item.dataset.taskId === selectedTaskId);
+      const isSelected = item.dataset.taskId === selectedTaskId;
+      item.classList.toggle("active-task", isSelected);
+
+      const selectButton = item.querySelector<HTMLButtonElement>(
+        ".task-select-btn",
+      );
+      if (selectButton !== null) {
+        selectButton.setAttribute("aria-pressed", String(isSelected));
+      }
     });
   }
 
@@ -158,6 +166,28 @@ function updateTaskElement(taskElement: HTMLLIElement, task: Task): void {
     taskElement.querySelector<HTMLSpanElement>(".task-pomos");
   if (taskPomosElement !== null) {
     taskPomosElement.textContent = `${task.act} / ${task.est}`;
+  }
+
+  const checkButton =
+    taskElement.querySelector<HTMLButtonElement>(".task-check-btn");
+  if (checkButton !== null) {
+    checkButton.setAttribute("aria-label", `Toggle completion for ${task.name}`);
+    checkButton.setAttribute("aria-pressed", String(task.isDone));
+  }
+
+  const editButton =
+    taskElement.querySelector<HTMLButtonElement>(".task-edit-btn");
+  if (editButton !== null) {
+    editButton.setAttribute("aria-label", `Edit task ${task.name}`);
+  }
+
+  const selectButton =
+    taskElement.querySelector<HTMLButtonElement>(".task-select-btn");
+  if (selectButton !== null) {
+    selectButton.setAttribute(
+      "aria-pressed",
+      String(task.id === selectedTaskId),
+    );
   }
 
   if (selectedTaskId === task.id && DOM.currentTaskMessage !== null) {
@@ -201,12 +231,16 @@ function createTaskElement(task: Task): HTMLLIElement | null {
     });
   }
 
-  taskElement.addEventListener("click", (): void => {
+  const selectButton =
+    taskElement.querySelector<HTMLButtonElement>(".task-select-btn");
+  if (selectButton !== null) {
+    selectButton.addEventListener("click", (): void => {
     selectedTaskId = selectedTaskId === task.id ? null : task.id;
     const selectedTask =
       selectedTaskId === null ? undefined : getTasks().find((item) => item.id === selectedTaskId);
     updateSelectedTaskUI(selectedTask);
-  });
+    });
+  }
 
   return taskElement;
 }
@@ -358,7 +392,8 @@ export function initTaskEvents(): void {
     DOM.taskDropdownBtn.addEventListener("click", (e): void => {
       e.stopPropagation();
       if (DOM.taskDropdownMenu !== null) {
-        DOM.taskDropdownMenu.classList.toggle("hidden");
+        const isExpanded = DOM.taskDropdownMenu.classList.toggle("hidden") === false;
+        DOM.taskDropdownBtn?.setAttribute("aria-expanded", String(isExpanded));
       }
     });
 
@@ -372,6 +407,7 @@ export function initTaskEvents(): void {
         !DOM.taskDropdownBtn.contains(e.target)
       ) {
         DOM.taskDropdownMenu.classList.add("hidden");
+        DOM.taskDropdownBtn.setAttribute("aria-expanded", "false");
       }
     });
   }

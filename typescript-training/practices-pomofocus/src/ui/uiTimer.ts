@@ -67,38 +67,52 @@ function switchUIMode(modeName: TimerMode): void {
 }
 
 export function initTimerEvents(): void {
+  let isCompletingSession = false;
+
   const handleSessionComplete = async (): Promise<void> => {
-    if (currentMode === "pomo") {
-      const selectedId: string | null = getSelectedTaskId();
-      if (selectedId !== null) {
-        const success: boolean = await increaseActualPomodoros(selectedId);
-        if (success) {
-          const updatedTask = getTasks().find((task) => task.id === selectedId);
-          if (updatedTask !== undefined) {
-            updateTaskDOM(selectedId, updatedTask);
+    if (isCompletingSession) return;
+    isCompletingSession = true;
+
+    try {
+      resetTimer();
+
+      if (DOM.startTimerBtn !== null) {
+        DOM.startTimerBtn.textContent = "START";
+      }
+      if (DOM.skipTimerBtn !== null) {
+        DOM.skipTimerBtn.classList.add("hidden");
+      }
+
+      if (currentMode === "pomo") {
+        const selectedId: string | null = getSelectedTaskId();
+        if (selectedId !== null) {
+          const success: boolean = await increaseActualPomodoros(selectedId);
+          if (success) {
+            const updatedTask = getTasks().find(
+              (task) => task.id === selectedId,
+            );
+            if (updatedTask !== undefined) {
+              updateTaskDOM(selectedId, updatedTask);
+            }
           }
         }
-      }
-      pomodorosCompleted++;
+        pomodorosCompleted++;
 
-      localStorage.setItem(
-        CONFIG.STORAGE.POMO_COUNT_KEY,
-        String(pomodorosCompleted),
-      );
+        localStorage.setItem(
+          CONFIG.STORAGE.POMO_COUNT_KEY,
+          String(pomodorosCompleted),
+        );
 
-      if (pomodorosCompleted % 4 === 0) {
-        switchUIMode("longBreak");
+        if (pomodorosCompleted % 4 === 0) {
+          switchUIMode("longBreak");
+        } else {
+          switchUIMode("shortBreak");
+        }
       } else {
-        switchUIMode("shortBreak");
+        switchUIMode("pomo");
       }
-    } else {
-      switchUIMode("pomo");
-    }
-    if (DOM.startTimerBtn !== null) {
-      DOM.startTimerBtn.textContent = "START";
-    }
-    if (DOM.skipTimerBtn !== null) {
-      DOM.skipTimerBtn.classList.add("hidden");
+    } finally {
+      isCompletingSession = false;
     }
   };
 
@@ -120,6 +134,8 @@ export function initTimerEvents(): void {
 
   if (DOM.startTimerBtn !== null) {
     DOM.startTimerBtn.addEventListener("click", (): void => {
+      if (isCompletingSession) return;
+
       const isNowRunning: boolean = toggleTimer();
       if (isNowRunning) {
         if (DOM.startTimerBtn !== null) {
@@ -137,21 +153,25 @@ export function initTimerEvents(): void {
   }
 
   if (DOM.pomoBtn !== null) {
-    DOM.pomoBtn.addEventListener("click", (): void => switchUIMode("pomo"));
+    DOM.pomoBtn.addEventListener("click", (): void => {
+      if (!isCompletingSession) switchUIMode("pomo");
+    });
   }
   if (DOM.shortBreakBtn !== null) {
-    DOM.shortBreakBtn.addEventListener("click", (): void =>
-      switchUIMode("shortBreak"),
-    );
+    DOM.shortBreakBtn.addEventListener("click", (): void => {
+      if (!isCompletingSession) switchUIMode("shortBreak");
+    });
   }
   if (DOM.longBreakBtn !== null) {
-    DOM.longBreakBtn.addEventListener("click", (): void =>
-      switchUIMode("longBreak"),
-    );
+    DOM.longBreakBtn.addEventListener("click", (): void => {
+      if (!isCompletingSession) switchUIMode("longBreak");
+    });
   }
 
   if (DOM.resetTimerBtn !== null) {
     DOM.resetTimerBtn.addEventListener("click", (): void => {
+      if (isCompletingSession) return;
+
       resetTimer();
       if (DOM.startTimerBtn !== null) {
         DOM.startTimerBtn.textContent = "START";

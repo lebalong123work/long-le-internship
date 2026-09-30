@@ -3,7 +3,7 @@ import { CONFIG } from "@/config";
 export interface AuthResponse {
   accessToken: string;
   user?: {
-    id: string;
+    id: string | number;
     email: string;
   };
 }
@@ -37,9 +37,10 @@ export async function loginUser(
       if (
         data.user !== undefined &&
         typeof data.user === "object" &&
-        typeof data.user.id === "string"
+        data.user !== null &&
+        (typeof data.user.id === "string" || typeof data.user.id === "number")
       ) {
-        localStorage.setItem("userId", data.user.id);
+        localStorage.setItem("userId", String(data.user.id));
       }
       return true;
     }

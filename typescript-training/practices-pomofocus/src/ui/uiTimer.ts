@@ -8,8 +8,8 @@ import {
   resetTimer,
   TimerMode,
 } from "@/logic/timerLogic";
-import { increaseActualPomodoros } from "@/logic/taskLogic";
-import { renderTasks, getSelectedTaskId } from "@/ui/uiTasks";
+import { increaseActualPomodoros, getTasks } from "@/logic/taskLogic";
+import { getSelectedTaskId, updateTaskDOM } from "@/ui/uiTasks";
 
 let currentMode: TimerMode = "pomo";
 
@@ -72,7 +72,12 @@ export function initTimerEvents(): void {
       const selectedId: string | null = getSelectedTaskId();
       if (selectedId !== null) {
         const success: boolean = await increaseActualPomodoros(selectedId);
-        if (success) renderTasks();
+        if (success) {
+          const updatedTask = getTasks().find((task) => task.id === selectedId);
+          if (updatedTask !== undefined) {
+            updateTaskDOM(selectedId, updatedTask);
+          }
+        }
       }
       pomodorosCompleted++;
 

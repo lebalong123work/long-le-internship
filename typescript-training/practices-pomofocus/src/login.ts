@@ -17,7 +17,7 @@ if (loginForm !== null) {
     }
 
     const emailVal: string = emailInput.value.trim();
-    const passwordVal: string = passwordInput.value.trim();
+    const passwordVal: string = passwordInput.value;
 
     const isSuccess: boolean = await loginUser(emailVal, passwordVal);
 

@@ -8,6 +8,31 @@ export interface AuthResponse {
   };
 }
 
+function isAuthResponse(value: unknown): value is AuthResponse {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) {
+    return false;
+  }
+
+  if (!("accessToken" in value) || typeof value.accessToken !== "string") {
+    return false;
+  }
+
+  if (!("user" in value) || value.user === undefined) {
+    return true;
+  }
+
+  const user = value.user;
+  return (
+    typeof user === "object" &&
+    user !== null &&
+    !Array.isArray(user) &&
+    "id" in user &&
+    (typeof user.id === "string" || typeof user.id === "number") &&
+    "email" in user &&
+    typeof user.email === "string"
+  );
+}
+
 export function getCurrentUserId(): string | null {
   return localStorage.getItem("userId");
 }
@@ -26,25 +51,14 @@ export async function loginUser(
     });
 
     if (!response.ok) return false;
+    const data: unknown = await response.json();
+    if (!isAuthResponse(data)) return false;
 
-    const data = (await response.json()) as AuthResponse;
-    if (
-      data !== null &&
-      typeof data === "object" &&
-      typeof data.accessToken === "string"
-    ) {
-      localStorage.setItem("accessToken", data.accessToken);
-      if (
-        data.user !== undefined &&
-        typeof data.user === "object" &&
-        data.user !== null &&
-        (typeof data.user.id === "string" || typeof data.user.id === "number")
-      ) {
-        localStorage.setItem("userId", String(data.user.id));
-      }
-      return true;
+    localStorage.setItem("accessToken", data.accessToken);
+    if (data.user !== undefined) {
+      localStorage.setItem("userId", String(data.user.id));
     }
-    return false;
+    return true;
   } catch (error: unknown) {
     console.error("Error logging in:", error);
     return false;

@@ -1,7 +1,7 @@
 import { DOM } from "@/ui/dom";
 import { getCurrentUserId, logoutUser } from "@/logic/authLogic";
 
-export function initHeaderEvents(): void {
+export const initHeaderEvents = (): void => {
   const userId: string | null = getCurrentUserId();
 
   if (userId !== null) {
@@ -55,4 +55,4 @@ export function initHeaderEvents(): void {
       DOM.avatarMenuBtn?.setAttribute("aria-expanded", "false");
     }
   });
-}
+};

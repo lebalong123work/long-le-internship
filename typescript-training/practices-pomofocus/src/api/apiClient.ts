@@ -3,10 +3,10 @@ export interface ApiRequestOptions extends RequestInit {
   headers?: Record<string, string>;
 }
 
-export async function fetchAPI(
+export const fetchAPI = async (
   endpoint: string,
   options: ApiRequestOptions = {},
-): Promise<unknown> {
+): Promise<unknown> => {
   const url: string = `${CONFIG.API.BASE_URL}${endpoint}`;
   const token: string | null = localStorage.getItem("accessToken");
 
@@ -27,6 +27,7 @@ export async function fetchAPI(
   if (options.method === "DELETE") {
     return response.ok;
   }
+
   const responseData: unknown = await response.json();
   return responseData;
-}
+};

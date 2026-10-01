@@ -13,7 +13,7 @@ import { getSelectedTaskId, updateTaskDOM } from "@/ui/uiTasks";
 
 let currentMode: TimerMode = "pomo";
 
-function getSavedPomoCount(): number {
+const getSavedPomoCount = (): number => {
   const saved: string | null = localStorage.getItem(
     CONFIG.STORAGE.POMO_COUNT_KEY,
   );
@@ -27,17 +27,17 @@ function getSavedPomoCount(): number {
   }
 
   return parsed;
-}
+};
 
 let pomodorosCompleted: number = getSavedPomoCount();
 
-export function updatePomodoroCountUI(): void {
+export const updatePomodoroCountUI = (): void => {
   if (DOM.currentTaskNumber === null) return;
   const currentCycle = (pomodorosCompleted % 4) + 1;
   DOM.currentTaskNumber.textContent = `#${currentCycle}`;
-}
+};
 
-function switchUIMode(modeName: TimerMode): void {
+const switchUIMode = (modeName: TimerMode): void => {
   currentMode = modeName;
 
   setMode(modeName);
@@ -64,9 +64,9 @@ function switchUIMode(modeName: TimerMode): void {
     }
     document.body.classList.add("theme-long-break");
   }
-}
+};
 
-export function initTimerEvents(): void {
+export const initTimerEvents = (): void => {
   let isCompletingSession = false;
 
   const handleSessionComplete = async (): Promise<void> => {
@@ -186,4 +186,4 @@ export function initTimerEvents(): void {
   if (DOM.currentTaskMessage !== null) {
     DOM.currentTaskMessage.textContent = "Time to focus!";
   }
-}
+};

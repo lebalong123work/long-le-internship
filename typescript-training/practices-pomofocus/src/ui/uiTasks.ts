@@ -14,7 +14,7 @@ import { withButtonLoading } from "@/ui/uiButtonState";
 
 let editingTaskId: string | null = null;
 
-export function hideTaskForm(): void {
+export const hideTaskForm = (): void => {
   if (DOM.actionGroup !== null && DOM.taskFormContainer !== null) {
     DOM.actionGroup.after(DOM.taskFormContainer);
     DOM.taskFormContainer.classList.add("hidden");
@@ -23,9 +23,9 @@ export function hideTaskForm(): void {
   document.querySelectorAll(".task-item").forEach((item) => {
     item.classList.remove("hidden");
   });
-}
+};
 
-export function openAddTaskForm(): void {
+export const openAddTaskForm = (): void => {
   hideTaskForm();
 
   editingTaskId = null;
@@ -56,9 +56,12 @@ export function openAddTaskForm(): void {
   if (DOM.taskNameInput !== null) {
     DOM.taskNameInput.focus();
   }
-}
+};
 
-export function openEditTaskForm(task: Task, liElement: HTMLLIElement): void {
+export const openEditTaskForm = (
+  task: Task,
+  liElement: HTMLLIElement,
+): void => {
   hideTaskForm();
 
   editingTaskId = task.id;
@@ -91,15 +94,15 @@ export function openEditTaskForm(task: Task, liElement: HTMLLIElement): void {
   if (DOM.taskNameInput !== null) {
     DOM.taskNameInput.focus();
   }
-}
+};
 
 let selectedTaskId: string | null = null;
 
-export function getSelectedTaskId(): string | null {
+export const getSelectedTaskId = (): string | null => {
   return selectedTaskId;
-}
+};
 
-export function updateSummaryUI(): void {
+export const updateSummaryUI = (): void => {
   const data: SummaryData = getSummaryData();
   if (DOM.actCount !== null) {
     DOM.actCount.textContent = String(data.totalAct);
@@ -110,16 +113,16 @@ export function updateSummaryUI(): void {
   if (DOM.finishTime !== null) {
     DOM.finishTime.textContent = data.finishAt || "--:--";
   }
-}
+};
 
-function updateTaskListSummary(): void {
+const updateTaskListSummary = (): void => {
   if (DOM.summaryBoard !== null) {
     DOM.summaryBoard.classList.toggle("hidden", getTasks().length === 0);
   }
   updateSummaryUI();
-}
+};
 
-function updateSelectedTaskUI(task: Task | undefined): void {
+const updateSelectedTaskUI = (task: Task | undefined): void => {
   if (DOM.taskList !== null) {
     DOM.taskList.querySelectorAll<HTMLLIElement>(".task-item").forEach((item) => {
       const isSelected = item.dataset.taskId === selectedTaskId;
@@ -137,9 +140,9 @@ function updateSelectedTaskUI(task: Task | undefined): void {
   if (DOM.currentTaskMessage !== null) {
     DOM.currentTaskMessage.textContent = task?.name ?? "Time to focus!";
   }
-}
+};
 
-function findTaskElement(taskId: string): HTMLLIElement | null {
+const findTaskElement = (taskId: string): HTMLLIElement | null => {
   if (DOM.taskList === null) return null;
 
   for (const taskElement of DOM.taskList.querySelectorAll<HTMLLIElement>(
@@ -151,9 +154,12 @@ function findTaskElement(taskId: string): HTMLLIElement | null {
   }
 
   return null;
-}
+};
 
-function updateTaskElement(taskElement: HTMLLIElement, task: Task): void {
+const updateTaskElement = (
+  taskElement: HTMLLIElement,
+  task: Task,
+): void => {
   taskElement.classList.toggle("task-done", task.isDone);
   taskElement.classList.toggle("active-task", task.id === selectedTaskId);
 
@@ -193,9 +199,9 @@ function updateTaskElement(taskElement: HTMLLIElement, task: Task): void {
   if (selectedTaskId === task.id && DOM.currentTaskMessage !== null) {
     DOM.currentTaskMessage.textContent = task.name;
   }
-}
+};
 
-function createTaskElement(task: Task): HTMLLIElement | null {
+const createTaskElement = (task: Task): HTMLLIElement | null => {
   if (DOM.taskTemplate === null) return null;
 
   const clone = DOM.taskTemplate.content.cloneNode(true);
@@ -243,9 +249,9 @@ function createTaskElement(task: Task): HTMLLIElement | null {
   }
 
   return taskElement;
-}
+};
 
-export function appendTaskToDOM(task: Task): void {
+export const appendTaskToDOM = (task: Task): void => {
   if (DOM.taskList === null) return;
 
   const existingTaskElement = findTaskElement(task.id);
@@ -260,17 +266,20 @@ export function appendTaskToDOM(task: Task): void {
     DOM.taskList.appendChild(taskElement);
     updateTaskListSummary();
   }
-}
+};
 
-export function updateTaskDOM(taskId: string, updatedTask: Task): void {
+export const updateTaskDOM = (
+  taskId: string,
+  updatedTask: Task,
+): void => {
   const taskElement = findTaskElement(taskId);
   if (taskElement === null) return;
 
   updateTaskElement(taskElement, updatedTask);
   updateSummaryUI();
-}
+};
 
-export function removeTaskDOM(taskId: string): void {
+export const removeTaskDOM = (taskId: string): void => {
   const taskElement = findTaskElement(taskId);
   if (taskElement !== null) {
     taskElement.remove();
@@ -282,9 +291,9 @@ export function removeTaskDOM(taskId: string): void {
   }
 
   updateTaskListSummary();
-}
+};
 
-export function renderTasks(): void {
+export const renderTasks = (): void => {
   if (DOM.taskList === null) return;
 
   const currentTasks: Task[] = getTasks();
@@ -305,9 +314,9 @@ export function renderTasks(): void {
     currentTasks.find((task) => task.id === selectedTaskId),
   );
   updateTaskListSummary();
-}
+};
 
-export function initTaskEvents(): void {
+export const initTaskEvents = (): void => {
   if (DOM.showTaskFormBtn !== null) {
     DOM.showTaskFormBtn.addEventListener("click", openAddTaskForm);
   }
@@ -434,4 +443,4 @@ export function initTaskEvents(): void {
       }
     });
   }
-}
+};

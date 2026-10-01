@@ -2,7 +2,7 @@ import { CONFIG } from "@/config";
 
 export type ToastType = "error" | "success" | "warning";
 
-function getToastContainer(): HTMLElement {
+const getToastContainer = (): HTMLElement => {
   let container: HTMLElement | null =
     document.getElementById("toast-container");
   if (container === null) {
@@ -11,9 +11,12 @@ function getToastContainer(): HTMLElement {
     document.body.appendChild(container);
   }
   return container;
-}
+};
 
-export function showToast(message: string, type: ToastType = "error"): void {
+export const showToast = (
+  message: string,
+  type: ToastType = "error",
+): void => {
   const container: HTMLElement = getToastContainer();
   const toast: HTMLDivElement = document.createElement("div");
 
@@ -23,4 +26,4 @@ export function showToast(message: string, type: ToastType = "error"): void {
   setTimeout(() => {
     toast.remove();
   }, CONFIG.UI.TOAST_DURATION);
-}
+};

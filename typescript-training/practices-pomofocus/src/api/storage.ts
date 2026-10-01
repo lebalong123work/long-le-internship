@@ -4,7 +4,7 @@ import { LocalDB } from "@/api/localDB";
 import { isTask, isTaskArray } from "@/api/validation";
 import type { Task } from "@/logic/taskLogic";
 
-export async function fetchTasks(): Promise<Task[]> {
+export const fetchTasks = async (): Promise<Task[]> => {
   try {
     const userId: string | null = getCurrentUserId();
     if (userId !== null) {
@@ -22,9 +22,9 @@ export async function fetchTasks(): Promise<Task[]> {
       { cause: error },
     );
   }
-}
+};
 
-export async function createTask(newTask: Task): Promise<Task> {
+export const createTask = async (newTask: Task): Promise<Task> => {
   try {
     const userId: string | null = getCurrentUserId();
     if (userId !== null) {
@@ -47,9 +47,9 @@ export async function createTask(newTask: Task): Promise<Task> {
   } catch (error: unknown) {
     throw new Error("Unable to save task", { cause: error });
   }
-}
+};
 
-export async function removeTask(taskId: string): Promise<boolean> {
+export const removeTask = async (taskId: string): Promise<boolean> => {
   try {
     const userId: string | null = getCurrentUserId();
     if (userId !== null) {
@@ -69,12 +69,12 @@ export async function removeTask(taskId: string): Promise<boolean> {
   } catch (error: unknown) {
     throw new Error("Unable to delete task", { cause: error });
   }
-}
+};
 
-export async function updateTask(
+export const updateTask = async (
   taskId: string,
   updatedTask: Partial<Task>,
-): Promise<Task | null> {
+): Promise<Task | null> => {
   try {
     const userId: string | null = getCurrentUserId();
     if (userId !== null) {
@@ -100,4 +100,4 @@ export async function updateTask(
   } catch (error: unknown) {
     throw new Error("Unable to update task", { cause: error });
   }
-}
+};

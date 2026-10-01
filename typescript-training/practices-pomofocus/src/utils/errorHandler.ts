@@ -1,6 +1,6 @@
 import { showToast } from "@/ui/uiToast";
 
-function getRejectionMessage(reason: unknown): string {
+const getRejectionMessage = (reason: unknown): string => {
   const fallbackMessage = "A system error occurred";
   const seenErrors = new Set<Error>();
   let rootReason = reason;
@@ -35,9 +35,9 @@ function getRejectionMessage(reason: unknown): string {
   }
 
   return fallbackMessage;
-}
+};
 
-export function initGlobalErrorHandler(): void {
+export const initGlobalErrorHandler = (): void => {
   window.addEventListener(
     "unhandledrejection",
     (event: PromiseRejectionEvent) => {
@@ -47,4 +47,4 @@ export function initGlobalErrorHandler(): void {
       showToast(uiMessage, "error");
     },
   );
-}
+};

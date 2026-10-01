@@ -18,14 +18,15 @@ export interface SummaryData {
 
 let tasks: Task[] = [];
 
-export async function initTasksData() {
+// Module arrow functions initialize in order before imported callers can invoke them.
+export const initTasksData = async () => {
   const apiData = await fetchTasks();
 
   tasks = apiData;
   return true;
-}
+};
 
-function getTaskIndexById(id: string): number {
+const getTaskIndexById = (id: string): number => {
   if (typeof id !== "string" || id.trim() === "") {
     return -1;
   }
@@ -36,11 +37,11 @@ function getTaskIndexById(id: string): number {
   }
 
   return taskIndex;
-}
+};
 
-function parsePomodoro(
+const parsePomodoro = (
   value: string | number | undefined | null,
-): number | null {
+): number | null => {
   if (value === undefined || value === "" || value === null) {
     return null;
   }
@@ -54,14 +55,17 @@ function parsePomodoro(
   finalVal = Math.floor(finalVal);
 
   return finalVal;
-}
+};
 
-export function getTasks() {
+export const getTasks = () => {
   return tasks;
-}
+};
 
 // Logic: Add a new task
-export async function addTask(taskName: string, estPomodoros: string | number) {
+export const addTask = async (
+  taskName: string,
+  estPomodoros: string | number,
+) => {
   if (typeof taskName !== "string" || taskName.trim() === "") {
     return null;
   }
@@ -88,15 +92,15 @@ export async function addTask(taskName: string, estPomodoros: string | number) {
   } else {
     return null;
   }
-}
+};
 
 // Logic: Edit Task
-export async function editTask(
+export const editTask = async (
   id: string,
   newName: string,
   newAct: string | number,
   newEst: string | number,
-): Promise<boolean> {
+): Promise<boolean> => {
   const taskIndex = getTaskIndexById(id);
   if (taskIndex === -1) return false;
   const task = tasks[taskIndex];
@@ -125,10 +129,10 @@ export async function editTask(
   Object.assign(task, draftUpdatedTask);
 
   return true;
-}
+};
 
 // Logic: Delete a Task
-export async function deleteTask(id: string): Promise<boolean> {
+export const deleteTask = async (id: string): Promise<boolean> => {
   const taskIndex = getTaskIndexById(id);
   if (taskIndex === -1) return false;
 
@@ -139,10 +143,10 @@ export async function deleteTask(id: string): Promise<boolean> {
   } else {
     return false;
   }
-}
+};
 
 // Logic: Toggle Task Done Status
-export async function toggleTaskDone(id: string): Promise<boolean> {
+export const toggleTaskDone = async (id: string): Promise<boolean> => {
   const taskIndex = getTaskIndexById(id);
   if (taskIndex === -1) return false;
 
@@ -159,10 +163,10 @@ export async function toggleTaskDone(id: string): Promise<boolean> {
   } else {
     return false;
   }
-}
+};
 
 // Logic: Delete All Tasks
-export async function deleteAllTasks(): Promise<boolean> {
+export const deleteAllTasks = async (): Promise<boolean> => {
   if (tasks.length === 0) {
     return false;
   }
@@ -179,9 +183,9 @@ export async function deleteAllTasks(): Promise<boolean> {
     await initTasksData();
     return false;
   }
-}
+};
 
-function calculateTotals() {
+const calculateTotals = () => {
   const activeTasks = tasks.filter((task) => !task.isDone);
 
   const totals = activeTasks.reduce(
@@ -200,9 +204,9 @@ function calculateTotals() {
   );
 
   return totals;
-}
+};
 
-export function getSummaryData(): SummaryData {
+export const getSummaryData = (): SummaryData => {
   const totals = calculateTotals();
   const finishAtString = calculateFinishTime(totals.remainingPomos);
 
@@ -212,9 +216,11 @@ export function getSummaryData(): SummaryData {
     finishAt: finishAtString,
   };
   return data;
-}
+};
 
-export async function increaseActualPomodoros(id: string): Promise<boolean> {
+export const increaseActualPomodoros = async (
+  id: string,
+): Promise<boolean> => {
   const taskIndex = getTaskIndexById(id);
   if (taskIndex === -1) {
     return false;
@@ -233,4 +239,4 @@ export async function increaseActualPomodoros(id: string): Promise<boolean> {
   } else {
     return false;
   }
-}
+};

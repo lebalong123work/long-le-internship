@@ -16,15 +16,15 @@ let expectedEndTime: number | null = null;
 let onTickCallback: TickCallback | null = null;
 let onCompleteCallback: CompleteCallback | null = null;
 
-export function setTimerCallback(callback: TickCallback): void {
+export const setTimerCallback = (callback: TickCallback): void => {
   onTickCallback = callback;
-}
+};
 
-export function setTimerCompleteCallback(callback: CompleteCallback): void {
+export const setTimerCompleteCallback = (callback: CompleteCallback): void => {
   onCompleteCallback = callback;
-}
+};
 
-export function toggleTimer(): boolean {
+export const toggleTimer = (): boolean => {
   if (isRunning) {
     if (timerId !== null) {
       clearInterval(timerId);
@@ -66,9 +66,9 @@ export function toggleTimer(): boolean {
   }
 
   return isRunning;
-}
+};
 
-export function setMode(modeName: TimerMode): void {
+export const setMode = (modeName: TimerMode): void => {
   if (timerId !== null) {
     clearInterval(timerId);
     timerId = null;
@@ -89,9 +89,9 @@ export function setMode(modeName: TimerMode): void {
   if (onTickCallback !== null) {
     onTickCallback(formatTime(timeLeft));
   }
-}
+};
 
-export function resetTimer(): void {
+export const resetTimer = (): void => {
   if (timerId !== null) {
     clearInterval(timerId);
     timerId = null;
@@ -103,4 +103,4 @@ export function resetTimer(): void {
   if (onTickCallback !== null) {
     onTickCallback(formatTime(timeLeft));
   }
-}
+};

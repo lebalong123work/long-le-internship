@@ -8,7 +8,7 @@ export interface AuthResponse {
   };
 }
 
-function isAuthResponse(value: unknown): value is AuthResponse {
+const isAuthResponse = (value: unknown): value is AuthResponse => {
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
     return false;
   }
@@ -31,16 +31,16 @@ function isAuthResponse(value: unknown): value is AuthResponse {
     "email" in user &&
     typeof user.email === "string"
   );
-}
+};
 
-export function getCurrentUserId(): string | null {
+export const getCurrentUserId = (): string | null => {
   return localStorage.getItem("userId");
-}
+};
 
-export async function loginUser(
+export const loginUser = async (
   email: string,
   password: string,
-): Promise<boolean> {
+): Promise<boolean> => {
   try {
     const response = await fetch(`${CONFIG.API.BASE_URL}/login`, {
       method: "POST",
@@ -63,9 +63,9 @@ export async function loginUser(
     console.error("Error logging in:", error);
     return false;
   }
-}
+};
 
-export function logoutUser(): void {
+export const logoutUser = (): void => {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("userId");
-}
+};

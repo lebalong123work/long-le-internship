@@ -10,9 +10,7 @@ export const fetchAPI = async (
   const url: string = `${CONFIG.API.BASE_URL}${endpoint}`;
   const token: string | null = localStorage.getItem("accessToken");
 
-  if (!options.headers) {
-    options.headers = {};
-  }
+  options.headers = options.headers ?? {};
 
   if (token) {
     options.headers["Authorization"] = `Bearer ${token}`;

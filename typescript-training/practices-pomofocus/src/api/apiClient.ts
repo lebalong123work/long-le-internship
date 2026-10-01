@@ -3,16 +3,14 @@ export interface ApiRequestOptions extends RequestInit {
   headers?: Record<string, string>;
 }
 
-export async function fetchAPI<T>(
+export const fetchAPI = async (
   endpoint: string,
   options: ApiRequestOptions = {},
-): Promise<T | boolean> {
+): Promise<unknown> => {
   const url: string = `${CONFIG.API.BASE_URL}${endpoint}`;
   const token: string | null = localStorage.getItem("accessToken");
 
-  if (!options.headers) {
-    options.headers = {};
-  }
+  options.headers = options.headers ?? {};
 
   if (token) {
     options.headers["Authorization"] = `Bearer ${token}`;
@@ -28,5 +26,6 @@ export async function fetchAPI<T>(
     return response.ok;
   }
 
-  return (await response.json()) as T;
-}
+  const responseData: unknown = await response.json();
+  return responseData;
+};

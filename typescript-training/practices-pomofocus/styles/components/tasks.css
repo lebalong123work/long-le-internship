@@ -89,7 +89,6 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-left: 6px solid transparent;
   font-weight: bold;
-  cursor: pointer;
 }
 .task-item:not(.task-done):not(.active-task):hover {
   border-left-color: var(--border-hover-gray);
@@ -111,6 +110,20 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+.task-select-btn {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  background: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-align: left;
+  cursor: pointer;
 }
 .task-right {
   display: flex;

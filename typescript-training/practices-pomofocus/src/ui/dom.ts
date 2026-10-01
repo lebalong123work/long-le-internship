@@ -1,24 +1,24 @@
-function getSafeElement<T extends HTMLElement>(
+const getSafeElement = <T extends HTMLElement>(
   id: string,
   expectedClass: new () => T,
-): T | null {
+): T | null => {
   const element = document.getElementById(id);
   if (element instanceof expectedClass) {
     return element;
   }
   return null;
-}
+};
 
-function querySafeElement<T extends HTMLElement>(
+const querySafeElement = <T extends HTMLElement>(
   selector: string,
   expectedClass: new () => T,
-): T | null {
+): T | null => {
   const element = document.querySelector(selector);
   if (element instanceof expectedClass) {
     return element;
   }
   return null;
-}
+};
 
 export const DOM = {
   //HEADER & AUTH

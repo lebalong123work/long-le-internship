@@ -7,7 +7,7 @@ export const CONFIG = {
     POMO_COUNT_KEY: "pomo_count",
   },
   TIMER: {
-    POMO: 25,
+    POMO: 0.1,
     SHORT_BREAK: 5,
     LONG_BREAK: 15,
   },

@@ -124,17 +124,18 @@ const updateTaskListSummary = (): void => {
 
 const updateSelectedTaskUI = (task: Task | undefined): void => {
   if (DOM.taskList !== null) {
-    DOM.taskList.querySelectorAll<HTMLLIElement>(".task-item").forEach((item) => {
-      const isSelected = item.dataset.taskId === selectedTaskId;
-      item.classList.toggle("active-task", isSelected);
+    DOM.taskList
+      .querySelectorAll<HTMLLIElement>(".task-item")
+      .forEach((item) => {
+        const isSelected = item.dataset.taskId === selectedTaskId;
+        item.classList.toggle("active-task", isSelected);
 
-      const selectButton = item.querySelector<HTMLButtonElement>(
-        ".task-select-btn",
-      );
-      if (selectButton !== null) {
-        selectButton.setAttribute("aria-pressed", String(isSelected));
-      }
-    });
+        const selectButton =
+          item.querySelector<HTMLButtonElement>(".task-select-btn");
+        if (selectButton !== null) {
+          selectButton.setAttribute("aria-pressed", String(isSelected));
+        }
+      });
   }
 
   if (DOM.currentTaskMessage !== null) {
@@ -156,14 +157,12 @@ const findTaskElement = (taskId: string): HTMLLIElement | null => {
   return null;
 };
 
-const updateTaskElement = (
-  taskElement: HTMLLIElement,
-  task: Task,
-): void => {
+const updateTaskElement = (taskElement: HTMLLIElement, task: Task): void => {
   taskElement.classList.toggle("task-done", task.isDone);
   taskElement.classList.toggle("active-task", task.id === selectedTaskId);
 
-  const taskNameElement = taskElement.querySelector<HTMLSpanElement>(".task-name");
+  const taskNameElement =
+    taskElement.querySelector<HTMLSpanElement>(".task-name");
   if (taskNameElement !== null) {
     taskNameElement.textContent = task.name;
   }
@@ -177,7 +176,10 @@ const updateTaskElement = (
   const checkButton =
     taskElement.querySelector<HTMLButtonElement>(".task-check-btn");
   if (checkButton !== null) {
-    checkButton.setAttribute("aria-label", `Toggle completion for ${task.name}`);
+    checkButton.setAttribute(
+      "aria-label",
+      `Toggle completion for ${task.name}`,
+    );
     checkButton.setAttribute("aria-pressed", String(task.isDone));
   }
 
@@ -221,7 +223,9 @@ const createTaskElement = (task: Task): HTMLLIElement | null => {
       const success = await toggleTaskDone(task.id);
       if (!success) return;
 
-      const updatedTask = getTasks().find((currentTask) => currentTask.id === task.id);
+      const updatedTask = getTasks().find(
+        (currentTask) => currentTask.id === task.id,
+      );
       if (updatedTask !== undefined) {
         updateTaskDOM(task.id, updatedTask);
       }
@@ -241,10 +245,12 @@ const createTaskElement = (task: Task): HTMLLIElement | null => {
     taskElement.querySelector<HTMLButtonElement>(".task-select-btn");
   if (selectButton !== null) {
     selectButton.addEventListener("click", (): void => {
-    selectedTaskId = selectedTaskId === task.id ? null : task.id;
-    const selectedTask =
-      selectedTaskId === null ? undefined : getTasks().find((item) => item.id === selectedTaskId);
-    updateSelectedTaskUI(selectedTask);
+      selectedTaskId = selectedTaskId === task.id ? null : task.id;
+      const selectedTask =
+        selectedTaskId === null
+          ? undefined
+          : getTasks().find((item) => item.id === selectedTaskId);
+      updateSelectedTaskUI(selectedTask);
     });
   }
 
@@ -268,10 +274,7 @@ export const appendTaskToDOM = (task: Task): void => {
   }
 };
 
-export const updateTaskDOM = (
-  taskId: string,
-  updatedTask: Task,
-): void => {
+export const updateTaskDOM = (taskId: string, updatedTask: Task): void => {
   const taskElement = findTaskElement(taskId);
   if (taskElement === null) return;
 
@@ -310,10 +313,64 @@ export const renderTasks = (): void => {
   }
 
   DOM.taskList.replaceChildren(fragment);
-  updateSelectedTaskUI(
-    currentTasks.find((task) => task.id === selectedTaskId),
-  );
+  updateSelectedTaskUI(currentTasks.find((task) => task.id === selectedTaskId));
   updateTaskListSummary();
+};
+
+const handleEditTaskSubmit = async (
+  taskId: string,
+  nameVal: string,
+  actVal: string,
+  estVal: string,
+): Promise<void> => {
+  const success: boolean = await editTask(taskId, nameVal, actVal, estVal);
+  if (success) {
+    hideTaskForm();
+    const updatedTask = getTasks().find((task) => task.id === taskId);
+    if (updatedTask !== undefined) {
+      updateTaskDOM(taskId, updatedTask);
+    }
+  }
+};
+
+const handleAddTaskSubmit = async (
+  nameVal: string,
+  estVal: string,
+): Promise<void> => {
+  const newTask: Task | null = await addTask(nameVal, estVal);
+  if (newTask !== null) {
+    if (DOM.taskNameInput !== null) {
+      DOM.taskNameInput.value = "";
+    }
+    if (DOM.estPomodorosInput !== null) {
+      DOM.estPomodorosInput.value = "1";
+    }
+    if (DOM.taskNameInput !== null) {
+      DOM.taskNameInput.focus();
+    }
+    appendTaskToDOM(newTask);
+  }
+};
+
+const handleDeleteAllTasksEvent = async (): Promise<void> => {
+  if (confirm("Are you sure you want to delete all tasks?")) {
+    const taskIds = getTasks().map((task) => task.id);
+    const success: boolean = await deleteAllTasks();
+    if (success) {
+      if (editingTaskId !== null) {
+        editingTaskId = null;
+        hideTaskForm();
+      }
+      for (const taskId of taskIds) {
+        removeTaskDOM(taskId);
+      }
+      selectedTaskId = null;
+      updateSelectedTaskUI(undefined);
+      if (DOM.taskDropdownMenu !== null) {
+        DOM.taskDropdownMenu.classList.add("hidden");
+      }
+    }
+  }
 };
 
 export const initTaskEvents = (): void => {
@@ -340,41 +397,20 @@ export const initTaskEvents = (): void => {
         const nameVal: string = DOM.taskNameInput.value;
         const estVal: string = DOM.estPomodorosInput.value;
         const actVal: string = DOM.actPomodorosInput.value;
+        const currentEditingId = editingTaskId;
 
         await withButtonLoading(
           "saveTaskBtn",
           async (): Promise<void> => {
-            if (editingTaskId !== null) {
-              const taskId = editingTaskId;
-              const success: boolean = await editTask(
-                taskId,
+            if (currentEditingId !== null) {
+              await handleEditTaskSubmit(
+                currentEditingId,
                 nameVal,
                 actVal,
                 estVal,
               );
-              if (success) {
-                hideTaskForm();
-                const updatedTask = getTasks().find(
-                  (task) => task.id === taskId,
-                );
-                if (updatedTask !== undefined) {
-                  updateTaskDOM(taskId, updatedTask);
-                }
-              }
             } else {
-              const newTask: Task | null = await addTask(nameVal, estVal);
-              if (newTask !== null) {
-                if (DOM.taskNameInput !== null) {
-                  DOM.taskNameInput.value = "";
-                }
-                if (DOM.estPomodorosInput !== null) {
-                  DOM.estPomodorosInput.value = "1";
-                }
-                if (DOM.taskNameInput !== null) {
-                  DOM.taskNameInput.focus();
-                }
-                appendTaskToDOM(newTask);
-              }
+              await handleAddTaskSubmit(nameVal, estVal);
             }
           },
           "Saving...",
@@ -401,7 +437,8 @@ export const initTaskEvents = (): void => {
     DOM.taskDropdownBtn.addEventListener("click", (e): void => {
       e.stopPropagation();
       if (DOM.taskDropdownMenu !== null) {
-        const isExpanded = DOM.taskDropdownMenu.classList.toggle("hidden") === false;
+        const isExpanded =
+          DOM.taskDropdownMenu.classList.toggle("hidden") === false;
         DOM.taskDropdownBtn?.setAttribute("aria-expanded", String(isExpanded));
       }
     });
@@ -422,25 +459,6 @@ export const initTaskEvents = (): void => {
   }
 
   if (DOM.deleteAllBtn !== null) {
-    DOM.deleteAllBtn.addEventListener("click", async (): Promise<void> => {
-      if (confirm("Are you sure you want to delete all tasks?")) {
-        const taskIds = getTasks().map((task) => task.id);
-        const success: boolean = await deleteAllTasks();
-        if (success) {
-          if (editingTaskId !== null) {
-            editingTaskId = null;
-            hideTaskForm();
-          }
-          for (const taskId of taskIds) {
-            removeTaskDOM(taskId);
-          }
-          selectedTaskId = null;
-          updateSelectedTaskUI(undefined);
-          if (DOM.taskDropdownMenu !== null) {
-            DOM.taskDropdownMenu.classList.add("hidden");
-          }
-        }
-      }
-    });
+    DOM.deleteAllBtn.addEventListener("click", handleDeleteAllTasksEvent);
   }
 };

@@ -13,7 +13,7 @@ import { getSelectedTaskId, updateTaskDOM } from "@/ui/uiTasks";
 
 let currentMode: TimerMode = "pomo";
 
-const getSavedPomoCount = (): number => {
+function getSavedPomoCount(): number {
   const saved: string | null = localStorage.getItem(
     CONFIG.STORAGE.POMO_COUNT_KEY,
   );
@@ -27,17 +27,17 @@ const getSavedPomoCount = (): number => {
   }
 
   return parsed;
-};
+}
 
 let pomodorosCompleted: number = getSavedPomoCount();
 
-export const updatePomodoroCountUI = (): void => {
+export function updatePomodoroCountUI(): void {
   if (DOM.currentTaskNumber === null) return;
   const currentCycle = (pomodorosCompleted % 4) + 1;
   DOM.currentTaskNumber.textContent = `#${currentCycle}`;
-};
+}
 
-const switchUIMode = (modeName: TimerMode): void => {
+function switchUIMode(modeName: TimerMode): void {
   currentMode = modeName;
 
   setMode(modeName);
@@ -64,6 +64,20 @@ const switchUIMode = (modeName: TimerMode): void => {
     }
     document.body.classList.add("theme-long-break");
   }
+}
+
+const updateTaskProgress = async (): Promise<void> => {
+  const selectedId: string | null = getSelectedTaskId();
+
+  if (selectedId !== null) {
+    const success: boolean = await increaseActualPomodoros(selectedId);
+    if (success) {
+      const updatedTask = getTasks().find((task) => task.id === selectedId);
+      if (updatedTask !== undefined) {
+        updateTaskDOM(selectedId, updatedTask);
+      }
+    }
+  }
 };
 
 export const initTimerEvents = (): void => {
@@ -84,20 +98,9 @@ export const initTimerEvents = (): void => {
       }
 
       if (currentMode === "pomo") {
-        const selectedId: string | null = getSelectedTaskId();
-        if (selectedId !== null) {
-          const success: boolean = await increaseActualPomodoros(selectedId);
-          if (success) {
-            const updatedTask = getTasks().find(
-              (task) => task.id === selectedId,
-            );
-            if (updatedTask !== undefined) {
-              updateTaskDOM(selectedId, updatedTask);
-            }
-          }
-        }
-        pomodorosCompleted++;
+        await updateTaskProgress();
 
+        pomodorosCompleted++;
         localStorage.setItem(
           CONFIG.STORAGE.POMO_COUNT_KEY,
           String(pomodorosCompleted),
@@ -137,17 +140,13 @@ export const initTimerEvents = (): void => {
       if (isCompletingSession) return;
 
       const isNowRunning: boolean = toggleTimer();
+
       if (isNowRunning) {
-        if (DOM.startTimerBtn !== null) {
-          DOM.startTimerBtn.textContent = "PAUSE";
-        }
-        if (DOM.skipTimerBtn !== null) {
+        if (DOM.startTimerBtn !== null) DOM.startTimerBtn.textContent = "PAUSE";
+        if (DOM.skipTimerBtn !== null)
           DOM.skipTimerBtn.classList.remove("hidden");
-        }
-      } else {
-        if (DOM.startTimerBtn !== null) {
-          DOM.startTimerBtn.textContent = "START";
-        }
+      } else if (DOM.startTimerBtn !== null) {
+        DOM.startTimerBtn.textContent = "START";
       }
     });
   }

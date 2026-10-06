@@ -8,8 +8,8 @@ import {
   resetTimer,
   TimerMode,
 } from "@/logic/timerLogic";
-import { increaseActualPomodoros } from "@/logic/taskLogic";
-import { renderTasks, getSelectedTaskId } from "@/ui/uiTasks";
+import { increaseActualPomodoros, getTasks } from "@/logic/taskLogic";
+import { getSelectedTaskId, updateTaskDOM } from "@/ui/uiTasks";
 
 let currentMode: TimerMode = "pomo";
 
@@ -66,34 +66,56 @@ function switchUIMode(modeName: TimerMode): void {
   }
 }
 
-export function initTimerEvents(): void {
+const updateTaskProgress = async (): Promise<void> => {
+  const selectedId: string | null = getSelectedTaskId();
+
+  if (selectedId !== null) {
+    const success: boolean = await increaseActualPomodoros(selectedId);
+    if (success) {
+      const updatedTask = getTasks().find((task) => task.id === selectedId);
+      if (updatedTask !== undefined) {
+        updateTaskDOM(selectedId, updatedTask);
+      }
+    }
+  }
+};
+
+export const initTimerEvents = (): void => {
+  let isCompletingSession = false;
+
   const handleSessionComplete = async (): Promise<void> => {
-    if (currentMode === "pomo") {
-      const selectedId: string | null = getSelectedTaskId();
-      if (selectedId !== null) {
-        const success: boolean = await increaseActualPomodoros(selectedId);
-        if (success) renderTasks();
+    if (isCompletingSession) return;
+    isCompletingSession = true;
+
+    try {
+      resetTimer();
+
+      if (DOM.startTimerBtn !== null) {
+        DOM.startTimerBtn.textContent = "START";
       }
-      pomodorosCompleted++;
+      if (DOM.skipTimerBtn !== null) {
+        DOM.skipTimerBtn.classList.add("hidden");
+      }
 
-      localStorage.setItem(
-        CONFIG.STORAGE.POMO_COUNT_KEY,
-        String(pomodorosCompleted),
-      );
+      if (currentMode === "pomo") {
+        await updateTaskProgress();
 
-      if (pomodorosCompleted % 4 === 0) {
-        switchUIMode("longBreak");
+        pomodorosCompleted++;
+        localStorage.setItem(
+          CONFIG.STORAGE.POMO_COUNT_KEY,
+          String(pomodorosCompleted),
+        );
+
+        if (pomodorosCompleted % 4 === 0) {
+          switchUIMode("longBreak");
+        } else {
+          switchUIMode("shortBreak");
+        }
       } else {
-        switchUIMode("shortBreak");
+        switchUIMode("pomo");
       }
-    } else {
-      switchUIMode("pomo");
-    }
-    if (DOM.startTimerBtn !== null) {
-      DOM.startTimerBtn.textContent = "START";
-    }
-    if (DOM.skipTimerBtn !== null) {
-      DOM.skipTimerBtn.classList.add("hidden");
+    } finally {
+      isCompletingSession = false;
     }
   };
 
@@ -115,38 +137,40 @@ export function initTimerEvents(): void {
 
   if (DOM.startTimerBtn !== null) {
     DOM.startTimerBtn.addEventListener("click", (): void => {
+      if (isCompletingSession) return;
+
       const isNowRunning: boolean = toggleTimer();
+
       if (isNowRunning) {
-        if (DOM.startTimerBtn !== null) {
-          DOM.startTimerBtn.textContent = "PAUSE";
-        }
-        if (DOM.skipTimerBtn !== null) {
+        if (DOM.startTimerBtn !== null) DOM.startTimerBtn.textContent = "PAUSE";
+        if (DOM.skipTimerBtn !== null)
           DOM.skipTimerBtn.classList.remove("hidden");
-        }
-      } else {
-        if (DOM.startTimerBtn !== null) {
-          DOM.startTimerBtn.textContent = "START";
-        }
+      } else if (DOM.startTimerBtn !== null) {
+        DOM.startTimerBtn.textContent = "START";
       }
     });
   }
 
   if (DOM.pomoBtn !== null) {
-    DOM.pomoBtn.addEventListener("click", (): void => switchUIMode("pomo"));
+    DOM.pomoBtn.addEventListener("click", (): void => {
+      if (!isCompletingSession) switchUIMode("pomo");
+    });
   }
   if (DOM.shortBreakBtn !== null) {
-    DOM.shortBreakBtn.addEventListener("click", (): void =>
-      switchUIMode("shortBreak"),
-    );
+    DOM.shortBreakBtn.addEventListener("click", (): void => {
+      if (!isCompletingSession) switchUIMode("shortBreak");
+    });
   }
   if (DOM.longBreakBtn !== null) {
-    DOM.longBreakBtn.addEventListener("click", (): void =>
-      switchUIMode("longBreak"),
-    );
+    DOM.longBreakBtn.addEventListener("click", (): void => {
+      if (!isCompletingSession) switchUIMode("longBreak");
+    });
   }
 
   if (DOM.resetTimerBtn !== null) {
     DOM.resetTimerBtn.addEventListener("click", (): void => {
+      if (isCompletingSession) return;
+
       resetTimer();
       if (DOM.startTimerBtn !== null) {
         DOM.startTimerBtn.textContent = "START";
@@ -161,4 +185,4 @@ export function initTimerEvents(): void {
   if (DOM.currentTaskMessage !== null) {
     DOM.currentTaskMessage.textContent = "Time to focus!";
   }
-}
+};

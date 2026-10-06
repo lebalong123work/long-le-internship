@@ -64,6 +64,10 @@
   font-weight: bold;
   outline: none;
 }
+.input-base:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
 .input-text {
   width: 100%;
   padding: 12px;

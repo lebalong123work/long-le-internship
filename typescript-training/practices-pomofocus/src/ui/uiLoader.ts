@@ -1,5 +1,5 @@
 import { CONFIG } from "@/config";
-export function removeInitialLoader(): void {
+export const removeInitialLoader = (): void => {
   const initialLoader: HTMLElement | null =
     document.getElementById("initial-loader");
 
@@ -10,4 +10,4 @@ export function removeInitialLoader(): void {
       initialLoader.remove();
     }, CONFIG.UI.LOADER_FADE_TIME);
   }
-}
+};

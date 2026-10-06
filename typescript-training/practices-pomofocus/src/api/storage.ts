@@ -1,42 +1,41 @@
 import { getCurrentUserId } from "@/logic/authLogic";
 import { fetchAPI } from "@/api/apiClient";
 import { LocalDB } from "@/api/localDB";
-import { Task } from "@/logic/taskLogic";
+import { isTask, isTaskArray } from "@/api/validation";
+import type { Task } from "@/logic/taskLogic";
 
-export async function fetchTasks(): Promise<Task[]> {
+export const fetchTasks = async (): Promise<Task[]> => {
   try {
     const userId: string | null = getCurrentUserId();
     if (userId !== null) {
-      const data: Task[] | boolean = await fetchAPI<Task[]>(
-        `/tasks?userId=${userId}`,
-      );
-      if (Array.isArray(data)) {
-        return data;
+      const data = await fetchAPI(`/tasks?userId=${userId}`);
+      if (!isTaskArray(data)) {
+        throw new Error("API returned an invalid task list");
       }
-      return [];
+      return data;
     } else {
       return LocalDB.getTasks();
     }
   } catch (error: unknown) {
     throw new Error(
-      "Network error: Unable to connect. Please check internet connection",
+      "Unable to load tasks",
       { cause: error },
     );
   }
-}
+};
 
-export async function createTask(newTask: Task): Promise<Task> {
+export const createTask = async (newTask: Task): Promise<Task> => {
   try {
     const userId: string | null = getCurrentUserId();
     if (userId !== null) {
       const taskToSave: Task = { ...newTask, userId };
-      const data: Task | boolean = await fetchAPI<Task>("/tasks", {
+      const data = await fetchAPI("/tasks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(taskToSave),
       });
-      if (typeof data === "boolean") {
-        throw new Error("Invalid response format");
+      if (!isTask(data)) {
+        throw new Error("API returned an invalid task");
       }
       return data;
     } else {
@@ -46,18 +45,18 @@ export async function createTask(newTask: Task): Promise<Task> {
       return newTask;
     }
   } catch (error: unknown) {
-    throw new Error("Network error: Unable to save", { cause: error });
+    throw new Error("Unable to save task", { cause: error });
   }
-}
+};
 
-export async function removeTask(taskId: string): Promise<boolean> {
+export const removeTask = async (taskId: string): Promise<boolean> => {
   try {
     const userId: string | null = getCurrentUserId();
     if (userId !== null) {
-      await fetchAPI<unknown>(`/tasks/${taskId}`, {
+      const deleted = await fetchAPI(`/tasks/${taskId}`, {
         method: "DELETE",
       });
-      return true;
+      return deleted === true;
     } else {
       const currentTasks: Task[] = LocalDB.getTasks();
       if (currentTasks.length === 0) return false;
@@ -68,23 +67,23 @@ export async function removeTask(taskId: string): Promise<boolean> {
       return true;
     }
   } catch (error: unknown) {
-    throw new Error("Network error: Unable to delete", { cause: error });
+    throw new Error("Unable to delete task", { cause: error });
   }
-}
+};
 
-export async function updateTask(
+export const updateTask = async (
   taskId: string,
   updatedTask: Partial<Task>,
-): Promise<Task | null> {
+): Promise<Task | null> => {
   try {
     const userId: string | null = getCurrentUserId();
     if (userId !== null) {
-      const data: Task | boolean = await fetchAPI<Task>(`/tasks/${taskId}`, {
+      const data = await fetchAPI(`/tasks/${taskId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedTask),
       });
-      if (typeof data === "boolean") {
+      if (!isTask(data)) {
         return null;
       }
       return data;
@@ -99,6 +98,6 @@ export async function updateTask(
       return currentTasks[taskIndex];
     }
   } catch (error: unknown) {
-    throw new Error("Network error: Unable to update", { cause: error });
+    throw new Error("Unable to update task", { cause: error });
   }
-}
+};

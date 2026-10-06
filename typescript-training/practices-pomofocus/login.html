@@ -9,17 +9,18 @@
     <link rel="stylesheet" href="styles/login.css" />
   </head>
   <body class="login-body">
-    <div class="login-wrapper">
+    <main class="login-wrapper">
       <a href="index.html" class="login-brand">
         <img
           src="icons/icon-white2.png"
           alt="pomofocus icon"
           class="login-logo-img"
         />
-        <span class="login-logo-text">Pomofocus</span>
+        <h1 class="login-logo-text">Pomofocus</h1>
       </a>
 
-      <div class="login-card">
+      <section class="login-card" aria-labelledby="loginHeading">
+        <h2 id="loginHeading" class="visually-hidden">Log in</h2>
         <form id="loginForm">
           <div class="form-group">
             <label for="emailInput" class="login-label">EMAIL</label>
@@ -45,8 +46,8 @@
 
           <button type="submit" class="login-btn-submit">Log in</button>
         </form>
-      </div>
-    </div>
+      </section>
+    </main>
     <script type="module" src="js/login.js"></script>
   </body>
 </html>

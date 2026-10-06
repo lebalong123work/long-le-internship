@@ -1,8 +1,8 @@
-export async function withButtonLoading(
+export const withButtonLoading = async (
   buttonId: string,
   action: () => Promise<void>,
   loadingText: string = "Loading...",
-): Promise<void> {
+): Promise<void> => {
   const button = document.getElementById(buttonId);
 
   if (!(button instanceof HTMLButtonElement)) {
@@ -21,4 +21,4 @@ export async function withButtonLoading(
     button.disabled = false;
     button.textContent = originalText;
   }
-}
+};

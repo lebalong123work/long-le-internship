@@ -14,7 +14,7 @@ import { withButtonLoading } from "@/ui/uiButtonState";
 
 let editingTaskId: string | null = null;
 
-export function hideTaskForm(): void {
+export const hideTaskForm = (): void => {
   if (DOM.actionGroup !== null && DOM.taskFormContainer !== null) {
     DOM.actionGroup.after(DOM.taskFormContainer);
     DOM.taskFormContainer.classList.add("hidden");
@@ -23,9 +23,9 @@ export function hideTaskForm(): void {
   document.querySelectorAll(".task-item").forEach((item) => {
     item.classList.remove("hidden");
   });
-}
+};
 
-export function openAddTaskForm(): void {
+export const openAddTaskForm = (): void => {
   hideTaskForm();
 
   editingTaskId = null;
@@ -56,9 +56,12 @@ export function openAddTaskForm(): void {
   if (DOM.taskNameInput !== null) {
     DOM.taskNameInput.focus();
   }
-}
+};
 
-export function openEditTaskForm(task: Task, liElement: HTMLLIElement): void {
+export const openEditTaskForm = (
+  task: Task,
+  liElement: HTMLLIElement,
+): void => {
   hideTaskForm();
 
   editingTaskId = task.id;
@@ -91,15 +94,15 @@ export function openEditTaskForm(task: Task, liElement: HTMLLIElement): void {
   if (DOM.taskNameInput !== null) {
     DOM.taskNameInput.focus();
   }
-}
+};
 
 let selectedTaskId: string | null = null;
 
-export function getSelectedTaskId(): string | null {
+export const getSelectedTaskId = (): string | null => {
   return selectedTaskId;
-}
+};
 
-export function updateSummaryUI(): void {
+export const updateSummaryUI = (): void => {
   const data: SummaryData = getSummaryData();
   if (DOM.actCount !== null) {
     DOM.actCount.textContent = String(data.totalAct);
@@ -110,91 +113,267 @@ export function updateSummaryUI(): void {
   if (DOM.finishTime !== null) {
     DOM.finishTime.textContent = data.finishAt || "--:--";
   }
-}
+};
 
-export function renderTasks(): void {
+const updateTaskListSummary = (): void => {
+  if (DOM.summaryBoard !== null) {
+    DOM.summaryBoard.classList.toggle("hidden", getTasks().length === 0);
+  }
+  updateSummaryUI();
+};
+
+const updateSelectedTaskUI = (task: Task | undefined): void => {
+  if (DOM.taskList !== null) {
+    DOM.taskList
+      .querySelectorAll<HTMLLIElement>(".task-item")
+      .forEach((item) => {
+        const isSelected = item.dataset.taskId === selectedTaskId;
+        item.classList.toggle("active-task", isSelected);
+
+        const selectButton =
+          item.querySelector<HTMLButtonElement>(".task-select-btn");
+        if (selectButton !== null) {
+          selectButton.setAttribute("aria-pressed", String(isSelected));
+        }
+      });
+  }
+
+  if (DOM.currentTaskMessage !== null) {
+    DOM.currentTaskMessage.textContent = task?.name ?? "Time to focus!";
+  }
+};
+
+const findTaskElement = (taskId: string): HTMLLIElement | null => {
+  if (DOM.taskList === null) return null;
+
+  for (const taskElement of DOM.taskList.querySelectorAll<HTMLLIElement>(
+    ".task-item",
+  )) {
+    if (taskElement.dataset.taskId === taskId) {
+      return taskElement;
+    }
+  }
+
+  return null;
+};
+
+const updateTaskElement = (taskElement: HTMLLIElement, task: Task): void => {
+  taskElement.classList.toggle("task-done", task.isDone);
+  taskElement.classList.toggle("active-task", task.id === selectedTaskId);
+
+  const taskNameElement =
+    taskElement.querySelector<HTMLSpanElement>(".task-name");
+  if (taskNameElement !== null) {
+    taskNameElement.textContent = task.name;
+  }
+
+  const taskPomosElement =
+    taskElement.querySelector<HTMLSpanElement>(".task-pomos");
+  if (taskPomosElement !== null) {
+    taskPomosElement.textContent = `${task.act} / ${task.est}`;
+  }
+
+  const checkButton =
+    taskElement.querySelector<HTMLButtonElement>(".task-check-btn");
+  if (checkButton !== null) {
+    checkButton.setAttribute(
+      "aria-label",
+      `Toggle completion for ${task.name}`,
+    );
+    checkButton.setAttribute("aria-pressed", String(task.isDone));
+  }
+
+  const editButton =
+    taskElement.querySelector<HTMLButtonElement>(".task-edit-btn");
+  if (editButton !== null) {
+    editButton.setAttribute("aria-label", `Edit task ${task.name}`);
+  }
+
+  const selectButton =
+    taskElement.querySelector<HTMLButtonElement>(".task-select-btn");
+  if (selectButton !== null) {
+    selectButton.setAttribute(
+      "aria-pressed",
+      String(task.id === selectedTaskId),
+    );
+  }
+
+  if (selectedTaskId === task.id && DOM.currentTaskMessage !== null) {
+    DOM.currentTaskMessage.textContent = task.name;
+  }
+};
+
+const createTaskElement = (task: Task): HTMLLIElement | null => {
+  if (DOM.taskTemplate === null) return null;
+
+  const clone = DOM.taskTemplate.content.cloneNode(true);
+  if (!(clone instanceof DocumentFragment)) return null;
+
+  const taskElement = clone.querySelector<HTMLLIElement>("li");
+  if (taskElement === null) return null;
+
+  taskElement.dataset.taskId = task.id;
+  updateTaskElement(taskElement, task);
+
+  const checkButton =
+    taskElement.querySelector<HTMLButtonElement>(".task-check-btn");
+  if (checkButton !== null) {
+    checkButton.addEventListener("click", async (event): Promise<void> => {
+      event.stopPropagation();
+      const success = await toggleTaskDone(task.id);
+      if (!success) return;
+
+      const updatedTask = getTasks().find(
+        (currentTask) => currentTask.id === task.id,
+      );
+      if (updatedTask !== undefined) {
+        updateTaskDOM(task.id, updatedTask);
+      }
+    });
+  }
+
+  const editButton =
+    taskElement.querySelector<HTMLButtonElement>(".task-edit-btn");
+  if (editButton !== null) {
+    editButton.addEventListener("click", (event): void => {
+      event.stopPropagation();
+      openEditTaskForm(task, taskElement);
+    });
+  }
+
+  const selectButton =
+    taskElement.querySelector<HTMLButtonElement>(".task-select-btn");
+  if (selectButton !== null) {
+    selectButton.addEventListener("click", (): void => {
+      selectedTaskId = selectedTaskId === task.id ? null : task.id;
+      const selectedTask =
+        selectedTaskId === null
+          ? undefined
+          : getTasks().find((item) => item.id === selectedTaskId);
+      updateSelectedTaskUI(selectedTask);
+    });
+  }
+
+  return taskElement;
+};
+
+export const appendTaskToDOM = (task: Task): void => {
   if (DOM.taskList === null) return;
-  DOM.taskList.innerHTML = "";
+
+  const existingTaskElement = findTaskElement(task.id);
+  if (existingTaskElement !== null) {
+    updateTaskElement(existingTaskElement, task);
+    updateTaskListSummary();
+    return;
+  }
+
+  const taskElement = createTaskElement(task);
+  if (taskElement !== null) {
+    DOM.taskList.appendChild(taskElement);
+    updateTaskListSummary();
+  }
+};
+
+export const updateTaskDOM = (taskId: string, updatedTask: Task): void => {
+  const taskElement = findTaskElement(taskId);
+  if (taskElement === null) return;
+
+  updateTaskElement(taskElement, updatedTask);
+  updateSummaryUI();
+};
+
+export const removeTaskDOM = (taskId: string): void => {
+  const taskElement = findTaskElement(taskId);
+  if (taskElement !== null) {
+    taskElement.remove();
+  }
+
+  if (selectedTaskId === taskId) {
+    selectedTaskId = null;
+    updateSelectedTaskUI(undefined);
+  }
+
+  updateTaskListSummary();
+};
+
+export const renderTasks = (): void => {
+  if (DOM.taskList === null) return;
 
   const currentTasks: Task[] = getTasks();
-  const activeTask: Task | undefined = currentTasks.find(
-    (t): boolean => t.id === selectedTaskId,
-  );
-
-  if (activeTask !== undefined) {
-    if (DOM.currentTaskMessage !== null) {
-      DOM.currentTaskMessage.textContent = activeTask.name;
-    }
-  } else {
+  if (!currentTasks.some((task) => task.id === selectedTaskId)) {
     selectedTaskId = null;
-    if (DOM.currentTaskMessage !== null) {
-      DOM.currentTaskMessage.textContent = "Time to focus!";
+  }
+
+  const fragment = document.createDocumentFragment();
+  for (const task of currentTasks) {
+    const taskElement = createTaskElement(task);
+    if (taskElement !== null) {
+      fragment.appendChild(taskElement);
     }
   }
 
-  if (DOM.summaryBoard !== null) {
-    if (currentTasks.length === 0) {
-      DOM.summaryBoard.classList.add("hidden");
-    } else {
-      DOM.summaryBoard.classList.remove("hidden");
+  DOM.taskList.replaceChildren(fragment);
+  updateSelectedTaskUI(currentTasks.find((task) => task.id === selectedTaskId));
+  updateTaskListSummary();
+};
+
+const handleEditTaskSubmit = async (
+  taskId: string,
+  nameVal: string,
+  actVal: string,
+  estVal: string,
+): Promise<void> => {
+  const success: boolean = await editTask(taskId, nameVal, actVal, estVal);
+  if (success) {
+    hideTaskForm();
+    const updatedTask = getTasks().find((task) => task.id === taskId);
+    if (updatedTask !== undefined) {
+      updateTaskDOM(taskId, updatedTask);
     }
   }
+};
 
-  currentTasks.forEach((task: Task): void => {
-    if (DOM.taskTemplate === null || DOM.taskList === null) return;
-
-    const clone: Node = DOM.taskTemplate.content.cloneNode(true);
-    if (!(clone instanceof DocumentFragment)) return;
-
-    const li: HTMLLIElement | null = clone.querySelector("li");
-    if (li === null) return;
-
-    if (task.isDone) li.classList.add("task-done");
-    if (task.id === selectedTaskId) li.classList.add("active-task");
-
-    const taskNameEl: Element | null = li.querySelector(".task-name");
-    if (taskNameEl !== null) {
-      taskNameEl.textContent = task.name;
+const handleAddTaskSubmit = async (
+  nameVal: string,
+  estVal: string,
+): Promise<void> => {
+  const newTask: Task | null = await addTask(nameVal, estVal);
+  if (newTask !== null) {
+    if (DOM.taskNameInput !== null) {
+      DOM.taskNameInput.value = "";
     }
-
-    const taskPomosEl: Element | null = li.querySelector(".task-pomos");
-    if (taskPomosEl !== null) {
-      taskPomosEl.textContent = `${task.act} / ${task.est}`;
+    if (DOM.estPomodorosInput !== null) {
+      DOM.estPomodorosInput.value = "1";
     }
-
-    const checkBtn: Element | null = li.querySelector(".task-check-btn");
-    if (checkBtn !== null) {
-      checkBtn.addEventListener("click", async (e): Promise<void> => {
-        e.stopPropagation();
-        const success: boolean = await toggleTaskDone(task.id);
-        if (success) renderTasks();
-      });
+    if (DOM.taskNameInput !== null) {
+      DOM.taskNameInput.focus();
     }
+    appendTaskToDOM(newTask);
+  }
+};
 
-    const editBtn: Element | null = li.querySelector(".task-edit-btn");
-    if (editBtn !== null) {
-      editBtn.addEventListener("click", (e): void => {
-        e.stopPropagation();
-        openEditTaskForm(task, li);
-      });
-    }
-
-    li.addEventListener("click", (): void => {
-      if (selectedTaskId === task.id) {
-        selectedTaskId = null;
-      } else {
-        selectedTaskId = task.id;
+const handleDeleteAllTasksEvent = async (): Promise<void> => {
+  if (confirm("Are you sure you want to delete all tasks?")) {
+    const taskIds = getTasks().map((task) => task.id);
+    const success: boolean = await deleteAllTasks();
+    if (success) {
+      if (editingTaskId !== null) {
+        editingTaskId = null;
+        hideTaskForm();
       }
-      renderTasks();
-    });
+      for (const taskId of taskIds) {
+        removeTaskDOM(taskId);
+      }
+      selectedTaskId = null;
+      updateSelectedTaskUI(undefined);
+      if (DOM.taskDropdownMenu !== null) {
+        DOM.taskDropdownMenu.classList.add("hidden");
+      }
+    }
+  }
+};
 
-    DOM.taskList.appendChild(clone);
-  });
-
-  updateSummaryUI();
-}
-
-export function initTaskEvents(): void {
+export const initTaskEvents = (): void => {
   if (DOM.showTaskFormBtn !== null) {
     DOM.showTaskFormBtn.addEventListener("click", openAddTaskForm);
   }
@@ -218,35 +397,21 @@ export function initTaskEvents(): void {
         const nameVal: string = DOM.taskNameInput.value;
         const estVal: string = DOM.estPomodorosInput.value;
         const actVal: string = DOM.actPomodorosInput.value;
+        const currentEditingId = editingTaskId;
 
         await withButtonLoading(
           "saveTaskBtn",
           async (): Promise<void> => {
-            if (editingTaskId !== null) {
-              const success: boolean = await editTask(
-                editingTaskId,
+            if (currentEditingId !== null) {
+              await handleEditTaskSubmit(
+                currentEditingId,
                 nameVal,
                 actVal,
                 estVal,
               );
-              if (success) {
-                hideTaskForm();
-              }
             } else {
-              const newTask: Task | null = await addTask(nameVal, estVal);
-              if (newTask !== null) {
-                if (DOM.taskNameInput !== null) {
-                  DOM.taskNameInput.value = "";
-                }
-                if (DOM.estPomodorosInput !== null) {
-                  DOM.estPomodorosInput.value = "1";
-                }
-                if (DOM.taskNameInput !== null) {
-                  DOM.taskNameInput.focus();
-                }
-              }
+              await handleAddTaskSubmit(nameVal, estVal);
             }
-            renderTasks();
           },
           "Saving...",
         );
@@ -257,10 +422,12 @@ export function initTaskEvents(): void {
   if (DOM.deleteTaskBtn !== null) {
     DOM.deleteTaskBtn.addEventListener("click", async (): Promise<void> => {
       if (editingTaskId !== null) {
-        const success: boolean = await deleteTask(editingTaskId);
+        const taskId = editingTaskId;
+        const success: boolean = await deleteTask(taskId);
         if (success) {
           editingTaskId = null;
-          renderTasks();
+          hideTaskForm();
+          removeTaskDOM(taskId);
         }
       }
     });
@@ -270,7 +437,9 @@ export function initTaskEvents(): void {
     DOM.taskDropdownBtn.addEventListener("click", (e): void => {
       e.stopPropagation();
       if (DOM.taskDropdownMenu !== null) {
-        DOM.taskDropdownMenu.classList.toggle("hidden");
+        const isExpanded =
+          DOM.taskDropdownMenu.classList.toggle("hidden") === false;
+        DOM.taskDropdownBtn?.setAttribute("aria-expanded", String(isExpanded));
       }
     });
 
@@ -284,21 +453,12 @@ export function initTaskEvents(): void {
         !DOM.taskDropdownBtn.contains(e.target)
       ) {
         DOM.taskDropdownMenu.classList.add("hidden");
+        DOM.taskDropdownBtn.setAttribute("aria-expanded", "false");
       }
     });
   }
 
   if (DOM.deleteAllBtn !== null) {
-    DOM.deleteAllBtn.addEventListener("click", async (): Promise<void> => {
-      if (confirm("Are you sure you want to delete all tasks?")) {
-        const success: boolean = await deleteAllTasks();
-        if (success) {
-          if (DOM.taskDropdownMenu !== null) {
-            DOM.taskDropdownMenu.classList.add("hidden");
-          }
-          renderTasks();
-        }
-      }
-    });
+    DOM.deleteAllBtn.addEventListener("click", handleDeleteAllTasksEvent);
   }
-}
+};

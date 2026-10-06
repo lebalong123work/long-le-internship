@@ -1,6 +1,6 @@
 import { CONFIG } from "@/config";
 
-export function formatTime(totalSeconds: number): string {
+export const formatTime = (totalSeconds: number): string => {
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
 
@@ -8,9 +8,9 @@ export function formatTime(totalSeconds: number): string {
   const stringSeconds = seconds.toString().padStart(2, "0");
 
   return `${stringMinutes}:${stringSeconds}`;
-}
+};
 
-export function calculateFinishTime(remainingPomos: number): string {
+export const calculateFinishTime = (remainingPomos: number): string => {
   if (remainingPomos <= 0) return "--:--";
 
   const pomoSecs = CONFIG.TIMER.POMO * 60;
@@ -37,4 +37,4 @@ export function calculateFinishTime(remainingPomos: number): string {
   const minutes = now.getMinutes().toString().padStart(2, "0");
 
   return `${hours}:${minutes} (${hoursNeeded}h)`;
-}
+};

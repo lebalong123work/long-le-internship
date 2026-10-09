@@ -1,0 +1,44 @@
+:root {
+  /* Brand & Action Colors */
+  --color-primary: #7a5cfa;
+  --color-primary-hover: #5a32a3;
+  --color-add-btn: #6b46c1;
+  --color-sidebar-bg: #220646;
+  --color-active-accent: #e03386;
+  --color-danger: #ff3333;
+  --color-danger-hover: #e03386;
+  --color-neutral-btn: #4a5568;
+  --color-neutral-hover: #a0aec0;
+
+  /* Text Colors */
+  --color-text-main: #000000;
+  --color-text-secondary: #ffffff;
+  --color-text-muted: #32403b;
+  --color-text-table: #718096;
+  --color-text-header: #4a5568;
+  --color-placeholder: #a0aec0;
+
+  /* Surfaces & Backgrounds */
+  --color-bg-app: #f5f6f7;
+  --color-bg-main: #ffffff;
+  --color-bg-table-header: #edf2f7;
+  --color-border-table: #edf2f7;
+  --color-border-input: #e2e8f0;
+  --color-overlay: rgba(0, 0, 0, 0.5);
+
+  /* Toast Feedback Colors */
+  --color-toast-success-bg: #dff2bf;
+  --color-toast-success-text: #227700;
+  --color-toast-error-bg: #ffbaba;
+  --color-toast-error-text: #d8000c;
+
+  /* Typography Families */
+  --font-family-main: "Roboto", sans-serif;
+  --font-family-desc: "Karla", sans-serif;
+
+  /* Border Radii */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 23px;
+  --radius-main: 5px;
+}

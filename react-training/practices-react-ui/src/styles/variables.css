@@ -26,6 +26,7 @@
   --color-border-input: #e2e8f0;
   --color-overlay: rgba(0, 0, 0, 0.5);
   --shadow-main-panel: 0 4px 6px rgba(0, 0, 0, 0.02);
+  --shadow-modal: 0 12px 32px rgba(0, 0, 0, 0.2);
 
   /* Toast Feedback Colors */
   --color-toast-success-bg: #dff2bf;

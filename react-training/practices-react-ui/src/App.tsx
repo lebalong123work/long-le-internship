@@ -1,6 +1,7 @@
 import { useState, type ChangeEvent } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Sidebar } from "@/components/layout/Sidebar";
+import { UserFormModal } from "@/components/modal/UserFormModal";
 import { UserTable } from "@/components/table/UserTable";
 import { Toolbar } from "@/components/toolbar/Toolbar";
 import type { User } from "@/scripts/types/user";
@@ -30,13 +31,47 @@ const mockUsers: User[] = [
 ];
 
 export default function App() {
+  const [users, setUsers] = useState<User[]>(mockUsers);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isUserFormOpen, setIsUserFormOpen] = useState(false);
+  const [formMode, setFormMode] = useState<"create" | "edit">("create");
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.currentTarget.value);
   };
 
-  const filteredUsers = mockUsers.filter((user) =>
+  const handleOpenAddModal = () => {
+    setFormMode("create");
+    setSelectedUser(null);
+    setIsUserFormOpen(true);
+  };
+
+  const handleEditUser = (user: User) => {
+    setFormMode("edit");
+    setSelectedUser(user);
+    setIsUserFormOpen(true);
+  };
+
+  const handleSubmitUser = (userData: Omit<User, "id">) => {
+    if (formMode === "create") {
+      setUsers((currentUsers) => [
+        ...currentUsers,
+        { ...userData, id: crypto.randomUUID() },
+      ]);
+    } else if (selectedUser) {
+      setUsers((currentUsers) =>
+        currentUsers.map((user) =>
+          user.id === selectedUser.id ? { ...user, ...userData } : user,
+        ),
+      );
+    }
+
+    setIsUserFormOpen(false);
+    setSelectedUser(null);
+  };
+
+  const filteredUsers = users.filter((user) =>
     [user.email, user.first_name, user.last_name, user.phone_number].some(
       (value) => value.toLowerCase().includes(searchTerm.trim().toLowerCase()),
     ),
@@ -50,14 +85,19 @@ export default function App() {
           <Toolbar
             searchTerm={searchTerm}
             onSearchChange={handleSearchChange}
-            onOpenAddModal={() =>
-              console.info("The add-user modal is not implemented yet.")
-            }
+            onOpenAddModal={handleOpenAddModal}
           />
           <UserTable
             users={filteredUsers}
-            onEdit={(user) => console.info("Edit user:", user)}
+            onEdit={handleEditUser}
             onDelete={(user) => console.info("Delete user:", user)}
+          />
+          <UserFormModal
+            isOpen={isUserFormOpen}
+            mode={formMode}
+            initialData={selectedUser}
+            onClose={() => setIsUserFormOpen(false)}
+            onSubmit={handleSubmitUser}
           />
         </div>
       }

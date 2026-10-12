@@ -1,5 +1,4 @@
 import type { ChangeEvent } from "react";
-import "@/styles/index.css";
 
 interface ToolbarProps {
   searchTerm: string;
@@ -15,14 +14,14 @@ export function Toolbar({
   return (
     <div className="form-secondary">
       <input
-        className="form-secondary__search"
+        className="form-secondary_search"
         type="search"
         aria-label="Search users"
         placeholder="Search users..."
         value={searchTerm}
         onChange={onSearchChange}
       />
-      <button className="btn__add" type="button" onClick={onOpenAddModal}>
+      <button className="btn_add" type="button" onClick={onOpenAddModal}>
         Add New
       </button>
     </div>

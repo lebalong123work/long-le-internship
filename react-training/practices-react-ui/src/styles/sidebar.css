@@ -3,11 +3,11 @@
   flex: 0 0 250px;
   min-width: 250px;
   min-height: 100vh;
-  background-color: #220646;
+  background-color: var(--color-sidebar-bg);
   color: var(--color-text-secondary);
 }
 
-.aside__action {
+.aside_action {
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -15,18 +15,18 @@
   padding: 28px 0;
 }
 
-.aside__head {
+.aside_head {
   padding: 0 20px;
   font-size: 20px;
   font-weight: 700;
 }
 
-.aside__list {
+.aside_list {
   display: flex;
   flex-direction: column;
 }
 
-.nav__item {
+.nav_item {
   display: block;
   padding: 12px 20px;
   border-right: 6px solid transparent;
@@ -34,7 +34,13 @@
   text-decoration: none;
 }
 
-.nav__item.active {
-  border-right-color: #e03386;
-  background-color: #220646;
+.nav_item.active {
+  border-right-color: var(--color-active-accent);
+  background-color: var(--color-sidebar-bg);
+}
+
+.aside_logo {
+  display: block;
+  width: 45px;
+  height: 45px;
 }

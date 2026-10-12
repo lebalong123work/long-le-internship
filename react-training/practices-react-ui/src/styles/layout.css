@@ -6,36 +6,6 @@
   overflow: hidden;
 }
 
-.aside {
-  display: flex;
-  flex: 0 0 240px;
-  flex-direction: column;
-  gap: 36px;
-  padding: 28px 20px;
-  background-color: var(--color-sidebar-bg);
-  color: var(--color-text-secondary);
-}
-
-.manager-logo {
-  color: inherit;
-  font-size: 20px;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.aside nav {
-  display: grid;
-  gap: 8px;
-}
-
-.manager-menu-item {
-  padding: 12px;
-  border-radius: var(--radius-sm);
-  background-color: var(--color-active-accent);
-  color: var(--color-text-secondary);
-  text-decoration: none;
-}
-
 .manager {
   flex: 1;
   min-width: 0;
@@ -52,26 +22,6 @@
 }
 
 @media (max-width: 640px) {
-  .aside {
-    flex-basis: 64px;
-    align-items: center;
-    padding: 20px 8px;
-  }
-
-  .manager-logo {
-    overflow: hidden;
-    width: 1px;
-    height: 1px;
-  }
-
-  .manager-menu-item {
-    overflow: hidden;
-    width: 40px;
-    padding: 12px 0;
-    text-indent: 100%;
-    white-space: nowrap;
-  }
-
   .manager {
     margin: 12px 8px;
   }

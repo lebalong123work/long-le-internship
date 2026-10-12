@@ -1,0 +1,47 @@
+.confirmation {
+  width: min(600px, calc(100vw - 32px));
+  min-height: 250px;
+  padding: 30px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-main);
+  box-shadow: var(--shadow-modal);
+  color: var(--color-text-main);
+}
+
+.confirmation_title {
+  margin: 0 0 20px;
+  color: var(--color-text-main);
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.confirmation_desc {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-base);
+  line-height: 1.4;
+  text-align: center;
+}
+
+.confirmation_actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 32px;
+}
+
+@media (max-width: 480px) {
+  .confirmation {
+    min-height: 0;
+    padding: 24px 20px;
+  }
+
+  .confirmation_title {
+    font-size: 26px;
+  }
+
+  .confirmation_desc {
+    font-size: 16px;
+  }
+}

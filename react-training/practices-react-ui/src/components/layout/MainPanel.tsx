@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react";
 
 interface MainPanelProps {
-  mainContent: React.ReactNode
+  mainContent: React.ReactNode;
 }
 
 export const MainPanel: React.FC<MainPanelProps> = ({ mainContent }) => {
@@ -9,5 +9,5 @@ export const MainPanel: React.FC<MainPanelProps> = ({ mainContent }) => {
     <div className="manager">
       <main className="main">{mainContent}</main>
     </div>
-  )
-}
+  );
+};

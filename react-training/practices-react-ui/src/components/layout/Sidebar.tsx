@@ -8,7 +8,11 @@ export function Sidebar() {
           <img className="aside_logo" src={logoManager} alt="User Manager" />
         </div>
         <nav className="aside_list" aria-label="Main navigation">
-          <a href="#user-management" className="nav_item active" aria-current="page">
+          <a
+            href="#user-management"
+            className="nav_item active"
+            aria-current="page"
+          >
             User management
           </a>
         </nav>

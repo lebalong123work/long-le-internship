@@ -1,6 +1,7 @@
 import { useState, type ChangeEvent } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Sidebar } from "@/components/layout/Sidebar";
+import { ConfirmationDialog } from "@/components/modal/ConfirmationDialog";
 import { UserFormModal } from "@/components/modal/UserFormModal";
 import { UserTable } from "@/components/table/UserTable";
 import { Toolbar } from "@/components/toolbar/Toolbar";
@@ -36,6 +37,7 @@ export default function App() {
   const [isUserFormOpen, setIsUserFormOpen] = useState(false);
   const [formMode, setFormMode] = useState<"create" | "edit">("create");
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [userToDelete, setUserToDelete] = useState<User | null>(null);
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.currentTarget.value);
@@ -51,6 +53,15 @@ export default function App() {
     setFormMode("edit");
     setSelectedUser(user);
     setIsUserFormOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (!userToDelete) return;
+
+    setUsers((currentUsers) =>
+      currentUsers.filter((user) => user.id !== userToDelete.id),
+    );
+    setUserToDelete(null);
   };
 
   const handleSubmitUser = (userData: Omit<User, "id">) => {
@@ -90,7 +101,7 @@ export default function App() {
           <UserTable
             users={filteredUsers}
             onEdit={handleEditUser}
-            onDelete={(user) => console.info("Delete user:", user)}
+            onDelete={setUserToDelete}
           />
           <UserFormModal
             isOpen={isUserFormOpen}
@@ -98,6 +109,17 @@ export default function App() {
             initialData={selectedUser}
             onClose={() => setIsUserFormOpen(false)}
             onSubmit={handleSubmitUser}
+          />
+          <ConfirmationDialog
+            isOpen={userToDelete !== null}
+            title="Delete user?"
+            message={
+              userToDelete
+                ? `Are you sure you want to delete ${userToDelete.email}? This action cannot be undone.`
+                : ""
+            }
+            onClose={() => setUserToDelete(null)}
+            onConfirm={handleConfirmDelete}
           />
         </div>
       }

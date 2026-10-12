@@ -1,20 +1,20 @@
-import type { ButtonHTMLAttributes } from 'react'
+import type { ButtonHTMLAttributes } from "react";
 
-export type ButtonVariant = 'primary' | 'add' | 'danger' | 'neutral'
+export type ButtonVariant = "primary" | "add" | "danger" | "neutral";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant: ButtonVariant
+  variant: ButtonVariant;
 }
 
 export function Button({
   variant,
   className,
-  type = 'button',
+  type = "button",
   ...buttonProps
 }: ButtonProps) {
-  const classes = ['btn', `btn-${variant}`, className]
+  const classes = ["btn", `btn-${variant}`, className]
     .filter(Boolean)
-    .join(' ')
+    .join(" ");
 
-  return <button {...buttonProps} className={classes} type={type} />
+  return <button {...buttonProps} className={classes} type={type} />;
 }

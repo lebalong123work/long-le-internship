@@ -59,12 +59,12 @@ function UserFormContent({
 
   const handleChange =
     (field: keyof UserFormValues) => (event: ChangeEvent<HTMLInputElement>) => {
-      const value = event.currentTarget.value
+      const value = event.currentTarget.value;
       setValues((currentValues) => ({
         ...currentValues,
         [field]: value,
-      }))
-    }
+      }));
+    };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

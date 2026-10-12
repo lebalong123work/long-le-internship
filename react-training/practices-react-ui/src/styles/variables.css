@@ -36,6 +36,7 @@
   /* Typography Families */
   --font-family-main: "Roboto", sans-serif;
   --font-family-desc: "Karla", sans-serif;
+  --font-size-base: 20px;
 
   /* Border Radii */
   --radius-sm: 4px;

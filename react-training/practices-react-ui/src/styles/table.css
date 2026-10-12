@@ -1,0 +1,81 @@
+.table-user {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--color-text-table);
+  text-align: left;
+}
+
+.table-user th,
+.table-user td {
+  border-bottom: 1px solid var(--color-border-table);
+}
+
+.table-header {
+  background-color: var(--color-bg-table-header);
+  color: var(--color-text-header);
+  font-weight: 700;
+}
+
+.table-header th {
+  position: sticky;
+  top: 63px;
+  z-index: 3;
+  min-height: 40px;
+  padding: 11px 0 10px 37px;
+  background-color: var(--color-bg-table-header);
+  color: var(--color-text-header);
+  font-weight: 700;
+}
+
+.table-row {
+  background-color: var(--color-bg-main);
+  min-height: 71px;
+}
+
+.table-row td {
+  max-width: 200px;
+  min-height: 71px;
+  padding: 24px 0 25px 37px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.table-actions {
+  display: flex;
+  align-items: center;
+}
+
+.action-link {
+  padding: 0;
+  background: none;
+  color: var(--color-text-table);
+  font: inherit;
+  cursor: pointer;
+}
+
+.action-link--danger {
+  margin-left: 40px;
+}
+
+.action-link--danger:hover {
+  color: var(--color-danger);
+  text-decoration: underline;
+}
+
+.empty-state {
+  padding: 32px 16px;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.table-scroll {
+  width: 100%;
+  overflow: visible;
+}
+
+@media (max-width: 720px) {
+  .table-user {
+    min-width: 680px;
+  }
+}

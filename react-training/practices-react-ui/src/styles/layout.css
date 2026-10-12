@@ -10,7 +10,7 @@
   flex: 1;
   min-width: 0;
   margin: 21px 14px;
-  overflow-y: auto;
+  overflow: auto;
 }
 
 .main {

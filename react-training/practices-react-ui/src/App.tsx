@@ -1,7 +1,15 @@
+import { AppLayout } from '@/components/layout/AppLayout'
+import { Sidebar } from '@/components/layout/Sidebar'
+
 export default function App() {
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>User Management UI</h1>
-    </div>
+    <AppLayout
+      sidebar={<Sidebar />}
+      mainContent={
+        <div id="user-management">
+          <h1>Management User</h1>
+        </div>
+      }
+    />
   )
 }

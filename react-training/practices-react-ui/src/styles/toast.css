@@ -1,0 +1,25 @@
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  z-index: 1000;
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  padding: 12px 20px;
+  transform: translateX(-50%);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-modal);
+  font-family: var(--font-family-main);
+  text-align: center;
+  transition: opacity 0.3s;
+}
+
+.toast-success {
+  background-color: var(--color-toast-success-bg);
+  color: var(--color-toast-success-text);
+}
+
+.toast-error {
+  background-color: var(--color-toast-error-bg);
+  color: var(--color-toast-error-text);
+}

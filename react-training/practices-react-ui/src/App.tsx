@@ -6,7 +6,7 @@ import { ConfirmationDialog } from "@/components/modal/ConfirmationDialog";
 import { UserFormModal } from "@/components/modal/UserFormModal";
 import { UserTable } from "@/components/table/UserTable";
 import { Toolbar } from "@/components/toolbar/Toolbar";
-import type { User } from "@/scripts/types/user";
+import type { User } from "@/types/user";
 
 const mockUsers: User[] = [
   {
@@ -83,7 +83,7 @@ export default function App() {
     setUsers((currentUsers) =>
       currentUsers.filter((user) => user.id !== userToDelete.id),
     );
-    setToast({ message: "User deleted successfully.", type: "success" });
+    setToast({ message: "Delete success user", type: "success" });
     setIsDeleteModalOpen(false);
     setUserToDelete(null);
   };
@@ -94,14 +94,14 @@ export default function App() {
         ...currentUsers,
         { ...userData, id: crypto.randomUUID() },
       ]);
-      setToast({ message: "User added successfully.", type: "success" });
+      setToast({ message: "Create success a new user", type: "success" });
     } else if (selectedUser) {
       setUsers((currentUsers) =>
         currentUsers.map((user) =>
           user.id === selectedUser.id ? { ...user, ...userData } : user,
         ),
       );
-      setToast({ message: "User updated successfully.", type: "success" });
+      setToast({ message: "Update success a user", type: "success" });
     }
 
     setIsFormModalOpen(false);
@@ -138,12 +138,8 @@ export default function App() {
           />
           <ConfirmationDialog
             isOpen={isDeleteModalOpen}
-            title="Delete user?"
-            message={
-              userToDelete
-                ? `Are you sure you want to delete ${userToDelete.email}? This action cannot be undone.`
-                : ""
-            }
+            title="Are You Sure?"
+            message="You won't be able to revert this."
             onClose={handleCloseDeleteModal}
             onConfirm={handleConfirmDelete}
           />

@@ -17,7 +17,8 @@ export function Toolbar({
         className="form-secondary_search"
         type="search"
         aria-label="Search users"
-        placeholder="Search users..."
+        maxLength={12}
+        placeholder="Search List..."
         value={searchTerm}
         onChange={onSearchChange}
       />

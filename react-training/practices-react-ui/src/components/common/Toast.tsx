@@ -24,15 +24,12 @@ export function Toast({
     return () => window.clearTimeout(timeoutId);
   }, [duration, isOpen, message, onClose]);
 
-  if (!isOpen) {
-    return null;
-  }
-
   return (
     <div
-      className={`toast toast-${type}`}
+      className={`toast toast-${type}${isOpen ? " toast-show" : ""}`}
       role={type === "error" ? "alert" : "status"}
       aria-live={type === "error" ? "assertive" : "polite"}
+      aria-hidden={!isOpen}
     >
       {message}
     </div>

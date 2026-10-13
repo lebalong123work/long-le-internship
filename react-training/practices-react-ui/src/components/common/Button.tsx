@@ -11,7 +11,7 @@ export function Button({
   className,
   type = "button",
   ...buttonProps
-}: ButtonProps) {
+}: Readonly<ButtonProps>) {
   const classes = ["btn", `btn-${variant}`, className]
     .filter(Boolean)
     .join(" ");

@@ -1,6 +1,8 @@
 # User Management UI
 
-A small user management interface built as a React and TypeScript practice project. It demonstrates a sidebar layout, user search, a data table, and dialogs for adding, editing, and deleting users.
+A React and TypeScript practice project that converts the user-management screen from an older TypeScript project into reusable React components.
+
+The goal is **UI only**: recreate the screen and its visible interaction states. The app uses sample data in React state to demonstrate the interface. It does not connect to an API, database, or browser storage.
 
 ## Run the project
 
@@ -47,8 +49,9 @@ Serves the production build locally. Run `npm run build` first.
 - Open a form to add a user.
 - Edit a user's information.
 - Ask for confirmation before deleting a user.
+- Show a temporary toast message after an action.
 
-**Data is temporary:** users are held in React state in the browser. Adding, editing, and deleting users works while the page is open, but the changes are not saved to a server or browser storage. Reloading the page restores the sample users.
+These interactions are UI demonstrations backed by React state. Changes are temporary and are lost when the page reloads. There is no backend, API service, or persistent data storage in this project.
 
 ## Tools and why they are used
 
@@ -57,11 +60,22 @@ Serves the production build locally. Run `npm run build` first.
 | React | Builds the interface from reusable components and manages UI state. |
 | TypeScript | Adds types for users, component props, and browser events. |
 | Vite | Runs the local development server and builds the app for production. |
-| ESLint | Checks TypeScript and React code for common mistakes and style issues. |
+| ESLint | Checks TypeScript, React/JSX, React DOM, and accessibility rules. |
 | CSS | Styles the layout, table, toolbar, buttons, and dialogs. CSS variables keep colors and other design values in one place. |
 | npm | Installs project packages and runs the scripts defined in `package.json`. |
 
 The `@` import alias points to the `src/` directory. For example, `@/components/table/UserTable` refers to `src/components/table/UserTable.tsx`.
+
+## Checks before commit
+
+The repository uses a Husky `pre-commit` hook. When a commit includes staged files under `react-training/practices-react-ui/`, the hook runs:
+
+```bash
+npm --prefix react-training/practices-react-ui run lint
+npm --prefix react-training/practices-react-ui run build
+```
+
+If either check fails, that commit is stopped. The hook is stored in the repository's shared Husky configuration; commits that do not include files from this React project do not run these React checks.
 
 ## Project structure
 
@@ -79,16 +93,19 @@ The `@` import alias points to the `src/` directory. For example, `@/components/
     ├── App.tsx
     ├── main.tsx
     ├── assets/
+    │   └── images/
+    │       └── managers/
     ├── components/
-    │   ├── common/
-    │   ├── layout/
-    │   ├── modal/
-    │   ├── table/
-    │   └── toolbar/
-    ├── scripts/
-    │   └── types/
+    │   ├── common/       # Button, Overlay, Toast
+    │   ├── layout/       # AppLayout, MainPanel, Sidebar
+    │   ├── modal/        # User form, fields, delete confirmation
+    │   ├── table/        # Table, header, rows, empty state
+    │   └── toolbar/      # Search and Add New
     ├── styles/
+    │   ├── index.css
+    │   └── *.css
     └── types/
+        └── user.ts
 ```
 
 ## What the main files do
@@ -109,9 +126,8 @@ The `@` import alias points to the `src/` directory. For example, `@/components/
 ### Application entry and state
 
 - `src/main.tsx` — Imports the master stylesheet and renders `<App />` into the page.
-- `src/App.tsx` — Creates the sample users, owns the search and dialog state, filters the list, and handles create, edit, and delete actions.
-- `src/scripts/types/user.ts` — Defines the `User` data shape used by the table and app state.
-- `src/types/ui.ts` — Contains shared UI-related TypeScript interfaces.
+- `src/App.tsx` — Creates the sample users, owns the UI state, filters the list, and coordinates the Add/Edit/Delete dialogs and toast messages. It does not call a backend.
+- `src/types/user.ts` — Defines the shared `User` data shape used by the app, form, and table.
 
 ### Components
 
@@ -128,6 +144,7 @@ The `@` import alias points to the `src/` directory. For example, `@/components/
 - `src/components/modal/ConfirmationDialog.tsx` — Asks the user to confirm a delete action.
 - `src/components/common/Overlay.tsx` — Provides the modal backdrop and closes it when the backdrop is clicked.
 - `src/components/common/Button.tsx` — Provides a reusable button with visual variants.
+- `src/components/common/Toast.tsx` — Displays temporary success or error feedback.
 
 ### Styles and images
 
@@ -142,5 +159,8 @@ The `@` import alias points to the `src/` directory. For example, `@/components/
 - `src/styles/btn.css` — Styles the shared button variants.
 - `src/styles/form.css` — Styles the Add/Edit form modal and its fields.
 - `src/styles/confirmation.css` — Styles the delete confirmation dialog.
-- `src/assets/images/managers/` — Contains images used by the manager UI, including the sidebar logo and search icon.
-- `src/assets/hero.png` and `src/assets/vite.svg` — Starter assets from the Vite template; they are not used by the current screen.
+- `src/styles/toast.css` — Styles temporary success and error notifications.
+- `src/assets/images/managers/` — Contains UI images such as the sidebar logo, search icon, and form error icon.
+- `public/favicon.svg` — The browser tab icon referenced from `index.html`.
+
+There are no `scripts/` or `constants/` folders because the React UI does not use the old project's controller/service logic or a separate set of shared constants. Component-only prop types stay next to their components; the shared user data type is in `src/types/user.ts`.

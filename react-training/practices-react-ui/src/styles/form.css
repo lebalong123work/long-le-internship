@@ -1,60 +1,69 @@
 .form-primary.form-update {
+  display: flex;
+  flex-direction: column;
   position: relative;
   width: min(760px, calc(100vw - 32px));
   max-height: calc(100vh - 32px);
   overflow-y: auto;
-  padding: 60px 80px;
-  border-radius: var(--radius-md);
-  background-color: var(--color-bg-main);
-  box-shadow: var(--shadow-modal);
+  padding: 96px 98px;
+  font-family: var(--font-family-main);
+  text-align: center;
+  background-color: var(--color-bg-modal);
   color: var(--color-text-main);
 }
 
-.form-title {
-  margin: 0 0 32px;
+.form-title,
+.title {
+  margin: 0 auto 20px;
   color: var(--color-text-main);
-  font-size: 32px;
+  font-size: 55.23px;
   font-weight: 700;
   text-align: center;
 }
 
 .close-btn {
-  position: absolute;
-  top: 16px;
-  right: 20px;
-  padding: 4px;
+  align-self: flex-end;
+  margin-left: auto;
+  padding: 0;
   background: transparent;
-  color: var(--color-text-header);
-  font-size: 28px;
+  color: var(--color-text-main);
+  font-size: 16px;
   line-height: 1;
+  text-decoration: none;
 }
 
 .close-btn:hover {
-  color: var(--color-danger);
+  color: var(--color-active-accent);
+  text-decoration: underline;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 18px;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-family-main);
 }
 
 .form-label {
-  color: var(--color-text-header);
-  font-size: 14px;
+  color: var(--color-text-main);
+  font-size: 12px;
   font-weight: 600;
+  line-height: 18px;
 }
 
 .form-input {
   width: 100%;
-  min-height: 48px;
-  padding: 12px 14px;
+  max-width: 564px;
+  height: 56px;
+  margin: 10px auto;
+  padding: 12px 32px;
   border: 1px solid var(--color-border-input);
   border-radius: var(--radius-md);
   background-color: var(--color-bg-main);
   color: var(--color-text-main);
-  font: inherit;
+  font-family: var(--font-family-main);
+  font-size: 23px;
 }
 
 .form-input::placeholder {
@@ -63,15 +72,19 @@
 
 .form-input[aria-invalid='true'] {
   border-color: var(--color-danger);
+  background-image: url('../assets/images/managers/icon-error.png');
+  background-repeat: no-repeat;
+  background-position: right 16px center;
 }
 
 .form-error-msg {
   color: var(--color-danger);
-  font-size: 14px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  text-align: left;
 }
 
-@media (max-width: 640px) {
-  .form-primary.form-update {
-    padding: 56px 24px 28px;
-  }
+.form-group--error .form-label {
+  color: var(--color-danger);
 }

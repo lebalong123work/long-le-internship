@@ -1,8 +1,12 @@
 .table-user {
   width: 100%;
+  padding-left: 37px;
   border-collapse: collapse;
   color: var(--color-text-table);
   text-align: left;
+  font-family: var(--font-family-main);
+  font-weight: 400;
+  font-size: 16px;
 }
 
 .table-user th,
@@ -18,13 +22,16 @@
 
 .table-header th {
   position: sticky;
-  top: 63px;
-  z-index: 3;
+  top: 84px;
+  z-index: 4;
   min-height: 40px;
   padding: 11px 0 10px 37px;
   background-color: var(--color-bg-table-header);
   color: var(--color-text-header);
+  font: inherit;
   font-weight: 700;
+  text-align: left;
+  vertical-align: baseline;
 }
 
 .table-row {
@@ -38,7 +45,6 @@
   padding: 24px 0 25px 37px;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .table-actions {
@@ -54,13 +60,13 @@
   cursor: pointer;
 }
 
-.action-link--danger {
-  margin-left: 40px;
+.action-link:hover {
+  color: var(--color-text-main);
+  text-decoration: underline;
 }
 
-.action-link--danger:hover {
-  color: var(--color-danger);
-  text-decoration: underline;
+.action-link--danger {
+  margin-left: 40px;
 }
 
 .empty-state {
@@ -72,10 +78,4 @@
 .table-scroll {
   width: 100%;
   overflow: visible;
-}
-
-@media (max-width: 720px) {
-  .table-user {
-    min-width: 680px;
-  }
 }

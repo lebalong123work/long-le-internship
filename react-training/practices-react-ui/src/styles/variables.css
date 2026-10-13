@@ -14,6 +14,7 @@
   --color-text-main: #000000;
   --color-text-secondary: #ffffff;
   --color-text-muted: #32403b;
+  --color-text-modal: rgba(0, 0, 0, 0.6);
   --color-text-table: #718096;
   --color-text-header: #4a5568;
   --color-placeholder: #a0aec0;
@@ -21,6 +22,7 @@
   /* Surfaces & Backgrounds */
   --color-bg-app: #f5f6f7;
   --color-bg-main: #ffffff;
+  --color-bg-modal: #ffffff;
   --color-bg-table-header: #edf2f7;
   --color-border-table: #edf2f7;
   --color-border-input: #e2e8f0;

@@ -6,15 +6,20 @@ export function Sidebar() {
       <div className="aside_action">
         <div className="aside_head">
           <img className="aside_logo" src={logoManager} alt="User Manager" />
+          <span>Company name</span>
         </div>
-        <nav className="aside_list" aria-label="Main navigation">
-          <a
-            href="#user-management"
-            className="nav_item active"
-            aria-current="page"
-          >
-            User management
-          </a>
+        <nav aria-label="Main navigation">
+          <ul className="aside_list">
+            <li>
+              <a
+                href="#user-management"
+                className="nav_item active"
+                aria-current="page"
+              >
+                User management
+              </a>
+            </li>
+          </ul>
         </nav>
       </div>
     </aside>

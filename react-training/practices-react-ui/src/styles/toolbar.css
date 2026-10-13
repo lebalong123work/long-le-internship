@@ -4,24 +4,29 @@
   z-index: 4;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 24px;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 23px;
+  background-color: var(--color-bg-main);
+  font-family: var(--font-family-main);
 }
 
 .form-secondary_search {
   width: 100%;
   max-width: 228px;
-  height: 40px;
-  padding: 0 12px 0 38px;
+  margin-right: 85px;
+  max-height: 40px;
+  padding: 11px 10px 10px 40px;
   border: 1px solid var(--color-border-input);
   border-radius: var(--radius-main);
   background-color: var(--color-bg-main);
   background-image: url('../assets/images/managers/icon-search.png');
   background-repeat: no-repeat;
-  background-position: 12px center;
-  background-size: 18px;
+  background-position: 15px center;
+  background-size: 17px 17px;
   color: var(--color-text-main);
+  font-family: var(--font-family-main);
+  font-size: 16px;
 }
 
 .form-secondary_search::placeholder {
@@ -33,12 +38,15 @@
   width: 90px;
   height: 40px;
   flex: 0 0 90px;
+  margin-right: 26px;
   align-items: center;
   justify-content: center;
   border-radius: 4px;
   background-color: var(--color-add-btn);
   color: var(--color-text-secondary);
-  font-weight: 500;
+  font-family: var(--font-family-main);
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .btn_add:hover {
@@ -47,10 +55,16 @@
 
 @media (max-width: 420px) {
   .form-secondary {
-    align-items: stretch;
+    padding: 23px;
   }
 
   .form-secondary_search {
-    min-width: 0;
+    width: 228px;
+    flex: 0 1 228px;
+    margin-right: auto;
+  }
+
+  .btn_add {
+    margin-right: 0;
   }
 }

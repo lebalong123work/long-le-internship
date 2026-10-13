@@ -9,6 +9,7 @@ interface FormFieldProps {
   error?: string;
   placeholder?: string;
   required?: boolean;
+  maxLength?: number;
   autoComplete?: InputHTMLAttributes<HTMLInputElement>["autoComplete"];
 }
 
@@ -21,12 +22,13 @@ export function FormField({
   error,
   placeholder,
   required = true,
+  maxLength,
   autoComplete,
 }: FormFieldProps) {
   const errorId = `${name}-error`;
 
   return (
-    <div className="form-group">
+    <div className={error ? "form-group form-group--error" : "form-group"}>
       <label className="form-label" htmlFor={name}>
         {label}
       </label>
@@ -39,6 +41,7 @@ export function FormField({
         onChange={onChange}
         placeholder={placeholder}
         required={required}
+        maxLength={maxLength}
         autoComplete={autoComplete}
         aria-invalid={Boolean(error)}
         aria-describedby={error ? errorId : undefined}

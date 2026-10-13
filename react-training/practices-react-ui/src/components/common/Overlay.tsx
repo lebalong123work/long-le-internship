@@ -6,7 +6,7 @@ interface OverlayProps {
   children: ReactNode;
 }
 
-export function Overlay({ isOpen, onClose, children }: OverlayProps) {
+export function Overlay({ isOpen, onClose, children }: Readonly<OverlayProps>) {
   if (!isOpen) {
     return null;
   }

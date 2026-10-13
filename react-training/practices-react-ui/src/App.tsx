@@ -1,6 +1,7 @@
-import { useState, type ChangeEvent } from "react";
+import { useCallback, useState, type ChangeEvent } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Sidebar } from "@/components/layout/Sidebar";
+import { Toast } from "@/components/common/Toast";
 import { ConfirmationDialog } from "@/components/modal/ConfirmationDialog";
 import { UserFormModal } from "@/components/modal/UserFormModal";
 import { UserTable } from "@/components/table/UserTable";
@@ -31,13 +32,24 @@ const mockUsers: User[] = [
   },
 ];
 
+interface ToastState {
+  message: string;
+  type: "success" | "error";
+}
+
 export default function App() {
   const [users, setUsers] = useState<User[]>(mockUsers);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isUserFormOpen, setIsUserFormOpen] = useState(false);
+  const [isFormModalOpen, setIsFormModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [formMode, setFormMode] = useState<"create" | "edit">("create");
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [userToDelete, setUserToDelete] = useState<User | null>(null);
+  const [toast, setToast] = useState<ToastState | null>(null);
+
+  const handleCloseToast = useCallback(() => {
+    setToast(null);
+  }, []);
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.currentTarget.value);
@@ -46,13 +58,23 @@ export default function App() {
   const handleOpenAddModal = () => {
     setFormMode("create");
     setSelectedUser(null);
-    setIsUserFormOpen(true);
+    setIsFormModalOpen(true);
   };
 
   const handleEditUser = (user: User) => {
     setFormMode("edit");
     setSelectedUser(user);
-    setIsUserFormOpen(true);
+    setIsFormModalOpen(true);
+  };
+
+  const handleRequestDelete = (user: User) => {
+    setUserToDelete(user);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+    setUserToDelete(null);
   };
 
   const handleConfirmDelete = () => {
@@ -61,6 +83,8 @@ export default function App() {
     setUsers((currentUsers) =>
       currentUsers.filter((user) => user.id !== userToDelete.id),
     );
+    setToast({ message: "User deleted successfully.", type: "success" });
+    setIsDeleteModalOpen(false);
     setUserToDelete(null);
   };
 
@@ -70,15 +94,17 @@ export default function App() {
         ...currentUsers,
         { ...userData, id: crypto.randomUUID() },
       ]);
+      setToast({ message: "User added successfully.", type: "success" });
     } else if (selectedUser) {
       setUsers((currentUsers) =>
         currentUsers.map((user) =>
           user.id === selectedUser.id ? { ...user, ...userData } : user,
         ),
       );
+      setToast({ message: "User updated successfully.", type: "success" });
     }
 
-    setIsUserFormOpen(false);
+    setIsFormModalOpen(false);
     setSelectedUser(null);
   };
 
@@ -101,25 +127,31 @@ export default function App() {
           <UserTable
             users={filteredUsers}
             onEdit={handleEditUser}
-            onDelete={setUserToDelete}
+            onDelete={handleRequestDelete}
           />
           <UserFormModal
-            isOpen={isUserFormOpen}
+            isOpen={isFormModalOpen}
             mode={formMode}
             initialData={selectedUser}
-            onClose={() => setIsUserFormOpen(false)}
+            onClose={() => setIsFormModalOpen(false)}
             onSubmit={handleSubmitUser}
           />
           <ConfirmationDialog
-            isOpen={userToDelete !== null}
+            isOpen={isDeleteModalOpen}
             title="Delete user?"
             message={
               userToDelete
                 ? `Are you sure you want to delete ${userToDelete.email}? This action cannot be undone.`
                 : ""
             }
-            onClose={() => setUserToDelete(null)}
+            onClose={handleCloseDeleteModal}
             onConfirm={handleConfirmDelete}
+          />
+          <Toast
+            message={toast?.message ?? ""}
+            type={toast?.type ?? "success"}
+            isOpen={toast !== null}
+            onClose={handleCloseToast}
           />
         </div>
       }

@@ -22,7 +22,7 @@ export function Toast({
 
     const timeoutId = window.setTimeout(onClose, duration);
     return () => window.clearTimeout(timeoutId);
-  }, [duration, isOpen, onClose]);
+  }, [duration, isOpen, message, onClose]);
 
   if (!isOpen) {
     return null;

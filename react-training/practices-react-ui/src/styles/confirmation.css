@@ -1,0 +1,37 @@
+.confirmation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  position: relative;
+  width: 600px;
+  height: 250px;
+  max-width: 50%;
+  padding: 30px;
+  z-index: 9999;
+  background-color: var(--color-bg-modal);
+  color: var(--color-text-main);
+  font-family: var(--font-family-main);
+  font-size: 23.01px;
+}
+
+.confirmation_title {
+  margin: 0 auto;
+  color: var(--color-text-main);
+  font-size: 40px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.confirmation_desc {
+  width: 100%;
+  margin: 0;
+  color: var(--color-text-modal);
+  text-align: center;
+}
+
+.confirmation_actions {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap: 15px;
+}

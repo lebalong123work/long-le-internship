@@ -1,0 +1,68 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  font-family: var(--font-family-main);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-primary {
+  width: 100%;
+  max-width: 391px;
+  margin: 10px auto 0;
+  padding: 23px 0;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-primary);
+  color: var(--color-text-secondary);
+  font-size: 34px;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--color-primary-hover);
+}
+
+.btn-add {
+  width: 90px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-add-btn);
+  color: var(--color-text-secondary);
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.btn-add:hover:not(:disabled) {
+  background-color: var(--color-primary-hover);
+}
+
+.btn-danger,
+.btn-neutral {
+  padding: 15px;
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  font-size: 23px;
+}
+
+.btn-danger {
+  background-color: var(--color-danger);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background-color: var(--color-danger-hover);
+}
+
+.btn-neutral {
+  background-color: var(--color-neutral-btn);
+}
+
+.btn-neutral:hover:not(:disabled) {
+  background-color: var(--color-neutral-hover);
+  color: var(--color-text-main);
+}

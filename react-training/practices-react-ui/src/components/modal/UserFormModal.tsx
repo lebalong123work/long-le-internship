@@ -96,7 +96,7 @@ function UserFormContent({
         Close
       </button>
       <h2 className="title form-title" id="user-form-title">
-        {mode === "create" ? "Add User" : "Edit User"}
+        {mode === "create" ? "Create User" : "Edit User"}
       </h2>
       <FormField
         label="Email"

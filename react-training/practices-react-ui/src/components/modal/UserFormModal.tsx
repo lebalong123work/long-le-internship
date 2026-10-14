@@ -1,10 +1,18 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Button } from "@/components/common/Button";
 import { Overlay } from "@/components/common/Overlay";
-import type { UserFormModalProps, UserRecord } from "@/types/ui";
+import type { User } from "@/types/user";
 import { FormField } from "./FormField";
 
-type UserFormValues = Omit<UserRecord, "id">;
+type UserFormValues = Omit<User, "id">;
+
+interface UserFormModalProps {
+  isOpen: boolean;
+  mode: "create" | "edit";
+  initialData: User | null;
+  onClose: () => void;
+  onSubmit: (data: UserFormValues) => void;
+}
 
 const emptyValues: UserFormValues = {
   email: "",
@@ -85,10 +93,10 @@ function UserFormContent({
         aria-label="Close user form"
         onClick={onClose}
       >
-        <span aria-hidden="true">&times;</span>
+        Close
       </button>
-      <h2 className="form-title" id="user-form-title">
-        {mode === "create" ? "Add User" : "Edit User"}
+      <h2 className="title form-title" id="user-form-title">
+        {mode === "create" ? "Create User" : "Edit User"}
       </h2>
       <FormField
         label="Email"
@@ -96,7 +104,8 @@ function UserFormContent({
         type="email"
         value={values.email}
         onChange={handleChange("email")}
-        placeholder="Enter email address"
+        placeholder="Enter email"
+        maxLength={40}
         autoComplete="email"
       />
       <FormField
@@ -124,10 +133,11 @@ function UserFormContent({
         value={values.phone_number}
         onChange={handleChange("phone_number")}
         placeholder="Enter phone number"
+        maxLength={10}
         autoComplete="tel"
       />
       <Button className="form-submit" type="submit" variant="primary">
-        {mode === "create" ? "Add User" : "Save Changes"}
+        {mode === "create" ? "Create User" : "Update User"}
       </Button>
     </form>
   );

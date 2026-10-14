@@ -1,4 +1,4 @@
-import type { User } from "@/scripts/types/user";
+import type { User } from "@/types/user";
 
 interface UserTableRowProps {
   user: User;

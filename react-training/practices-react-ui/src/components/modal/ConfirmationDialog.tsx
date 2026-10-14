@@ -32,11 +32,11 @@ export function ConfirmationDialog({
           {message}
         </p>
         <div className="confirmation_actions">
+          <Button variant="danger" onClick={onConfirm}>
+            Yes, delete it!
+          </Button>
           <Button variant="neutral" onClick={onClose}>
             Cancel
-          </Button>
-          <Button variant="danger" onClick={onConfirm}>
-            Delete
           </Button>
         </div>
       </section>

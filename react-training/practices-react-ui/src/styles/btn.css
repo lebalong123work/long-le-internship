@@ -6,9 +6,6 @@
   font-family: var(--font-family-main);
   font-weight: 700;
   cursor: pointer;
-  transition:
-    background-color 160ms ease,
-    color 160ms ease;
 }
 
 .btn:disabled {
@@ -19,7 +16,8 @@
 .btn-primary {
   width: 100%;
   max-width: 391px;
-  padding: 23px 16px;
+  margin: 10px auto 0;
+  padding: 23px 0;
   border-radius: var(--radius-lg);
   background-color: var(--color-primary);
   color: var(--color-text-secondary);
@@ -46,12 +44,10 @@
 
 .btn-danger,
 .btn-neutral {
-  min-width: 90px;
-  min-height: 40px;
-  padding: 8px 16px;
+  padding: 15px;
   border-radius: var(--radius-md);
   color: var(--color-text-secondary);
-  font-size: 16px;
+  font-size: 23px;
 }
 
 .btn-danger {

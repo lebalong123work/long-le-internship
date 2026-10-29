@@ -1,3 +1,10 @@
-cd typescript-training/practices-pomofocus
+ROOT=$(git rev-parse --show-toplevel)
+
+cd "$ROOT/typescript-training/practices-pomofocus"
 npm run type-check
 npm run lint
+
+if git diff --cached --name-only --diff-filter=ACMR | grep -q '^react-training/practices-react-ui/'; then
+  npm --prefix "$ROOT/react-training/practices-react-ui" run lint
+  npm --prefix "$ROOT/react-training/practices-react-ui" run build
+fi

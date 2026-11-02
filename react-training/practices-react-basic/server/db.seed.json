@@ -1,0 +1,21 @@
+{
+  "users": [
+    {
+      "id": "u1",
+      "email": "user@store.com",
+      "password": "user123",
+      "name": "Test Customer",
+      "role": "customer"
+    }
+  ],
+  "categories": [
+    { "id": "c1", "name": "T-Shirt", "slug": "t-shirt" },
+    { "id": "c2", "name": "Jacket", "slug": "jacket" },
+    { "id": "c3", "name": "Shirt", "slug": "shirt" },
+    { "id": "c4", "name": "Jeans", "slug": "jeans" }
+  ],
+  "products": [],
+  "carts": [],
+  "wishlists": [],
+  "orders": []
+}

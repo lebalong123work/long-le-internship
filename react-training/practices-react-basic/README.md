@@ -3,8 +3,6 @@
 A responsive e-commerce **frontend** for a clothing store, built as a production-like React app.
 The backend is mocked with **json-server**, behind a service layer, so it can be replaced by a real API later without changing the UI.
 
-> **Status: in progress.** The app skeleton (routing, config, tooling) is set up. Features are not built yet — pages show placeholders. See [Roadmap](#roadmap).
-
 ---
 
 ## Features (MVP)

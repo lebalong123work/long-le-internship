@@ -5,20 +5,16 @@ dist
 .env.*.local
 *.tsbuildinfo
 
-# Claude chat exports — save /export files into exports/
 /exports/
 
-# Claude Code setup (personal, not part of the app)
 /.claude/
 /CLAUDE.md
 /.agents/
 /skills-lock.json
 /.mcp.json
 
-# Project docs and editor formatting (not needed to run the app)
 /docs/
 /.prettierrc
 /.prettierignore
 
-# json-server working copy (created from server/db.seed.json)
 /server/db.json

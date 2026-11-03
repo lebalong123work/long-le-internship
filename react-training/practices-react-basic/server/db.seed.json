@@ -9,12 +9,197 @@
     }
   ],
   "categories": [
-    { "id": "c1", "name": "T-Shirt", "slug": "t-shirt" },
-    { "id": "c2", "name": "Jacket", "slug": "jacket" },
-    { "id": "c3", "name": "Shirt", "slug": "shirt" },
-    { "id": "c4", "name": "Jeans", "slug": "jeans" }
+    {
+      "id": "c1",
+      "name": "T-Shirt",
+      "slug": "t-shirt"
+    },
+    {
+      "id": "c2",
+      "name": "Jacket",
+      "slug": "jacket"
+    },
+    {
+      "id": "c3",
+      "name": "Shirt",
+      "slug": "shirt"
+    },
+    {
+      "id": "c4",
+      "name": "Jeans",
+      "slug": "jeans"
+    }
   ],
-  "products": [],
+  "products": [
+    {
+      "id": "p1",
+      "name": "Smart T-Shirt",
+      "price": 40,
+      "thumbnail": "/images/products/JskqEILt-ds-card.jpg",
+      "images": [
+        "/images/products/acn5ERAeSb4-main.jpg",
+        "/images/products/9ugEeqflo70-thumb.jpg",
+        "/images/products/Q0zoxQF7OUY-thumb.jpg",
+        "/images/products/gEupiRvyxh0-thumb.jpg"
+      ],
+      "category": "t-shirt",
+      "description": "Placeholder description — the real product text has not been provided yet.",
+      "stock": 1234,
+      "colors": ["Black", "Blue", "Green"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 5,
+      "reviewCount": 1000,
+      "isBestSeller": true,
+      "createdAt": "2026-11-03T00:00:08.000Z"
+    },
+    {
+      "id": "p2",
+      "name": "Smart T-Shirt",
+      "price": 40,
+      "thumbnail": "/images/products/tvG4WvjgsEY-card.jpg",
+      "images": [
+        "/images/products/acn5ERAeSb4-main.jpg",
+        "/images/products/9ugEeqflo70-thumb.jpg",
+        "/images/products/Q0zoxQF7OUY-thumb.jpg",
+        "/images/products/gEupiRvyxh0-thumb.jpg"
+      ],
+      "category": "t-shirt",
+      "description": "Placeholder description — the real product text has not been provided yet.",
+      "stock": 1234,
+      "colors": ["Black", "Blue", "Green"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 5,
+      "reviewCount": 1000,
+      "isBestSeller": true,
+      "createdAt": "2026-11-03T00:00:07.000Z"
+    },
+    {
+      "id": "p3",
+      "name": "Smart T-Shirt",
+      "price": 40,
+      "thumbnail": "/images/products/7cERndkOyDw-card.jpg",
+      "images": [
+        "/images/products/acn5ERAeSb4-main.jpg",
+        "/images/products/9ugEeqflo70-thumb.jpg",
+        "/images/products/Q0zoxQF7OUY-thumb.jpg",
+        "/images/products/gEupiRvyxh0-thumb.jpg"
+      ],
+      "category": "t-shirt",
+      "description": "Placeholder description — the real product text has not been provided yet.",
+      "stock": 1234,
+      "colors": ["Black", "Blue", "Green"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 5,
+      "reviewCount": 1000,
+      "isBestSeller": true,
+      "createdAt": "2026-11-03T00:00:06.000Z"
+    },
+    {
+      "id": "p4",
+      "name": "Smart T-Shirt",
+      "price": 40,
+      "thumbnail": "/images/products/gEupiRvyxh0-card.png",
+      "images": [
+        "/images/products/acn5ERAeSb4-main.jpg",
+        "/images/products/9ugEeqflo70-thumb.jpg",
+        "/images/products/Q0zoxQF7OUY-thumb.jpg",
+        "/images/products/gEupiRvyxh0-thumb.jpg"
+      ],
+      "category": "t-shirt",
+      "description": "Placeholder description — the real product text has not been provided yet.",
+      "stock": 1234,
+      "colors": ["Black", "Blue", "Green"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 5,
+      "reviewCount": 1000,
+      "isBestSeller": true,
+      "createdAt": "2026-11-03T00:00:05.000Z"
+    },
+    {
+      "id": "p5",
+      "name": "Smart T-Shirt",
+      "price": 40,
+      "thumbnail": "/images/products/JskqEILt-ds-card.jpg",
+      "images": [
+        "/images/products/acn5ERAeSb4-main.jpg",
+        "/images/products/9ugEeqflo70-thumb.jpg",
+        "/images/products/Q0zoxQF7OUY-thumb.jpg",
+        "/images/products/gEupiRvyxh0-thumb.jpg"
+      ],
+      "category": "t-shirt",
+      "description": "Placeholder description — the real product text has not been provided yet.",
+      "stock": 1234,
+      "colors": ["Black", "Blue", "Green"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 5,
+      "reviewCount": 1000,
+      "isBestSeller": true,
+      "createdAt": "2026-11-03T00:00:04.000Z"
+    },
+    {
+      "id": "p6",
+      "name": "Smart T-Shirt",
+      "price": 40,
+      "thumbnail": "/images/products/tvG4WvjgsEY-card.jpg",
+      "images": [
+        "/images/products/acn5ERAeSb4-main.jpg",
+        "/images/products/9ugEeqflo70-thumb.jpg",
+        "/images/products/Q0zoxQF7OUY-thumb.jpg",
+        "/images/products/gEupiRvyxh0-thumb.jpg"
+      ],
+      "category": "t-shirt",
+      "description": "Placeholder description — the real product text has not been provided yet.",
+      "stock": 1234,
+      "colors": ["Black", "Blue", "Green"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 5,
+      "reviewCount": 1000,
+      "isBestSeller": true,
+      "createdAt": "2026-11-03T00:00:03.000Z"
+    },
+    {
+      "id": "p7",
+      "name": "Smart T-Shirt",
+      "price": 40,
+      "thumbnail": "/images/products/7cERndkOyDw-card.jpg",
+      "images": [
+        "/images/products/acn5ERAeSb4-main.jpg",
+        "/images/products/9ugEeqflo70-thumb.jpg",
+        "/images/products/Q0zoxQF7OUY-thumb.jpg",
+        "/images/products/gEupiRvyxh0-thumb.jpg"
+      ],
+      "category": "t-shirt",
+      "description": "Placeholder description — the real product text has not been provided yet.",
+      "stock": 1234,
+      "colors": ["Black", "Blue", "Green"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 5,
+      "reviewCount": 1000,
+      "isBestSeller": true,
+      "createdAt": "2026-11-03T00:00:02.000Z"
+    },
+    {
+      "id": "p8",
+      "name": "Smart T-Shirt",
+      "price": 40,
+      "thumbnail": "/images/products/gEupiRvyxh0-card.png",
+      "images": [
+        "/images/products/acn5ERAeSb4-main.jpg",
+        "/images/products/9ugEeqflo70-thumb.jpg",
+        "/images/products/Q0zoxQF7OUY-thumb.jpg",
+        "/images/products/gEupiRvyxh0-thumb.jpg"
+      ],
+      "category": "t-shirt",
+      "description": "Placeholder description — the real product text has not been provided yet.",
+      "stock": 1234,
+      "colors": ["Black", "Blue", "Green"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 5,
+      "reviewCount": 1000,
+      "isBestSeller": true,
+      "createdAt": "2026-11-03T00:00:01.000Z"
+    }
+  ],
   "carts": [],
   "wishlists": [],
   "orders": []

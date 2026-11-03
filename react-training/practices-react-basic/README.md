@@ -132,8 +132,6 @@ Layer rules:
 | Guests get the login modal for cart / wishlist actions, and the action runs after login | Cart and wishlist belong to the account and work across devices |
 | Shared states and toast components | Every page behaves the same; change it in one place |
 
-For each feature we ask: **"How do we maintain this?"** and **"How do we extend this?"**
-
 ---
 
 ## Roadmap

@@ -1,4 +1,4 @@
-# mangcoding Store
+# Store
 
 A responsive e-commerce **frontend** for a clothing store, built as a production-like React app.
 The backend is mocked with **json-server**, behind a service layer, so it can be replaced by a real API later without changing the UI.

@@ -1,8 +1,9 @@
 import { useAuthModal } from '@/hooks/useAuthModal'
+import { useDropPendingActionOnClose } from '@/hooks/usePendingAction'
 
-// Placeholder — the real modal (tabs, forms, pending action) is built in the Auth task.
 export function AuthModal(): JSX.Element | null {
   const { mode, close } = useAuthModal()
+  useDropPendingActionOnClose()
   if (!mode) return null
 
   return (

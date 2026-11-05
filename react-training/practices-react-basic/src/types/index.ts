@@ -12,3 +12,4 @@ export type {
   Order,
   CreateOrderDto,
 } from './order'
+export type { Toast, ToastType } from './toast'

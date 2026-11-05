@@ -1,6 +1,5 @@
 import { useAuthStore } from '@/stores/authStore'
 
-/** Error thrown for every failed request. status 0 = network error. */
 export class ApiError extends Error {
   readonly status: number
 
@@ -9,6 +8,9 @@ export class ApiError extends Error {
     this.name = 'ApiError'
     this.status = status
   }
+}
+export function isNotFoundError(error: unknown): boolean {
+  return error instanceof ApiError && error.status === 404
 }
 
 type QueryValue = string | number | boolean | undefined

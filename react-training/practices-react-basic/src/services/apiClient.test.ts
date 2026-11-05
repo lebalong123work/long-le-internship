@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { apiClient, ApiError } from './apiClient'
+import { apiClient, ApiError, isNotFoundError } from './apiClient'
 import { useAuthStore } from '@/stores/authStore'
 
 interface FakeResponse {
@@ -68,5 +68,18 @@ describe('apiClient', () => {
     const error = await apiClient.get('/products').catch((e: unknown) => e)
     expect(error).toBeInstanceOf(ApiError)
     expect((error as ApiError).status).toBe(0)
+  })
+})
+
+describe('isNotFoundError', () => {
+  it('is true only for an ApiError with status 404', () => {
+    expect(isNotFoundError(new ApiError(404, 'Not Found'))).toBe(true)
+    expect(isNotFoundError(new ApiError(500, 'Server error'))).toBe(false)
+  })
+
+  it('is false for non-ApiError values', () => {
+    expect(isNotFoundError(new Error('404'))).toBe(false)
+    expect(isNotFoundError({ status: 404 })).toBe(false)
+    expect(isNotFoundError(undefined)).toBe(false)
   })
 })

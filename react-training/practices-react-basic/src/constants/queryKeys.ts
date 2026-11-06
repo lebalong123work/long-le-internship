@@ -7,6 +7,7 @@ export const queryKeys = {
     bestSellers: (category: string) => ['products', 'best-sellers', category] as const,
     detail: (id: string) => ['products', 'detail', id] as const,
     related: (id: string) => ['products', 'related', id] as const,
+    byIds: (ids: string[]) => ['products', 'by-ids', ids] as const,
   },
   search: {
     results: (q: string, page: number) => ['search', 'results', q, page] as const,

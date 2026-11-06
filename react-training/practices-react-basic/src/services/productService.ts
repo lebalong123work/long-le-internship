@@ -56,6 +56,12 @@ export async function getById(id: string): Promise<Product> {
   }
 }
 
+export async function getByIds(ids: string[]): Promise<Product[]> {
+  if (ids.length === 0) return []
+  const products = await apiClient.get<Product[]>('/products', { 'id:in': ids.join(',') })
+  return ids.flatMap((id) => products.filter((product) => product.id === id))
+}
+
 export async function getBestSellers(category: string): Promise<Product[]> {
   const response = await apiClient.get<JsonServerPage<Product>>('/products', {
     'category:eq': category,
@@ -66,7 +72,6 @@ export async function getBestSellers(category: string): Promise<Product[]> {
   return response.data
 }
 
-/** Products in the same category, without the current one (max RELATED_LIMIT). */
 export async function getRelated(product: Product): Promise<Product[]> {
   const response = await apiClient.get<JsonServerPage<Product>>('/products', {
     'category:eq': product.category,

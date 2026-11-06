@@ -11,7 +11,6 @@ interface AuthState {
   updateUser: (data: Partial<User>) => void
 }
 
-// Session only (user without password + mock token). Cart, wishlist and orders live on the server.
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
@@ -19,7 +18,10 @@ export const useAuthStore = create<AuthState>()(
       token: null,
       isAuthenticated: false,
       login: (user, token) => set({ user, token, isAuthenticated: true }),
-      logout: () => set({ user: null, token: null, isAuthenticated: false }),
+      logout: () => {
+        set({ user: null, token: null, isAuthenticated: false })
+        useAuthStore.persist.clearStorage()
+      },
       updateUser: (data) =>
         set((state) => ({
           user: state.user ? { ...state.user, ...data } : null,

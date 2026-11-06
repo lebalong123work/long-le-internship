@@ -17,7 +17,7 @@ interface UpdateQuantityVariables {
   quantity: number
 }
 
-const CART_MUTATION_SCOPE = { id: 'cart' }
+export const CART_MUTATION_SCOPE = { id: 'cart' }
 const LOGIN_REQUIRED = 'Login required'
 
 function cartErrorMessage(error: unknown): string {

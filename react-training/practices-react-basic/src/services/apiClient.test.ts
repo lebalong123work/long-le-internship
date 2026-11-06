@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { apiClient, ApiError, isNotFoundError } from './apiClient'
+import { apiClient, ApiError, isNetworkError, isNotFoundError } from './apiClient'
 import { useAuthStore } from '@/stores/authStore'
 
 interface FakeResponse {
@@ -81,5 +81,19 @@ describe('isNotFoundError', () => {
     expect(isNotFoundError(new Error('404'))).toBe(false)
     expect(isNotFoundError({ status: 404 })).toBe(false)
     expect(isNotFoundError(undefined)).toBe(false)
+  })
+})
+
+describe('isNetworkError', () => {
+  it('isNetworkError is true for an ApiError with status 0', () => {
+    expect(isNetworkError(new ApiError(0, 'Network error'))).toBe(true)
+  })
+
+  it('isNetworkError is false for other statuses and non-ApiError values', () => {
+    expect(isNetworkError(new ApiError(500, 'Server error'))).toBe(false)
+    expect(isNetworkError(new ApiError(404, 'Not Found'))).toBe(false)
+    expect(isNetworkError(new Error('Network error'))).toBe(false)
+    expect(isNetworkError({ status: 0 })).toBe(false)
+    expect(isNetworkError(undefined)).toBe(false)
   })
 })

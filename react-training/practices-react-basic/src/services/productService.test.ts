@@ -4,6 +4,7 @@ import {
   BEST_SELLER_LIMIT,
   getBestSellers,
   getById,
+  getByIds,
   getProducts,
   getRelated,
   PRODUCTS_PER_PAGE,
@@ -161,5 +162,35 @@ describe('getRelated', () => {
     expect(params.get('category:eq')).toBe('t-shirt')
     expect(params.get('id:ne')).toBe('p1')
     expect(params.get('_per_page')).toBe(String(RELATED_LIMIT))
+  })
+})
+
+describe('getByIds', () => {
+  it('getByIds requests the products with id:in', async () => {
+    const fetchMock = mockFetch([product])
+    await getByIds(['p1', 'p2'])
+    const url = requestedUrl(fetchMock)
+    expect(url.pathname).toBe('/products')
+    expect(url.searchParams.get('id:in')).toBe('p1,p2')
+  })
+
+  it('getByIds sends no request for an empty list', async () => {
+    const fetchMock = mockFetch([])
+    await expect(getByIds([])).resolves.toEqual([])
+    expect(fetchMock).not.toHaveBeenCalled()
+  })
+
+  it('getByIds returns the products in the order of the ids', async () => {
+    const p2 = { ...product, id: 'p2' }
+    const p3 = { ...product, id: 'p3' }
+    mockFetch([product, p2, p3])
+    const result = await getByIds(['p3', 'p1', 'p2'])
+    expect(result.map(({ id }) => id)).toEqual(['p3', 'p1', 'p2'])
+  })
+
+  it('getByIds leaves out ids with no product', async () => {
+    mockFetch([product])
+    const result = await getByIds(['p9', 'p1'])
+    expect(result).toEqual([product])
   })
 })

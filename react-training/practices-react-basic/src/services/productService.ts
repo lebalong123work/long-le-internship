@@ -1,5 +1,7 @@
 import { apiClient, ApiError, isNotFoundError } from './apiClient'
+import { toPaginatedList } from './pagination'
 import type { Query } from './apiClient'
+import type { JsonServerPage } from './pagination'
 import type { PaginatedList, Product, ProductFilters } from '@/types'
 
 export const PRODUCTS_PER_PAGE = 12
@@ -12,26 +14,6 @@ const SORT_PARAM: Record<ProductSort, string> = {
   newest: '-createdAt',
   'price-asc': 'price',
   'price-desc': '-price',
-}
-
-interface JsonServerPage<T> {
-  data: T[]
-  first: number
-  prev: number | null
-  next: number | null
-  last: number
-  pages: number
-  items: number
-}
-
-function toPaginatedList<T>(response: JsonServerPage<T>, perPage: number): PaginatedList<T> {
-  return {
-    data: response.data,
-    total: response.items,
-    page: response.prev === null ? 1 : response.prev + 1,
-    perPage,
-    totalPages: response.pages,
-  }
 }
 
 export async function getProducts(filters: ProductFilters): Promise<PaginatedList<Product>> {

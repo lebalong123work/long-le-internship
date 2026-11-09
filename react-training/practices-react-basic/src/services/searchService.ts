@@ -5,7 +5,7 @@ import type { Category, PaginatedList, Product, Suggestion } from '@/types'
 export const SEARCH_RESULTS_PER_PAGE = 8
 export const SUGGESTION_LIMIT = 8
 
-function normalizeQuery(query: string): string {
+export function normalizeQuery(query: string): string {
   return query.trim()
 }
 

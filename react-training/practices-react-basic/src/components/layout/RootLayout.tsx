@@ -1,8 +1,9 @@
 import { Outlet } from 'react-router-dom'
 import { AuthModal } from '@/components/auth/AuthModal'
+import { useWishlistPendingAction } from '@/hooks/useWishlist'
 
-// Header, Footer and Toaster are added in their own tasks.
 export function RootLayout(): JSX.Element {
+  useWishlistPendingAction()
   return (
     <>
       <Outlet />

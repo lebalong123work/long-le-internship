@@ -12,6 +12,9 @@ export class ApiError extends Error {
 export function isNotFoundError(error: unknown): boolean {
   return error instanceof ApiError && error.status === 404
 }
+export function isNetworkError(error: unknown): boolean {
+  return error instanceof ApiError && error.status === 0
+}
 
 type QueryValue = string | number | boolean | undefined
 export type Query = Record<string, QueryValue>

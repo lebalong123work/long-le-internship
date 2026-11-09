@@ -19,6 +19,8 @@ export const TOAST_MESSAGES = {
   profile: {
     updated: 'Profile updated successfully',
     passwordChanged: 'Password changed successfully',
+    updateFailed: 'Could not save your profile. Please try again.',
+    passwordChangeFailed: 'Could not change your password. Please try again.',
   },
   network: {
     error: 'Network error. Check your connection.',

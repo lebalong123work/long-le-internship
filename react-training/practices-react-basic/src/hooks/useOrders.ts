@@ -6,19 +6,14 @@ import { TOAST_MESSAGES } from '@/constants/toastMessages'
 import { isNetworkError, isNotFoundError } from '@/services/apiClient'
 import * as cartService from '@/services/cartService'
 import * as orderService from '@/services/orderService'
+import { requireUserId } from '@/utils/requireUserId'
 import { useAuth } from './useAuth'
 import { CART_MUTATION_SCOPE } from './useCart'
 import { useToast } from './useToast'
 import type { QueryClient, UseMutationResult, UseQueryResult } from '@tanstack/react-query'
 import type { CreateOrderDto, Order, PaginatedList } from '@/types'
 
-const LOGIN_REQUIRED = 'Login required'
 const MAX_RETRIES = 3
-
-function requireUserId(userId: string | undefined): string {
-  if (!userId) throw new Error(LOGIN_REQUIRED)
-  return userId
-}
 
 function retryUnlessNotFound(failureCount: number, error: Error): boolean {
   return !isNotFoundError(error) && failureCount < MAX_RETRIES

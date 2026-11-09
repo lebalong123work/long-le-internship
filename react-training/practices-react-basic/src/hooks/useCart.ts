@@ -3,6 +3,7 @@ import { queryKeys } from '@/constants/queryKeys'
 import { TOAST_MESSAGES } from '@/constants/toastMessages'
 import { ApiError } from '@/services/apiClient'
 import * as cartService from '@/services/cartService'
+import { requireUserId } from '@/utils/requireUserId'
 import { useAuth } from './useAuth'
 import { useToast } from './useToast'
 import type { QueryClient, UseMutationResult, UseQueryResult } from '@tanstack/react-query'
@@ -18,17 +19,11 @@ interface UpdateQuantityVariables {
 }
 
 export const CART_MUTATION_SCOPE = { id: 'cart' }
-const LOGIN_REQUIRED = 'Login required'
 
 function cartErrorMessage(error: unknown): string {
   return error instanceof ApiError && error.status === 0
     ? TOAST_MESSAGES.network.error
     : TOAST_MESSAGES.cart.updateFailed
-}
-
-function requireUserId(userId: string | undefined): string {
-  if (!userId) throw new Error(LOGIN_REQUIRED)
-  return userId
 }
 
 async function applyOptimistic(

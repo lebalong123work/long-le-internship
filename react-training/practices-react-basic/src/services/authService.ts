@@ -1,5 +1,7 @@
 import { apiClient, ApiError } from './apiClient'
-import type { AuthResponse, LoginCredentials, RegisterCredentials, User } from '@/types'
+import { toUser } from './userRecord'
+import type { AuthResponse, LoginCredentials, RegisterCredentials } from '@/types'
+import type { UserRecord } from './userRecord'
 
 export const AUTH_ERRORS = {
   emailNotFound: 'No account with this email',
@@ -7,18 +9,8 @@ export const AUTH_ERRORS = {
   emailExists: 'Email already exists',
 } as const
 
-interface UserRecord extends User {
-  password: string
-}
-
 function normalizeEmail(email: string): string {
   return email.trim().toLowerCase()
-}
-
-function toUser(record: UserRecord): User {
-  const user: Omit<UserRecord, 'password'> & { password?: string } = { ...record }
-  delete user.password
-  return user
 }
 
 function toAuthResponse(record: UserRecord): AuthResponse {

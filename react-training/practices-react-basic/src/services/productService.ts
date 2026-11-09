@@ -1,5 +1,7 @@
 import { apiClient, ApiError, isNotFoundError } from './apiClient'
+import { toPaginatedList } from './pagination'
 import type { Query } from './apiClient'
+import type { JsonServerPage } from './pagination'
 import type { PaginatedList, Product, ProductFilters } from '@/types'
 
 export const PRODUCTS_PER_PAGE = 12
@@ -12,26 +14,6 @@ const SORT_PARAM: Record<ProductSort, string> = {
   newest: '-createdAt',
   'price-asc': 'price',
   'price-desc': '-price',
-}
-
-interface JsonServerPage<T> {
-  data: T[]
-  first: number
-  prev: number | null
-  next: number | null
-  last: number
-  pages: number
-  items: number
-}
-
-function toPaginatedList<T>(response: JsonServerPage<T>, perPage: number): PaginatedList<T> {
-  return {
-    data: response.data,
-    total: response.items,
-    page: response.prev === null ? 1 : response.prev + 1,
-    perPage,
-    totalPages: response.pages,
-  }
 }
 
 export async function getProducts(filters: ProductFilters): Promise<PaginatedList<Product>> {
@@ -56,6 +38,12 @@ export async function getById(id: string): Promise<Product> {
   }
 }
 
+export async function getByIds(ids: string[]): Promise<Product[]> {
+  if (ids.length === 0) return []
+  const products = await apiClient.get<Product[]>('/products', { 'id:in': ids.join(',') })
+  return ids.flatMap((id) => products.filter((product) => product.id === id))
+}
+
 export async function getBestSellers(category: string): Promise<Product[]> {
   const response = await apiClient.get<JsonServerPage<Product>>('/products', {
     'category:eq': category,
@@ -66,7 +54,6 @@ export async function getBestSellers(category: string): Promise<Product[]> {
   return response.data
 }
 
-/** Products in the same category, without the current one (max RELATED_LIMIT). */
 export async function getRelated(product: Product): Promise<Product[]> {
   const response = await apiClient.get<JsonServerPage<Product>>('/products', {
     'category:eq': product.category,

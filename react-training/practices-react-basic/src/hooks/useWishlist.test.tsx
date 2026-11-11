@@ -137,10 +137,24 @@ describe('toggle add', () => {
     saving.reject(new ApiError(500, 'Server error'))
 
     await waitFor(() =>
-      expect(toasts()).toEqual([{ type: 'error', message: TOAST_MESSAGES.cart.updateFailed }])
+      expect(toasts()).toEqual([{ type: 'error', message: TOAST_MESSAGES.wishlist.updateFailed }])
     )
     expect(queryClient.getQueryData(wishlistKey)).toEqual(['p1'])
     refetch.resolve(['p1'])
+  })
+})
+
+describe('toggle before the list loads', () => {
+  it('toggle does nothing while the saved list is loading', () => {
+    vi.mocked(wishlistService.getWishlist).mockReturnValue(deferred<string[]>().promise)
+    const { wrapper } = setup()
+    const { result } = renderHook(() => useWishlist(), { wrapper })
+
+    act(() => result.current.toggle('p1'))
+
+    expect(wishlistService.add).not.toHaveBeenCalled()
+    expect(wishlistService.remove).not.toHaveBeenCalled()
+    expect(toasts()).toEqual([])
   })
 })
 
@@ -178,7 +192,7 @@ describe('toggle remove', () => {
     removing.reject(new ApiError(500, 'Server error'))
 
     await waitFor(() =>
-      expect(toasts()).toEqual([{ type: 'error', message: TOAST_MESSAGES.cart.updateFailed }])
+      expect(toasts()).toEqual([{ type: 'error', message: TOAST_MESSAGES.wishlist.updateFailed }])
     )
     expect(queryClient.getQueryData(wishlistKey)).toEqual(['p2', 'p1'])
     refetch.resolve(['p2', 'p1'])
@@ -206,7 +220,7 @@ describe('toggle error text', () => {
     act(() => result.current.wishlist.toggle('p3'))
 
     await waitFor(() =>
-      expect(toasts()).toEqual([{ type: 'error', message: TOAST_MESSAGES.cart.updateFailed }])
+      expect(toasts()).toEqual([{ type: 'error', message: TOAST_MESSAGES.wishlist.updateFailed }])
     )
   })
 })

@@ -1,4 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
+import { product } from '@/test/fixtures'
+import { mockNetworkFailure, mockRoutes } from '@/test/mockFetch'
 import { ApiError } from './apiClient'
 import {
   SEARCH_RESULTS_PER_PAGE,
@@ -7,25 +9,6 @@ import {
   SUGGESTION_LIMIT,
 } from './searchService'
 import type { Category, Product } from '@/types'
-
-function product(id: string): Product {
-  return {
-    id,
-    name: 'Smart T-Shirt',
-    price: 40,
-    thumbnail: `/images/products/${id}.jpg`,
-    images: [`/images/products/${id}.jpg`],
-    category: 't-shirt',
-    description: 'Best quality',
-    stock: 1234,
-    colors: ['Black'],
-    sizes: ['S'],
-    rating: 5,
-    reviewCount: 1000,
-    isBestSeller: true,
-    createdAt: '2026-11-03T00:00:00.000Z',
-  }
-}
 
 const tShirt: Category = { id: 'c1', name: 'T-Shirt', slug: 't-shirt' }
 const shirt: Category = { id: 'c3', name: 'Shirt', slug: 'shirt' }
@@ -41,35 +24,6 @@ function page(data: Product[], overrides: Record<string, unknown> = {}) {
     items: data.length,
     ...overrides,
   }
-}
-
-interface MockResponse {
-  body?: unknown
-  status?: number
-}
-
-function fakeResponse({ body, status = 200 }: MockResponse) {
-  return {
-    ok: status >= 200 && status < 300,
-    status,
-    statusText: status >= 500 ? 'Internal Server Error' : 'OK',
-    text: () => Promise.resolve(body === undefined ? '' : JSON.stringify(body)),
-  }
-}
-
-function mockRoutes(routes: Record<string, MockResponse>) {
-  const fetchMock = vi.fn((input: string) => {
-    const route = routes[new URL(input).pathname]
-    return Promise.resolve(fakeResponse(route ?? { status: 404 }))
-  })
-  vi.stubGlobal('fetch', fetchMock)
-  return fetchMock
-}
-
-function mockNetworkFailure() {
-  const fetchMock = vi.fn().mockRejectedValue(new TypeError('Failed to fetch'))
-  vi.stubGlobal('fetch', fetchMock)
-  return fetchMock
 }
 
 function requestedUrls(fetchMock: ReturnType<typeof vi.fn>): URL[] {

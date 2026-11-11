@@ -1,11 +1,13 @@
 import { skipToken, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/constants/queryKeys'
 import { TOAST_MESSAGES } from '@/constants/toastMessages'
-import { ApiError, isNetworkError, isNotFoundError } from '@/services/apiClient'
+import { ApiError } from '@/services/apiClient'
 import * as userService from '@/services/userService'
 import { USER_ERRORS } from '@/services/userService'
 import { useAuthStore } from '@/stores/authStore'
 import { requireUserId } from '@/utils/requireUserId'
+import { failureMessage } from './failureMessage'
+import { retryUnlessNotFound } from './queryRetry'
 import { useAuth } from './useAuth'
 import { useToast } from './useToast'
 import type { UseMutationResult, UseQueryResult } from '@tanstack/react-query'
@@ -16,19 +18,9 @@ export interface PasswordFieldError {
   message: string
 }
 
-const MAX_RETRIES = 3
-
 const PASSWORD_FIELD_BY_MESSAGE: Record<string, PasswordFieldError['field']> = {
   [USER_ERRORS.wrongCurrentPassword]: 'currentPassword',
   [USER_ERRORS.samePassword]: 'newPassword',
-}
-
-function retryUnlessNotFound(failureCount: number, error: Error): boolean {
-  return !isNotFoundError(error) && failureCount < MAX_RETRIES
-}
-
-function failureMessage(error: unknown, fallback: string): string {
-  return isNetworkError(error) ? TOAST_MESSAGES.network.error : fallback
 }
 
 function isSessionUser(userId: string): boolean {

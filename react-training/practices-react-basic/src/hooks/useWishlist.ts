@@ -2,9 +2,9 @@ import { useEffect } from 'react'
 import { skipToken, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/constants/queryKeys'
 import { TOAST_MESSAGES } from '@/constants/toastMessages'
-import { ApiError } from '@/services/apiClient'
 import * as wishlistService from '@/services/wishlistService'
 import { registerPendingActionHandler } from '@/stores/pendingActionStore'
+import { failureMessage } from './failureMessage'
 import { useAuth } from './useAuth'
 import { useRequestLogin } from './usePendingAction'
 import { useToast } from './useToast'
@@ -28,12 +28,6 @@ interface WishlistState {
 
 const WISHLIST_MUTATION_SCOPE = { id: 'wishlist' }
 const EMPTY_IDS: string[] = []
-
-function wishlistErrorMessage(error: unknown): string {
-  return error instanceof ApiError && error.status === 0
-    ? TOAST_MESSAGES.network.error
-    : TOAST_MESSAGES.cart.updateFailed
-}
 
 async function applyOptimistic(
   queryClient: QueryClient,
@@ -66,7 +60,7 @@ function useWishlistMutation(): UseMutationResult<void, Error, WishlistChange, W
       if (snapshot?.previous) {
         queryClient.setQueryData(queryKeys.wishlist(userId), snapshot.previous)
       }
-      toast.error(wishlistErrorMessage(error))
+      toast.error(failureMessage(error, TOAST_MESSAGES.wishlist.updateFailed))
     },
     onSettled: (_data, _error, { userId }) =>
       queryClient.invalidateQueries({ queryKey: queryKeys.wishlist(userId) }),
@@ -81,6 +75,7 @@ export function useWishlist(): WishlistState {
     queryFn: userId ? () => wishlistService.getWishlist(userId) : skipToken,
   })
   const productIds = data ?? EMPTY_IDS
+  const isLoaded = data !== undefined
   const { mutate } = useWishlistMutation()
   const requestLogin = useRequestLogin()
 
@@ -93,6 +88,7 @@ export function useWishlist(): WishlistState {
       requestLogin({ type: 'toggleWishlist', productId })
       return
     }
+    if (!isLoaded) return
     mutate({ userId, productId, add: !productIds.includes(productId) })
   }
 

@@ -46,7 +46,7 @@ export const profileSchema = z.object({
 
 export const changePasswordSchema = z
   .object({
-    currentPassword: requiredText(VALIDATION_MESSAGES.currentPasswordRequired),
+    currentPassword: z.string().min(1, VALIDATION_MESSAGES.currentPasswordRequired),
     newPassword: passwordField,
     confirmNewPassword: z.string(),
   })

@@ -5,6 +5,7 @@ import { queryKeys } from '@/constants/queryKeys'
 import { ApiError } from '@/services/apiClient'
 import * as searchService from '@/services/searchService'
 import { useToastStore } from '@/stores/toastStore'
+import { product } from '@/test/fixtures'
 import { SEARCH_DEBOUNCE_MS, useSearchResults, useSearchSuggestions } from './useSearch'
 import type { ReactNode } from 'react'
 import type { PaginatedList, Product, Suggestion } from '@/types'
@@ -14,25 +15,6 @@ vi.mock('@/services/searchService', async (importOriginal) => ({
   searchProducts: vi.fn(),
   searchSuggestions: vi.fn(),
 }))
-
-function product(id: string): Product {
-  return {
-    id,
-    name: 'Smart T-Shirt',
-    price: 40,
-    thumbnail: `/images/products/${id}.jpg`,
-    images: [`/images/products/${id}.jpg`],
-    category: 't-shirt',
-    description: 'Best quality',
-    stock: 1234,
-    colors: ['Black'],
-    sizes: ['S'],
-    rating: 5,
-    reviewCount: 1000,
-    isBestSeller: true,
-    createdAt: '2026-11-03T00:00:00.000Z',
-  }
-}
 
 function resultsPage(data: Product[], page: number): PaginatedList<Product> {
   return { data, total: 16, page, perPage: 8, totalPages: 2 }

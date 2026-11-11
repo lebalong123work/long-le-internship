@@ -7,6 +7,7 @@ export const TOAST_MESSAGES = {
   wishlist: {
     saved: 'Saved to wishlist',
     removed: 'Removed from wishlist',
+    updateFailed: 'Could not update your wishlist. Please try again.',
   },
   auth: {
     welcomeBack: (name: string): string => `Welcome back, ${name}`,

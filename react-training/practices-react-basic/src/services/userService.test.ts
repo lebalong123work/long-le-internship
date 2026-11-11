@@ -1,5 +1,12 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { callBody, callInit, callUrl, catchError, mockFetch } from '@/test/mockFetch'
+import {
+  callBody,
+  callInit,
+  callUrl,
+  catchError,
+  mockFetch,
+  mockNetworkFailure,
+} from '@/test/mockFetch'
 import { changePassword, getProfile, updateProfile, USER_ERRORS } from './userService'
 
 const record = {
@@ -17,12 +24,6 @@ const profile = {
   name: 'Test Customer',
   role: 'customer',
   phone: '0912345678',
-}
-
-function mockNetworkFailure() {
-  const fetchMock = vi.fn().mockRejectedValue(new TypeError('Failed to fetch'))
-  vi.stubGlobal('fetch', fetchMock)
-  return fetchMock
 }
 
 afterEach(() => {

@@ -92,6 +92,11 @@ describe('changePasswordSchema', () => {
     expect(errors.currentPassword?.[0]).toBe(VALIDATION_MESSAGES.currentPasswordRequired)
   })
 
+  it('keeps spaces around the current password', () => {
+    const result = changePasswordSchema.safeParse({ ...validPassword, currentPassword: ' user123 ' })
+    expect(result.success && result.data.currentPassword).toBe(' user123 ')
+  })
+
   it('rejects a new password shorter than 6 characters', () => {
     const errors = passwordErrors(
       changePasswordSchema.safeParse({

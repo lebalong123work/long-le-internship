@@ -8,6 +8,10 @@ export const PRODUCTS_PER_PAGE = 12
 export const BEST_SELLER_LIMIT = 8
 export const RELATED_LIMIT = 8
 
+export const PRODUCT_ERRORS = {
+  notFound: 'Product not found',
+} as const
+
 type ProductSort = NonNullable<ProductFilters['sort']>
 
 const SORT_PARAM: Record<ProductSort, string> = {
@@ -33,7 +37,7 @@ export async function getById(id: string): Promise<Product> {
   try {
     return await apiClient.get<Product>(`/products/${encodeURIComponent(id)}`)
   } catch (error) {
-    if (isNotFoundError(error)) throw new ApiError(404, 'Product not found')
+    if (isNotFoundError(error)) throw new ApiError(404, PRODUCT_ERRORS.notFound)
     throw error
   }
 }

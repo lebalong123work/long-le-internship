@@ -1,6 +1,7 @@
 export type { User, UserRole, UpdateProfileDto, ChangePasswordDto } from './user'
 export type { LoginCredentials, RegisterCredentials, AuthResponse } from './auth'
 export type { Product, Category, ProductFilters, PaginatedList } from './product'
+export type { Suggestion } from './search'
 export type {
   CartItem,
   Cart,

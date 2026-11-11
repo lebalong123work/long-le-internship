@@ -3,30 +3,16 @@ import { skipToken, useMutation, useQuery, useQueryClient } from '@tanstack/reac
 import { queryKeys } from '@/constants/queryKeys'
 import { ROUTES } from '@/constants/routes'
 import { TOAST_MESSAGES } from '@/constants/toastMessages'
-import { isNetworkError, isNotFoundError } from '@/services/apiClient'
 import * as cartService from '@/services/cartService'
 import * as orderService from '@/services/orderService'
+import { requireUserId } from '@/utils/requireUserId'
+import { failureMessage } from './failureMessage'
+import { retryUnlessNotFound } from './queryRetry'
 import { useAuth } from './useAuth'
 import { CART_MUTATION_SCOPE } from './useCart'
 import { useToast } from './useToast'
 import type { QueryClient, UseMutationResult, UseQueryResult } from '@tanstack/react-query'
 import type { CreateOrderDto, Order, PaginatedList } from '@/types'
-
-const LOGIN_REQUIRED = 'Login required'
-const MAX_RETRIES = 3
-
-function requireUserId(userId: string | undefined): string {
-  if (!userId) throw new Error(LOGIN_REQUIRED)
-  return userId
-}
-
-function retryUnlessNotFound(failureCount: number, error: Error): boolean {
-  return !isNotFoundError(error) && failureCount < MAX_RETRIES
-}
-
-function orderErrorMessage(error: unknown): string {
-  return isNetworkError(error) ? TOAST_MESSAGES.network.error : TOAST_MESSAGES.order.failed
-}
 
 async function clearCartAfterOrder(userId: string): Promise<boolean> {
   try {
@@ -81,7 +67,7 @@ export function useCreateOrder(): UseMutationResult<Order, Error, CreateOrderDto
       navigate(ROUTES.ORDER_SUCCESS(order.id), { replace: true })
     },
     onError: (error) => {
-      toast.error(orderErrorMessage(error))
+      toast.error(failureMessage(error, TOAST_MESSAGES.order.failed))
       if (userId) invalidateOrderData(queryClient, userId)
     },
   })

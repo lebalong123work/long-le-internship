@@ -13,5 +13,5 @@ export type {
   Order,
   CreateOrderDto,
 } from './order'
-export type { Toast, ToastType } from './toast'
+export type { Toast, ToastType, ToastPauseReason } from './toast'
 export type { PendingAction, PendingActionType, PendingActionHandler } from './pendingAction'

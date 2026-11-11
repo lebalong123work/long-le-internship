@@ -1,13 +1,12 @@
 import { useId, useLayoutEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import { FOCUS_RING, HOVER_OPACITY } from '@/components/ui/interactionClasses'
+import { CloseButton } from '@/components/ui/CloseButton'
 import { MODAL_ERRORS } from '@/components/ui/modalErrors'
+import { clearTopLayerHost, setTopLayerHost } from '@/components/ui/topLayer'
 import { cn } from '@/utils/cn'
 import type { MouseEvent, MutableRefObject, ReactNode, SyntheticEvent } from 'react'
 
 const CLOSE_LABEL = 'Close dialog'
-
-const CLOSE_ICON = '/icons/close.svg'
 
 const FOCUSABLE_SELECTOR = [
   'a[href]',
@@ -66,9 +65,11 @@ function DialogController({ dialogId, isOpen, isOpenRef }: DialogControllerProps
     const opener = activeHtmlElement()
     isOpenRef.current = true
     if (!dialog.open) dialog.showModal()
+    setTopLayerHost(dialog)
 
     return () => {
       isOpenRef.current = false
+      clearTopLayerHost(dialog)
       if (dialog.open) dialog.close()
       if (isUnmountingRef.current && opener?.isConnected) opener.focus()
     }
@@ -134,18 +135,7 @@ export function Modal({ isOpen, onClose, title, children, className }: ModalProp
             <h2 id={titleId} className="font-heading text-h4 font-bold text-dark">
               {title}
             </h2>
-            <button
-              type="button"
-              aria-label={CLOSE_LABEL}
-              onClick={onClose}
-              className={cn(
-                'inline-flex size-10 shrink-0 items-center justify-center',
-                FOCUS_RING,
-                HOVER_OPACITY
-              )}
-            >
-              <img src={CLOSE_ICON} alt="" className="size-6" />
-            </button>
+            <CloseButton label={CLOSE_LABEL} onClick={onClose} />
           </div>
           <div className="-m-1 min-h-0 overflow-y-auto overscroll-contain p-1">{children}</div>
         </div>

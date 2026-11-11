@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { ApiError } from './apiClient'
+import { callInit, callUrl, catchError, mockFetch } from '@/test/mockFetch'
 import { AUTH_ERRORS, login, register } from './authService'
 
 const seedRecord = {
@@ -8,45 +8,6 @@ const seedRecord = {
   password: 'user123',
   name: 'Test Customer',
   role: 'customer',
-}
-
-interface MockResponse {
-  body: unknown
-  status?: number
-}
-
-function response({ body, status = 200 }: MockResponse) {
-  return {
-    ok: status >= 200 && status < 300,
-    status,
-    statusText: status === 500 ? 'Internal Server Error' : 'OK',
-    text: () => Promise.resolve(JSON.stringify(body)),
-  }
-}
-
-function mockFetch(...responses: MockResponse[]) {
-  const fetchMock = vi.fn()
-  for (const r of responses) fetchMock.mockResolvedValueOnce(response(r))
-  vi.stubGlobal('fetch', fetchMock)
-  return fetchMock
-}
-
-function callUrl(fetchMock: ReturnType<typeof vi.fn>, index: number): URL {
-  return new URL(fetchMock.mock.calls[index][0] as string)
-}
-
-function callInit(fetchMock: ReturnType<typeof vi.fn>, index: number): RequestInit {
-  return fetchMock.mock.calls[index][1] as RequestInit
-}
-
-async function catchError(promise: Promise<unknown>): Promise<ApiError> {
-  try {
-    await promise
-  } catch (error) {
-    if (error instanceof ApiError) return error
-    throw error
-  }
-  throw new Error('expected an ApiError')
 }
 
 afterEach(() => {

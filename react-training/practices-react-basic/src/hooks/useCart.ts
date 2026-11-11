@@ -1,8 +1,9 @@
 import { skipToken, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/constants/queryKeys'
 import { TOAST_MESSAGES } from '@/constants/toastMessages'
-import { ApiError } from '@/services/apiClient'
 import * as cartService from '@/services/cartService'
+import { requireUserId } from '@/utils/requireUserId'
+import { failureMessage } from './failureMessage'
 import { useAuth } from './useAuth'
 import { useToast } from './useToast'
 import type { QueryClient, UseMutationResult, UseQueryResult } from '@tanstack/react-query'
@@ -18,18 +19,6 @@ interface UpdateQuantityVariables {
 }
 
 export const CART_MUTATION_SCOPE = { id: 'cart' }
-const LOGIN_REQUIRED = 'Login required'
-
-function cartErrorMessage(error: unknown): string {
-  return error instanceof ApiError && error.status === 0
-    ? TOAST_MESSAGES.network.error
-    : TOAST_MESSAGES.cart.updateFailed
-}
-
-function requireUserId(userId: string | undefined): string {
-  if (!userId) throw new Error(LOGIN_REQUIRED)
-  return userId
-}
 
 async function applyOptimistic(
   queryClient: QueryClient,
@@ -79,7 +68,7 @@ export function useAddToCart(): UseMutationResult<Cart, Error, AddToCartDto> {
       toast.success(TOAST_MESSAGES.cart.added)
     },
     onError: (error) => {
-      toast.error(cartErrorMessage(error))
+      toast.error(failureMessage(error, TOAST_MESSAGES.cart.updateFailed))
     },
     onSettled: () => {
       if (userId) return queryClient.invalidateQueries({ queryKey: queryKeys.cart(userId) })
@@ -111,7 +100,7 @@ export function useUpdateCartQuantity(): UseMutationResult<
       if (userId && snapshot?.previous) {
         queryClient.setQueryData(queryKeys.cart(userId), snapshot.previous)
       }
-      toast.error(cartErrorMessage(error))
+      toast.error(failureMessage(error, TOAST_MESSAGES.cart.updateFailed))
     },
     onSettled: () => {
       if (userId) return queryClient.invalidateQueries({ queryKey: queryKeys.cart(userId) })
@@ -137,7 +126,7 @@ export function useRemoveCartItem(): UseMutationResult<Cart, Error, string, Cart
       if (userId && snapshot?.previous) {
         queryClient.setQueryData(queryKeys.cart(userId), snapshot.previous)
       }
-      toast.error(cartErrorMessage(error))
+      toast.error(failureMessage(error, TOAST_MESSAGES.cart.updateFailed))
     },
     onSettled: () => {
       if (userId) return queryClient.invalidateQueries({ queryKey: queryKeys.cart(userId) })

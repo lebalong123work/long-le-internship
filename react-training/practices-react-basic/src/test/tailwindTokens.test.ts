@@ -57,6 +57,17 @@ describe('color tokens', () => {
   })
 })
 
+describe('error color token', () => {
+  it('maps the error color token to #DC2626', async () => {
+    expect(theme.colors).toMatchObject({ error: '#DC2626' })
+    expect(await generateCss('text-error')).toContain('rgb(220 38 38')
+  })
+
+  it('generates no class for an error shade outside the token', async () => {
+    expect(await generateCss('text-error-500')).not.toContain('.text-error-500')
+  })
+})
+
 describe('gradient token', () => {
   it('generates the brand gradient for bg-brand', async () => {
     expect(await generateCss('bg-brand')).toContain(

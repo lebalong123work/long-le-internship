@@ -23,6 +23,7 @@ const config: Config = {
         footer: '#393E46',
         badge: '#EF8484',
         star: '#FFD43C',
+        error: '#DC2626',
       },
       backgroundImage: {
         brand: 'linear-gradient(180deg, #7D89FF 0%, #AB40FF 66.67%)',

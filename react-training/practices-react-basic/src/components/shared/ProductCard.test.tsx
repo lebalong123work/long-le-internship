@@ -320,6 +320,21 @@ describe('ProductCard hover and touch', () => {
   })
 })
 
+describe('ProductCard focus ring', () => {
+  it('uses a white focus ring on the heart over the photo bar', () => {
+    renderCard()
+    expect(heart()).toHaveClass('focus-visible:ring-2', 'focus-visible:ring-white')
+    expect(heart()).not.toHaveClass('focus-visible:ring-primary')
+  })
+
+  it('keeps the primary focus ring on the card link', () => {
+    renderCard()
+    expect(screen.getByRole('link', { name: 'Smart T-Shirt' })).toHaveClass(
+      'focus-visible:after:ring-primary'
+    )
+  })
+})
+
 describe('ProductCard className', () => {
   it('merges a caller class name', () => {
     const { container } = renderCard({}, 'mt-4')

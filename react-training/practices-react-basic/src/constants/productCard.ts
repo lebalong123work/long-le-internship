@@ -1,6 +1,6 @@
-const countFormat = new Intl.NumberFormat('en-US')
+import { MAX_RATING } from './product'
 
-export const MAX_RATING = 5
+const countFormat = new Intl.NumberFormat('en-US')
 
 export const PRODUCT_CARD_TEXT = {
   bestQuality: 'Best quality',

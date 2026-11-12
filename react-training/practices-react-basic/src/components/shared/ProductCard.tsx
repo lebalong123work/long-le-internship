@@ -48,7 +48,13 @@ function HeartButton({ product }: HeartButtonProps): JSX.Element {
       aria-pressed={isSaved}
       aria-disabled={isLoaded ? undefined : true}
       onClick={handleClick}
-      className={cn('pointer-events-auto size-8', FOCUS_RING, HOVER_OPACITY, ARIA_DISABLED)}
+      className={cn(
+        'pointer-events-auto size-8',
+        FOCUS_RING,
+        'focus-visible:ring-white',
+        HOVER_OPACITY,
+        ARIA_DISABLED
+      )}
     >
       <svg viewBox="0 0 32 32" fill="none" aria-hidden="true" className="size-8">
         <use href={HEART_FRAME} />
@@ -63,7 +69,6 @@ function Rating({ rating, reviewCount }: RatingProps): JSX.Element {
 
   return (
     <div className="mt-[13px] flex flex-wrap items-center gap-x-2.5 gap-y-1">
-      {/* TODO: clarify Figma node 1:267 — empty / half star for a rating below 5 (https://www.figma.com/design/7A0wnuwHwF4x3nKWR2hd7b/T-Shirt-Website--Copy-?node-id=1-267) */}
       <span
         role="img"
         aria-label={PRODUCT_CARD_TEXT.rating(ratingLabelValue(rating))}
@@ -109,7 +114,6 @@ export function ProductCard({ product, className }: ProductCardProps): JSX.Eleme
           />
         )}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex h-14 items-center justify-end gap-4 bg-black/50 pr-4 backdrop-blur-[2px] can-hover:opacity-0 can-hover:group-focus-within:opacity-100 can-hover:group-hover:opacity-100">
-          {/* TODO: clarify Figma node 1:267 — Bookmark behavior (https://www.figma.com/design/7A0wnuwHwF4x3nKWR2hd7b/T-Shirt-Website--Copy-?node-id=1-267) */}
           <span aria-hidden="true" className="size-8">
             <img src={BOOKMARK_ICON} alt="" className="size-8" />
           </span>

@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { MAX_RATING } from '@/constants/product'
 import { ApiError } from './apiClient'
 import { PRODUCT_ERRORS } from './productErrors'
 import type { Product } from '@/types'
@@ -19,7 +20,7 @@ export const productRecordSchema: z.ZodType<Product> = z.object({
   stock: countField,
   colors: z.array(nonBlankText),
   sizes: z.array(nonBlankText),
-  rating: z.number().finite().min(0).max(5),
+  rating: z.number().finite().min(0).max(MAX_RATING),
   reviewCount: countField,
   isBestSeller: z.boolean(),
   createdAt: z.string().datetime(),

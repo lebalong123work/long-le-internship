@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import { AuthModal } from '@/components/auth/AuthModal'
+import { Footer } from '@/components/layout/Footer'
 import { Header } from '@/components/layout/Header'
 import { SAFE_AREA_X } from '@/components/layout/safeArea'
 import { Toaster } from '@/components/shared/Toaster'
@@ -15,6 +16,7 @@ export function RootLayout(): JSX.Element {
           <Outlet />
         </main>
       </div>
+      <Footer />
       <AuthModal />
       <Toaster />
     </>

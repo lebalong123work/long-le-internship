@@ -1,6 +1,11 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ARIA_DISABLED, FOCUS_RING, HOVER_OPACITY } from '@/components/ui/interactionClasses'
+import {
+  ARIA_DISABLED,
+  FOCUS_RING,
+  FOCUS_RING_ON_DARK,
+  HOVER_OPACITY,
+} from '@/components/ui/interactionClasses'
 import { PRODUCT_CARD_TEXT } from '@/constants/productCard'
 import { ROUTES } from '@/constants/routes'
 import { useWishlist } from '@/hooks/useWishlist'
@@ -51,7 +56,7 @@ function HeartButton({ product }: HeartButtonProps): JSX.Element {
       className={cn(
         'pointer-events-auto size-8',
         FOCUS_RING,
-        'focus-visible:ring-white',
+        FOCUS_RING_ON_DARK,
         HOVER_OPACITY,
         ARIA_DISABLED
       )}

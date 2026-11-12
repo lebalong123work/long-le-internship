@@ -166,6 +166,20 @@ describe('card size', () => {
   })
 })
 
+describe('fluid card tokens', () => {
+  it('maps max-w-card to 265px and aspect-card to 265 / 248', async () => {
+    const css = await generateCss('max-w-card aspect-card')
+    expect(css).toContain('max-width: 265px')
+    expect(css).toContain('aspect-ratio: 265 / 248')
+  })
+
+  it('generates no max-width or aspect class for another card name', async () => {
+    const css = await generateCss('max-w-card-lg aspect-card-wide')
+    expect(css).not.toContain('.max-w-card-lg')
+    expect(css).not.toContain('.aspect-card-wide')
+  })
+})
+
 describe('container', () => {
   it('centers the container and caps it at 1200px from 1200px wide', async () => {
     const css = await generateCss('container')

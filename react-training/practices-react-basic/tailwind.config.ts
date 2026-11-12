@@ -64,6 +64,12 @@ const config: Config = {
       height: {
         card: '366px',
       },
+      maxWidth: {
+        card: '265px',
+      },
+      aspectRatio: {
+        card: '265 / 248',
+      },
     },
   },
   plugins: [

@@ -1,31 +1,11 @@
-import { cva } from 'class-variance-authority'
+import { buttonVariants, GRADIENT_TEXT } from '@/components/ui/buttonVariants'
 import { DISABLED_CURSOR, FOCUS_RING, HOVER_OPACITY } from '@/components/ui/interactionClasses'
 import { Spinner } from '@/components/ui/Spinner'
 import { cn } from '@/utils/cn'
+import type { ButtonVariant } from '@/components/ui/buttonVariants'
 import type { ButtonHTMLAttributes, ReactNode } from 'react'
 
-const buttonVariants = cva(
-  [
-    'inline-flex h-12 items-center justify-center gap-2.5 rounded-none font-body text-lg font-bold leading-normal disabled:opacity-50',
-    FOCUS_RING,
-    HOVER_OPACITY,
-    DISABLED_CURSOR,
-  ],
-  {
-    variants: {
-      variant: {
-        primary: 'bg-brand px-[34px] py-2.5 text-white shadow-button',
-        light: 'bg-white px-[34px] py-2.5 text-primary shadow-button-light',
-        'icon-gradient': 'size-12 bg-brand text-white shadow-button',
-      },
-    },
-    defaultVariants: {
-      variant: 'primary',
-    },
-  }
-)
-
-type ButtonVariant = 'primary' | 'light' | 'icon-gradient'
+const BUTTON_INTERACTION = ['disabled:opacity-50', FOCUS_RING, HOVER_OPACITY, DISABLED_CURSOR]
 
 interface ButtonBaseProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'aria-label'> {
   isLoading?: boolean
@@ -51,7 +31,7 @@ function renderContent(
 ): ReactNode {
   if (variant === 'icon-gradient') return isLoading ? null : children
   if (variant === 'light') {
-    return <span className="bg-brand bg-clip-text text-transparent">{children}</span>
+    return <span className={GRADIENT_TEXT}>{children}</span>
   }
   return children
 }
@@ -63,6 +43,7 @@ export function Button({
   type = 'button',
   className,
   children,
+  'aria-busy': ariaBusy,
   ...rest
 }: ButtonProps): JSX.Element {
   return (
@@ -70,8 +51,8 @@ export function Button({
       {...rest}
       type={type}
       disabled={disabled || isLoading}
-      aria-busy={isLoading ? true : undefined}
-      className={cn(buttonVariants({ variant }), className)}
+      aria-busy={isLoading ? true : ariaBusy}
+      className={cn(buttonVariants({ variant }), BUTTON_INTERACTION, className)}
     >
       {isLoading && <Spinner />}
       {renderContent(variant, isLoading, children)}

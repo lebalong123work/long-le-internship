@@ -13,7 +13,7 @@ interface DialogControllerProps {
 
 interface DialogCloseEvents {
   onCancel: (event: SyntheticEvent<HTMLDialogElement>) => void
-  onClose: () => void
+  onClose: (event: SyntheticEvent<HTMLDialogElement>) => void
   onMouseDown: (event: MouseEvent<HTMLDialogElement>) => void
   onClick: (event: MouseEvent<HTMLDialogElement>) => void
 }
@@ -67,8 +67,8 @@ export function useDialogCloseEvents(onClose: () => void): DialogCloseState {
     onClose()
   }
 
-  function handleNativeClose(): void {
-    if (isOpenRef.current) onClose()
+  function handleNativeClose(event: SyntheticEvent<HTMLDialogElement>): void {
+    if (isOpenRef.current && !event.currentTarget.open) onClose()
   }
 
   function handleMouseDown(event: MouseEvent<HTMLDialogElement>): void {

@@ -42,8 +42,16 @@ interface ModalProps {
   className?: string
 }
 
+const AUTOFOCUS_SELECTOR = '[data-autofocus]'
+
 function focusFirstControl(panel: HTMLElement | null): void {
-  if (!panel || panel.contains(document.activeElement)) return
+  if (!panel) return
+  const preferred = panel.querySelector<HTMLElement>(AUTOFOCUS_SELECTOR)
+  if (preferred) {
+    preferred.focus()
+    return
+  }
+  if (panel.contains(document.activeElement)) return
   panel.querySelector<HTMLElement>(FOCUSABLE_SELECTOR)?.focus()
 }
 

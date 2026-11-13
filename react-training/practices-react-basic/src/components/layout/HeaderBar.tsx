@@ -3,7 +3,7 @@ import { ROUTES } from '@/constants/routes'
 import { useCart } from '@/hooks/useCart'
 import { countCartItems } from '@/utils/countCartItems'
 import { GuardedIconLink } from './GuardedIconLink'
-import { HeaderLogo } from './HeaderLogo'
+import { SiteLogo } from './SiteLogo'
 import { HeaderSearch } from './HeaderSearch'
 import { MainNav } from './MainNav'
 import { UserMenu } from './UserMenu'
@@ -23,7 +23,7 @@ export function HeaderBar({ menuControl }: HeaderBarProps): JSX.Element {
 
   return (
     <div className="container flex h-16 items-center justify-between gap-4 px-4 md:px-6 xl:grid xl:h-20 xl:grid-cols-[1fr_auto_1fr] xl:px-0">
-      <HeaderLogo />
+      <SiteLogo />
       <MainNav orientation="row" className="hidden xl:mt-[3px] xl:block" />
       <div className="flex items-center justify-end gap-4 xl:gap-6">
         <GuardedIconLink

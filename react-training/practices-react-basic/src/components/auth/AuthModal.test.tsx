@@ -317,17 +317,17 @@ describe('AuthModal close while submitting', () => {
 })
 
 describe('AuthModal register tab', () => {
-  it('?auth=register shows the Sign Up dialog and panel', () => {
+  it('?auth=register shows the Sign Up dialog and the register form', () => {
     renderModal('/?auth=register')
     expect(screen.getByRole('dialog', { name: AUTH_TEXT.signUp })).toBeInTheDocument()
     expect(
-      within(screen.getByRole('tabpanel')).getByText(AUTH_TEXT.signUpPlaceholder)
+      within(screen.getByRole('tabpanel')).getByLabelText(AUTH_TEXT.nameLabel)
     ).toBeVisible()
   })
 
-  it('?auth=register shows no login form', () => {
+  it('?auth=register shows no login password field', () => {
     renderModal('/?auth=register')
-    expect(screen.queryByLabelText(AUTH_TEXT.emailLabel)).toBeNull()
+    expect(authDialog().querySelector('[autocomplete="current-password"]')).toBeNull()
   })
 })
 

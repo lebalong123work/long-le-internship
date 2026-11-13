@@ -24,6 +24,7 @@ interface WishlistState {
   productIds: string[]
   isInWishlist: (productId: string) => boolean
   toggle: (productId: string) => void
+  isLoaded: boolean
 }
 
 const WISHLIST_MUTATION_SCOPE = { id: 'wishlist' }
@@ -75,7 +76,7 @@ export function useWishlist(): WishlistState {
     queryFn: userId ? () => wishlistService.getWishlist(userId) : skipToken,
   })
   const productIds = data ?? EMPTY_IDS
-  const isLoaded = data !== undefined
+  const isLoaded = !userId || data !== undefined
   const { mutate } = useWishlistMutation()
   const requestLogin = useRequestLogin()
 
@@ -92,7 +93,7 @@ export function useWishlist(): WishlistState {
     mutate({ userId, productId, add: !productIds.includes(productId) })
   }
 
-  return { productIds, isInWishlist, toggle }
+  return { productIds, isInWishlist, toggle, isLoaded }
 }
 
 export function useWishlistPendingAction(): void {

@@ -33,7 +33,7 @@ describe('useToast', () => {
     )
   })
 
-  it('success disappears after 3 s, error after 5 s', () => {
+  it('success disappears after 5 s, error after 7 s', () => {
     const { result } = renderHook(() => useToast())
 
     act(() => {
@@ -41,7 +41,7 @@ describe('useToast', () => {
       result.current.error('fail')
     })
     act(() => {
-      vi.advanceTimersByTime(3000)
+      vi.advanceTimersByTime(5000)
     })
     expect(useToastStore.getState().toasts.map((t) => t.message)).toEqual(['fail'])
 

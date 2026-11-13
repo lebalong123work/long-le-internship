@@ -1,27 +1,28 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { AuthSwitchPrompt } from '@/components/auth/AuthSwitchPrompt'
 import { Button } from '@/components/ui/Button'
 import { FORM_ERROR_TEXT } from '@/components/ui/formClasses'
-import { DISABLED_CURSOR, FOCUS_RING, HOVER_OPACITY } from '@/components/ui/interactionClasses'
 import { Input } from '@/components/ui/Input'
 import { AUTH_TEXT } from '@/constants/auth'
 import { authFormError } from '@/hooks/authFormError'
 import { useLogin } from '@/hooks/useAuth'
 import { useAuthModal } from '@/hooks/useAuthModal'
+import { useSubmitLock } from '@/hooks/useSubmitLock'
 import { loginSchema } from '@/schemas/auth'
 import { runPendingAction } from '@/stores/pendingActionStore'
-import { cn } from '@/utils/cn'
 import type { LoginFormValues } from '@/schemas/auth'
 
 const EMPTY_LOGIN: LoginFormValues = { email: '', password: '' }
 
 interface LoginFormProps {
-  isLoginPending: boolean
+  isAuthPending: boolean
   autoFocusEmail: boolean
 }
 
-export function LoginForm({ isLoginPending, autoFocusEmail }: LoginFormProps): JSX.Element {
+export function LoginForm({ isAuthPending, autoFocusEmail }: LoginFormProps): JSX.Element {
   const login = useLogin()
+  const submitLock = useSubmitLock()
   const { switchMode, closeAndRedirect } = useAuthModal()
   const {
     register,
@@ -31,16 +32,17 @@ export function LoginForm({ isLoginPending, autoFocusEmail }: LoginFormProps): J
     resolver: zodResolver(loginSchema),
     defaultValues: EMPTY_LOGIN,
   })
-  const isBusy = login.isPending || isLoginPending
+  const isBusy = login.isPending || isAuthPending
   const formError = login.isError ? authFormError(login.error) : null
 
   function submitLogin(values: LoginFormValues): void {
-    if (isLoginPending || login.isPending) return
+    if (isAuthPending || !submitLock.acquire()) return
     login.mutate(values, {
       onSuccess: ({ user }) => {
         runPendingAction(user)
         closeAndRedirect()
       },
+      onSettled: submitLock.release,
     })
   }
 
@@ -71,22 +73,12 @@ export function LoginForm({ isLoginPending, autoFocusEmail }: LoginFormProps): J
           {formError?.canRetry ? AUTH_TEXT.retry : AUTH_TEXT.logIn}
         </Button>
       </form>
-      <p className="flex flex-wrap items-center gap-2 font-heading text-lg leading-normal text-medium-dark">
-        {AUTH_TEXT.noAccountPrompt}
-        <button
-          type="button"
-          disabled={isBusy}
-          onClick={() => switchMode('register')}
-          className={cn(
-            'font-bold text-primary disabled:opacity-50',
-            FOCUS_RING,
-            DISABLED_CURSOR,
-            HOVER_OPACITY
-          )}
-        >
-          {AUTH_TEXT.switchToSignUp}
-        </button>
-      </p>
+      <AuthSwitchPrompt
+        prompt={AUTH_TEXT.noAccountPrompt}
+        actionLabel={AUTH_TEXT.switchToSignUp}
+        onSwitch={() => switchMode('register')}
+        disabled={isBusy}
+      />
     </div>
   )
 }

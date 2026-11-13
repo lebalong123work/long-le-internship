@@ -6,9 +6,12 @@ export const AUTH_TEXT = {
   tabsLabel: 'Log In or Sign Up',
   emailLabel: 'Email',
   passwordLabel: 'Password',
+  nameLabel: 'Full name',
+  confirmPasswordLabel: 'Confirm Password',
   noAccountPrompt: "Don't have an account?",
   switchToSignUp: 'Sign up',
+  haveAccountPrompt: 'Already have an account?',
+  switchToLogIn: 'Log in',
   invalidCredentials: 'Incorrect email or password',
   retry: UI_STATE_MESSAGES.retry,
-  signUpPlaceholder: 'Sign Up — placeholder',
 } as const

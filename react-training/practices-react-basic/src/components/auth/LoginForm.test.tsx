@@ -34,12 +34,12 @@ function currentUrl(): URL {
   return new URL(screen.getByTestId('location').textContent ?? '', 'http://localhost')
 }
 
-function renderForm({ path = '/?auth=login', isLoginPending = false } = {}) {
+function renderForm({ path = '/?auth=login', isAuthPending = false } = {}) {
   const queryClient = new QueryClient({ defaultOptions: { mutations: { retry: false } } })
   const view = render(
     <QueryClientProvider client={queryClient}>
       <MemoryRouter initialEntries={[path]}>
-        <LoginForm isLoginPending={isLoginPending} autoFocusEmail />
+        <LoginForm isAuthPending={isAuthPending} autoFocusEmail />
         <LocationProbe />
       </MemoryRouter>
     </QueryClientProvider>
@@ -358,16 +358,16 @@ describe('LoginForm attributes', () => {
   })
 })
 
-describe('LoginForm isLoginPending', () => {
-  it('submits normally when isLoginPending is false', async () => {
+describe('LoginForm isAuthPending', () => {
+  it('submits normally when isAuthPending is false', async () => {
     vi.mocked(authService.login).mockResolvedValue(authResponse)
-    const { user } = renderForm({ isLoginPending: false })
+    const { user } = renderForm({ isAuthPending: false })
     await fillAndSubmit(user)
     await waitFor(() => expect(authService.login).toHaveBeenCalledTimes(1))
   })
 
-  it('shows the spinner and sends nothing when isLoginPending is true', async () => {
-    const { user, container } = renderForm({ isLoginPending: true })
+  it('shows the spinner and sends nothing when isAuthPending is true', async () => {
+    const { user, container } = renderForm({ isAuthPending: true })
     expect(submitButton()).toHaveAttribute('aria-busy', 'true')
     await user.type(emailInput(), VALID_EMAIL)
     await user.type(passwordInput(), VALID_PASSWORD)

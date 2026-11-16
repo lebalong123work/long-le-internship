@@ -1,4 +1,5 @@
 import { forwardRef, useId } from 'react'
+import { FORM_ERROR_TEXT } from '@/components/ui/formClasses'
 import { DISABLED_CURSOR, FOCUS_RING } from '@/components/ui/interactionClasses'
 import { cn } from '@/utils/cn'
 import type { InputHTMLAttributes } from 'react'
@@ -42,7 +43,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           )}
         />
         {error && (
-          <p id={errorId} className="font-body text-sm leading-normal text-error">
+          <p id={errorId} className={FORM_ERROR_TEXT}>
             {error}
           </p>
         )}

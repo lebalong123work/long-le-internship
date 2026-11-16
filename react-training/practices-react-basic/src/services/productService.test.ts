@@ -17,7 +17,7 @@ const product: Product = {
   name: 'Smart T-Shirt',
   price: 40,
   thumbnail: '/images/products/p1.jpg',
-  images: ['/images/products/p1.jpg'],
+  images: [{ src: '/images/products/p1.jpg' }],
   category: 't-shirt',
   description: 'Best quality',
   stock: 1234,

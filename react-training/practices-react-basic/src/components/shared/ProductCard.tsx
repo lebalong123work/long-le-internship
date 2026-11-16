@@ -7,6 +7,7 @@ import {
   HOVER_OPACITY,
 } from '@/components/ui/interactionClasses'
 import { CARD_INFO_PADDING } from '@/components/shared/productCardClasses'
+import { RatingStars } from '@/components/shared/RatingStars'
 import { PRODUCT_CARD_TEXT } from '@/constants/productCard'
 import { ROUTES } from '@/constants/routes'
 import { useWishlist } from '@/hooks/useWishlist'
@@ -15,7 +16,6 @@ import { formatCurrency } from '@/utils/formatCurrency'
 import { formatReviewCount } from '@/utils/formatReviewCount'
 import type { Product } from '@/types'
 
-const STAR_ICON = '/icons/star.svg'
 const BOOKMARK_ICON = '/icons/card-bookmark.svg'
 const HEART_FRAME = '/icons/card-heart.svg#card-heart-frame'
 const HEART_SHAPE = '/icons/card-heart.svg#card-heart-shape'
@@ -32,10 +32,6 @@ interface HeartButtonProps {
 interface RatingProps {
   rating: number
   reviewCount: number
-}
-
-function ratingLabelValue(rating: number): number {
-  return Math.round(rating * 10) / 10
 }
 
 function HeartButton({ product }: HeartButtonProps): JSX.Element {
@@ -71,21 +67,9 @@ function HeartButton({ product }: HeartButtonProps): JSX.Element {
 }
 
 function Rating({ rating, reviewCount }: RatingProps): JSX.Element {
-  const stars = Array.from({ length: Math.round(rating) }, (_, index) => index)
-
   return (
     <div className="mt-[13px] flex flex-wrap items-center gap-x-2.5 gap-y-1">
-      <span
-        role="img"
-        aria-label={PRODUCT_CARD_TEXT.rating(ratingLabelValue(rating))}
-        className="flex gap-1"
-      >
-        {stars.map((star) => (
-          <span key={star} className="flex size-[18px] items-center justify-center">
-            <img src={STAR_ICON} alt="" width={16} height={15} />
-          </span>
-        ))}
-      </span>
+      <RatingStars rating={rating} className="gap-1" />
       <p className="font-numeric text-sm leading-normal text-medium-dark">
         <span aria-hidden="true">
           {PRODUCT_CARD_TEXT.reviewCountShort(formatReviewCount(reviewCount))}

@@ -1,9 +1,15 @@
+export interface ProductImage {
+  src: string
+  thumbnailSrc?: string
+  src2x?: string
+}
+
 export interface Product {
   id: string
   name: string
   price: number
   thumbnail: string
-  images: string[]
+  images: ProductImage[]
   category: string
   description: string
   stock: number

@@ -9,3 +9,5 @@ export const DISABLED_CURSOR = 'disabled:cursor-not-allowed'
 
 export const ARIA_DISABLED =
   'aria-disabled:cursor-not-allowed aria-disabled:opacity-50 can-hover:aria-disabled:hover:opacity-50'
+
+export const FOCUS_RING_ON_DARK = 'focus-visible:ring-white'

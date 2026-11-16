@@ -1,8 +1,11 @@
+const SEARCH = '/search'
+
 export const ROUTES = {
   HOME: '/',
   SHOP: '/shop',
   PRODUCT: (productId: string) => `/shop/${productId}`,
-  SEARCH: '/search',
+  SEARCH,
+  SEARCH_RESULTS: (query: string) => `${SEARCH}?${new URLSearchParams({ q: query }).toString()}`,
   ABOUT: '/about',
   CONTACT: '/contact',
   CART: '/cart',

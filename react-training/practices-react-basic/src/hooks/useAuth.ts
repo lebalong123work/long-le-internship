@@ -8,6 +8,9 @@ import { useToast } from './useToast'
 import type { UseMutationResult } from '@tanstack/react-query'
 import type { AuthResponse, LoginCredentials, RegisterCredentials, User } from '@/types'
 
+export const LOGIN_MUTATION_KEY = ['auth', 'login'] as const
+export const REGISTER_MUTATION_KEY = ['auth', 'register'] as const
+
 interface AuthSession {
   user: User | null
   isAuthenticated: boolean
@@ -24,6 +27,7 @@ export function useLogin(): UseMutationResult<AuthResponse, Error, LoginCredenti
   const toast = useToast()
 
   return useMutation({
+    mutationKey: LOGIN_MUTATION_KEY,
     mutationFn: authService.login,
     onSuccess: ({ user, token }) => {
       login(user, token)
@@ -37,6 +41,7 @@ export function useRegister(): UseMutationResult<AuthResponse, Error, RegisterCr
   const toast = useToast()
 
   return useMutation({
+    mutationKey: REGISTER_MUTATION_KEY,
     mutationFn: authService.register,
     onSuccess: ({ user, token }) => {
       login(user, token)

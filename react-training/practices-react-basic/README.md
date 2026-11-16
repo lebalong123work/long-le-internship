@@ -25,6 +25,8 @@ Log in from the user icon in the header, or open https://mangcoding-store-seven.
 | Where | What to check |
 |---|---|
 | Home `/` | Hero banner (desktop and mobile — resize the window) |
+| Home — "Our Best Seller" | Category tabs T-Shirt · Jacket · Shirt · Jeans (click, or arrow keys + Enter): T-Shirt shows 8 product cards, the other tabs show "No products in this category" (the mock data has T-shirts only). Grid: 4 columns on desktop, 3 on tablets, 2 on phones. "See More" opens the shop page (under development) |
+| Product card heart | Logged in: saves / removes the product from your wishlist. Guest: opens Log In, and the product is saved after you log in |
 | Header | Logo, nav (Home · Shop · About Us · Contact), search bar, mobile menu (☰) |
 | Log In / Sign Up | Modal with two tabs, form validation (empty fields, wrong email, wrong password), toast after login |
 | Logged in | User menu: Profile · Orders · Wishlist · Logout |
@@ -33,7 +35,7 @@ Log in from the user icon in the header, or open https://mangcoding-store-seven.
 | `/shop`, `/about`, `/contact` | "This page is under development" |
 | Any unknown URL, e.g. `/abc` | 404 page |
 
-**Not built yet** (the page shows a placeholder): Best Seller section, Product Detail, Cart, Checkout, Wishlist, Search results, Order History, Profile. The logic behind them (services and hooks) is done and tested; the pages come in the next tasks. The demo updates automatically after each merge into `practices-react-basic`.
+**Not built yet** (the page shows a placeholder): Product Detail, Cart, Checkout, Wishlist, Search results, Order History, Profile. The logic behind them (services and hooks) is done and tested; the pages come in the next tasks. The demo updates automatically after each merge into `practices-react-basic`.
 
 ### Demo limits
 
@@ -196,7 +198,7 @@ Layer rules:
 - [x] Auth modal (Log In + Sign Up) + route guards
 - [x] "Under development" pages + 404
 - [x] Deploy demo: Vercel (app) + Render (mock API)
-- [ ] Home: Hero banner done; Best Seller section next
+- [x] Home: Hero banner + Best Seller section
 - [ ] Product Detail → Cart → Checkout → Order Success
 - [ ] Wishlist, Search, Order History, Profile
 - [ ] Responsive pass (mobile)

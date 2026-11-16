@@ -6,6 +6,7 @@ import {
   FOCUS_RING_ON_DARK,
   HOVER_OPACITY,
 } from '@/components/ui/interactionClasses'
+import { CARD_INFO_PADDING } from '@/components/shared/productCardClasses'
 import { PRODUCT_CARD_TEXT } from '@/constants/productCard'
 import { ROUTES } from '@/constants/routes'
 import { useWishlist } from '@/hooks/useWishlist'
@@ -125,7 +126,7 @@ export function ProductCard({ product, className }: ProductCardProps): JSX.Eleme
           <HeartButton product={product} />
         </div>
       </div>
-      <div className="px-4 pb-6 pt-4">
+      <div className={CARD_INFO_PADDING}>
         <div className="flex items-start justify-between gap-2">
           <h3 className="min-w-0 break-words font-body text-sm font-bold leading-normal text-dark">
             <Link

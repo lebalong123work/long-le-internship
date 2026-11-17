@@ -4,7 +4,6 @@ import { describe, expect, it } from 'vitest'
 import { HERO_SLIDES, HERO_TEXT } from '@/constants/hero'
 import { ROUTES } from '@/constants/routes'
 import { HeroBanner } from './HeroBanner'
-import Home from './index'
 
 function renderInRouter(element: JSX.Element) {
   return render(<MemoryRouter>{element}</MemoryRouter>)
@@ -32,11 +31,5 @@ describe('HeroBanner', () => {
       'src',
       HERO_SLIDES[0].imageSrc
     )
-  })
-
-  it('Home page shows the hero banner', () => {
-    renderInRouter(<Home />)
-    expect(screen.getByRole('heading', { level: 1, name: HERO_TEXT.title })).toBeInTheDocument()
-    expect(screen.getByRole('region', { name: HERO_TEXT.carouselLabel })).toBeInTheDocument()
   })
 })

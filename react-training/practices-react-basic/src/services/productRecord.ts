@@ -9,12 +9,18 @@ const INVALID_DATA_STATUS = 502
 const nonBlankText = z.string().regex(/\S/)
 const countField = z.number().int().nonnegative()
 
+const productImageSchema = z.object({
+  src: nonBlankText,
+  thumbnailSrc: nonBlankText.optional(),
+  src2x: nonBlankText.optional(),
+})
+
 export const productRecordSchema: z.ZodType<Product> = z.object({
   id: nonBlankText,
   name: nonBlankText,
   price: z.number().finite().nonnegative(),
   thumbnail: nonBlankText,
-  images: z.array(nonBlankText).min(1),
+  images: z.array(productImageSchema).min(1),
   category: nonBlankText,
   description: z.string(),
   stock: countField,

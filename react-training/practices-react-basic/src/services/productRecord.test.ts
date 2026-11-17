@@ -136,14 +136,34 @@ describe('productRecordSchema — numbers', () => {
 })
 
 describe('productRecordSchema — lists', () => {
-  it('accepts one or more image paths', () => {
-    expect(accepts('images', ['/a.jpg'])).toBe(true)
-    expect(accepts('images', ['/a.jpg', '/b.jpg'])).toBe(true)
+  it('accepts image objects with optional thumbnailSrc and src2x', () => {
+    expect(accepts('images', [{ src: '/a.jpg' }])).toBe(true)
+    expect(
+      accepts('images', [
+        { src: '/a.jpg', thumbnailSrc: '/a-thumb.jpg', src2x: '/a@2x.jpg' },
+        { src: '/b.jpg' },
+      ])
+    ).toBe(true)
   })
 
-  it('rejects an empty images list or a blank image', () => {
+  it('rejects an empty images list or a blank image src', () => {
     expect(accepts('images', [])).toBe(false)
-    expect(accepts('images', ['/a.jpg', ' '])).toBe(false)
+    expect(accepts('images', [{ src: '/a.jpg' }, { src: ' ' }])).toBe(false)
+    expect(accepts('images', [{ thumbnailSrc: '/a-thumb.jpg' }])).toBe(false)
+  })
+
+  it('rejects a plain string image', () => {
+    expect(accepts('images', ['/a.jpg'])).toBe(false)
+  })
+
+  it('rejects a blank thumbnailSrc or src2x', () => {
+    expect(accepts('images', [{ src: '/a.jpg', thumbnailSrc: ' ' }])).toBe(false)
+    expect(accepts('images', [{ src: '/a.jpg', src2x: '' }])).toBe(false)
+  })
+
+  it('strips unknown image fields', () => {
+    const record = withField('images', [{ src: '/a.jpg', width: 588 }])
+    expect(productRecordSchema.parse(record).images).toEqual([{ src: '/a.jpg' }])
   })
 
   it('accepts an empty or filled colors list', () => {

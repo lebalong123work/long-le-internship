@@ -5,6 +5,49 @@ The backend is mocked with **json-server**, behind a service layer, so it can be
 
 ---
 
+## Live Demo
+
+| | Link |
+|---|---|
+| App (Vercel) | https://mangcoding-store-seven.vercel.app |
+| Mock API (Render) | https://long-le-internship.onrender.com/products |
+
+**Demo account** (mock data, not a real account):
+
+| Email | Password |
+|---|---|
+| `user@store.com` | `user123` |
+
+Log in from the user icon in the header, or open https://mangcoding-store-seven.vercel.app/?auth=login
+
+### What you can try now
+
+| Where | What to check |
+|---|---|
+| Home `/` | Hero banner (desktop and mobile — resize the window) |
+| Home — "Our Best Seller" | Category tabs T-Shirt · Jacket · Shirt · Jeans (click, or arrow keys + Enter): T-Shirt shows 8 product cards, the other tabs show "No products in this category" (the mock data has T-shirts only). Grid: 4 columns on desktop, 3 on tablets, 2 on phones. "See More" opens the shop page (under development) |
+| Product card heart | Logged in: saves / removes the product from your wishlist. Guest: opens Log In, and the product is saved after you log in |
+| Product page — click a product card | Photo gallery (click a thumbnail; the 4th photo is in the sideways scroll strip), name, price "$40 USD", stock, choose color / size / quantity (quantity stays within stock). `/shop/unknown` shows "Product not found" with "Back to Home" |
+| Product page — Add To Cart | Without a color: "Please select a color" (red frame around the colors). Logged in: "Added to cart" and the cart icon count goes up. Guest: Log In opens, and the item is added once after you log in. The heart saves the product (same state as on the product card); the bag button is decoration only |
+| Product page — "Same Product" | Up to 8 other products of the same category, and "See More" (opens the shop page, under development) |
+| Header | Logo, nav (Home · Shop · About Us · Contact), search bar, mobile menu (☰) |
+| Log In / Sign Up | Modal with two tabs, form validation (empty fields, wrong email, wrong password), toast after login |
+| Logged in | User menu: Profile · Orders · Wishlist · Logout |
+| Guest | Click the cart / heart / user icon → the login modal opens |
+| Footer | Links and "Log In" (hidden when logged in) |
+| `/shop`, `/about`, `/contact` | "This page is under development" |
+| Any unknown URL, e.g. `/abc` | 404 page |
+
+**Not built yet** (the page shows a placeholder): Cart page, Checkout, Wishlist, Search results, Order History, Profile. The logic behind them (services and hooks) is done and tested; the pages come in the next tasks. The demo updates automatically after each merge into `practices-react-basic`.
+
+### Demo limits
+
+- The mock API runs on Render's free plan: after ~15 minutes without visits it sleeps, so the **first load can take 30–60 seconds**.
+- Data **resets to the seed** whenever the API restarts — new accounts and changes are not kept.
+- Login is a **UI simulation** on an open mock API. Do not use a real password.
+
+---
+
 ## Features (MVP)
 
 | Area | What users can do |
@@ -96,6 +139,20 @@ Before finishing any change, run `type-check`, `lint`, `test` and `build`.
 
 ---
 
+## Deployment
+
+| Part | Host | Settings |
+|---|---|---|
+| App | Vercel | Root Directory `react-training/practices-react-basic`, preset Vite, Node 22.x, Production Branch `practices-react-basic`, env `VITE_API_URL=https://long-le-internship.onrender.com` |
+| Mock API (demo only) | Render (Free, Singapore) | Root Directory `react-training/practices-react-basic`, Branch `practices-react-basic`, Build `npm install`, Start `node server/ensure-db.mjs && npx json-server server/db.json --host 0.0.0.0 --port $PORT`, env `NODE_VERSION=22` |
+
+- Both deploy automatically on every push to `practices-react-basic`.
+- `vercel.json`: SPA rewrite (direct links like `/shop` work), long cache for hashed `/assets/*`, basic security headers.
+- `VITE_API_URL` is read at build time — after changing it, redeploy on Vercel.
+- Switching to a real backend: change `VITE_API_URL` and the inside of `services/`; the UI stays the same.
+
+---
+
 ## Project Structure
 
 ```
@@ -137,12 +194,17 @@ Layer rules:
 - [x] Requirements and architecture
 - [x] App skeleton: Vite, TypeScript, Tailwind, ESLint, Vitest, routing
 - [x] Update skeleton to the final scope: json-server, login modal, remove old admin/seller stubs
-- [ ] Task breakdown
-- [ ] Shared UI: layout, toast, loading / error / empty states
-- [ ] Auth modal + route guards
-- [ ] Home → Product Detail → Cart → Checkout → Order Success
+- [x] Task breakdown
+- [x] Services + hooks: products, auth, cart, wishlist, orders, search, profile
+- [x] Shared UI: design tokens, UI atoms, modal, toast, loading / error / empty states, ProductCard
+- [x] Layout: Header (desktop + mobile), Footer
+- [x] Auth modal (Log In + Sign Up) + route guards
+- [x] "Under development" pages + 404
+- [x] Deploy demo: Vercel (app) + Render (mock API)
+- [x] Home: Hero banner + Best Seller section
+- [x] Product Detail: photo gallery, color / size / quantity, Add to Cart (guests log in first), wishlist heart, "Same Product"
+- [ ] Cart → Checkout → Order Success
 - [ ] Wishlist, Search, Order History, Profile
-- [ ] "Under development" pages + 404
 - [ ] Responsive pass (mobile)
 
 ---

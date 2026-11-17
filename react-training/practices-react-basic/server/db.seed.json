@@ -37,10 +37,25 @@
       "price": 40,
       "thumbnail": "/images/products/JskqEILt-ds-card.jpg",
       "images": [
-        "/images/products/acn5ERAeSb4-main.jpg",
-        "/images/products/9ugEeqflo70-thumb.jpg",
-        "/images/products/Q0zoxQF7OUY-thumb.jpg",
-        "/images/products/gEupiRvyxh0-thumb.jpg"
+        {
+          "src": "/images/products/acn5ERAeSb4-main.jpg",
+          "thumbnailSrc": "/images/products/acn5ERAeSb4-thumb.jpg"
+        },
+        {
+          "src": "/images/products/9ugEeqflo70-main.jpg",
+          "thumbnailSrc": "/images/products/9ugEeqflo70-thumb.jpg",
+          "src2x": "/images/products/9ugEeqflo70-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/Q0zoxQF7OUY-main.jpg",
+          "thumbnailSrc": "/images/products/Q0zoxQF7OUY-thumb.jpg",
+          "src2x": "/images/products/Q0zoxQF7OUY-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/gEupiRvyxh0-main.jpg",
+          "thumbnailSrc": "/images/products/gEupiRvyxh0-thumb.jpg",
+          "src2x": "/images/products/gEupiRvyxh0-main@2x.jpg"
+        }
       ],
       "category": "t-shirt",
       "description": "Placeholder description — the real product text has not been provided yet.",
@@ -58,10 +73,25 @@
       "price": 40,
       "thumbnail": "/images/products/tvG4WvjgsEY-card.jpg",
       "images": [
-        "/images/products/acn5ERAeSb4-main.jpg",
-        "/images/products/9ugEeqflo70-thumb.jpg",
-        "/images/products/Q0zoxQF7OUY-thumb.jpg",
-        "/images/products/gEupiRvyxh0-thumb.jpg"
+        {
+          "src": "/images/products/acn5ERAeSb4-main.jpg",
+          "thumbnailSrc": "/images/products/acn5ERAeSb4-thumb.jpg"
+        },
+        {
+          "src": "/images/products/9ugEeqflo70-main.jpg",
+          "thumbnailSrc": "/images/products/9ugEeqflo70-thumb.jpg",
+          "src2x": "/images/products/9ugEeqflo70-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/Q0zoxQF7OUY-main.jpg",
+          "thumbnailSrc": "/images/products/Q0zoxQF7OUY-thumb.jpg",
+          "src2x": "/images/products/Q0zoxQF7OUY-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/gEupiRvyxh0-main.jpg",
+          "thumbnailSrc": "/images/products/gEupiRvyxh0-thumb.jpg",
+          "src2x": "/images/products/gEupiRvyxh0-main@2x.jpg"
+        }
       ],
       "category": "t-shirt",
       "description": "Placeholder description — the real product text has not been provided yet.",
@@ -79,10 +109,25 @@
       "price": 40,
       "thumbnail": "/images/products/7cERndkOyDw-card.jpg",
       "images": [
-        "/images/products/acn5ERAeSb4-main.jpg",
-        "/images/products/9ugEeqflo70-thumb.jpg",
-        "/images/products/Q0zoxQF7OUY-thumb.jpg",
-        "/images/products/gEupiRvyxh0-thumb.jpg"
+        {
+          "src": "/images/products/acn5ERAeSb4-main.jpg",
+          "thumbnailSrc": "/images/products/acn5ERAeSb4-thumb.jpg"
+        },
+        {
+          "src": "/images/products/9ugEeqflo70-main.jpg",
+          "thumbnailSrc": "/images/products/9ugEeqflo70-thumb.jpg",
+          "src2x": "/images/products/9ugEeqflo70-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/Q0zoxQF7OUY-main.jpg",
+          "thumbnailSrc": "/images/products/Q0zoxQF7OUY-thumb.jpg",
+          "src2x": "/images/products/Q0zoxQF7OUY-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/gEupiRvyxh0-main.jpg",
+          "thumbnailSrc": "/images/products/gEupiRvyxh0-thumb.jpg",
+          "src2x": "/images/products/gEupiRvyxh0-main@2x.jpg"
+        }
       ],
       "category": "t-shirt",
       "description": "Placeholder description — the real product text has not been provided yet.",
@@ -100,10 +145,25 @@
       "price": 40,
       "thumbnail": "/images/products/gEupiRvyxh0-card.png",
       "images": [
-        "/images/products/acn5ERAeSb4-main.jpg",
-        "/images/products/9ugEeqflo70-thumb.jpg",
-        "/images/products/Q0zoxQF7OUY-thumb.jpg",
-        "/images/products/gEupiRvyxh0-thumb.jpg"
+        {
+          "src": "/images/products/acn5ERAeSb4-main.jpg",
+          "thumbnailSrc": "/images/products/acn5ERAeSb4-thumb.jpg"
+        },
+        {
+          "src": "/images/products/9ugEeqflo70-main.jpg",
+          "thumbnailSrc": "/images/products/9ugEeqflo70-thumb.jpg",
+          "src2x": "/images/products/9ugEeqflo70-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/Q0zoxQF7OUY-main.jpg",
+          "thumbnailSrc": "/images/products/Q0zoxQF7OUY-thumb.jpg",
+          "src2x": "/images/products/Q0zoxQF7OUY-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/gEupiRvyxh0-main.jpg",
+          "thumbnailSrc": "/images/products/gEupiRvyxh0-thumb.jpg",
+          "src2x": "/images/products/gEupiRvyxh0-main@2x.jpg"
+        }
       ],
       "category": "t-shirt",
       "description": "Placeholder description — the real product text has not been provided yet.",
@@ -121,10 +181,25 @@
       "price": 40,
       "thumbnail": "/images/products/JskqEILt-ds-card.jpg",
       "images": [
-        "/images/products/acn5ERAeSb4-main.jpg",
-        "/images/products/9ugEeqflo70-thumb.jpg",
-        "/images/products/Q0zoxQF7OUY-thumb.jpg",
-        "/images/products/gEupiRvyxh0-thumb.jpg"
+        {
+          "src": "/images/products/acn5ERAeSb4-main.jpg",
+          "thumbnailSrc": "/images/products/acn5ERAeSb4-thumb.jpg"
+        },
+        {
+          "src": "/images/products/9ugEeqflo70-main.jpg",
+          "thumbnailSrc": "/images/products/9ugEeqflo70-thumb.jpg",
+          "src2x": "/images/products/9ugEeqflo70-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/Q0zoxQF7OUY-main.jpg",
+          "thumbnailSrc": "/images/products/Q0zoxQF7OUY-thumb.jpg",
+          "src2x": "/images/products/Q0zoxQF7OUY-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/gEupiRvyxh0-main.jpg",
+          "thumbnailSrc": "/images/products/gEupiRvyxh0-thumb.jpg",
+          "src2x": "/images/products/gEupiRvyxh0-main@2x.jpg"
+        }
       ],
       "category": "t-shirt",
       "description": "Placeholder description — the real product text has not been provided yet.",
@@ -142,10 +217,25 @@
       "price": 40,
       "thumbnail": "/images/products/tvG4WvjgsEY-card.jpg",
       "images": [
-        "/images/products/acn5ERAeSb4-main.jpg",
-        "/images/products/9ugEeqflo70-thumb.jpg",
-        "/images/products/Q0zoxQF7OUY-thumb.jpg",
-        "/images/products/gEupiRvyxh0-thumb.jpg"
+        {
+          "src": "/images/products/acn5ERAeSb4-main.jpg",
+          "thumbnailSrc": "/images/products/acn5ERAeSb4-thumb.jpg"
+        },
+        {
+          "src": "/images/products/9ugEeqflo70-main.jpg",
+          "thumbnailSrc": "/images/products/9ugEeqflo70-thumb.jpg",
+          "src2x": "/images/products/9ugEeqflo70-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/Q0zoxQF7OUY-main.jpg",
+          "thumbnailSrc": "/images/products/Q0zoxQF7OUY-thumb.jpg",
+          "src2x": "/images/products/Q0zoxQF7OUY-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/gEupiRvyxh0-main.jpg",
+          "thumbnailSrc": "/images/products/gEupiRvyxh0-thumb.jpg",
+          "src2x": "/images/products/gEupiRvyxh0-main@2x.jpg"
+        }
       ],
       "category": "t-shirt",
       "description": "Placeholder description — the real product text has not been provided yet.",
@@ -163,10 +253,25 @@
       "price": 40,
       "thumbnail": "/images/products/7cERndkOyDw-card.jpg",
       "images": [
-        "/images/products/acn5ERAeSb4-main.jpg",
-        "/images/products/9ugEeqflo70-thumb.jpg",
-        "/images/products/Q0zoxQF7OUY-thumb.jpg",
-        "/images/products/gEupiRvyxh0-thumb.jpg"
+        {
+          "src": "/images/products/acn5ERAeSb4-main.jpg",
+          "thumbnailSrc": "/images/products/acn5ERAeSb4-thumb.jpg"
+        },
+        {
+          "src": "/images/products/9ugEeqflo70-main.jpg",
+          "thumbnailSrc": "/images/products/9ugEeqflo70-thumb.jpg",
+          "src2x": "/images/products/9ugEeqflo70-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/Q0zoxQF7OUY-main.jpg",
+          "thumbnailSrc": "/images/products/Q0zoxQF7OUY-thumb.jpg",
+          "src2x": "/images/products/Q0zoxQF7OUY-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/gEupiRvyxh0-main.jpg",
+          "thumbnailSrc": "/images/products/gEupiRvyxh0-thumb.jpg",
+          "src2x": "/images/products/gEupiRvyxh0-main@2x.jpg"
+        }
       ],
       "category": "t-shirt",
       "description": "Placeholder description — the real product text has not been provided yet.",
@@ -184,10 +289,25 @@
       "price": 40,
       "thumbnail": "/images/products/gEupiRvyxh0-card.png",
       "images": [
-        "/images/products/acn5ERAeSb4-main.jpg",
-        "/images/products/9ugEeqflo70-thumb.jpg",
-        "/images/products/Q0zoxQF7OUY-thumb.jpg",
-        "/images/products/gEupiRvyxh0-thumb.jpg"
+        {
+          "src": "/images/products/acn5ERAeSb4-main.jpg",
+          "thumbnailSrc": "/images/products/acn5ERAeSb4-thumb.jpg"
+        },
+        {
+          "src": "/images/products/9ugEeqflo70-main.jpg",
+          "thumbnailSrc": "/images/products/9ugEeqflo70-thumb.jpg",
+          "src2x": "/images/products/9ugEeqflo70-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/Q0zoxQF7OUY-main.jpg",
+          "thumbnailSrc": "/images/products/Q0zoxQF7OUY-thumb.jpg",
+          "src2x": "/images/products/Q0zoxQF7OUY-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/gEupiRvyxh0-main.jpg",
+          "thumbnailSrc": "/images/products/gEupiRvyxh0-thumb.jpg",
+          "src2x": "/images/products/gEupiRvyxh0-main@2x.jpg"
+        }
       ],
       "category": "t-shirt",
       "description": "Placeholder description — the real product text has not been provided yet.",

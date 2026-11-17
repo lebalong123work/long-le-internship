@@ -4,6 +4,7 @@ export const UI_STATE_MESSAGES = {
   emptyCategory: 'No products in this category',
   productNotFound: 'Product not found',
   backToHome: 'Back to Home',
+  emptyCart: 'Your cart is empty',
 } as const
 
 export const UI_STATE_ERRORS = {

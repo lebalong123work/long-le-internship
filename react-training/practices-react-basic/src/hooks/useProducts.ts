@@ -1,4 +1,4 @@
-import { skipToken, useQuery } from '@tanstack/react-query'
+import { keepPreviousData, skipToken, useQuery } from '@tanstack/react-query'
 import { queryKeys } from '@/constants/queryKeys'
 import * as productService from '@/services/productService'
 import { retryUnlessNotFound } from './queryRetry'
@@ -31,5 +31,13 @@ export function useRelatedProducts(product: Product | undefined): UseQueryResult
   return useQuery({
     queryKey: queryKeys.products.related(product?.id ?? ''),
     queryFn: product ? () => productService.getRelated(product) : skipToken,
+  })
+}
+
+export function useProductsByIds(ids: string[]): UseQueryResult<Product[], Error> {
+  return useQuery({
+    queryKey: queryKeys.products.byIds(ids),
+    queryFn: ids.length > 0 ? () => productService.getByIds(ids) : skipToken,
+    placeholderData: keepPreviousData,
   })
 }

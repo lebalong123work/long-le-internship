@@ -17,6 +17,8 @@ export interface CartLine {
 
 export interface CartSummary {
   itemCount: number
+  subtotal: number
+  shippingFee: number
   total: number
 }
 
@@ -82,14 +84,12 @@ export function useCartLines(): CartLinesState {
 
   const status = resolveStatus()
   const lines = status === 'ready' && products !== undefined ? joinLines(items, products) : []
+  const { subtotal, shippingFee, total } = calcCartTotals(pricedLines(lines))
 
   return {
     status,
     lines,
-    summary: {
-      itemCount: countCartItems(items),
-      total: calcCartTotals(pricedLines(lines)).total,
-    },
+    summary: { itemCount: countCartItems(items), subtotal, shippingFee, total },
     hasUnavailableItems: lines.some((line) => line.product === null),
     retry,
     isRetrying: retryingQuery !== null,

@@ -205,7 +205,8 @@ Layer rules:
 - [x] Home: Hero banner + Best Seller section
 - [x] Product Detail: photo gallery, color / size / quantity, Add to Cart (guests log in first), wishlist heart, "Same Product"
 - [x] Cart: review items, change quantity, remove, order summary
-- [ ] Checkout → Order Success
+- [x] Checkout form: shipping address (Province / City → Ward / Commune), payment method (mock), order summary — released together with Place Order
+- [ ] Place Order → Order Success
 - [ ] Wishlist, Search, Order History, Profile
 - [ ] Responsive pass (mobile)
 

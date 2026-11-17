@@ -1,7 +1,12 @@
 import { useEffect, useRef } from 'react'
 import { EmptyState } from '@/components/shared/EmptyState'
 import { ErrorState } from '@/components/shared/ErrorState'
-import { focusWithVisibleRing, SCRIPT_FOCUS_RING } from '@/components/ui/focusWithVisibleRing'
+import { PageBanner } from '@/components/shared/PageBanner'
+import {
+  focusWithVisibleRing,
+  isFocusFree,
+  SCRIPT_FOCUS_RING,
+} from '@/components/ui/focusWithVisibleRing'
 import { FOCUS_RING } from '@/components/ui/interactionClasses'
 import { CART_TEXT } from '@/constants/cart'
 import { ROUTES } from '@/constants/routes'
@@ -9,19 +14,19 @@ import { UI_STATE_MESSAGES } from '@/constants/uiStateMessages'
 import { useRemoveCartItem, useUpdateCartQuantity } from '@/hooks/useCart'
 import { useCartLines } from '@/hooks/useCartLines'
 import { cn } from '@/utils/cn'
-import { CartBanner } from './CartBanner'
 import { CartItemRow } from './CartItemRow'
 import { CART_LAYOUT } from './cartLayout'
 import { CartSkeleton } from './CartSkeleton'
 import { OrderSummary } from './OrderSummary'
+import type { BreadcrumbItem } from '@/components/ui/Breadcrumb'
 import type { ReactNode } from 'react'
 
 const EMPTY_CART_ICON = '/icons/cart.svg'
 
-function isFocusFree(): boolean {
-  const focused = document.activeElement
-  return focused === null || focused === document.body
-}
+const BREADCRUMB_ITEMS: BreadcrumbItem[] = [
+  { label: CART_TEXT.breadcrumbHome, to: ROUTES.HOME },
+  { label: CART_TEXT.breadcrumbCart },
+]
 
 export default function Cart(): JSX.Element {
   const headingRef = useRef<HTMLHeadingElement>(null)
@@ -85,7 +90,7 @@ export default function Cart(): JSX.Element {
 
   return (
     <div className="pb-10 xl:pb-16">
-      <CartBanner />
+      <PageBanner title={CART_TEXT.title} breadcrumb={BREADCRUMB_ITEMS} />
       <div className="container px-4 md:px-6 xl:px-0">
         <h2
           ref={headingRef}

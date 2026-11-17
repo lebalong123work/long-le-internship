@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { queryKeys } from '@/constants/queryKeys'
+import { SHIPPING_FEE } from '@/constants/shipping'
 import { ApiError } from '@/services/apiClient'
 import * as cartService from '@/services/cartService'
 import * as productService from '@/services/productService'
@@ -100,7 +101,12 @@ describe('useCartLines', () => {
     const { result } = setup()
     await waitFor(() => expect(result.current.status).toBe('empty'))
     expect(result.current.lines).toEqual([])
-    expect(result.current.summary).toEqual({ itemCount: 0, total: 0 })
+    expect(result.current.summary).toEqual({
+      itemCount: 0,
+      subtotal: 0,
+      shippingFee: 0,
+      total: 0,
+    })
     expect(productService.getByIds).not.toHaveBeenCalled()
   })
 
@@ -130,7 +136,35 @@ describe('useCartLines', () => {
     vi.mocked(productService.getByIds).mockResolvedValue([P1, P2])
     const { result } = setup()
     await waitFor(() => expect(result.current.status).toBe('ready'))
-    expect(result.current.summary).toEqual({ itemCount: 9, total: 155 })
+    expect(result.current.summary).toEqual({
+      itemCount: 9,
+      subtotal: 155,
+      shippingFee: 0,
+      total: 155,
+    })
+  })
+
+  it('reports the subtotal and the shipping fee of the lines with a product', async () => {
+    vi.mocked(cartService.getCart).mockResolvedValue(cartOf(blackP1, blackP2))
+    vi.mocked(productService.getByIds).mockResolvedValue([P1, P2])
+    const { result } = setup()
+    await waitFor(() => expect(result.current.status).toBe('ready'))
+    expect(result.current.summary.subtotal).toBe(155)
+    expect(result.current.summary.shippingFee).toBe(SHIPPING_FEE)
+    expect(result.current.summary.total).toBe(155 + SHIPPING_FEE)
+  })
+
+  it('leaves an unavailable line out of the subtotal', async () => {
+    vi.mocked(cartService.getCart).mockResolvedValue(cartOf(gone))
+    vi.mocked(productService.getByIds).mockResolvedValue([])
+    const { result } = setup()
+    await waitFor(() => expect(result.current.status).toBe('ready'))
+    expect(result.current.summary).toEqual({
+      itemCount: 4,
+      subtotal: 0,
+      shippingFee: SHIPPING_FEE,
+      total: SHIPPING_FEE,
+    })
   })
 
   it('is loading until the cart and then the products have loaded', async () => {

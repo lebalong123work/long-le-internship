@@ -1,5 +1,8 @@
+import { SIDEBAR_LAYOUT } from '@/components/shared/pageLayout'
+import { cn } from '@/utils/cn'
+
 export const CART_LAYOUT = {
-  columns: 'flex flex-col gap-10 xl:flex-row xl:items-start',
+  columns: SIDEBAR_LAYOUT.columns,
   detailText: 'font-heading text-lg leading-normal text-medium-dark',
-  list: 'flex min-w-0 flex-col gap-6 xl:w-[782px] xl:shrink-0',
+  list: cn(SIDEBAR_LAYOUT.main, 'gap-6'),
 }

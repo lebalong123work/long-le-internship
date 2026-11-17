@@ -12,6 +12,7 @@ interface ColorPickerProps {
   colors: string[]
   value: string | null
   onChange: (color: string) => void
+  errorId?: string
 }
 
 interface SwatchProps {
@@ -54,14 +55,24 @@ function isKnownColor(color: string): boolean {
   return Object.prototype.hasOwnProperty.call(SWATCH_COLORS, color)
 }
 
-export function ColorPicker({ colors, value, onChange }: ColorPickerProps): JSX.Element | null {
+export function ColorPicker({
+  colors,
+  value,
+  onChange,
+  errorId,
+}: ColorPickerProps): JSX.Element | null {
   const name = useId()
   if (colors.length === 0) return null
 
   return (
-    <fieldset className={PICKER_FIELDSET}>
+    <fieldset className={PICKER_FIELDSET} aria-describedby={errorId}>
       <legend className={PICKER_LEGEND}>{PRODUCT_DETAIL_TEXT.color}</legend>
-      <div className="flex flex-wrap items-center gap-2.5">
+      <div
+        className={cn(
+          'flex flex-wrap items-center gap-2.5',
+          errorId !== undefined && '-m-1 w-fit p-1 ring-1 ring-error'
+        )}
+      >
         {colors.map((color) => {
           const isSelected = color === value
           const Swatch = isKnownColor(color) ? KnownSwatch : UnknownSwatch

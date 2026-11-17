@@ -9,6 +9,7 @@ import { useProduct } from '@/hooks/useProducts'
 import { isNotFoundError } from '@/services/apiClient'
 import { ProductDetailSkeleton } from './ProductDetailSkeleton'
 import { ProductDetailView } from './ProductDetailView'
+import { SameProductSection } from './SameProductSection'
 import type { ReactNode } from 'react'
 
 const NOT_FOUND_ICON = '/icons/search.svg'
@@ -61,11 +62,14 @@ export default function ProductDetail(): JSX.Element {
   function renderContent(): ReactNode {
     if (data !== undefined) {
       return (
-        <ProductDetailView
-          key={data.id}
-          product={data}
-          focusHeadingOnMount={isCurrentRetry && retry.phase === 'focusHeading'}
-        />
+        <>
+          <ProductDetailView
+            key={data.id}
+            product={data}
+            focusHeadingOnMount={isCurrentRetry && retry.phase === 'focusHeading'}
+          />
+          <SameProductSection product={data} />
+        </>
       )
     }
     if (productId === undefined) return <NotFoundState />

@@ -4,10 +4,12 @@ import { Footer } from '@/components/layout/Footer'
 import { Header } from '@/components/layout/Header'
 import { SAFE_AREA_X } from '@/components/layout/safeArea'
 import { Toaster } from '@/components/shared/Toaster'
+import { useAddToCartPendingAction } from '@/hooks/useCart'
 import { useWishlistPendingAction } from '@/hooks/useWishlist'
 
 export function RootLayout(): JSX.Element {
   useWishlistPendingAction()
+  useAddToCartPendingAction()
   return (
     <>
       <div className={SAFE_AREA_X}>

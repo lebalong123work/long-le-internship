@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { RatingStars } from '@/components/shared/RatingStars'
 import { Breadcrumb } from '@/components/ui/Breadcrumb'
 import { focusWithVisibleRing, SCRIPT_FOCUS_RING } from '@/components/ui/focusWithVisibleRing'
+import { FORM_ERROR_TEXT } from '@/components/ui/formClasses'
 import { FOCUS_RING } from '@/components/ui/interactionClasses'
 import { QuantityStepper } from '@/components/ui/QuantityStepper'
 import { RATING_TEXT } from '@/constants/product'
@@ -12,6 +13,7 @@ import { cn } from '@/utils/cn'
 import { formatCurrency } from '@/utils/formatCurrency'
 import { formatReviewCount } from '@/utils/formatReviewCount'
 import { ColorPicker } from './ColorPicker'
+import { ProductActions } from './ProductActions'
 import { ProductGallery } from './ProductGallery'
 import { PRODUCT_DETAIL_LAYOUT } from './productDetailLayout'
 import { SizePicker } from './SizePicker'
@@ -70,6 +72,8 @@ export function ProductDetailView({
   const [chosenColor, setChosenColor] = useState<string | null>(null)
   const [chosenSize, setChosenSize] = useState<string | null>(null)
   const [chosenQuantity, setChosenQuantity] = useState(1)
+  const [colorAttempted, setColorAttempted] = useState(false)
+  const colorErrorId = useId()
 
   const color = chosenColor !== null && product.colors.includes(chosenColor) ? chosenColor : null
   const size =
@@ -77,6 +81,7 @@ export function ProductDetailView({
       ? chosenSize
       : defaultSize(product.sizes)
   const quantity = clampQuantity(chosenQuantity, product.stock)
+  const showColorError = colorAttempted && product.colors.length > 0 && color === null
 
   useEffect(() => {
     if (focusHeadingOnMount && headingRef.current && isFocusFree()) {
@@ -119,7 +124,19 @@ export function ProductDetailView({
               {formatCurrency(product.price, 'long')}
             </p>
             <div className="xl:col-start-1 xl:row-start-1">
-              <ColorPicker colors={product.colors} value={color} onChange={setChosenColor} />
+              <ColorPicker
+                colors={product.colors}
+                value={color}
+                onChange={setChosenColor}
+                errorId={showColorError ? colorErrorId : undefined}
+              />
+              <p
+                id={colorErrorId}
+                role="alert"
+                className={cn(FORM_ERROR_TEXT, showColorError && 'mt-2')}
+              >
+                {showColorError ? PRODUCT_DETAIL_TEXT.colorRequired : ''}
+              </p>
             </div>
             <div className="xl:col-start-1 xl:row-start-2">
               <SizePicker sizes={product.sizes} value={size} onChange={setChosenSize} />
@@ -135,6 +152,13 @@ export function ProductDetailView({
               />
             </div>
           </div>
+          <ProductActions
+            product={product}
+            color={color}
+            size={size}
+            quantity={quantity}
+            onMissingColor={() => setColorAttempted(true)}
+          />
         </div>
       </div>
     </>

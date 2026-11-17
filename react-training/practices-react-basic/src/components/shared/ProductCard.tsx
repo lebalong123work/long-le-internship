@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/interactionClasses'
 import { CARD_INFO_PADDING } from '@/components/shared/productCardClasses'
 import { RatingStars } from '@/components/shared/RatingStars'
+import { WishlistHeartIcon } from '@/components/shared/WishlistHeartIcon'
 import { PRODUCT_CARD_TEXT } from '@/constants/productCard'
 import { ROUTES } from '@/constants/routes'
 import { useWishlist } from '@/hooks/useWishlist'
@@ -17,8 +18,6 @@ import { formatReviewCount } from '@/utils/formatReviewCount'
 import type { Product } from '@/types'
 
 const BOOKMARK_ICON = '/icons/card-bookmark.svg'
-const HEART_FRAME = '/icons/card-heart.svg#card-heart-frame'
-const HEART_SHAPE = '/icons/card-heart.svg#card-heart-shape'
 
 interface ProductCardProps {
   product: Product
@@ -58,10 +57,7 @@ function HeartButton({ product }: HeartButtonProps): JSX.Element {
         ARIA_DISABLED
       )}
     >
-      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true" className="size-8">
-        <use href={HEART_FRAME} />
-        <use href={HEART_SHAPE} className={isSaved ? 'fill-badge' : 'fill-none'} />
-      </svg>
+      <WishlistHeartIcon isSaved={isSaved} withFrame />
     </button>
   )
 }

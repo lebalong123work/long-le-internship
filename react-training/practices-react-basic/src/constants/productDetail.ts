@@ -28,4 +28,8 @@ export const PRODUCT_DETAIL_TEXT = {
     `Photo ${photoPosition(position, total)}`,
   mainPhotoAlt: (productName: string, position: number, total: number): string =>
     `${productName}, photo ${photoPosition(position, total)}`,
+  addToCart: 'Add To Cart',
+  colorRequired: 'Please select a color',
+  sameProduct: 'Same Product',
+  seeMore: 'See More',
 } as const

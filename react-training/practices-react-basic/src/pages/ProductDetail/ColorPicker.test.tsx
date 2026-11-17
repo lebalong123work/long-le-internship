@@ -6,9 +6,11 @@ import { ColorPicker } from './ColorPicker'
 
 const COLORS = ['Black', 'Blue', 'Green']
 
-function renderPicker(colors: string[] = COLORS, value: string | null = null) {
+function renderPicker(colors: string[] = COLORS, value: string | null = null, errorId?: string) {
   const onChange = vi.fn()
-  const view = render(<ColorPicker colors={colors} value={value} onChange={onChange} />)
+  const view = render(
+    <ColorPicker colors={colors} value={value} onChange={onChange} errorId={errorId} />
+  )
   return { ...view, onChange, user: userEvent.setup() }
 }
 
@@ -87,6 +89,22 @@ describe('ColorPicker', () => {
   it('paints Black with #19181D', () => {
     renderPicker()
     expect(swatchOf('Black')).toHaveStyle({ backgroundColor: '#19181D' })
+  })
+
+  it('describes the group with errorId', () => {
+    renderPicker(COLORS, null, 'color-error')
+    expect(group()).toHaveAttribute('aria-describedby', 'color-error')
+  })
+
+  it('rings the swatch row in the error color with errorId', () => {
+    renderPicker(COLORS, null, 'color-error')
+    expect(swatchOf('Black').closest('label')?.parentElement).toHaveClass('ring-1', 'ring-error')
+  })
+
+  it('has no description and no ring without errorId', () => {
+    renderPicker()
+    expect(group()).not.toHaveAttribute('aria-describedby')
+    expect(swatchOf('Black').closest('label')?.parentElement).not.toHaveClass('ring-error')
   })
 
   it('checks nothing when value is not in the list', () => {

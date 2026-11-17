@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { act, render, screen } from '@testing-library/react'
+import { act, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createMemoryRouter, RouterProvider } from 'react-router-dom'
 import { afterEach, describe, expect, it, vi } from 'vitest'
@@ -16,6 +16,7 @@ import type { Product } from '@/types'
 vi.mock('@/services/productService', async (importOriginal) => ({
   ...(await importOriginal<typeof import('@/services/productService')>()),
   getById: vi.fn(),
+  getRelated: vi.fn().mockResolvedValue([]),
 }))
 
 interface Deferred<T> {
@@ -138,6 +139,7 @@ describe('ProductDetail page', () => {
   it('renders the product and empties the status', async () => {
     const { container } = renderPage()
     await answerAll(P1)
+    await act(settleQueries)
     expect(heading()).toHaveTextContent('Tee One')
     expect(busySkeleton(container)).toBeNull()
     expect(statusText()).toBe('')
@@ -219,7 +221,7 @@ describe('ProductDetail page', () => {
     await answerAll(NETWORK_ERROR)
     expect(queryClient.getQueryState(queryKeys.products.detail('p1'))?.status).toBe('error')
     expect(heading()).toHaveTextContent('Tee One')
-    expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: UI_STATE_MESSAGES.retry })).not.toBeInTheDocument()
   })
 
   it('resets color, size and quantity when another product opens', async () => {
@@ -265,6 +267,15 @@ describe('ProductDetail page', () => {
     await openProduct(router, 'p1')
     expect(heading()).toHaveTextContent('Tee One')
     expect(heading()).not.toHaveFocus()
+  })
+
+  it('shows Same Product below the product', async () => {
+    vi.mocked(productService.getRelated).mockResolvedValueOnce([P2])
+    renderPage()
+    await answerAll(P1)
+    const section = await screen.findByRole('region', { name: PRODUCT_DETAIL_TEXT.sameProduct })
+    expect(within(section).getByRole('link', { name: 'Tee Two' })).toBeInTheDocument()
+    expect(productService.getRelated).toHaveBeenCalledWith(P1)
   })
 
   it('shows Product not found without a productId', () => {

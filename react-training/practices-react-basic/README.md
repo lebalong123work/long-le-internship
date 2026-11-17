@@ -27,7 +27,9 @@ Log in from the user icon in the header, or open https://mangcoding-store-seven.
 | Home `/` | Hero banner (desktop and mobile — resize the window) |
 | Home — "Our Best Seller" | Category tabs T-Shirt · Jacket · Shirt · Jeans (click, or arrow keys + Enter): T-Shirt shows 8 product cards, the other tabs show "No products in this category" (the mock data has T-shirts only). Grid: 4 columns on desktop, 3 on tablets, 2 on phones. "See More" opens the shop page (under development) |
 | Product card heart | Logged in: saves / removes the product from your wishlist. Guest: opens Log In, and the product is saved after you log in |
-| Product page — click a product card | Photo gallery (click a thumbnail; the 4th photo is in the sideways scroll strip), name, price "$40 USD", stock, choose color / size / quantity (quantity stays within stock). `/shop/unknown` shows "Product not found" with "Back to Home". Add to Cart and "Same Product" come in the next task |
+| Product page — click a product card | Photo gallery (click a thumbnail; the 4th photo is in the sideways scroll strip), name, price "$40 USD", stock, choose color / size / quantity (quantity stays within stock). `/shop/unknown` shows "Product not found" with "Back to Home" |
+| Product page — Add To Cart | Without a color: "Please select a color" (red frame around the colors). Logged in: "Added to cart" and the cart icon count goes up. Guest: Log In opens, and the item is added once after you log in. The heart saves the product (same state as on the product card); the bag button is decoration only |
+| Product page — "Same Product" | Up to 8 other products of the same category, and "See More" (opens the shop page, under development) |
 | Header | Logo, nav (Home · Shop · About Us · Contact), search bar, mobile menu (☰) |
 | Log In / Sign Up | Modal with two tabs, form validation (empty fields, wrong email, wrong password), toast after login |
 | Logged in | User menu: Profile · Orders · Wishlist · Logout |
@@ -36,7 +38,7 @@ Log in from the user icon in the header, or open https://mangcoding-store-seven.
 | `/shop`, `/about`, `/contact` | "This page is under development" |
 | Any unknown URL, e.g. `/abc` | 404 page |
 
-**Not built yet** (the page shows a placeholder): Add to Cart on the product page, Cart, Checkout, Wishlist, Search results, Order History, Profile. The logic behind them (services and hooks) is done and tested; the pages come in the next tasks. The demo updates automatically after each merge into `practices-react-basic`.
+**Not built yet** (the page shows a placeholder): Cart page, Checkout, Wishlist, Search results, Order History, Profile. The logic behind them (services and hooks) is done and tested; the pages come in the next tasks. The demo updates automatically after each merge into `practices-react-basic`.
 
 ### Demo limits
 
@@ -200,7 +202,8 @@ Layer rules:
 - [x] "Under development" pages + 404
 - [x] Deploy demo: Vercel (app) + Render (mock API)
 - [x] Home: Hero banner + Best Seller section
-- [ ] Product Detail → Cart → Checkout → Order Success
+- [x] Product Detail: photo gallery, color / size / quantity, Add to Cart (guests log in first), wishlist heart, "Same Product"
+- [ ] Cart → Checkout → Order Success
 - [ ] Wishlist, Search, Order History, Profile
 - [ ] Responsive pass (mobile)
 

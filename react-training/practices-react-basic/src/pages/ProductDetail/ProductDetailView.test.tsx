@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
@@ -15,11 +16,15 @@ const PRODUCT: Product = {
   sizes: ['S', 'M', 'L', 'XL'],
 }
 
+const queryClient = new QueryClient()
+
 function viewOf(item: Product, focusHeadingOnMount?: boolean): JSX.Element {
   return (
-    <MemoryRouter>
-      <ProductDetailView product={item} focusHeadingOnMount={focusHeadingOnMount} />
-    </MemoryRouter>
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter>
+        <ProductDetailView product={item} focusHeadingOnMount={focusHeadingOnMount} />
+      </MemoryRouter>
+    </QueryClientProvider>
   )
 }
 
@@ -27,6 +32,10 @@ function renderView(overrides: Partial<Product> = {}, focusHeadingOnMount?: bool
   const item = { ...PRODUCT, ...overrides }
   const view = render(viewOf(item, focusHeadingOnMount))
   return { ...view, item, user: userEvent.setup() }
+}
+
+function addToCart(): HTMLElement {
+  return screen.getByRole('button', { name: PRODUCT_DETAIL_TEXT.addToCart })
 }
 
 function heading(): HTMLElement {
@@ -172,6 +181,39 @@ describe('ProductDetailView', () => {
     renderView({}, true)
     expect(heading()).toHaveFocus()
     expect(heading()).toHaveAttribute('data-script-focus', 'true')
+  })
+
+  it('shows Please select a color after Add To Cart without a color', async () => {
+    const { user } = renderView()
+    await user.click(addToCart())
+    expect(screen.getByRole('alert')).toHaveTextContent(PRODUCT_DETAIL_TEXT.colorRequired)
+    expect(
+      screen.getByRole('group', { name: PRODUCT_DETAIL_TEXT.color })
+    ).toHaveAccessibleDescription(PRODUCT_DETAIL_TEXT.colorRequired)
+    expect(addToCart()).toHaveFocus()
+  })
+
+  it('hides the color message once a color is chosen', async () => {
+    const { user } = renderView()
+    await user.click(addToCart())
+    await user.click(screen.getByRole('radio', { name: 'Blue' }))
+    expect(screen.getByRole('alert')).toBeEmptyDOMElement()
+    expect(screen.getByRole('group', { name: PRODUCT_DETAIL_TEXT.color })).not.toHaveAttribute(
+      'aria-describedby'
+    )
+  })
+
+  it('keeps the alert region mounted and empty at start', () => {
+    renderView()
+    expect(screen.getByRole('alert')).toBeEmptyDOMElement()
+  })
+
+  it('places the actions row after Quantity', () => {
+    renderView()
+    const quantity = screen.getByText(PRODUCT_DETAIL_TEXT.quantity)
+    expect(
+      quantity.compareDocumentPosition(addToCart()) & Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy()
   })
 
   it('leaves focus alone when it is elsewhere', () => {

@@ -5,7 +5,14 @@ import { retryUnlessNotFound } from './queryRetry'
 import type { UseQueryResult } from '@tanstack/react-query'
 import type { PaginatedList, Product, ProductFilters } from '@/types'
 
-export function useProducts(filters: ProductFilters): UseQueryResult<PaginatedList<Product>, Error> {
+interface ProductsByIdsQueryOptions {
+  queryKey: ReturnType<typeof queryKeys.products.byIds>
+  queryFn: () => Promise<Product[]>
+}
+
+export function useProducts(
+  filters: ProductFilters
+): UseQueryResult<PaginatedList<Product>, Error> {
   return useQuery({
     queryKey: queryKeys.products.list(filters),
     queryFn: () => productService.getProducts(filters),
@@ -34,10 +41,19 @@ export function useRelatedProducts(product: Product | undefined): UseQueryResult
   })
 }
 
-export function useProductsByIds(ids: string[]): UseQueryResult<Product[], Error> {
-  return useQuery({
+export function productsByIdsQueryOptions(ids: string[]): ProductsByIdsQueryOptions {
+  return {
     queryKey: queryKeys.products.byIds(ids),
-    queryFn: ids.length > 0 ? () => productService.getByIds(ids) : skipToken,
+    queryFn: () => productService.getByIds(ids),
+  }
+}
+
+export function useProductsByIds(ids: string[]): UseQueryResult<Product[], Error> {
+  const options = productsByIdsQueryOptions(ids)
+
+  return useQuery({
+    queryKey: options.queryKey,
+    queryFn: ids.length > 0 ? options.queryFn : skipToken,
     placeholderData: keepPreviousData,
   })
 }

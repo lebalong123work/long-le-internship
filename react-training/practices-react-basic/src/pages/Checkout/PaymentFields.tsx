@@ -40,7 +40,11 @@ function PaymentDetails({ method }: PaymentDetailsProps): JSX.Element | null {
   return null
 }
 
-export function PaymentFields(): JSX.Element {
+interface PaymentFieldsProps {
+  disabled?: boolean
+}
+
+export function PaymentFields({ disabled = false }: PaymentFieldsProps): JSX.Element {
   const errorId = useId()
   const {
     register,
@@ -50,7 +54,11 @@ export function PaymentFields(): JSX.Element {
   const error = errors.paymentMethod?.message
 
   return (
-    <fieldset aria-describedby={error ? errorId : undefined} className={CHECKOUT_LAYOUT.fieldset}>
+    <fieldset
+      disabled={disabled}
+      aria-describedby={error ? errorId : undefined}
+      className={CHECKOUT_LAYOUT.fieldset}
+    >
       <legend className={CHECKOUT_LAYOUT.legend}>{CHECKOUT_TEXT.paymentLegend}</legend>
       {PAYMENT_OPTIONS.map(({ value, label }) => (
         <label key={value} className={PAYMENT_CLASSES.option}>

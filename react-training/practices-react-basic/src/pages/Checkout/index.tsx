@@ -10,6 +10,7 @@ import { useCartLines } from '@/hooks/useCartLines'
 import { CheckoutForm } from './CheckoutForm'
 import { CheckoutSkeleton } from './CheckoutSkeleton'
 import { hasStockIssue } from './stockIssue'
+import { usePlaceOrder } from './usePlaceOrder'
 import type { BreadcrumbItem } from '@/components/ui/Breadcrumb'
 import type { ReactNode } from 'react'
 import type { DefaultValues } from 'react-hook-form'
@@ -21,6 +22,12 @@ const BREADCRUMB_ITEMS: BreadcrumbItem[] = [
   { label: CHECKOUT_TEXT.breadcrumbCart, to: ROUTES.CART },
   { label: CHECKOUT_TEXT.breadcrumbCheckout },
 ]
+
+function statusText(isLoading: boolean, isPlacing: boolean): string {
+  if (isLoading) return CHECKOUT_TEXT.loading
+  if (isPlacing) return CHECKOUT_TEXT.placing
+  return ''
+}
 
 function checkoutDefaults(user: User | null): DefaultValues<CheckoutFormValues> {
   return {
@@ -34,13 +41,12 @@ function checkoutDefaults(user: User | null): DefaultValues<CheckoutFormValues> 
   }
 }
 
-function submitCheckout(): void {}
-
 export default function Checkout(): JSX.Element {
   const headingRef = useRef<HTMLHeadingElement>(null)
   const retryRequested = useRef(false)
   const { user } = useAuth()
   const { status, lines, summary, hasUnavailableItems, retry, isRetrying } = useCartLines()
+  const { placeOrder, isPlacing, isOrderStarted } = usePlaceOrder()
 
   useEffect(() => {
     if (!retryRequested.current || isRetrying) return
@@ -64,14 +70,17 @@ export default function Checkout(): JSX.Element {
       )
     }
     if (status === 'error') return <ErrorState onRetry={retryLoading} isRetrying={isRetrying} />
-    if (status === 'empty' || hasUnavailableItems) return <Navigate to={ROUTES.CART} replace />
+    if ((status === 'empty' || hasUnavailableItems) && !isOrderStarted) {
+      return <Navigate to={ROUTES.CART} replace />
+    }
     return (
       <CheckoutForm
         lines={lines}
         summary={summary}
         isPlaceOrderBlocked={hasStockIssue(lines)}
+        isPlacing={isPlacing}
         defaultValues={checkoutDefaults(user)}
-        onValidSubmit={submitCheckout}
+        onValidSubmit={(values) => void placeOrder(values, lines)}
       />
     )
   }
@@ -85,7 +94,7 @@ export default function Checkout(): JSX.Element {
       />
       <div className="container px-4 md:px-6 xl:px-0">
         <p role="status" className="sr-only">
-          {status === 'loading' ? CHECKOUT_TEXT.loading : ''}
+          {statusText(status === 'loading', isPlacing)}
         </p>
         <div className="mt-10 xl:mt-20">{renderContent()}</div>
       </div>

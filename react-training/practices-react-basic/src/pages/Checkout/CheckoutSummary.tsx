@@ -16,6 +16,7 @@ interface CheckoutSummaryProps {
   lines: CartLine[]
   summary: CartSummary
   isPlaceOrderBlocked: boolean
+  isPlacing?: boolean
 }
 
 interface SummaryRowProps {
@@ -79,6 +80,7 @@ export function CheckoutSummary({
   lines,
   summary,
   isPlaceOrderBlocked,
+  isPlacing = false,
 }: CheckoutSummaryProps): JSX.Element {
   const blockedMessageId = useId()
   const shipping =
@@ -109,6 +111,7 @@ export function CheckoutSummary({
       <Button
         type="submit"
         disabled={isPlaceOrderBlocked}
+        isLoading={isPlacing}
         aria-describedby={isPlaceOrderBlocked ? blockedMessageId : undefined}
         className="w-full"
       >

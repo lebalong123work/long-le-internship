@@ -11,6 +11,11 @@ import { useToast } from './useToast'
 import type { QueryClient, UseMutationResult, UseQueryResult } from '@tanstack/react-query'
 import type { AddToCartDto, Cart } from '@/types'
 
+interface CartQueryOptions {
+  queryKey: ReturnType<typeof queryKeys.cart>
+  queryFn: () => Promise<Cart>
+}
+
 interface CartSnapshot {
   previous: Cart | undefined
 }
@@ -64,12 +69,7 @@ function useAddToCartCallbacks(): AddToCartCallbacks {
 
   return {
     addForUser: async (userId, item) => {
-      await queryClient
-        .ensureQueryData({
-          queryKey: queryKeys.cart(userId),
-          queryFn: () => cartService.getCart(userId),
-        })
-        .catch(() => undefined)
+      await queryClient.ensureQueryData(cartQueryOptions(userId)).catch(() => undefined)
       return cartService.addItem(userId, item)
     },
     onSuccess: (cart) => {
@@ -85,13 +85,21 @@ function useAddToCartCallbacks(): AddToCartCallbacks {
   }
 }
 
+export function cartQueryOptions(userId: string): CartQueryOptions {
+  return {
+    queryKey: queryKeys.cart(userId),
+    queryFn: () => cartService.getCart(userId),
+  }
+}
+
 export function useCart(): UseQueryResult<Cart, Error> {
   const { user } = useAuth()
   const userId = user?.id
+  const options = cartQueryOptions(userId ?? '')
 
   return useQuery({
-    queryKey: queryKeys.cart(userId ?? ''),
-    queryFn: userId ? () => cartService.getCart(userId) : skipToken,
+    queryKey: options.queryKey,
+    queryFn: userId ? options.queryFn : skipToken,
   })
 }
 

@@ -6,7 +6,11 @@ import { PROVINCE_CITY_NAMES, wardsOf } from '@/constants/provinceCities'
 import { CHECKOUT_LAYOUT } from './checkoutLayout'
 import type { CheckoutFormValues } from '@/schemas/checkout'
 
-export function ShippingFields(): JSX.Element {
+interface ShippingFieldsProps {
+  disabled?: boolean
+}
+
+export function ShippingFields({ disabled = false }: ShippingFieldsProps): JSX.Element {
   const {
     register,
     setValue,
@@ -22,7 +26,7 @@ export function ShippingFields(): JSX.Element {
   }
 
   return (
-    <fieldset className={CHECKOUT_LAYOUT.fieldset}>
+    <fieldset disabled={disabled} className={CHECKOUT_LAYOUT.fieldset}>
       <legend className={CHECKOUT_LAYOUT.legend}>{CHECKOUT_TEXT.shippingLegend}</legend>
       <Input
         {...register('fullName')}

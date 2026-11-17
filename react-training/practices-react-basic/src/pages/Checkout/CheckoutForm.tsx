@@ -14,6 +14,7 @@ interface CheckoutFormProps {
   lines: CartLine[]
   summary: CartSummary
   isPlaceOrderBlocked: boolean
+  isPlacing?: boolean
   defaultValues: DefaultValues<CheckoutFormValues>
   onValidSubmit: (values: CheckoutFormValues) => void
 }
@@ -22,6 +23,7 @@ export function CheckoutForm({
   lines,
   summary,
   isPlaceOrderBlocked,
+  isPlacing = false,
   defaultValues,
   onValidSubmit,
 }: CheckoutFormProps): JSX.Element {
@@ -38,14 +40,15 @@ export function CheckoutForm({
         className={SIDEBAR_LAYOUT.columns}
       >
         <div className={cn(SIDEBAR_LAYOUT.main, 'gap-10')}>
-          <ShippingFields />
-          <PaymentFields />
+          <ShippingFields disabled={isPlacing} />
+          <PaymentFields disabled={isPlacing} />
         </div>
         <div className={SIDEBAR_LAYOUT.aside}>
           <CheckoutSummary
             lines={lines}
             summary={summary}
             isPlaceOrderBlocked={isPlaceOrderBlocked}
+            isPlacing={isPlacing}
           />
         </div>
       </form>

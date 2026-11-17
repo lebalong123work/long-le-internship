@@ -84,4 +84,16 @@ describe('CheckoutSummary', () => {
     expect(screen.queryByRole('link', { name: 'Back to cart' })).toBeNull()
     expect(screen.queryByText(/Only \d+ left|Out of Stock/)).toBeNull()
   })
+
+  it('shows Place Order busy and disabled while the order is placing', () => {
+    render(
+      <MemoryRouter>
+        <form>
+          <CheckoutSummary lines={[TEE]} summary={SUMMARY} isPlaceOrderBlocked={false} isPlacing />
+        </form>
+      </MemoryRouter>
+    )
+    expect(placeOrder()).toBeDisabled()
+    expect(placeOrder()).toHaveAttribute('aria-busy', 'true')
+  })
 })

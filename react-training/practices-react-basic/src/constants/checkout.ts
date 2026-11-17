@@ -23,6 +23,7 @@ export const CHECKOUT_TEXT = {
   breadcrumbCart: 'Cart',
   breadcrumbCheckout: 'Checkout',
   loading: 'Loading checkout',
+  placing: 'Placing your order',
   shippingLegend: 'Shipping address',
   paymentLegend: 'Payment method',
   fullName: 'Full name',

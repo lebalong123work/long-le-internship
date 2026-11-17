@@ -29,7 +29,7 @@ describe('db.seed.json products', () => {
       name: expect.any(String),
       price: expect.any(Number),
       thumbnail: expect.any(String),
-      images: expect.arrayContaining([expect.any(String)]),
+      images: expect.arrayContaining([expect.objectContaining({ src: expect.any(String) })]),
       category: expect.any(String),
       description: expect.any(String),
       stock: expect.any(Number),
@@ -53,7 +53,10 @@ describe('db.seed.json products', () => {
   })
 
   it.each(products)('$id points to image files that exist in public/', (p) => {
-    for (const path of [p.thumbnail, ...p.images]) {
+    const imagePaths = p.images.flatMap(({ src, thumbnailSrc, src2x }) =>
+      [src, thumbnailSrc, src2x].filter((path) => path !== undefined)
+    )
+    for (const path of [p.thumbnail, ...imagePaths]) {
       expect(publicImages.has(path), path).toBe(true)
     }
   })

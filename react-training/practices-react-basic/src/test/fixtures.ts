@@ -6,7 +6,7 @@ export function product(id: string): Product {
     name: 'Smart T-Shirt',
     price: 40,
     thumbnail: `/images/products/${id}.jpg`,
-    images: [`/images/products/${id}.jpg`],
+    images: [{ src: `/images/products/${id}.jpg` }],
     category: 't-shirt',
     description: 'Best quality',
     stock: 1234,

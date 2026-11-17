@@ -1,7 +1,9 @@
+import { useEffect } from 'react'
 import { skipToken, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/constants/queryKeys'
 import { TOAST_MESSAGES } from '@/constants/toastMessages'
 import * as cartService from '@/services/cartService'
+import { registerPendingActionHandler } from '@/stores/pendingActionStore'
 import { requireUserId } from '@/utils/requireUserId'
 import { failureMessage } from './failureMessage'
 import { useAuth } from './useAuth'
@@ -11,6 +13,18 @@ import type { AddToCartDto, Cart } from '@/types'
 
 interface CartSnapshot {
   previous: Cart | undefined
+}
+
+interface AddForUserVariables {
+  userId: string
+  item: AddToCartDto
+}
+
+interface AddToCartCallbacks {
+  addForUser: (userId: string, item: AddToCartDto) => Promise<Cart>
+  onSuccess: (cart: Cart) => void
+  onError: (error: Error) => void
+  settle: (userId: string | undefined) => Promise<void> | undefined
 }
 
 interface UpdateQuantityVariables {
@@ -44,6 +58,33 @@ function dropLine(cart: Cart, itemId: string): Cart {
   return { ...cart, items: cart.items.filter((line) => line.id !== itemId) }
 }
 
+function useAddToCartCallbacks(): AddToCartCallbacks {
+  const queryClient = useQueryClient()
+  const toast = useToast()
+
+  return {
+    addForUser: async (userId, item) => {
+      await queryClient
+        .ensureQueryData({
+          queryKey: queryKeys.cart(userId),
+          queryFn: () => cartService.getCart(userId),
+        })
+        .catch(() => undefined)
+      return cartService.addItem(userId, item)
+    },
+    onSuccess: (cart) => {
+      queryClient.setQueryData(queryKeys.cart(cart.userId), cart)
+      toast.success(TOAST_MESSAGES.cart.added)
+    },
+    onError: (error) => {
+      toast.error(failureMessage(error, TOAST_MESSAGES.cart.updateFailed))
+    },
+    settle: (userId) => {
+      if (userId) return queryClient.invalidateQueries({ queryKey: queryKeys.cart(userId) })
+    },
+  }
+}
+
 export function useCart(): UseQueryResult<Cart, Error> {
   const { user } = useAuth()
   const userId = user?.id
@@ -57,23 +98,34 @@ export function useCart(): UseQueryResult<Cart, Error> {
 export function useAddToCart(): UseMutationResult<Cart, Error, AddToCartDto> {
   const { user } = useAuth()
   const userId = user?.id
-  const queryClient = useQueryClient()
-  const toast = useToast()
+  const { addForUser, onSuccess, onError, settle } = useAddToCartCallbacks()
 
   return useMutation({
     scope: CART_MUTATION_SCOPE,
-    mutationFn: (item) => cartService.addItem(requireUserId(userId), item),
-    onSuccess: (cart) => {
-      queryClient.setQueryData(queryKeys.cart(cart.userId), cart)
-      toast.success(TOAST_MESSAGES.cart.added)
-    },
-    onError: (error) => {
-      toast.error(failureMessage(error, TOAST_MESSAGES.cart.updateFailed))
-    },
-    onSettled: () => {
-      if (userId) return queryClient.invalidateQueries({ queryKey: queryKeys.cart(userId) })
-    },
+    mutationFn: (item) => addForUser(requireUserId(userId), item),
+    onSuccess,
+    onError,
+    onSettled: () => settle(userId),
   })
+}
+
+export function useAddToCartPendingAction(): void {
+  const { addForUser, onSuccess, onError, settle } = useAddToCartCallbacks()
+  const { mutate } = useMutation<Cart, Error, AddForUserVariables>({
+    scope: CART_MUTATION_SCOPE,
+    mutationFn: ({ userId, item }) => addForUser(userId, item),
+    onSuccess,
+    onError,
+    onSettled: (_cart, _error, { userId }) => settle(userId),
+  })
+
+  useEffect(
+    () =>
+      registerPendingActionHandler('addToCart', (action, user) => {
+        mutate({ userId: user.id, item: action.payload })
+      }),
+    [mutate]
+  )
 }
 
 export function useUpdateCartQuantity(): UseMutationResult<

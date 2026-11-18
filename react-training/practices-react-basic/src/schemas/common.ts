@@ -16,6 +16,9 @@ export const VALIDATION_MESSAGES = {
   currentPasswordRequired: 'Current password is required',
   birthDateInvalid: 'Enter a valid date of birth',
   birthDateFuture: 'Date of birth cannot be in the future',
+  avatarType: 'Choose a JPG, PNG or WebP image',
+  avatarTooLarge: 'Image must be 1 MB or smaller',
+  avatarReadFailed: 'Could not read the image. Please try again.',
 }
 
 export const VN_PHONE_REGEX = /^(0|\+84)\d{9}$/

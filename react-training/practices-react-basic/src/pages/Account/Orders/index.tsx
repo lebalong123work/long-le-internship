@@ -2,13 +2,9 @@ import { useEffect, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { EmptyState } from '@/components/shared/EmptyState'
 import { ErrorState } from '@/components/shared/ErrorState'
+import { ACCOUNT_HEADING } from '@/components/shared/pageLayout'
 import { Pagination } from '@/components/shared/Pagination'
-import {
-  focusWithVisibleRing,
-  isFocusFree,
-  SCRIPT_FOCUS_RING,
-} from '@/components/ui/focusWithVisibleRing'
-import { FOCUS_RING } from '@/components/ui/interactionClasses'
+import { focusWithVisibleRing, isFocusFree } from '@/components/ui/focusWithVisibleRing'
 import { ORDER_HISTORY_TEXT } from '@/constants/order'
 import { ROUTES } from '@/constants/routes'
 import { UI_STATE_MESSAGES } from '@/constants/uiStateMessages'
@@ -111,11 +107,7 @@ export default function OrderHistory(): JSX.Element {
 
   return (
     <div>
-      <h1
-        ref={headingRef}
-        tabIndex={-1}
-        className={cn('font-heading text-h3 font-bold text-dark', FOCUS_RING, SCRIPT_FOCUS_RING)}
-      >
+      <h1 ref={headingRef} tabIndex={-1} className={ACCOUNT_HEADING}>
         {ORDER_HISTORY_TEXT.heading}
       </h1>
       <p role="status" className="sr-only">

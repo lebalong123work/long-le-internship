@@ -1,19 +1,14 @@
 import { useEffect, useRef } from 'react'
 import { EmptyState } from '@/components/shared/EmptyState'
 import { ErrorState } from '@/components/shared/ErrorState'
+import { ACCOUNT_HEADING } from '@/components/shared/pageLayout'
 import { ProductGrid, ProductGridSkeleton } from '@/components/shared/ProductGrid'
-import {
-  focusWithVisibleRing,
-  isFocusFree,
-  SCRIPT_FOCUS_RING,
-} from '@/components/ui/focusWithVisibleRing'
-import { FOCUS_RING } from '@/components/ui/interactionClasses'
+import { focusWithVisibleRing, isFocusFree } from '@/components/ui/focusWithVisibleRing'
 import { ROUTES } from '@/constants/routes'
 import { UI_STATE_MESSAGES } from '@/constants/uiStateMessages'
 import { WISHLIST_TEXT } from '@/constants/wishlist'
 import { useWishlist } from '@/hooks/useWishlist'
 import { useWishlistProducts } from '@/hooks/useWishlistProducts'
-import { cn } from '@/utils/cn'
 import { WishlistCardActions } from './WishlistCardActions'
 import type { ReactNode } from 'react'
 
@@ -82,11 +77,7 @@ export default function Wishlist(): JSX.Element {
 
   return (
     <div>
-      <h1
-        ref={headingRef}
-        tabIndex={-1}
-        className={cn('font-heading text-h3 font-bold text-dark', FOCUS_RING, SCRIPT_FOCUS_RING)}
-      >
+      <h1 ref={headingRef} tabIndex={-1} className={ACCOUNT_HEADING}>
         {WISHLIST_TEXT.heading}
       </h1>
       <p role="status" className="sr-only">

@@ -36,7 +36,8 @@ Log in from the user icon in the header, or open https://mangcoding-store-seven.
 | Header | Logo, nav (Home · Shop · About Us · Contact), search bar, mobile menu (☰) |
 | Log In / Sign Up | Modal with two tabs, form validation (empty fields, wrong email, wrong password), toast after login |
 | Logged in | User menu: Profile · Orders · Wishlist · Logout |
-| Account pages `/account/profile`, `/account/orders`, `/account/wishlist` (log in first) | Account pages share the account menu: Profile · Orders · Wishlist. Links sit on top on phones and tablets and become a side menu on wide screens; the current page is highlighted. Profile is still a placeholder |
+| Account pages `/account/profile`, `/account/orders`, `/account/wishlist` (log in first) | Account pages share the account menu: Profile · Orders · Wishlist. Links sit on top on phones and tablets and become a side menu on wide screens; the current page is highlighted |
+| Profile `/account/profile` (log in first) | Your details filled in: full name, email (cannot be changed), phone, default address, date of birth. "Change photo" shows the new picture before you save (JPG, PNG or WebP, up to 1 MB). Save Changes → "Profile updated successfully" and the new name is used in the account menu |
 | Order History `/account/orders` (log in first) | Your orders, newest first, 10 per page ("Previous page" / "Next page"; the page number stays in the address, so refresh keeps it). Each card shows the order number, date (dd/mm/yyyy), total, number of items and a colored status badge. "View Detail" opens the order in place: status steps (Ordered → Processing → Shipped → Delivered; hidden for a cancelled order), products, address, payment method and totals. No orders → "You have no orders yet" + Shop Now |
 | Wishlist `/account/wishlist` (log in first) | Your saved products as cards, newest first. "Add to Cart" opens the product page to pick color and size; "Remove" takes the product off the list. Empty list → "No saved items" + Start Shopping |
 | Guest | Click the cart / heart / user icon → the login modal opens |
@@ -44,7 +45,7 @@ Log in from the user icon in the header, or open https://mangcoding-store-seven.
 | `/shop`, `/about`, `/contact` | "This page is under development" |
 | Any unknown URL, e.g. `/abc` | 404 page |
 
-**Not built yet** (the page shows a placeholder): Search results, Profile. The logic behind them (services and hooks) is done and tested; the pages come in the next tasks. The demo updates automatically after each merge into `practices-react-basic`.
+**Not built yet** (the page shows a placeholder): Search results. The logic behind them (services and hooks) is done and tested; the pages come in the next tasks. The demo updates automatically after each merge into `practices-react-basic`.
 
 ### Demo limits
 
@@ -133,6 +134,7 @@ Optional: copy `.env.example` to `.env` to change the API URL or the fake networ
 | `npm run dev` | Start the app (:5173) and the mock API (:3001) together |
 | `npm run dev:client` | Start only the app |
 | `npm run dev:server` | Start only the mock API |
+| `npm run start:server` | Start the mock API the same way as on Render (accepts request bodies up to 2 MB, needed for profile photos) |
 | `npm run db:reset` | Reset mock API data to the seed |
 | `npm run build` | Production build into `dist/` |
 | `npm run preview` | Serve the production build |
@@ -150,7 +152,7 @@ Before finishing any change, run `type-check`, `lint`, `test` and `build`.
 | Part | Host | Settings |
 |---|---|---|
 | App | Vercel | Root Directory `react-training/practices-react-basic`, preset Vite, Node 22.x, Production Branch `practices-react-basic`, env `VITE_API_URL=https://long-le-internship.onrender.com` |
-| Mock API (demo only) | Render (Free, Singapore) | Root Directory `react-training/practices-react-basic`, Branch `practices-react-basic`, Build `npm install`, Start `node server/ensure-db.mjs && npx json-server server/db.json --host 0.0.0.0 --port $PORT`, env `NODE_VERSION=22` |
+| Mock API (demo only) | Render (Free, Singapore) | Root Directory `react-training/practices-react-basic`, Branch `practices-react-basic`, Build `npm install`, Start `npm run start:server -- --host 0.0.0.0 --port $PORT`, env `NODE_VERSION=22` |
 
 - Both deploy automatically on every push to `practices-react-basic`.
 - `vercel.json`: SPA rewrite (direct links like `/shop` work), long cache for hashed `/assets/*`, basic security headers.
@@ -214,7 +216,8 @@ Layer rules:
 - [x] Place Order → Order Success
 - [x] Wishlist page: saved products, Remove, Add to Cart → product page
 - [x] Order History: order cards, status badge, details in place, 10 per page
-- [ ] Search, Profile
+- [x] Profile: edit details, photo preview
+- [ ] Change password, Search
 - [ ] Responsive pass (mobile)
 
 ---

@@ -1,7 +1,11 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { RatingStars } from '@/components/shared/RatingStars'
 import { Breadcrumb } from '@/components/ui/Breadcrumb'
-import { focusWithVisibleRing, SCRIPT_FOCUS_RING } from '@/components/ui/focusWithVisibleRing'
+import {
+  focusWithVisibleRing,
+  isFocusFree,
+  SCRIPT_FOCUS_RING,
+} from '@/components/ui/focusWithVisibleRing'
 import { FORM_ERROR_TEXT } from '@/components/ui/formClasses'
 import { FOCUS_RING } from '@/components/ui/interactionClasses'
 import { QuantityStepper } from '@/components/ui/QuantityStepper'
@@ -42,11 +46,6 @@ function breadcrumbItems(productName: string): BreadcrumbItem[] {
     { label: PRODUCT_DETAIL_TEXT.breadcrumbShop, to: ROUTES.SHOP },
     { label: productName },
   ]
-}
-
-function isFocusFree(): boolean {
-  const focused = document.activeElement
-  return focused === null || focused === document.body
 }
 
 function Stock({ stock }: StockProps): JSX.Element {

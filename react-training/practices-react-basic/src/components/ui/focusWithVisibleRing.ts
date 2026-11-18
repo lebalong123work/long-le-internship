@@ -30,3 +30,8 @@ export function focusWithVisibleRing(element: HTMLElement): void {
     signal: controller.signal,
   })
 }
+
+export function isFocusFree(): boolean {
+  const focused = document.activeElement
+  return focused === null || focused === document.body
+}

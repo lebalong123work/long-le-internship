@@ -1,4 +1,4 @@
-import { checkoutSchema } from './checkout'
+import { checkoutSchema, toShippingAddress } from './checkout'
 import { VALIDATION_MESSAGES } from './common'
 
 import type { PaymentMethod } from '@/types/order'
@@ -14,8 +14,8 @@ const valid = {
   phone: '0901234567',
   email: 'user@store.com',
   address: '1 Le Loi',
-  city: 'Hồ Chí Minh',
-  district: 'Quận 1',
+  province: 'Ho Chi Minh City',
+  ward: 'Ben Thanh',
   paymentMethod: 'cod',
 }
 
@@ -63,13 +63,36 @@ describe('checkoutSchema', () => {
   })
 
   it('requires the province / city', () => {
-    const errors = fieldErrors(checkoutSchema.safeParse({ ...valid, city: '' }))
-    expect(errors.city?.[0]).toBe(VALIDATION_MESSAGES.cityRequired)
+    const errors = fieldErrors(checkoutSchema.safeParse({ ...valid, province: '' }))
+    expect(errors.province?.[0]).toBe(VALIDATION_MESSAGES.provinceRequired)
   })
 
-  it('requires the district', () => {
-    const errors = fieldErrors(checkoutSchema.safeParse({ ...valid, district: '' }))
-    expect(errors.district?.[0]).toBe(VALIDATION_MESSAGES.districtRequired)
+  it('requires the ward / commune', () => {
+    const errors = fieldErrors(checkoutSchema.safeParse({ ...valid, ward: '' }))
+    expect(errors.ward?.[0]).toBe(VALIDATION_MESSAGES.wardRequired)
+  })
+
+  it('rejects a province / city that is not in the list', () => {
+    const errors = fieldErrors(checkoutSchema.safeParse({ ...valid, province: 'Hue' }))
+    expect(errors.province?.[0]).toBe(VALIDATION_MESSAGES.provinceRequired)
+  })
+
+  it('accepts a ward / commune of the chosen province / city', () => {
+    expect(
+      checkoutSchema.safeParse({ ...valid, province: 'Can Tho', ward: 'Ninh Kieu' }).success
+    ).toBe(true)
+  })
+
+  it('rejects a ward / commune of another province / city on the ward field', () => {
+    const errors = fieldErrors(checkoutSchema.safeParse({ ...valid, ward: 'Ninh Kieu' }))
+    expect(errors.ward?.[0]).toBe(VALIDATION_MESSAGES.wardRequired)
+    expect(errors.province).toBeUndefined()
+  })
+
+  it('reports the province / city when a ward is given without one', () => {
+    const result = checkoutSchema.safeParse({ ...valid, province: '' })
+    expect(result.success).toBe(false)
+    expect(fieldErrors(result).province?.[0]).toBe(VALIDATION_MESSAGES.provinceRequired)
   })
 
   it.each(['cod', 'bank-transfer', 'credit-card'])(
@@ -87,5 +110,25 @@ describe('checkoutSchema', () => {
       fieldErrors(checkoutSchema.safeParse({ ...valid, paymentMethod: 'paypal' }))
         .paymentMethod?.[0]
     ).toBe(VALIDATION_MESSAGES.paymentMethodRequired)
+  })
+})
+
+describe('toShippingAddress', () => {
+  it('keeps the address fields and drops the payment method', () => {
+    const values = checkoutSchema.parse({ ...valid, note: 'Call first' })
+    expect(toShippingAddress(values)).toEqual({
+      fullName: 'Long Le',
+      phone: '0901234567',
+      email: 'user@store.com',
+      address: '1 Le Loi',
+      province: 'Ho Chi Minh City',
+      ward: 'Ben Thanh',
+      note: 'Call first',
+    })
+  })
+
+  it('leaves out an empty note', () => {
+    const values = checkoutSchema.parse({ ...valid, note: '   ' })
+    expect(toShippingAddress(values)).not.toHaveProperty('note')
   })
 })

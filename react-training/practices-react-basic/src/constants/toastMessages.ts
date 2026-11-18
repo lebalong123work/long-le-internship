@@ -16,6 +16,7 @@ export const TOAST_MESSAGES = {
   },
   order: {
     failed: 'Order failed, please try again',
+    cartChanged: 'Your cart has changed. Please review your order.',
   },
   profile: {
     updated: 'Profile updated successfully',

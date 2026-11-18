@@ -2,8 +2,10 @@ import { useState } from 'react'
 import { OrderDetails } from '@/components/shared/OrderDetails'
 import { ORDER_SUMMARY_CLASSES } from '@/components/shared/orderSummaryClasses'
 import { OrderStatusBadge } from '@/components/shared/OrderStatusBadge'
+import { ACCOUNT_SECTION_HEADING } from '@/components/shared/pageLayout'
 import { Button } from '@/components/ui/Button'
 import { ORDER_HISTORY_TEXT, ORDER_TEXT } from '@/constants/order'
+import { cn } from '@/utils/cn'
 import { formatCurrency } from '@/utils/formatCurrency'
 import { formatDate } from '@/utils/formatDate'
 import { ORDER_CARD_CLASSES } from './orderHistoryClasses'
@@ -27,7 +29,7 @@ export function OrderCard({ order }: OrderCardProps): JSX.Element {
   return (
     <article aria-labelledby={headingId} className={ORDER_CARD_CLASSES}>
       <div className="flex flex-col gap-2 md:flex-row md:flex-wrap md:items-center md:gap-x-6">
-        <h2 id={headingId} className="break-words font-heading text-h4 font-bold text-dark">
+        <h2 id={headingId} className={cn('break-words', ACCOUNT_SECTION_HEADING)}>
           {ORDER_TEXT.orderNumber(order.id)}
         </h2>
         {date !== '' && (

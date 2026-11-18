@@ -1,5 +1,11 @@
 import { forwardRef, useId } from 'react'
-import { FORM_ERROR_TEXT } from '@/components/ui/formClasses'
+import {
+  FIELD_CONTROL,
+  FIELD_INVALID,
+  FIELD_LABEL,
+  FORM_ERROR_TEXT,
+  joinIds,
+} from '@/components/ui/formClasses'
 import { DISABLED_CURSOR, FOCUS_RING } from '@/components/ui/interactionClasses'
 import { cn } from '@/utils/cn'
 import type { InputHTMLAttributes } from 'react'
@@ -7,11 +13,6 @@ import type { InputHTMLAttributes } from 'react'
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string
   error?: string
-}
-
-function joinIds(...ids: (string | undefined)[]): string | undefined {
-  const joined = ids.filter(Boolean).join(' ')
-  return joined || undefined
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
@@ -24,7 +25,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
 
   return (
     <div className="flex flex-col gap-4">
-      <label htmlFor={inputId} className="font-body text-lg font-bold leading-normal text-dark">
+      <label htmlFor={inputId} className={FIELD_LABEL}>
         {label}
       </label>
       <div className="flex flex-col gap-2">
@@ -35,10 +36,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           aria-invalid={Boolean(error)}
           aria-describedby={joinIds(describedBy, error ? errorId : undefined)}
           className={cn(
-            'h-12 w-full rounded-none border border-medium bg-white px-4 font-heading text-lg leading-normal text-dark placeholder:text-medium-dark disabled:opacity-50',
+            FIELD_CONTROL,
+            'placeholder:text-medium-dark',
             FOCUS_RING,
             DISABLED_CURSOR,
-            error && 'border-error',
+            error && FIELD_INVALID,
             className
           )}
         />

@@ -37,8 +37,8 @@ const payload: CreateOrderDto = {
     phone: '0912345678',
     email: 'user@store.com',
     address: '1 Test Street',
-    city: 'Hà Nội',
-    district: 'Ba Đình',
+    province: 'Hanoi',
+    ward: 'Ba Dinh',
   },
   paymentMethod: 'cod',
 }

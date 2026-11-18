@@ -30,6 +30,9 @@ Log in from the user icon in the header, or open https://mangcoding-store-seven.
 | Product page — click a product card | Photo gallery (click a thumbnail; the 4th photo is in the sideways scroll strip), name, price "$40 USD", stock, choose color / size / quantity (quantity stays within stock). `/shop/unknown` shows "Product not found" with "Back to Home" |
 | Product page — Add To Cart | Without a color: "Please select a color" (red frame around the colors). Logged in: "Added to cart" and the cart icon count goes up. Guest: Log In opens, and the item is added once after you log in. The heart saves the product (same state as on the product card); the bag button is decoration only |
 | Product page — "Same Product" | Up to 8 other products of the same category, and "See More" (opens the shop page, under development) |
+| Cart `/cart` (log in first) | Add a product on its page, then open the cart: each row shows the photo, name, color and size, price and stock. "+" / "−" change the quantity (never above the stock) and the total updates at once; the trash icon removes the row ("Removed from cart"). The summary shows the number of products and the total; "Checkout" opens the checkout page. An empty cart shows "Your cart is empty" with "Shop Now". The stock shown is for display only — it is not reserved for you |
+| Checkout `/checkout` (log in, cart not empty) | Shipping address (Province / City → Ward / Commune), payment method (Cash on delivery, bank transfer, or card — demo only, no real payment and no card details asked), order summary. Empty fields show messages. "Place Order" checks the cart again, saves the order and empties the cart |
+| Order Success | After "Place Order": green check, "Order Placed Successfully!", order number, products, address, payment method and totals. "Continue Shopping" opens the shop page (under development), "View Order" opens the order history (placeholder). An unknown order number, e.g. `/order-success/abc`, shows "Order not found" |
 | Header | Logo, nav (Home · Shop · About Us · Contact), search bar, mobile menu (☰) |
 | Log In / Sign Up | Modal with two tabs, form validation (empty fields, wrong email, wrong password), toast after login |
 | Logged in | User menu: Profile · Orders · Wishlist · Logout |
@@ -38,7 +41,7 @@ Log in from the user icon in the header, or open https://mangcoding-store-seven.
 | `/shop`, `/about`, `/contact` | "This page is under development" |
 | Any unknown URL, e.g. `/abc` | 404 page |
 
-**Not built yet** (the page shows a placeholder): Cart page, Checkout, Wishlist, Search results, Order History, Profile. The logic behind them (services and hooks) is done and tested; the pages come in the next tasks. The demo updates automatically after each merge into `practices-react-basic`.
+**Not built yet** (the page shows a placeholder): Wishlist, Search results, Order History, Profile. The logic behind them (services and hooks) is done and tested; the pages come in the next tasks. The demo updates automatically after each merge into `practices-react-basic`.
 
 ### Demo limits
 
@@ -203,7 +206,9 @@ Layer rules:
 - [x] Deploy demo: Vercel (app) + Render (mock API)
 - [x] Home: Hero banner + Best Seller section
 - [x] Product Detail: photo gallery, color / size / quantity, Add to Cart (guests log in first), wishlist heart, "Same Product"
-- [ ] Cart → Checkout → Order Success
+- [x] Cart: review items, change quantity, remove, order summary
+- [x] Checkout form: shipping address (Province / City → Ward / Commune), payment method (mock), order summary — released together with Place Order
+- [x] Place Order → Order Success
 - [ ] Wishlist, Search, Order History, Profile
 - [ ] Responsive pass (mobile)
 

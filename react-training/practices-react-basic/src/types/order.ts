@@ -38,8 +38,8 @@ export interface ShippingAddress {
   phone: string
   email: string
   address: string
-  city: string
-  district: string
+  province: string
+  ward: string
   note?: string
 }
 

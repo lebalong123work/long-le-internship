@@ -6,7 +6,7 @@ import {
   FOCUS_RING_ON_DARK,
   HOVER_OPACITY,
 } from '@/components/ui/interactionClasses'
-import { CARD_INFO_PADDING } from '@/components/shared/productCardClasses'
+import { CARD_INFO_PADDING, PRICE_TEXT_CLASSES } from '@/components/shared/productCardClasses'
 import { RatingStars } from '@/components/shared/RatingStars'
 import { WishlistHeartIcon } from '@/components/shared/WishlistHeartIcon'
 import { PRODUCT_CARD_TEXT } from '@/constants/productCard'
@@ -119,9 +119,7 @@ export function ProductCard({ product, actions, className }: ProductCardProps): 
               {product.name}
             </Link>
           </h3>
-          <p className="shrink-0 whitespace-nowrap font-numeric text-lg font-bold leading-normal text-dark">
-            {formatCurrency(product.price, 'short')}
-          </p>
+          <p className={PRICE_TEXT_CLASSES}>{formatCurrency(product.price, 'short')}</p>
         </div>
         <p className="mt-1 font-body text-sm leading-normal text-medium-dark">
           {PRODUCT_CARD_TEXT.bestQuality}

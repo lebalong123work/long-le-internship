@@ -345,7 +345,7 @@ describe('Header user menu', () => {
     const user = await openAccountMenu()
     within(accountPanel()).getByRole('button', { name: 'Logout' }).focus()
     await user.tab()
-    expect(screen.getByRole('searchbox', { name: 'Search products' })).toHaveFocus()
+    expect(screen.getByRole('combobox', { name: 'Search products' })).toHaveFocus()
     expect(accountButton()).toHaveAttribute('aria-expanded', 'false')
   })
 
@@ -439,5 +439,106 @@ describe('Header safe area', () => {
     const header = screen.getByRole('banner')
     expect(header).toHaveClass('pt-[env(safe-area-inset-top)]')
     expect([...header.classList].some((name) => /^(xl:)?h-/.test(name))).toBe(false)
+  })
+})
+
+describe('Header search button (below xl)', () => {
+  function searchButtons(): HTMLElement[] {
+    return screen.getAllByRole('button', { name: 'Open search' })
+  }
+
+  function barSearchButton(): HTMLElement {
+    return searchButtons()[0]
+  }
+
+  function searchDialog(): HTMLDialogElement {
+    const dialog = document.getElementById(barSearchButton().getAttribute('aria-controls') ?? '')
+    if (!(dialog instanceof HTMLDialogElement)) throw new Error('search dialog not rendered')
+    return dialog
+  }
+
+  function menuButton(): HTMLElement {
+    return screen.getByRole('button', { name: 'Open menu' })
+  }
+
+  beforeEach(() => {
+    media.setMatches(false)
+  })
+
+  it('bar order is logo, search, cart, menu', () => {
+    renderHeader()
+    const order = [
+      screen.getByRole('link', { name: 'mangcoding Store' }),
+      barSearchButton(),
+      screen.getByRole('link', { name: 'Cart' }),
+      menuButton(),
+    ]
+    order.slice(1).forEach((element, index) => {
+      expect(order[index].compareDocumentPosition(element) & Node.DOCUMENT_POSITION_FOLLOWING).toBe(
+        Node.DOCUMENT_POSITION_FOLLOWING
+      )
+    })
+  })
+
+  it('search button controls the search dialog and shows its state', async () => {
+    renderHeader()
+    expect(barSearchButton()).toHaveAttribute('aria-expanded', 'false')
+    await userEvent.click(barSearchButton())
+    expect(barSearchButton()).toHaveAttribute('aria-expanded', 'true')
+    expect(searchDialog().open).toBe(true)
+  })
+
+  it('search button in the menu closes the menu and opens search', async () => {
+    const user = userEvent.setup()
+    renderHeader()
+    await user.click(menuButton())
+    expect(searchButtons()).toHaveLength(2)
+    await user.click(searchButtons()[1])
+    expect(menuButton()).toHaveAttribute('aria-expanded', 'false')
+    expect(searchDialog().open).toBe(true)
+  })
+
+  it('Close search and a cancel return focus to the bar search button', async () => {
+    const user = userEvent.setup()
+    renderHeader()
+    await user.click(barSearchButton())
+    await user.click(screen.getByRole('button', { name: 'Close search' }))
+    expect(barSearchButton()).toHaveFocus()
+    await user.click(menuButton())
+    await user.click(searchButtons()[1])
+    fireEvent(searchDialog(), new Event('cancel', { cancelable: true }))
+    expect(searchDialog().open).toBe(false)
+    expect(barSearchButton()).toHaveFocus()
+  })
+
+  it('reaching xl closes search without moving focus; the button is hidden at xl', async () => {
+    renderHeader()
+    await userEvent.click(barSearchButton())
+    act(() => media.setMatches(true))
+    expect(searchDialog().open).toBe(false)
+    expect(barSearchButton()).not.toHaveFocus()
+    expect(barSearchButton().parentElement).toHaveClass('xl:hidden')
+  })
+
+  it('closing by navigation does not move focus to the search button', async () => {
+    const user = userEvent.setup()
+    renderHeader()
+    await user.click(barSearchButton())
+    const input = within(searchDialog()).getByRole('combobox', { name: 'Search products' })
+    await user.type(input, 'shirt{Enter}')
+    expect(currentUrl().pathname).toBe('/search')
+    expect(searchDialog().open).toBe(false)
+    expect(barSearchButton()).not.toHaveFocus()
+  })
+
+  it('bar gaps are 4 below md and 16 from md', () => {
+    renderHeader()
+    const bar = screen.getByRole('banner').firstElementChild
+    expect(bar).toHaveClass('gap-1', 'md:gap-4')
+    expect(barSearchButton().parentElement?.parentElement).toHaveClass(
+      'gap-1',
+      'md:gap-4',
+      'xl:gap-6'
+    )
   })
 })

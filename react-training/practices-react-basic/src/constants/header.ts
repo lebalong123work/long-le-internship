@@ -36,6 +36,9 @@ export const HEADER_TEXT = {
   searchLabel: 'Search products',
   searchPlaceholder: 'Search',
   searchSubmit: 'Search',
+  openSearch: 'Open search',
+  closeSearch: 'Close search',
+  searchDialog: 'Search',
   cartLabel,
   accountMenuLabel,
 } as const

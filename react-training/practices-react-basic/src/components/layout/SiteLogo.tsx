@@ -28,7 +28,7 @@ export function SiteLogo({ tone = 'dark' }: SiteLogoProps): JSX.Element {
     <Link
       to={ROUTES.HOME}
       className={cn(
-        'flex w-40 shrink-0 items-center justify-between gap-1',
+        'flex w-40 min-w-[156px] shrink items-center justify-between gap-1',
         FOCUS_RING,
         toneClasses.focusRing,
         LINK_HOVER_OPACITY

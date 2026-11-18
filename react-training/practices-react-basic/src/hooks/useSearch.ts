@@ -9,6 +9,8 @@ type SearchResultsKey = ReturnType<typeof queryKeys.search.results>
 
 export const SEARCH_DEBOUNCE_MS = 300
 
+export const SUGGESTION_RETRY_COUNT = 1
+
 function isSameSearch(previousKey: SearchResultsKey | undefined, search: string): boolean {
   return previousKey?.[2] === search
 }
@@ -20,6 +22,7 @@ export function useSearchSuggestions(query: string): UseQueryResult<Suggestion[]
   return useQuery({
     queryKey: queryKeys.search.suggestions(search),
     queryFn: search ? () => searchService.searchSuggestions(search) : skipToken,
+    retry: SUGGESTION_RETRY_COUNT,
   })
 }
 

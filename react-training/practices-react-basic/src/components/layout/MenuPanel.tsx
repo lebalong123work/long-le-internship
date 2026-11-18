@@ -14,6 +14,7 @@ import { MENU_ROW_BUTTON, NAV_LINK_CLASSES, PANEL_ROW } from './headerClasses'
 import { MainNav } from './MainNav'
 import { SAFE_AREA_X } from './safeArea'
 import { AccountNavItems } from './UserMenu'
+import type { ReactNode } from 'react'
 
 const DIALOG_CLASSES = [
   FULLSCREEN_DIALOG_CLASSES,
@@ -29,6 +30,7 @@ interface MenuPanelProps {
   dialogId: string
   isOpen: boolean
   onClose: () => void
+  searchControl: ReactNode
 }
 
 function GuestItems(): JSX.Element {
@@ -49,7 +51,12 @@ function GuestItems(): JSX.Element {
   )
 }
 
-export function MenuPanel({ dialogId, isOpen, onClose }: MenuPanelProps): JSX.Element {
+export function MenuPanel({
+  dialogId,
+  isOpen,
+  onClose,
+  searchControl,
+}: MenuPanelProps): JSX.Element {
   const { isAuthenticated } = useAuth()
   const { isOpenRef, dialogEvents } = useDialogCloseEvents(onClose)
   const homeLinkRef = useRef<HTMLAnchorElement>(null)
@@ -70,6 +77,7 @@ export function MenuPanel({ dialogId, isOpen, onClose }: MenuPanelProps): JSX.El
         <>
           <div className="bg-white pt-[env(safe-area-inset-top)]">
             <HeaderBar
+              searchControl={searchControl}
               menuControl={<CloseButton label={HEADER_TEXT.closeMenu} onClick={onClose} />}
             />
           </div>

@@ -36,6 +36,7 @@ Log in from the user icon in the header, or open https://mangcoding-store-seven.
 | Header | Logo, nav (Home · Shop · About Us · Contact), search bar, mobile menu (☰) |
 | Log In / Sign Up | Modal with two tabs, form validation (empty fields, wrong email, wrong password), toast after login |
 | Logged in | User menu: Profile · Orders · Wishlist · Logout |
+| Account pages `/account/profile`, `/account/orders`, `/account/wishlist` (log in first) | Account pages share the account menu: Profile · Orders · Wishlist. Links sit on top on phones and tablets and become a side menu on wide screens; the current page is highlighted. The page content itself is still a placeholder |
 | Guest | Click the cart / heart / user icon → the login modal opens |
 | Footer | Links and "Log In" (hidden when logged in) |
 | `/shop`, `/about`, `/contact` | "This page is under development" |

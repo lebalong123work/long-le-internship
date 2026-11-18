@@ -32,6 +32,7 @@ export const HEADER_TEXT = {
   profile: 'Profile',
   orders: 'Orders',
   wishlist: 'Wishlist',
+  accountNav: 'Account',
   searchLabel: 'Search products',
   searchPlaceholder: 'Search',
   searchSubmit: 'Search',

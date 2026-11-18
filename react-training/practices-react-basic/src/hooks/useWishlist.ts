@@ -20,6 +20,11 @@ interface WishlistSnapshot {
   previous: string[] | undefined
 }
 
+interface WishlistQueryOptions {
+  queryKey: ReturnType<typeof queryKeys.wishlist>
+  queryFn: () => Promise<string[]>
+}
+
 interface WishlistState {
   productIds: string[]
   isInWishlist: (productId: string) => boolean
@@ -29,6 +34,13 @@ interface WishlistState {
 
 const WISHLIST_MUTATION_SCOPE = { id: 'wishlist' }
 const EMPTY_IDS: string[] = []
+
+export function wishlistQueryOptions(userId: string): WishlistQueryOptions {
+  return {
+    queryKey: queryKeys.wishlist(userId),
+    queryFn: () => wishlistService.getWishlist(userId),
+  }
+}
 
 async function applyOptimistic(
   queryClient: QueryClient,
@@ -71,9 +83,10 @@ function useWishlistMutation(): UseMutationResult<void, Error, WishlistChange, W
 export function useWishlist(): WishlistState {
   const { user } = useAuth()
   const userId = user?.id
+  const options = wishlistQueryOptions(userId ?? '')
   const { data } = useQuery({
-    queryKey: queryKeys.wishlist(userId ?? ''),
-    queryFn: userId ? () => wishlistService.getWishlist(userId) : skipToken,
+    queryKey: options.queryKey,
+    queryFn: userId ? options.queryFn : skipToken,
   })
   const productIds = data ?? EMPTY_IDS
   const isLoaded = !userId || data !== undefined

@@ -15,12 +15,15 @@ import { useWishlist } from '@/hooks/useWishlist'
 import { cn } from '@/utils/cn'
 import { formatCurrency } from '@/utils/formatCurrency'
 import { formatReviewCount } from '@/utils/formatReviewCount'
+import type { ReactNode } from 'react'
 import type { Product } from '@/types'
 
 const BOOKMARK_ICON = '/icons/card-bookmark.svg'
+const CARD_ACTIONS = 'relative z-10 mt-auto flex flex-col gap-2 px-4 pb-6'
 
 interface ProductCardProps {
   product: Product
+  actions?: ReactNode
   className?: string
 }
 
@@ -76,7 +79,7 @@ function Rating({ rating, reviewCount }: RatingProps): JSX.Element {
   )
 }
 
-export function ProductCard({ product, className }: ProductCardProps): JSX.Element {
+export function ProductCard({ product, actions, className }: ProductCardProps): JSX.Element {
   const [failedSrc, setFailedSrc] = useState<string | null>(null)
   const imageFailed = failedSrc === product.thumbnail
 
@@ -125,6 +128,7 @@ export function ProductCard({ product, className }: ProductCardProps): JSX.Eleme
         </p>
         <Rating rating={product.rating} reviewCount={product.reviewCount} />
       </div>
+      {actions && <div className={CARD_ACTIONS}>{actions}</div>}
     </article>
   )
 }

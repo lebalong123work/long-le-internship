@@ -36,13 +36,14 @@ Log in from the user icon in the header, or open https://mangcoding-store-seven.
 | Header | Logo, nav (Home · Shop · About Us · Contact), search bar, mobile menu (☰) |
 | Log In / Sign Up | Modal with two tabs, form validation (empty fields, wrong email, wrong password), toast after login |
 | Logged in | User menu: Profile · Orders · Wishlist · Logout |
-| Account pages `/account/profile`, `/account/orders`, `/account/wishlist` (log in first) | Account pages share the account menu: Profile · Orders · Wishlist. Links sit on top on phones and tablets and become a side menu on wide screens; the current page is highlighted. The page content itself is still a placeholder |
+| Account pages `/account/profile`, `/account/orders`, `/account/wishlist` (log in first) | Account pages share the account menu: Profile · Orders · Wishlist. Links sit on top on phones and tablets and become a side menu on wide screens; the current page is highlighted. Profile and Orders are still placeholders |
+| Wishlist `/account/wishlist` (log in first) | Your saved products as cards, newest first. "Add to Cart" opens the product page to pick color and size; "Remove" takes the product off the list. Empty list → "No saved items" + Start Shopping |
 | Guest | Click the cart / heart / user icon → the login modal opens |
 | Footer | Links and "Log In" (hidden when logged in) |
 | `/shop`, `/about`, `/contact` | "This page is under development" |
 | Any unknown URL, e.g. `/abc` | 404 page |
 
-**Not built yet** (the page shows a placeholder): Wishlist, Search results, Order History, Profile. The logic behind them (services and hooks) is done and tested; the pages come in the next tasks. The demo updates automatically after each merge into `practices-react-basic`.
+**Not built yet** (the page shows a placeholder): Search results, Order History, Profile. The logic behind them (services and hooks) is done and tested; the pages come in the next tasks. The demo updates automatically after each merge into `practices-react-basic`.
 
 ### Demo limits
 
@@ -210,7 +211,8 @@ Layer rules:
 - [x] Cart: review items, change quantity, remove, order summary
 - [x] Checkout form: shipping address (Province / City → Ward / Commune), payment method (mock), order summary — released together with Place Order
 - [x] Place Order → Order Success
-- [ ] Wishlist, Search, Order History, Profile
+- [x] Wishlist page: saved products, Remove, Add to Cart → product page
+- [ ] Search, Order History, Profile
 - [ ] Responsive pass (mobile)
 
 ---

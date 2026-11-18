@@ -1,6 +1,18 @@
 import { describe, expect, it } from 'vitest'
 import { product } from '@/test/fixtures'
-import { productImageSrc } from './productImage'
+import { productImageSrc, usableImageSrc } from './productImage'
+
+describe('usableImageSrc', () => {
+  it('returns a filled source unchanged', () => {
+    expect(usableImageSrc('/a.jpg')).toBe('/a.jpg')
+  })
+
+  it('returns undefined for a blank or missing source', () => {
+    expect(usableImageSrc('')).toBeUndefined()
+    expect(usableImageSrc('   ')).toBeUndefined()
+    expect(usableImageSrc(undefined)).toBeUndefined()
+  })
+})
 
 describe('productImageSrc', () => {
   it('returns the first gallery image', () => {

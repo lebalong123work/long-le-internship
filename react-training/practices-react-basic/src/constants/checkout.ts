@@ -5,11 +5,18 @@ export interface PaymentOption {
   label: string
 }
 
-export const PAYMENT_OPTIONS: readonly PaymentOption[] = [
-  { value: 'cod', label: 'Cash on delivery (COD)' },
-  { value: 'bank-transfer', label: 'Bank transfer' },
-  { value: 'credit-card', label: 'Credit card (mock)' },
-]
+export const PAYMENT_METHOD_LABELS: Readonly<Record<PaymentMethod, string>> = {
+  cod: 'Cash on delivery (COD)',
+  'bank-transfer': 'Bank transfer',
+  'credit-card': 'Credit card (mock)',
+}
+
+const PAYMENT_METHOD_ORDER: readonly PaymentMethod[] = ['cod', 'bank-transfer', 'credit-card']
+
+export const PAYMENT_OPTIONS: readonly PaymentOption[] = PAYMENT_METHOD_ORDER.map((value) => ({
+  value,
+  label: PAYMENT_METHOD_LABELS[value],
+}))
 
 export const BANK_TRANSFER_DETAILS = [
   'Bank: Mock Bank',

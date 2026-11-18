@@ -7,6 +7,7 @@ export const UI_STATE_MESSAGES = {
   emptyCart: 'Your cart is empty',
   orderNotFound: 'Order not found',
   emptyWishlist: 'No saved items',
+  emptyOrders: 'You have no orders yet',
 } as const
 
 export const UI_STATE_ERRORS = {

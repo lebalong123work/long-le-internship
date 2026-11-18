@@ -3,6 +3,7 @@ import { render, screen, within } from '@testing-library/react'
 import { createMemoryRouter, RouterProvider } from 'react-router-dom'
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { HEADER_TEXT } from '@/constants/header'
+import { ORDER_HISTORY_TEXT } from '@/constants/order'
 import { ROUTES } from '@/constants/routes'
 import { WISHLIST_TEXT } from '@/constants/wishlist'
 import { useAuthStore } from '@/stores/authStore'
@@ -20,7 +21,7 @@ const customer: User = {
 
 const ACCOUNT_PAGES = [
   { path: ROUTES.ACCOUNT.PROFILE, placeholder: 'Profile — placeholder' },
-  { path: ROUTES.ACCOUNT.ORDERS, placeholder: 'Order History — placeholder' },
+  { path: ROUTES.ACCOUNT.ORDERS, placeholder: ORDER_HISTORY_TEXT.heading },
   { path: ROUTES.ACCOUNT.WISHLIST, placeholder: WISHLIST_TEXT.heading },
 ]
 

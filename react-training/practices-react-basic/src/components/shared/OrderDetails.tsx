@@ -9,13 +9,17 @@ import { ORDER_SUMMARY_CLASSES } from './orderSummaryClasses'
 import type { ShippingAddress, Order } from '@/types'
 import type { ReactNode } from 'react'
 
+type HeadingLevel = 2 | 3
+
 interface OrderDetailsProps {
   order: Order
+  headingLevel?: HeadingLevel
   className?: string
 }
 
 interface DetailGroupProps {
   heading: string
+  headingLevel: HeadingLevel
   children: ReactNode
 }
 
@@ -23,10 +27,12 @@ interface AddressLinesProps {
   address: ShippingAddress
 }
 
-function DetailGroup({ heading, children }: DetailGroupProps): JSX.Element {
+function DetailGroup({ heading, headingLevel, children }: DetailGroupProps): JSX.Element {
+  const Heading = headingLevel === 3 ? 'h3' : 'h2'
+
   return (
     <div className={ORDER_SUMMARY_CLASSES.group}>
-      <h2 className={ORDER_SUMMARY_CLASSES.heading}>{heading}</h2>
+      <Heading className={ORDER_SUMMARY_CLASSES.heading}>{heading}</Heading>
       {children}
     </div>
   )
@@ -46,10 +52,14 @@ function AddressLines({ address }: AddressLinesProps): JSX.Element {
   )
 }
 
-export function OrderDetails({ order, className }: OrderDetailsProps): JSX.Element {
+export function OrderDetails({
+  order,
+  headingLevel = 2,
+  className,
+}: OrderDetailsProps): JSX.Element {
   return (
     <div className={cn(ORDER_SUMMARY_CLASSES.section, className)}>
-      <DetailGroup heading={ORDER_TEXT.productsHeading}>
+      <DetailGroup heading={ORDER_TEXT.productsHeading} headingLevel={headingLevel}>
         <ul className={ORDER_SUMMARY_CLASSES.list}>
           {order.items.map((item, index) => (
             <OrderLineItem
@@ -64,11 +74,11 @@ export function OrderDetails({ order, className }: OrderDetailsProps): JSX.Eleme
         </ul>
       </DetailGroup>
       <hr className={ORDER_SUMMARY_CLASSES.divider} />
-      <DetailGroup heading={CHECKOUT_TEXT.shippingLegend}>
+      <DetailGroup heading={CHECKOUT_TEXT.shippingLegend} headingLevel={headingLevel}>
         <AddressLines address={order.shippingAddress} />
       </DetailGroup>
       <hr className={ORDER_SUMMARY_CLASSES.divider} />
-      <DetailGroup heading={CHECKOUT_TEXT.paymentLegend}>
+      <DetailGroup heading={CHECKOUT_TEXT.paymentLegend} headingLevel={headingLevel}>
         <p className={ORDER_SUMMARY_CLASSES.bodyText}>
           {PAYMENT_METHOD_LABELS[order.paymentMethod]}
         </p>

@@ -1,4 +1,11 @@
-import type { ProductFilters } from '@/types'
+import { ownerKey } from '@/utils/cartOwner'
+import type { CartOwner, ProductFilters } from '@/types'
+
+const NO_OWNER = 'none'
+
+function keyOf(owner: CartOwner | null): string {
+  return owner ? ownerKey(owner) : NO_OWNER
+}
 
 export const queryKeys = {
   products: {
@@ -13,12 +20,14 @@ export const queryKeys = {
     results: (q: string, page: number) => ['search', 'results', q, page] as const,
     suggestions: (q: string) => ['search', 'suggestions', q] as const,
   },
-  cart: (userId: string) => ['cart', userId] as const,
+  cart: (owner: CartOwner | null) => ['cart', keyOf(owner)] as const,
   wishlist: (userId: string) => ['wishlist', userId] as const,
   orders: {
-    all: (userId: string) => ['orders', userId] as const,
-    list: (userId: string, page: number) => ['orders', userId, 'list', page] as const,
-    detail: (userId: string, id: string) => ['orders', userId, 'detail', id] as const,
+    all: (owner: CartOwner | null) => ['orders', keyOf(owner)] as const,
+    list: (owner: CartOwner | null, page: number) =>
+      ['orders', keyOf(owner), 'list', page] as const,
+    detail: (owner: CartOwner | null, id: string) =>
+      ['orders', keyOf(owner), 'detail', id] as const,
   },
   profile: (userId: string) => ['profile', userId] as const,
 }

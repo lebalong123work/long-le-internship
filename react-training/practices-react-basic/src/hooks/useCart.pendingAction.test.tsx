@@ -70,7 +70,7 @@ describe('useAddToCartPendingAction', () => {
 
     act(() => runPendingAction(user))
 
-    await waitFor(() => expect(cartService.addItem).toHaveBeenCalledWith('u1', payload))
+    await waitFor(() => expect(cartService.addItem).toHaveBeenCalledWith({ kind: 'user', id: 'u1' }, payload))
     unmount()
   })
 
@@ -124,7 +124,7 @@ describe('useAddToCartPendingAction', () => {
     await waitFor(() =>
       expect(toasts()).toEqual([{ type: 'success', message: TOAST_MESSAGES.cart.added }])
     )
-    expect(queryClient.getQueryData(queryKeys.cart('u1'))).toEqual(serverCart)
+    expect(queryClient.getQueryData(queryKeys.cart({ kind: 'user', id: 'u1' }))).toEqual(serverCart)
     unmount()
   })
 
@@ -138,8 +138,8 @@ describe('useAddToCartPendingAction', () => {
     vi.mocked(cartService.addItem).mockResolvedValue(serverCart)
     const { queryClient, unmount } = setup()
     void queryClient.fetchQuery({
-      queryKey: queryKeys.cart('u1'),
-      queryFn: () => cartService.getCart('u1'),
+      queryKey: queryKeys.cart({ kind: 'user', id: 'u1' }),
+      queryFn: () => cartService.getCart({ kind: 'user', id: 'u1' }),
     })
     savePendingAdd()
 
@@ -158,7 +158,7 @@ describe('useAddToCartPendingAction', () => {
   it('does not read the cart again when it is already cached', async () => {
     vi.mocked(cartService.addItem).mockResolvedValue(serverCart)
     const { queryClient, unmount } = setup()
-    queryClient.setQueryData(queryKeys.cart('u1'), { id: 'c1', userId: 'u1', items: [] })
+    queryClient.setQueryData(queryKeys.cart({ kind: 'user', id: 'u1' }), { id: 'c1', userId: 'u1', items: [] })
     savePendingAdd()
 
     act(() => runPendingAction(user))

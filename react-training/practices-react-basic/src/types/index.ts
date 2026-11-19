@@ -5,6 +5,9 @@ export type { Suggestion } from './search'
 export type {
   CartItem,
   Cart,
+  CartOwner,
+  PendingGuestMerge,
+  GuestMergeResult,
   AddToCartDto,
   Wishlist,
   OrderItem,

@@ -1,35 +1,60 @@
+import { mergeCartLines, subtractCartLines } from '@/utils/cartMerge'
+import { ownerFields } from '@/utils/cartOwner'
 import { apiClient, ApiError } from './apiClient'
-import type { AddToCartDto, Cart, CartItem } from '@/types'
+import type {
+  AddToCartDto,
+  Cart,
+  CartItem,
+  CartOwner,
+  GuestMergeResult,
+  PendingGuestMerge,
+} from '@/types'
 
 export const CART_ERRORS = {
   itemNotFound: 'Cart item not found',
+  mergePending: 'Guest cart merge pending',
 } as const
 
 function cartItemId(item: AddToCartDto): string {
   return `${item.productId}__${item.color}__${item.size}`
 }
 
-async function findCart(userId: string): Promise<Cart | undefined> {
-  const carts = await apiClient.get<Cart[]>('/carts', { 'userId:eq': userId })
+function cartPath(cartId: string): string {
+  return `/carts/${encodeURIComponent(cartId)}`
+}
+
+async function findCart(owner: CartOwner): Promise<Cart | undefined> {
+  const [field, id] = Object.entries(ownerFields(owner))[0]
+  const carts = await apiClient.get<Cart[]>('/carts', { [`${field}:eq`]: id })
   return carts[0]
 }
 
 function saveItems(cartId: string, items: CartItem[]): Promise<Cart> {
-  return apiClient.patch<Cart>(`/carts/${encodeURIComponent(cartId)}`, { items })
+  return apiClient.patch<Cart>(cartPath(cartId), { items })
 }
 
 function hasItem(cart: Cart, itemId: string): boolean {
   return cart.items.some((line) => line.id === itemId)
 }
 
-export async function getCart(userId: string): Promise<Cart> {
-  const cart = await findCart(userId)
-  if (cart) return cart
-  return apiClient.post<Cart>('/carts', { userId, items: [] })
+function assertNoPendingMerge(cart: Cart | undefined): void {
+  if (cart?.pendingMerge) throw new ApiError(409, CART_ERRORS.mergePending)
 }
 
-export async function addItem(userId: string, item: AddToCartDto): Promise<Cart> {
-  const cart = await getCart(userId)
+async function getWritableCart(owner: CartOwner): Promise<Cart> {
+  const cart = await getCart(owner)
+  assertNoPendingMerge(cart)
+  return cart
+}
+
+export async function getCart(owner: CartOwner): Promise<Cart> {
+  const cart = await findCart(owner)
+  if (cart) return cart
+  return apiClient.post<Cart>('/carts', { ...ownerFields(owner), items: [] })
+}
+
+export async function addItem(owner: CartOwner, item: AddToCartDto): Promise<Cart> {
+  const cart = await getWritableCart(owner)
   const isSameLine = (line: CartItem): boolean =>
     line.productId === item.productId && line.color === item.color && line.size === item.size
 
@@ -43,11 +68,11 @@ export async function addItem(userId: string, item: AddToCartDto): Promise<Cart>
 }
 
 export async function updateQuantity(
-  userId: string,
+  owner: CartOwner,
   itemId: string,
   quantity: number
 ): Promise<Cart> {
-  const cart = await getCart(userId)
+  const cart = await getWritableCart(owner)
   if (!hasItem(cart, itemId)) throw new ApiError(404, CART_ERRORS.itemNotFound)
   return saveItems(
     cart.id,
@@ -55,8 +80,8 @@ export async function updateQuantity(
   )
 }
 
-export async function removeItem(userId: string, itemId: string): Promise<Cart> {
-  const cart = await getCart(userId)
+export async function removeItem(owner: CartOwner, itemId: string): Promise<Cart> {
+  const cart = await getWritableCart(owner)
   if (!hasItem(cart, itemId)) return cart
   return saveItems(
     cart.id,
@@ -64,7 +89,46 @@ export async function removeItem(userId: string, itemId: string): Promise<Cart> 
   )
 }
 
-export async function clearCart(userId: string): Promise<void> {
-  const cart = await getCart(userId)
+export async function clearCart(owner: CartOwner): Promise<void> {
+  const cart = await getWritableCart(owner)
   await saveItems(cart.id, [])
+}
+
+async function stampMerge(guestCart: Cart, userId: string): Promise<PendingGuestMerge> {
+  const pendingMerge: PendingGuestMerge = {
+    id: crypto.randomUUID(),
+    userId,
+    items: guestCart.items,
+  }
+  await apiClient.patch<Cart>(cartPath(guestCart.id), { pendingMerge })
+  return pendingMerge
+}
+
+async function completeMerge(guestCart: Cart, pending: PendingGuestMerge): Promise<Cart> {
+  const account = await getCart({ kind: 'user', id: pending.userId })
+  const appliedIds = account.appliedMergeIds ?? []
+  const merged = appliedIds.includes(pending.id)
+    ? account
+    : await apiClient.patch<Cart>(cartPath(account.id), {
+        items: mergeCartLines(account.items, pending.items),
+        appliedMergeIds: [...appliedIds, pending.id],
+      })
+  await apiClient.patch<Cart>(cartPath(guestCart.id), {
+    items: subtractCartLines(guestCart.items, pending.items),
+    pendingMerge: null,
+  })
+  return merged
+}
+
+export async function mergeGuestCart(guestId: string, userId: string): Promise<GuestMergeResult> {
+  const guestCart = await findCart({ kind: 'guest', id: guestId })
+  if (!guestCart) return { status: 'nothing' }
+  const { pendingMerge } = guestCart
+  if (pendingMerge) {
+    if (pendingMerge.userId !== userId) return { status: 'otherAccount' }
+    return { status: 'merged', cart: await completeMerge(guestCart, pendingMerge) }
+  }
+  if (guestCart.items.length === 0) return { status: 'nothing' }
+  const pending = await stampMerge(guestCart, userId)
+  return { status: 'merged', cart: await completeMerge(guestCart, pending) }
 }

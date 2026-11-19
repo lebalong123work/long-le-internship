@@ -5,11 +5,13 @@ import { Header } from '@/components/layout/Header'
 import { SAFE_AREA_X } from '@/components/layout/safeArea'
 import { Toaster } from '@/components/shared/Toaster'
 import { useAddToCartPendingAction } from '@/hooks/useCart'
+import { useGuestCartMergeRecovery } from '@/hooks/useGuestCartMerge'
 import { useWishlistPendingAction } from '@/hooks/useWishlist'
 
 export function RootLayout(): JSX.Element {
   useWishlistPendingAction()
   useAddToCartPendingAction()
+  useGuestCartMergeRecovery()
   return (
     <>
       <div className={SAFE_AREA_X}>

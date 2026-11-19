@@ -95,7 +95,7 @@ function renderPage(cached?: Order) {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false, retryDelay: 0 } },
   })
-  if (cached) queryClient.setQueryData(queryKeys.orders.detail(USER.id, cached.id), cached)
+  if (cached) queryClient.setQueryData(queryKeys.orders.detail({ kind: 'user', id: USER.id }, cached.id), cached)
   const router = createMemoryRouter(
     [
       { path: '/order-success/:orderId', element: <OrderSuccess /> },

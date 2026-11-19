@@ -154,6 +154,27 @@ describe('useOrders', () => {
     expect(result.current.error).toBe(error)
     expect(toasts()).toEqual([])
   })
+
+  it('H1 useOrders keeps the previous page as placeholder while the next page loads', async () => {
+    const pageOne: PaginatedList<Order> = { ...orderPage, page: 1 }
+    const nextPage = deferred<PaginatedList<Order>>()
+    vi.mocked(orderService.getOrdersByUser)
+      .mockResolvedValueOnce(pageOne)
+      .mockReturnValueOnce(nextPage.promise)
+    const { wrapper } = setup()
+    const { result, rerender } = renderHook(({ page }) => useOrders(page), {
+      wrapper,
+      initialProps: { page: 1 },
+    })
+    await waitFor(() => expect(result.current.isSuccess).toBe(true))
+    rerender({ page: 2 })
+    await waitFor(() => expect(orderService.getOrdersByUser).toHaveBeenLastCalledWith('u1', 2))
+    expect(result.current.data).toEqual(pageOne)
+    expect(result.current.isPlaceholderData).toBe(true)
+    nextPage.resolve(orderPage)
+    await waitFor(() => expect(result.current.data).toEqual(orderPage))
+    expect(result.current.isPlaceholderData).toBe(false)
+  })
 })
 
 describe('useOrder', () => {

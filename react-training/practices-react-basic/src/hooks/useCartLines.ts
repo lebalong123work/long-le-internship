@@ -2,8 +2,7 @@ import { useState } from 'react'
 import { calcCartTotals } from '@/utils/cartTotals'
 import { countCartItems } from '@/utils/countCartItems'
 import { useCart } from './useCart'
-import { useProductsByIds } from './useProducts'
-import type { UseQueryResult } from '@tanstack/react-query'
+import { usableProducts, useProductsByIds } from './useProducts'
 import type { PricedLine } from '@/utils/cartTotals'
 import type { CartItem, Product } from '@/types'
 
@@ -35,15 +34,6 @@ const NO_ITEMS: CartItem[] = []
 
 function uniqueProductIds(items: CartItem[]): string[] {
   return [...new Set(items.map((item) => item.productId))]
-}
-
-function usableProducts(
-  { data, isPlaceholderData }: UseQueryResult<Product[], Error>,
-  ids: string[]
-): Product[] | undefined {
-  if (data === undefined || !isPlaceholderData) return data
-  const coversEveryId = ids.every((id) => data.some((product) => product.id === id))
-  return coversEveryId ? data : undefined
 }
 
 function joinLines(items: CartItem[], products: Product[]): CartLine[] {

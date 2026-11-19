@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
+import { AccountLayout } from '@/components/layout/AccountLayout'
 import { RootLayout } from '@/components/layout/RootLayout'
 import ProtectedRoute from './ProtectedRoute'
 import Home from '@/pages/Home'
@@ -14,13 +15,12 @@ import Profile from '@/pages/Account/Profile'
 import OrderHistory from '@/pages/Account/Orders'
 import Wishlist from '@/pages/Account/Wishlist'
 import NotFound from '@/pages/NotFound'
+import type { RouteObject } from 'react-router-dom'
 
-// Login / Sign Up is a modal opened with ?auth=login|register — no /login or /register routes.
-export const router = createBrowserRouter([
+export const routes: RouteObject[] = [
   {
     element: <RootLayout />,
     children: [
-      // Public
       { path: '/', element: <Home /> },
       { path: '/shop', element: <Shop /> },
       { path: '/shop/:productId', element: <ProductDetail /> },
@@ -28,21 +28,26 @@ export const router = createBrowserRouter([
       { path: '/about', element: <AboutUs /> },
       { path: '/contact', element: <Contact /> },
 
-      // Login required
       {
         element: <ProtectedRoute />,
         children: [
           { path: '/cart', element: <Cart /> },
           { path: '/checkout', element: <Checkout /> },
           { path: '/order-success/:orderId', element: <OrderSuccess /> },
-          { path: '/account/profile', element: <Profile /> },
-          { path: '/account/orders', element: <OrderHistory /> },
-          { path: '/account/wishlist', element: <Wishlist /> },
+          {
+            element: <AccountLayout />,
+            children: [
+              { path: '/account/profile', element: <Profile /> },
+              { path: '/account/orders', element: <OrderHistory /> },
+              { path: '/account/wishlist', element: <Wishlist /> },
+            ],
+          },
         ],
       },
 
-      // Unknown URLs (also the removed /login, /register, /admin, /seller)
       { path: '*', element: <NotFound /> },
     ],
   },
-])
+]
+
+export const router = createBrowserRouter(routes)

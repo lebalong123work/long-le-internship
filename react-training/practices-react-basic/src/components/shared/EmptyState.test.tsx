@@ -140,3 +140,45 @@ describe('EmptyState className', () => {
     expect(wrapper).not.toHaveClass('py-10')
   })
 })
+
+describe('EmptyState hint', () => {
+  const HINT = 'Try a different search term or check your spelling.'
+
+  it('E1 shows the hint below the message', () => {
+    renderEmptyState({ hint: HINT })
+
+    const message = screen.getByText(MESSAGE)
+    const hint = screen.getByText(HINT)
+    expect(message.compareDocumentPosition(hint) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(hint).toHaveClass('text-medium-dark')
+  })
+
+  it('E1 keeps the message as a direct child of the wrapper without a hint', () => {
+    const { container } = renderEmptyState()
+
+    expect(container.querySelectorAll('p')).toHaveLength(1)
+    expect(screen.getByText(MESSAGE).parentElement).toHaveClass('py-10')
+  })
+
+  it.each(['', '   '])('E2 throws UI_STATE_ERRORS.emptyHint for a blank hint (%j)', (hint) => {
+    const restore = silenceRenderErrors()
+    try {
+      expect(() => renderEmptyState({ hint })).toThrow(UI_STATE_ERRORS.emptyHint)
+    } finally {
+      restore()
+    }
+  })
+})
+
+describe('EmptyState long text', () => {
+  const LONG = 'a'.repeat(200)
+
+  it('E3 lets a long message and its hint wrap inside the wrapper width', () => {
+    renderEmptyState({ message: LONG, hint: LONG.toUpperCase() })
+
+    const message = screen.getByText(LONG)
+    expect(message).toHaveClass('max-w-full', 'break-words')
+    expect(message.parentElement).toHaveClass('max-w-full')
+    expect(screen.getByText(LONG.toUpperCase())).toHaveClass('max-w-full', 'break-words')
+  })
+})

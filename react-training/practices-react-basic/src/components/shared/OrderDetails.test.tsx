@@ -113,4 +113,16 @@ describe('OrderDetails', () => {
     expect(amountOf(CHECKOUT_TEXT.shipping)).toBe('$5 USD')
     expect(amountOf(CHECKOUT_TEXT.total)).toBe('$80 USD')
   })
+
+  it('D6 uses level 3 headings when headingLevel is 3', () => {
+    render(<OrderDetails order={ORDER} headingLevel={3} />)
+    expect(screen.queryAllByRole('heading', { level: 2 })).toHaveLength(0)
+    expect(
+      screen.getAllByRole('heading', { level: 3 }).map((heading) => heading.textContent)
+    ).toEqual([
+      ORDER_TEXT.productsHeading,
+      CHECKOUT_TEXT.shippingLegend,
+      CHECKOUT_TEXT.paymentLegend,
+    ])
+  })
 })

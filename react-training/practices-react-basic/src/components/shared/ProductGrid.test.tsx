@@ -71,6 +71,19 @@ describe('ProductGrid', () => {
     )
   })
 
+  it('renders the actions from renderActions inside each card', () => {
+    const products = [product('p1'), product('p2')]
+    renderInRouter(
+      <ProductGrid
+        products={products}
+        renderActions={(item) => <button type="button">{`Act ${item.id}`}</button>}
+      />
+    )
+    const items = within(screen.getByRole('list')).getAllByRole('listitem')
+    expect(within(items[0]).getByRole('button', { name: 'Act p1' })).toBeInTheDocument()
+    expect(within(items[1]).getByRole('button', { name: 'Act p2' })).toBeInTheDocument()
+  })
+
   it('a conflicting caller class replaces the default', () => {
     renderInRouter(<ProductGrid products={[product('p1')]} className="gap-2" />)
     const list = screen.getByRole('list')

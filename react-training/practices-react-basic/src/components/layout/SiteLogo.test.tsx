@@ -24,3 +24,11 @@ describe('SiteLogo tone', () => {
     expect(text).not.toHaveClass('text-dark')
   })
 })
+
+describe('SiteLogo width', () => {
+  it('is 160 wide and may shrink to 156, never below', () => {
+    const link = logoText().closest('a')
+    expect(link).toHaveClass('w-40', 'min-w-[156px]', 'shrink')
+    expect(link).not.toHaveClass('shrink-0')
+  })
+})

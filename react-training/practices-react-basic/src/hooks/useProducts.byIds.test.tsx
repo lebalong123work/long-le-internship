@@ -5,7 +5,7 @@ import { queryKeys } from '@/constants/queryKeys'
 import { ApiError } from '@/services/apiClient'
 import * as productService from '@/services/productService'
 import { product } from '@/test/fixtures'
-import { useProductsByIds } from './useProducts'
+import { usableProducts, useProductsByIds } from './useProducts'
 import type { ReactNode } from 'react'
 import type { Product } from '@/types'
 
@@ -77,5 +77,31 @@ describe('useProductsByIds', () => {
     const { result } = renderHook(() => useProductsByIds(['p1']), { wrapper })
     await waitFor(() => expect(result.current.isError).toBe(true))
     expect(result.current.data).toBeUndefined()
+  })
+})
+
+describe('usableProducts', () => {
+  async function placeholderFor(nextIds: string[]) {
+    vi.mocked(productService.getByIds).mockResolvedValueOnce([P1, P2])
+    vi.mocked(productService.getByIds).mockReturnValue(new Promise<Product[]>(() => {}))
+    const { wrapper } = setup()
+    const { result, rerender } = renderHook(({ ids }) => useProductsByIds(ids), {
+      wrapper,
+      initialProps: { ids: ['p1', 'p2'] },
+    })
+    await waitFor(() => expect(result.current.isSuccess).toBe(true))
+    rerender({ ids: nextIds })
+    expect(result.current.isPlaceholderData).toBe(true)
+    return result.current
+  }
+
+  it('uses placeholder data that contains every current id', async () => {
+    const query = await placeholderFor(['p2'])
+    expect(usableProducts(query, ['p2'])).toEqual([P1, P2])
+  })
+
+  it('refuses placeholder data that misses a current id', async () => {
+    const query = await placeholderFor(['p3', 'p2'])
+    expect(usableProducts(query, ['p3', 'p2'])).toBeUndefined()
   })
 })

@@ -10,3 +10,13 @@ export const ORDER_TEXT = {
     `${address}, ${ward}, ${province}`,
   note: (note: string): string => `Note: ${note}`,
 } as const
+
+export const ORDER_HISTORY_TEXT = {
+  heading: 'My Orders',
+  loading: 'Loading orders',
+  itemCount: (count: number): string => (count === 1 ? '1 item' : `${count} items`),
+  viewDetail: 'View Detail',
+  hideDetail: 'Hide Detail',
+  timelineLabel: 'Order status',
+  shopNow: 'Shop Now',
+} as const

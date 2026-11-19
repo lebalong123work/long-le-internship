@@ -16,6 +16,15 @@ export const PAGE_HEADING = cn(
   SCRIPT_FOCUS_RING
 )
 
+export const PAGE_SUBTEXT = 'mt-2 font-heading text-lg leading-normal text-medium-dark'
+
+export const STATUS_PAGE_LAYOUT = {
+  section: cn(PAGE_CONTAINER, 'flex flex-col items-center text-center'),
+  heading: cn(PAGE_HEADING, 'break-words'),
+  message: PAGE_SUBTEXT,
+  action: 'mt-6',
+}
+
 export const ACCOUNT_HEADING = PAGE_HEADING
 
 export const ACCOUNT_SECTION_HEADING = 'font-heading text-h4 font-bold text-dark'

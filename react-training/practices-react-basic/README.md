@@ -221,7 +221,7 @@ Layer rules:
 - [x] Profile: edit details, photo preview
 - [x] Change password
 - [x] Search: suggestions while typing + results page
-- [ ] Responsive pass (mobile)
+- [x] Responsive pass: every screen checked on phone, tablet and desktop widths (320 → 1440), no sideways scrolling
 
 ---
 

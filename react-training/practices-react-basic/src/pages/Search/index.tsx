@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { Navigate, useSearchParams } from 'react-router-dom'
 import { EmptyState } from '@/components/shared/EmptyState'
 import { ErrorState } from '@/components/shared/ErrorState'
-import { PAGE_CONTAINER, PAGE_HEADING } from '@/components/shared/pageLayout'
+import { PAGE_CONTAINER, PAGE_HEADING, PAGE_SUBTEXT } from '@/components/shared/pageLayout'
 import { Pagination } from '@/components/shared/Pagination'
 import { ProductGrid, ProductGridSkeleton } from '@/components/shared/ProductGrid'
 import { focusWithVisibleRing, isFocusFree } from '@/components/ui/focusWithVisibleRing'
@@ -84,11 +84,7 @@ export default function Search(): JSX.Element {
       <h1 ref={headingRef} tabIndex={-1} className={cn(PAGE_HEADING, 'break-words')}>
         {SEARCH_RESULTS_TEXT.heading(query)}
       </h1>
-      {total !== undefined && (
-        <p className="mt-2 font-heading text-lg leading-normal text-medium-dark">
-          {SEARCH_RESULTS_TEXT.count(total)}
-        </p>
-      )}
+      {total !== undefined && <p className={PAGE_SUBTEXT}>{SEARCH_RESULTS_TEXT.count(total)}</p>}
       <p role="status" className="sr-only">
         {showSkeleton ? SEARCH_RESULTS_TEXT.loading : ''}
       </p>

@@ -13,3 +13,14 @@ export const SEARCH_TEXT = {
   noResults: 'No results',
   resultCount,
 } as const
+
+function resultTotal(count: number): string {
+  return count === 1 ? '(1 item)' : `(${count} items)`
+}
+
+export const SEARCH_RESULTS_TEXT = {
+  heading: (query: string): string => `Results for "${query}"`,
+  count: resultTotal,
+  loading: 'Loading results',
+  gridHeading: 'Search results',
+} as const

@@ -8,10 +8,14 @@ export const SIDEBAR_LAYOUT = {
   aside: 'xl:w-[378px] xl:shrink-0',
 }
 
-export const ACCOUNT_HEADING = cn(
+export const PAGE_CONTAINER = 'container px-4 py-10 md:px-6 xl:px-0'
+
+export const PAGE_HEADING = cn(
   'font-heading text-h3 font-bold text-dark',
   FOCUS_RING,
   SCRIPT_FOCUS_RING
 )
+
+export const ACCOUNT_HEADING = PAGE_HEADING
 
 export const ACCOUNT_SECTION_HEADING = 'font-heading text-h4 font-bold text-dark'

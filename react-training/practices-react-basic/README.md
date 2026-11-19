@@ -41,12 +41,13 @@ Log in from the user icon in the header, or open https://mangcoding-store-seven.
 | Change Password (on `/account/profile`, log in first) | Below your profile: current password, new password (at least 6 characters), confirm. A wrong current password, or a new password that is the same as the current one, shows a message under that field. Success → "Password changed successfully" and the form clears. On the demo, please change it back to the demo password afterwards |
 | Order History `/account/orders` (log in first) | Your orders, newest first, 10 per page ("Previous page" / "Next page"; the page number stays in the address, so refresh keeps it). Each card shows the order number, date (dd/mm/yyyy), total, number of items and a colored status badge. "View Detail" opens the order in place: status steps (Ordered → Processing → Shipped → Delivered; hidden for a cancelled order), products, address, payment method and totals. No orders → "You have no orders yet" + Shop Now |
 | Wishlist `/account/wishlist` (log in first) | Your saved products as cards, newest first. "Add to Cart" opens the product page to pick color and size; "Remove" takes the product off the list. Empty list → "No saved items" + Start Shopping |
+| Search results `/search?q=shirt` | Press Enter in the search bar (or pick a category suggestion): "Results for "shirt"" with the number of items and the matching product cards, 8 per page ("Previous page" / "Next page"; the page number stays in the address). No match → "No results for '…'" with a tip to try another word. An empty search goes back to Home. The demo data has T-shirts only, so most words show the no-results message |
 | Guest | Click the cart / heart / user icon → the login modal opens |
 | Footer | Links and "Log In" (hidden when logged in) |
 | `/shop`, `/about`, `/contact` | "This page is under development" |
 | Any unknown URL, e.g. `/abc` | 404 page |
 
-**Not built yet** (the page shows a placeholder): Search results. The logic behind them (services and hooks) is done and tested; the pages come in the next tasks. The demo updates automatically after each merge into `practices-react-basic`.
+All planned pages are built (Shop, About Us and Contact show "This page is under development" on purpose). The demo updates automatically after each merge into `practices-react-basic`.
 
 ### Demo limits
 
@@ -219,7 +220,7 @@ Layer rules:
 - [x] Order History: order cards, status badge, details in place, 10 per page
 - [x] Profile: edit details, photo preview
 - [x] Change password
-- [ ] Search
+- [x] Search: suggestions while typing + results page
 - [ ] Responsive pass (mobile)
 
 ---

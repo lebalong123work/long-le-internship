@@ -1,15 +1,17 @@
 import { useEffect } from 'react'
-import { skipToken, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/constants/queryKeys'
 import { TOAST_MESSAGES } from '@/constants/toastMessages'
 import * as cartService from '@/services/cartService'
+import { ensureGuestId } from '@/services/guestSession'
 import { registerPendingActionHandler } from '@/stores/pendingActionStore'
-import { requireUserId } from '@/utils/requireUserId'
+import { requireCartOwner } from '@/utils/cartOwner'
 import { failureMessage } from './failureMessage'
 import { useAuth } from './useAuth'
+import { useCartOwner } from './useCartOwner'
 import { useToast } from './useToast'
 import type { QueryClient, UseMutationResult, UseQueryResult } from '@tanstack/react-query'
-import type { AddToCartDto, Cart } from '@/types'
+import type { AddToCartDto, Cart, CartOwner } from '@/types'
 
 interface CartQueryOptions {
   queryKey: ReturnType<typeof queryKeys.cart>
@@ -20,16 +22,16 @@ interface CartSnapshot {
   previous: Cart | undefined
 }
 
-interface AddForUserVariables {
-  userId: string
+interface AddForOwnerVariables {
+  owner: CartOwner
   item: AddToCartDto
 }
 
 interface AddToCartCallbacks {
-  addForUser: (userId: string, item: AddToCartDto) => Promise<Cart>
-  onSuccess: (cart: Cart) => void
+  addForOwner: (owner: CartOwner, item: AddToCartDto) => Promise<Cart>
+  onSuccess: (cart: Cart, owner: CartOwner) => void
   onError: (error: Error) => void
-  settle: (userId: string | undefined) => Promise<void> | undefined
+  settle: (owner: CartOwner) => Promise<void>
 }
 
 interface UpdateQuantityVariables {
@@ -39,13 +41,19 @@ interface UpdateQuantityVariables {
 
 export const CART_MUTATION_SCOPE = { id: 'cart' }
 
+const EMPTY_CART: Cart = { id: '', items: [] }
+
+function writeOwner(userId: string | undefined): CartOwner {
+  return userId ? { kind: 'user', id: userId } : { kind: 'guest', id: ensureGuestId() }
+}
+
 async function applyOptimistic(
   queryClient: QueryClient,
-  userId: string | undefined,
+  owner: CartOwner | null,
   change: (cart: Cart) => Cart
 ): Promise<CartSnapshot> {
-  if (!userId) return { previous: undefined }
-  const key = queryKeys.cart(userId)
+  if (!owner) return { previous: undefined }
+  const key = queryKeys.cart(owner)
   await queryClient.cancelQueries({ queryKey: key })
   const previous = queryClient.getQueryData<Cart>(key)
   if (previous) queryClient.setQueryData<Cart>(key, change(previous))
@@ -68,69 +76,66 @@ function useAddToCartCallbacks(): AddToCartCallbacks {
   const toast = useToast()
 
   return {
-    addForUser: async (userId, item) => {
-      await queryClient.ensureQueryData(cartQueryOptions(userId)).catch(() => undefined)
-      return cartService.addItem(userId, item)
+    addForOwner: async (owner, item) => {
+      await queryClient.ensureQueryData(cartQueryOptions(owner)).catch(() => undefined)
+      return cartService.addItem(owner, item)
     },
-    onSuccess: (cart) => {
-      queryClient.setQueryData(queryKeys.cart(cart.userId), cart)
+    onSuccess: (cart, owner) => {
+      queryClient.setQueryData(queryKeys.cart(owner), cart)
       toast.success(TOAST_MESSAGES.cart.added)
     },
     onError: (error) => {
       toast.error(failureMessage(error, TOAST_MESSAGES.cart.updateFailed))
     },
-    settle: (userId) => {
-      if (userId) return queryClient.invalidateQueries({ queryKey: queryKeys.cart(userId) })
-    },
+    settle: (owner) => queryClient.invalidateQueries({ queryKey: queryKeys.cart(owner) }),
   }
 }
 
-export function cartQueryOptions(userId: string): CartQueryOptions {
+export function cartQueryOptions(owner: CartOwner): CartQueryOptions {
   return {
-    queryKey: queryKeys.cart(userId),
-    queryFn: () => cartService.getCart(userId),
+    queryKey: queryKeys.cart(owner),
+    queryFn: () => cartService.getCart(owner),
   }
 }
 
 export function useCart(): UseQueryResult<Cart, Error> {
-  const { user } = useAuth()
-  const userId = user?.id
-  const options = cartQueryOptions(userId ?? '')
+  const owner = useCartOwner()
 
-  return useQuery({
-    queryKey: options.queryKey,
-    queryFn: userId ? options.queryFn : skipToken,
-  })
+  return useQuery(
+    owner
+      ? cartQueryOptions(owner)
+      : { queryKey: queryKeys.cart(null), queryFn: () => EMPTY_CART, staleTime: Infinity }
+  )
 }
 
 export function useAddToCart(): UseMutationResult<Cart, Error, AddToCartDto> {
   const { user } = useAuth()
   const userId = user?.id
-  const { addForUser, onSuccess, onError, settle } = useAddToCartCallbacks()
+  const { addForOwner, onSuccess, onError, settle } = useAddToCartCallbacks()
 
   return useMutation({
     scope: CART_MUTATION_SCOPE,
-    mutationFn: (item) => addForUser(requireUserId(userId), item),
-    onSuccess,
+    mutationFn: (item) => addForOwner(writeOwner(userId), item),
+    onSuccess: (cart) => onSuccess(cart, writeOwner(userId)),
     onError,
-    onSettled: () => settle(userId),
+    onSettled: () => settle(writeOwner(userId)),
   })
 }
 
 export function useAddToCartPendingAction(): void {
-  const { addForUser, onSuccess, onError, settle } = useAddToCartCallbacks()
-  const { mutate } = useMutation<Cart, Error, AddForUserVariables>({
+  const { addForOwner, onSuccess, onError, settle } = useAddToCartCallbacks()
+  const { mutate } = useMutation<Cart, Error, AddForOwnerVariables>({
     scope: CART_MUTATION_SCOPE,
-    mutationFn: ({ userId, item }) => addForUser(userId, item),
-    onSuccess,
+    mutationFn: ({ owner, item }) => addForOwner(owner, item),
+    onSuccess: (cart, { owner }) => onSuccess(cart, owner),
     onError,
-    onSettled: (_cart, _error, { userId }) => settle(userId),
+    onSettled: (_cart, _error, { owner }) => settle(owner),
   })
 
   useEffect(
     () =>
       registerPendingActionHandler('addToCart', (action, user) => {
-        mutate({ userId: user.id, item: action.payload })
+        mutate({ owner: { kind: 'user', id: user.id }, item: action.payload })
       }),
     [mutate]
   )
@@ -142,54 +147,52 @@ export function useUpdateCartQuantity(): UseMutationResult<
   UpdateQuantityVariables,
   CartSnapshot
 > {
-  const { user } = useAuth()
-  const userId = user?.id
+  const owner = useCartOwner()
   const queryClient = useQueryClient()
   const toast = useToast()
 
   return useMutation({
     scope: CART_MUTATION_SCOPE,
     mutationFn: ({ itemId, quantity }) =>
-      cartService.updateQuantity(requireUserId(userId), itemId, quantity),
+      cartService.updateQuantity(requireCartOwner(owner), itemId, quantity),
     onMutate: (variables) =>
-      applyOptimistic(queryClient, userId, (cart) => setQuantity(cart, variables)),
+      applyOptimistic(queryClient, owner, (cart) => setQuantity(cart, variables)),
     onSuccess: (cart) => {
-      queryClient.setQueryData(queryKeys.cart(cart.userId), cart)
+      queryClient.setQueryData(queryKeys.cart(owner), cart)
     },
     onError: (error, _variables, snapshot) => {
-      if (userId && snapshot?.previous) {
-        queryClient.setQueryData(queryKeys.cart(userId), snapshot.previous)
+      if (owner && snapshot?.previous) {
+        queryClient.setQueryData(queryKeys.cart(owner), snapshot.previous)
       }
       toast.error(failureMessage(error, TOAST_MESSAGES.cart.updateFailed))
     },
     onSettled: () => {
-      if (userId) return queryClient.invalidateQueries({ queryKey: queryKeys.cart(userId) })
+      if (owner) return queryClient.invalidateQueries({ queryKey: queryKeys.cart(owner) })
     },
   })
 }
 
 export function useRemoveCartItem(): UseMutationResult<Cart, Error, string, CartSnapshot> {
-  const { user } = useAuth()
-  const userId = user?.id
+  const owner = useCartOwner()
   const queryClient = useQueryClient()
   const toast = useToast()
 
   return useMutation({
     scope: CART_MUTATION_SCOPE,
-    mutationFn: (itemId) => cartService.removeItem(requireUserId(userId), itemId),
-    onMutate: (itemId) => applyOptimistic(queryClient, userId, (cart) => dropLine(cart, itemId)),
+    mutationFn: (itemId) => cartService.removeItem(requireCartOwner(owner), itemId),
+    onMutate: (itemId) => applyOptimistic(queryClient, owner, (cart) => dropLine(cart, itemId)),
     onSuccess: (cart) => {
-      queryClient.setQueryData(queryKeys.cart(cart.userId), cart)
+      queryClient.setQueryData(queryKeys.cart(owner), cart)
       toast.info(TOAST_MESSAGES.cart.removed)
     },
     onError: (error, _variables, snapshot) => {
-      if (userId && snapshot?.previous) {
-        queryClient.setQueryData(queryKeys.cart(userId), snapshot.previous)
+      if (owner && snapshot?.previous) {
+        queryClient.setQueryData(queryKeys.cart(owner), snapshot.previous)
       }
       toast.error(failureMessage(error, TOAST_MESSAGES.cart.updateFailed))
     },
     onSettled: () => {
-      if (userId) return queryClient.invalidateQueries({ queryKey: queryKeys.cart(userId) })
+      if (owner) return queryClient.invalidateQueries({ queryKey: queryKeys.cart(owner) })
     },
   })
 }

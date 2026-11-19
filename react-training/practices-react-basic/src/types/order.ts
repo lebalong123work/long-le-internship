@@ -8,11 +8,25 @@ export interface CartItem {
   quantity: number
 }
 
-export interface Cart {
+export type CartOwner = { kind: 'user'; id: string } | { kind: 'guest'; id: string }
+
+export interface PendingGuestMerge {
   id: string
   userId: string
   items: CartItem[]
 }
+
+export interface Cart {
+  id: string
+  userId?: string
+  guestId?: string
+  items: CartItem[]
+  pendingMerge?: PendingGuestMerge | null
+  appliedMergeIds?: string[]
+}
+
+export type GuestMergeResult =
+  { status: 'nothing' } | { status: 'merged'; cart: Cart } | { status: 'otherAccount' }
 
 export type AddToCartDto = Omit<CartItem, 'id'>
 
@@ -47,7 +61,8 @@ export type PaymentMethod = 'cod' | 'bank-transfer' | 'credit-card'
 
 export interface Order {
   id: string
-  userId: string
+  userId?: string
+  guestId?: string
   items: OrderItem[]
   shippingAddress: ShippingAddress
   paymentMethod: PaymentMethod

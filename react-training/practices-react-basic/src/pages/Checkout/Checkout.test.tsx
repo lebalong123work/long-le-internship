@@ -207,7 +207,9 @@ describe('Checkout page', () => {
     expect(screen.getByLabelText('Full name')).toHaveValue('Test Customer')
     await userEvent.type(phone, '0901234567')
     vi.mocked(cartService.getCart).mockRejectedValue(SERVER_ERROR)
-    await act(() => queryClient.refetchQueries({ queryKey: queryKeys.cart('u1') }))
+    await act(() =>
+      queryClient.refetchQueries({ queryKey: queryKeys.cart({ kind: 'user', id: 'u1' }) })
+    )
     expect(screen.queryByRole('alert')).toBeNull()
     expect(screen.getByLabelText('Phone number')).toHaveValue('0901234567')
   })
@@ -226,7 +228,7 @@ describe('Checkout page', () => {
     expect(placeOrderButton()).toHaveAttribute('aria-busy', 'true')
     await act(async () => created.resolve(order))
     expect(await screen.findByText('Order success page')).toBeInTheDocument()
-    expect(cartService.clearCart).toHaveBeenCalledWith('u1')
+    expect(cartService.clearCart).toHaveBeenCalledWith({ kind: 'user', id: 'u1' })
   })
 
   it('stays on checkout when the cart empties while the order is pending', async () => {
@@ -239,7 +241,7 @@ describe('Checkout page', () => {
     await fillValidForm()
     await userEvent.click(placeOrderButton())
     await waitFor(() => expect(orderService.createOrder).toHaveBeenCalledTimes(1))
-    act(() => queryClient.setQueryData(queryKeys.cart('u1'), cartOf()))
+    act(() => queryClient.setQueryData(queryKeys.cart({ kind: 'user', id: 'u1' }), cartOf()))
     await waitFor(() => expect(screen.queryByText('Tee One')).toBeNull())
     expect(screen.queryByText('Cart page')).toBeNull()
     expect(pageHeading()).toBeInTheDocument()

@@ -7,13 +7,15 @@ import { TOAST_MESSAGES } from '@/constants/toastMessages'
 import ProtectedRoute from '@/router/ProtectedRoute'
 import { ApiError } from '@/services/apiClient'
 import * as authService from '@/services/authService'
+import * as cartService from '@/services/cartService'
 import { useAuthStore } from '@/stores/authStore'
 import { useToastStore } from '@/stores/toastStore'
 import { useAuth, useLogin, useLogout, useRegister } from './useAuth'
 import type { ReactNode } from 'react'
-import type { AuthResponse, User } from '@/types'
+import type { AuthResponse, GuestMergeResult, User } from '@/types'
 
 vi.mock('@/services/authService')
+vi.mock('@/services/cartService')
 
 const user: User = { id: 'u1', name: 'Test Customer', email: 'user@store.com', role: 'customer' }
 const authResponse: AuthResponse = { user, token: 'mock-token-u1' }
@@ -179,5 +181,77 @@ describe('useLogout', () => {
 
     expect(screen.getByText('Home')).toBeInTheDocument()
     expect(screen.getByTestId('location')).toHaveTextContent(/^\/$/)
+  })
+})
+
+describe('guest cart merge on login / sign up (T35)', () => {
+  const GUEST_ID = '3f2b8c1e-9a4d-4f6b-8c2a-1d5e7f9a0b3c'
+
+  function deferredMerge() {
+    let resolve: (value: GuestMergeResult) => void = () => undefined
+    const promise = new Promise<GuestMergeResult>((res) => {
+      resolve = res
+    })
+    vi.mocked(cartService.mergeGuestCart).mockReturnValue(promise)
+    return resolve
+  }
+
+  beforeEach(() => {
+    localStorage.setItem('mcs_guest', GUEST_ID)
+    vi.mocked(cartService.getCart).mockResolvedValue({ id: 'a', userId: 'u1', items: [] })
+  })
+
+  it('A1 A4 login keeps pending until the merge finishes, then runs the caller onSuccess', async () => {
+    vi.mocked(authService.login).mockResolvedValue(authResponse)
+    const resolveMerge = deferredMerge()
+    const onSuccess = vi.fn()
+    const { wrapper } = setup()
+    const { result } = renderHook(() => useLogin(), { wrapper })
+
+    act(() => result.current.mutate({ email: 'user@store.com', password: '123456' }, { onSuccess }))
+
+    await waitFor(() => expect(cartService.mergeGuestCart).toHaveBeenCalledWith(GUEST_ID, 'u1'))
+    expect(useAuthStore.getState().isAuthenticated).toBe(true)
+    expect(result.current.isPending).toBe(true)
+    expect(onSuccess).not.toHaveBeenCalled()
+
+    act(() => resolveMerge({ status: 'nothing' }))
+
+    await waitFor(() => expect(onSuccess).toHaveBeenCalledTimes(1))
+    expect(result.current.isSuccess).toBe(true)
+  })
+
+  it('A2 a failed merge keeps the session, shows the cart toast and still runs onSuccess', async () => {
+    vi.mocked(authService.login).mockResolvedValue(authResponse)
+    vi.mocked(cartService.mergeGuestCart).mockRejectedValue(new ApiError(500, 'Server error'))
+    const onSuccess = vi.fn()
+    const { wrapper } = setup()
+    const { result } = renderHook(() => useLogin(), { wrapper })
+
+    act(() => result.current.mutate({ email: 'user@store.com', password: '123456' }, { onSuccess }))
+
+    await waitFor(() => expect(onSuccess).toHaveBeenCalledTimes(1))
+    expect(useAuthStore.getState().user).toEqual(user)
+    expect(toasts()).toContainEqual({ type: 'error', message: TOAST_MESSAGES.cart.updateFailed })
+  })
+
+  it('A3 sign up merges the guest cart before the caller onSuccess', async () => {
+    vi.mocked(authService.register).mockResolvedValue(authResponse)
+    const resolveMerge = deferredMerge()
+    const onSuccess = vi.fn()
+    const { wrapper } = setup()
+    const { result } = renderHook(() => useRegister(), { wrapper })
+
+    act(() =>
+      result.current.mutate(
+        { name: 'Test Customer', email: 'user@store.com', password: '123456' },
+        { onSuccess }
+      )
+    )
+
+    await waitFor(() => expect(cartService.mergeGuestCart).toHaveBeenCalledWith(GUEST_ID, 'u1'))
+    expect(onSuccess).not.toHaveBeenCalled()
+    act(() => resolveMerge({ status: 'nothing' }))
+    await waitFor(() => expect(onSuccess).toHaveBeenCalledTimes(1))
   })
 })

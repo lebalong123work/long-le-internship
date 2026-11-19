@@ -123,14 +123,14 @@ describe('ProductActions — Add To Cart', () => {
     vi.mocked(cartService.addItem).mockResolvedValue(serverCart)
     const { user: clicker } = renderActions({ item: { ...PRODUCT, colors: [] }, color: null })
     await clicker.click(addButton())
-    expect(cartService.addItem).toHaveBeenCalledWith('u1', expect.objectContaining({ color: '' }))
+    expect(cartService.addItem).toHaveBeenCalledWith({ kind: 'user', id: 'u1' }, expect.objectContaining({ color: '' }))
   })
 
   it('sends an empty size for a product without sizes', async () => {
     vi.mocked(cartService.addItem).mockResolvedValue(serverCart)
     const { user: clicker } = renderActions({ item: { ...PRODUCT, sizes: [] }, size: null })
     await clicker.click(addButton())
-    expect(cartService.addItem).toHaveBeenCalledWith('u1', expect.objectContaining({ size: '' }))
+    expect(cartService.addItem).toHaveBeenCalledWith({ kind: 'user', id: 'u1' }, expect.objectContaining({ size: '' }))
   })
 
   it('disables Add To Cart when the quantity is 0 (out of stock)', () => {
@@ -154,7 +154,7 @@ describe('ProductActions — Add To Cart', () => {
     vi.mocked(cartService.addItem).mockResolvedValue(serverCart)
     const { user: clicker } = renderActions()
     await clicker.click(addButton())
-    expect(cartService.addItem).toHaveBeenCalledWith('u1', {
+    expect(cartService.addItem).toHaveBeenCalledWith({ kind: 'user', id: 'u1' }, {
       productId: 'p1',
       color: 'Blue',
       size: 'S',
@@ -175,8 +175,8 @@ describe('ProductActions — Add To Cart', () => {
     vi.mocked(cartService.addItem).mockResolvedValue(serverCart)
     const { user: clicker, queryClient } = renderActions()
     void queryClient.fetchQuery({
-      queryKey: queryKeys.cart('u1'),
-      queryFn: () => cartService.getCart('u1'),
+      queryKey: queryKeys.cart({ kind: 'user', id: 'u1' }),
+      queryFn: () => cartService.getCart({ kind: 'user', id: 'u1' }),
     })
     await clicker.click(addButton())
     expect(cartService.addItem).not.toHaveBeenCalled()

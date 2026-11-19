@@ -222,6 +222,7 @@ Layer rules:
 - [x] Change password
 - [x] Search: suggestions while typing + results page
 - [x] Responsive pass: every screen checked on phone, tablet and desktop widths (320 → 1440), no sideways scrolling
+- [x] Final check: full purchase flow, loading / error / empty states and keyboard use checked in the browser
 
 ---
 

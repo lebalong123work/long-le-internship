@@ -1,8 +1,15 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, useLocation } from 'react-router-dom'
-import { describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import * as searchService from '@/services/searchService'
 import { HeaderSearch } from './HeaderSearch'
+
+vi.mock('@/services/searchService', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@/services/searchService')>()),
+  searchSuggestions: vi.fn(),
+}))
 
 function LocationProbe(): JSX.Element {
   const location = useLocation()
@@ -14,18 +21,29 @@ function location(): string {
 }
 
 function renderSearch() {
+  const queryClient = new QueryClient()
   render(
-    <MemoryRouter initialEntries={['/']}>
-      <HeaderSearch />
-      <LocationProbe />
-    </MemoryRouter>
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter initialEntries={['/']}>
+        <HeaderSearch />
+        <LocationProbe />
+      </MemoryRouter>
+    </QueryClientProvider>
   )
   return {
     user: userEvent.setup(),
-    input: screen.getByRole('searchbox', { name: 'Search products' }),
+    input: screen.getByRole('combobox', { name: 'Search products' }),
     submit: screen.getByRole('button', { name: 'Search' }),
   }
 }
+
+beforeEach(() => {
+  vi.mocked(searchService.searchSuggestions).mockResolvedValue([])
+})
+
+afterEach(() => {
+  vi.resetAllMocks()
+})
 
 describe('HeaderSearch submit', () => {
   it('Enter with shirt goes to /search?q=shirt', async () => {
@@ -78,5 +96,10 @@ describe('HeaderSearch names', () => {
   it('search icon image is decorative', () => {
     const { submit } = renderSearch()
     expect(submit.querySelector('img')).toHaveAttribute('alt', '')
+  })
+
+  it('dropdown variant keeps the 250 px input width', () => {
+    renderSearch()
+    expect(screen.getByRole('search').parentElement?.parentElement).toHaveClass('w-[250px]')
   })
 })

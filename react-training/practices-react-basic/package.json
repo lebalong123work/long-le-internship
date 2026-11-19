@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "concurrently -k -n client,server -c blue,green \"npm:dev:client\" \"npm:dev:server\"",
     "dev:client": "vite",
-    "dev:server": "node server/ensure-db.mjs && json-server server/db.json --port 3001",
+    "dev:server": "npm run start:server -- --port 3001",
+    "start:server": "node server/ensure-db.mjs && node server/start.mjs server/db.json",
     "db:reset": "node server/ensure-db.mjs --reset",
     "build": "vite build",
     "preview": "vite preview",

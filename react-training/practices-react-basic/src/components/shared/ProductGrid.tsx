@@ -2,10 +2,12 @@ import { ProductCard } from '@/components/shared/ProductCard'
 import { CARD_INFO_PADDING } from '@/components/shared/productCardClasses'
 import { Skeleton } from '@/components/ui/Skeleton'
 import { cn } from '@/utils/cn'
+import type { ReactNode } from 'react'
 import type { Product } from '@/types'
 
 interface ProductGridProps {
   products: Product[]
+  renderActions?: (product: Product) => ReactNode
   className?: string
 }
 
@@ -36,14 +38,18 @@ function SkeletonCard(): JSX.Element {
   )
 }
 
-export function ProductGrid({ products, className }: ProductGridProps): JSX.Element | null {
+export function ProductGrid({
+  products,
+  renderActions,
+  className,
+}: ProductGridProps): JSX.Element | null {
   if (products.length === 0) return null
 
   return (
     <ul className={cn(GRID_CLASSES, className)}>
       {products.map((product) => (
         <li key={product.id} className="flex">
-          <ProductCard product={product} />
+          <ProductCard product={product} actions={renderActions?.(product)} />
         </li>
       ))}
     </ul>

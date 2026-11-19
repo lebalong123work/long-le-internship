@@ -131,6 +131,13 @@ describe('useSearchSuggestions', () => {
     expect(result.current.error).toBe(error)
   })
 
+  it('retries a failed suggestion request exactly once', async () => {
+    vi.mocked(searchService.searchSuggestions).mockRejectedValue(new ApiError(500, 'Server error'))
+    const { result } = renderSuggestions('shirt')
+    await waitFor(() => expect(result.current.isError).toBe(true))
+    expect(searchService.searchSuggestions).toHaveBeenCalledTimes(2)
+  })
+
   it('does not show a toast when suggestions fail', async () => {
     vi.mocked(searchService.searchSuggestions).mockRejectedValue(new ApiError(0, 'Network error'))
     const { result } = renderSuggestions('shirt')
@@ -220,6 +227,13 @@ describe('useSearchResults', () => {
     const { result } = renderResults('shirt')
     await waitFor(() => expect(result.current.isError).toBe(true))
     expect(result.current.error).toBe(error)
+  })
+
+  it('keeps the default 3 retries for results', async () => {
+    vi.mocked(searchService.searchProducts).mockRejectedValue(new ApiError(500, 'Server error'))
+    const { result } = renderResults('shirt')
+    await waitFor(() => expect(result.current.isError).toBe(true))
+    expect(searchService.searchProducts).toHaveBeenCalledTimes(4)
   })
 
   it('does not show a toast when results fail', async () => {

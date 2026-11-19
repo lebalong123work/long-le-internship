@@ -14,18 +14,20 @@ const CART_ICON = '/icons/cart.svg'
 const HEART_ICON = '/icons/heart.svg'
 
 interface HeaderBarProps {
+  searchControl: ReactNode
   menuControl: ReactNode
 }
 
-export function HeaderBar({ menuControl }: HeaderBarProps): JSX.Element {
+export function HeaderBar({ searchControl, menuControl }: HeaderBarProps): JSX.Element {
   const { data: cart } = useCart()
   const cartCount = countCartItems(cart?.items)
 
   return (
-    <div className="container flex h-16 items-center justify-between gap-4 px-4 md:px-6 xl:grid xl:h-20 xl:grid-cols-[1fr_auto_1fr] xl:px-0">
+    <div className="container flex h-16 items-center justify-between gap-1 px-4 md:gap-4 md:px-6 xl:grid xl:h-20 xl:grid-cols-[1fr_auto_1fr] xl:px-0">
       <SiteLogo />
       <MainNav orientation="row" className="hidden xl:mt-[3px] xl:block" />
-      <div className="flex items-center justify-end gap-4 xl:gap-6">
+      <div className="flex items-center justify-end gap-1 md:gap-4 xl:gap-6">
+        <div className="flex xl:hidden">{searchControl}</div>
         <GuardedIconLink
           to={ROUTES.CART}
           iconSrc={CART_ICON}

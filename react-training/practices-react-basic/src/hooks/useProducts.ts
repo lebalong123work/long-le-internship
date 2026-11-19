@@ -57,3 +57,12 @@ export function useProductsByIds(ids: string[]): UseQueryResult<Product[], Error
     placeholderData: keepPreviousData,
   })
 }
+
+export function usableProducts(
+  { data, isPlaceholderData }: UseQueryResult<Product[], Error>,
+  ids: string[]
+): Product[] | undefined {
+  if (data === undefined || !isPlaceholderData) return data
+  const coversEveryId = ids.every((id) => data.some((product) => product.id === id))
+  return coversEveryId ? data : undefined
+}

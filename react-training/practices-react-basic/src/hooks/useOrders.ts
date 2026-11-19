@@ -1,5 +1,11 @@
 import { useNavigate } from 'react-router-dom'
-import { skipToken, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  keepPreviousData,
+  skipToken,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query'
 import { queryKeys } from '@/constants/queryKeys'
 import { ROUTES } from '@/constants/routes'
 import { TOAST_MESSAGES } from '@/constants/toastMessages'
@@ -35,6 +41,7 @@ export function useOrders(page: number): UseQueryResult<PaginatedList<Order>, Er
   return useQuery({
     queryKey: queryKeys.orders.list(userId ?? '', page),
     queryFn: userId ? () => orderService.getOrdersByUser(userId, page) : skipToken,
+    placeholderData: keepPreviousData,
   })
 }
 

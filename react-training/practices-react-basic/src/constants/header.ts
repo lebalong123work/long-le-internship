@@ -32,9 +32,13 @@ export const HEADER_TEXT = {
   profile: 'Profile',
   orders: 'Orders',
   wishlist: 'Wishlist',
+  accountNav: 'Account',
   searchLabel: 'Search products',
   searchPlaceholder: 'Search',
   searchSubmit: 'Search',
+  openSearch: 'Open search',
+  closeSearch: 'Close search',
+  searchDialog: 'Search',
   cartLabel,
   accountMenuLabel,
 } as const

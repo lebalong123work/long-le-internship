@@ -32,16 +32,22 @@ Log in from the user icon in the header, or open https://mangcoding-store-seven.
 | Product page — "Same Product" | Up to 8 other products of the same category, and "See More" (opens the shop page, under development) |
 | Cart `/cart` (log in first) | Add a product on its page, then open the cart: each row shows the photo, name, color and size, price and stock. "+" / "−" change the quantity (never above the stock) and the total updates at once; the trash icon removes the row ("Removed from cart"). The summary shows the number of products and the total; "Checkout" opens the checkout page. An empty cart shows "Your cart is empty" with "Shop Now". The stock shown is for display only — it is not reserved for you |
 | Checkout `/checkout` (log in, cart not empty) | Shipping address (Province / City → Ward / Commune), payment method (Cash on delivery, bank transfer, or card — demo only, no real payment and no card details asked), order summary. Empty fields show messages. "Place Order" checks the cart again, saves the order and empties the cart |
-| Order Success | After "Place Order": green check, "Order Placed Successfully!", order number, products, address, payment method and totals. "Continue Shopping" opens the shop page (under development), "View Order" opens the order history (placeholder). An unknown order number, e.g. `/order-success/abc`, shows "Order not found" |
-| Header | Logo, nav (Home · Shop · About Us · Contact), search bar, mobile menu (☰) |
+| Order Success | After "Place Order": green check, "Order Placed Successfully!", order number, products, address, payment method and totals. "Continue Shopping" opens the shop page (under development), "View Order" opens the order history. An unknown order number, e.g. `/order-success/abc`, shows "Order not found" |
+| Header | Logo, nav (Home · Shop · About Us · Contact), search bar with suggestions while typing (on phones: search button → full-screen search), mobile menu (☰) |
 | Log In / Sign Up | Modal with two tabs, form validation (empty fields, wrong email, wrong password), toast after login |
 | Logged in | User menu: Profile · Orders · Wishlist · Logout |
+| Account pages `/account/profile`, `/account/orders`, `/account/wishlist` (log in first) | Account pages share the account menu: Profile · Orders · Wishlist. Links sit on top on phones and tablets and become a side menu on wide screens; the current page is highlighted |
+| Profile `/account/profile` (log in first) | Your details filled in: full name, email (cannot be changed), phone, default address, date of birth. "Change photo" shows the new picture before you save (JPG, PNG or WebP, up to 1 MB). Save Changes → "Profile updated successfully" and the new name is used in the account menu |
+| Change Password (on `/account/profile`, log in first) | Below your profile: current password, new password (at least 6 characters), confirm. A wrong current password, or a new password that is the same as the current one, shows a message under that field. Success → "Password changed successfully" and the form clears. On the demo, please change it back to the demo password afterwards |
+| Order History `/account/orders` (log in first) | Your orders, newest first, 10 per page ("Previous page" / "Next page"; the page number stays in the address, so refresh keeps it). Each card shows the order number, date (dd/mm/yyyy), total, number of items and a colored status badge. "View Detail" opens the order in place: status steps (Ordered → Processing → Shipped → Delivered; hidden for a cancelled order), products, address, payment method and totals. No orders → "You have no orders yet" + Shop Now |
+| Wishlist `/account/wishlist` (log in first) | Your saved products as cards, newest first. "Add to Cart" opens the product page to pick color and size; "Remove" takes the product off the list. Empty list → "No saved items" + Start Shopping |
+| Search results `/search?q=shirt` | Press Enter in the search bar (or pick a category suggestion): "Results for "shirt"" with the number of items and the matching product cards, 8 per page ("Previous page" / "Next page"; the page number stays in the address). No match → "No results for '…'" with a tip to try another word. An empty search goes back to Home. The demo data has T-shirts only, so most words show the no-results message |
 | Guest | Click the cart / heart / user icon → the login modal opens |
 | Footer | Links and "Log In" (hidden when logged in) |
 | `/shop`, `/about`, `/contact` | "This page is under development" |
 | Any unknown URL, e.g. `/abc` | 404 page |
 
-**Not built yet** (the page shows a placeholder): Wishlist, Search results, Order History, Profile. The logic behind them (services and hooks) is done and tested; the pages come in the next tasks. The demo updates automatically after each merge into `practices-react-basic`.
+All planned pages are built (Shop, About Us and Contact show "This page is under development" on purpose). The demo updates automatically after each merge into `practices-react-basic`.
 
 ### Demo limits
 
@@ -130,6 +136,7 @@ Optional: copy `.env.example` to `.env` to change the API URL or the fake networ
 | `npm run dev` | Start the app (:5173) and the mock API (:3001) together |
 | `npm run dev:client` | Start only the app |
 | `npm run dev:server` | Start only the mock API |
+| `npm run start:server` | Start the mock API the same way as on Render (accepts request bodies up to 2 MB, needed for profile photos) |
 | `npm run db:reset` | Reset mock API data to the seed |
 | `npm run build` | Production build into `dist/` |
 | `npm run preview` | Serve the production build |
@@ -147,7 +154,7 @@ Before finishing any change, run `type-check`, `lint`, `test` and `build`.
 | Part | Host | Settings |
 |---|---|---|
 | App | Vercel | Root Directory `react-training/practices-react-basic`, preset Vite, Node 22.x, Production Branch `practices-react-basic`, env `VITE_API_URL=https://long-le-internship.onrender.com` |
-| Mock API (demo only) | Render (Free, Singapore) | Root Directory `react-training/practices-react-basic`, Branch `practices-react-basic`, Build `npm install`, Start `node server/ensure-db.mjs && npx json-server server/db.json --host 0.0.0.0 --port $PORT`, env `NODE_VERSION=22` |
+| Mock API (demo only) | Render (Free, Singapore) | Root Directory `react-training/practices-react-basic`, Branch `practices-react-basic`, Build `npm install`, Start `npm run start:server -- --host 0.0.0.0 --port $PORT`, env `NODE_VERSION=22` |
 
 - Both deploy automatically on every push to `practices-react-basic`.
 - `vercel.json`: SPA rewrite (direct links like `/shop` work), long cache for hashed `/assets/*`, basic security headers.
@@ -209,7 +216,11 @@ Layer rules:
 - [x] Cart: review items, change quantity, remove, order summary
 - [x] Checkout form: shipping address (Province / City → Ward / Commune), payment method (mock), order summary — released together with Place Order
 - [x] Place Order → Order Success
-- [ ] Wishlist, Search, Order History, Profile
+- [x] Wishlist page: saved products, Remove, Add to Cart → product page
+- [x] Order History: order cards, status badge, details in place, 10 per page
+- [x] Profile: edit details, photo preview
+- [x] Change password
+- [x] Search: suggestions while typing + results page
 - [ ] Responsive pass (mobile)
 
 ---

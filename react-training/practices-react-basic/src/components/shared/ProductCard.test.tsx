@@ -335,6 +335,35 @@ describe('ProductCard focus ring', () => {
   })
 })
 
+describe('ProductCard actions', () => {
+  it('renders the actions above the card link and clicking one does not navigate', async () => {
+    const onAction = vi.fn()
+    render(
+      <MemoryRouter initialEntries={[START_PATH]}>
+        <ProductCard
+          product={product('p1')}
+          actions={
+            <button type="button" onClick={onAction}>
+              Act
+            </button>
+          }
+        />
+        <LocationDisplay />
+      </MemoryRouter>
+    )
+    const action = screen.getByRole('button', { name: 'Act' })
+    expect(action.parentElement).toHaveClass('relative', 'z-10', 'mt-auto')
+    await userEvent.click(action)
+    expect(onAction).toHaveBeenCalledTimes(1)
+    expect(screen.getByTestId('location')).toHaveTextContent(START_PATH)
+  })
+
+  it('renders no actions wrapper without actions', () => {
+    const { container } = renderCard()
+    expect(container.querySelector('.mt-auto')).not.toBeInTheDocument()
+  })
+})
+
 describe('ProductCard className', () => {
   it('merges a caller class name', () => {
     const { container } = renderCard({}, 'mt-4')

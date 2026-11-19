@@ -1,6 +1,7 @@
 import { useId, useRef } from 'react'
 import { SCRIPT_FOCUS_RING } from '@/components/ui/focusWithVisibleRing'
 import { DISABLED_CURSOR, FOCUS_RING } from '@/components/ui/interactionClasses'
+import { TAB_LOOK } from '@/components/ui/tabClasses'
 import { TABS_ERRORS } from '@/components/ui/tabsErrors'
 import { cn } from '@/utils/cn'
 import type { KeyboardEvent, ReactNode, Ref } from 'react'
@@ -27,14 +28,9 @@ interface TabsProps<T extends string> {
 }
 
 const TAB_CLASSES = {
-  base: [
-    'relative font-heading text-lg leading-normal disabled:opacity-50',
-    'after:absolute after:-inset-x-[3px] after:-bottom-[3px] after:h-0.5 after:rounded-sm',
-    FOCUS_RING,
-    DISABLED_CURSOR,
-  ],
-  active: 'font-bold text-primary after:bg-primary',
-  idle: 'font-normal text-medium-dark can-hover:enabled:hover:text-primary',
+  base: [TAB_LOOK.base, 'disabled:opacity-50', DISABLED_CURSOR],
+  active: TAB_LOOK.active,
+  idle: [TAB_LOOK.idle, 'can-hover:enabled:hover:text-primary'],
 } as const
 
 const LIST_BASE = 'flex'

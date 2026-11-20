@@ -211,27 +211,39 @@ describe('MenuPanel items', () => {
       'Shop',
       'About Us',
       'Contact',
+      'Track Order',
     ])
     await user.click(items.getByRole('button', { name: 'Log In' }))
     expect(currentUrl().pathname).toBe('/about')
     expect(currentUrl().searchParams.get('auth')).toBe('login')
   })
 
-  it('guest sees no Profile, Orders, Wishlist or Logout', async () => {
+  it('M1 guest Track Order opens the order lookup page and closes the menu', async () => {
+    const { user } = await openMenu('/about')
+    await user.click(within(panel()).getByRole('link', { name: 'Track Order' }))
+    expect(currentUrl().pathname).toBe('/order-lookup')
+    expect(menuDialog().open).toBe(false)
+  })
+
+  it('guest sees no Profile, Order History, Wishlist or Logout', async () => {
     await openMenu()
     const items = within(panel())
     expect(items.queryByRole('link', { name: 'Profile' })).toBeNull()
-    expect(items.queryByRole('link', { name: 'Orders' })).toBeNull()
+    expect(items.queryByRole('link', { name: 'Order History' })).toBeNull()
     expect(items.queryByRole('link', { name: 'Wishlist' })).toBeNull()
     expect(items.queryByRole('button', { name: 'Logout' })).toBeNull()
   })
 
-  it('logged-in user sees Profile, Orders, Wishlist and Logout', async () => {
+  it('logged-in user sees Profile, Order History, Wishlist and Logout', async () => {
     logIn()
     await openMenu()
     const items = within(panel())
     expect(items.getByRole('link', { name: 'Profile' })).toHaveAttribute('href', '/account/profile')
-    expect(items.getByRole('link', { name: 'Orders' })).toHaveAttribute('href', '/account/orders')
+    expect(items.getByRole('link', { name: 'Order History' })).toHaveAttribute(
+      'href',
+      '/account/orders'
+    )
+    expect(items.queryByRole('link', { name: 'Track Order' })).toBeNull()
     expect(items.getByRole('link', { name: 'Wishlist' })).toHaveAttribute(
       'href',
       '/account/wishlist'

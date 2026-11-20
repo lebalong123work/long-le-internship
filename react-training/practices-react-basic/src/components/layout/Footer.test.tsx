@@ -129,13 +129,26 @@ describe('Footer groups', () => {
 })
 
 describe('Footer links', () => {
-  it('every footer text link except the email points to /shop', () => {
+  it('every footer text link except the email and Track an Order points to /shop', () => {
     renderFooter()
     const links = within(footerNav())
       .getAllByRole('link')
       .filter((link) => !link.getAttribute('href')?.startsWith('mailto:'))
+      .filter((link) => link.textContent !== 'Track an Order')
     expect(links).toHaveLength(10)
     for (const link of links) expect(link).toHaveAttribute('href', '/shop')
+  })
+
+  it.each([
+    ['a guest', false],
+    ['a logged-in user', true],
+  ])('F2 shows Track an Order linking to /order-lookup for %s', (_case, isLoggedIn) => {
+    if (isLoggedIn) logIn()
+    renderFooter()
+    expect(within(footerNav()).getByRole('link', { name: 'Track an Order' })).toHaveAttribute(
+      'href',
+      '/order-lookup'
+    )
   })
 
   it('renders Jeans and Women, never Jens or Woman', () => {

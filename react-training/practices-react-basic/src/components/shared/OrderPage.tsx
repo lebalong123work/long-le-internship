@@ -17,7 +17,6 @@ import { useOrder } from '@/hooks/useOrders'
 import { isNotFoundError } from '@/services/apiClient'
 import { cn } from '@/utils/cn'
 import { OrderPageSkeleton } from './OrderPageSkeleton'
-import type { OrderActionCount } from './OrderPageSkeleton'
 import { ORDER_PAGE_LAYOUT } from './orderPageLayout'
 import type { ReactNode } from 'react'
 import type { Order } from '@/types'
@@ -27,16 +26,17 @@ const NOT_FOUND_ICON = '/icons/search.svg'
 interface OrderPageProps {
   orderId: string | undefined
   title: string
-  iconSrc?: string
-  actionCount: OrderActionCount
+  iconSrc: string
   renderActions: (order: Order) => ReactNode
+  renderNote?: (order: Order) => ReactNode
 }
 
 interface OrderViewProps {
   order: Order
   title: string
-  iconSrc?: string
+  iconSrc: string
   actions: ReactNode
+  note: ReactNode
 }
 
 function NotFoundState(): JSX.Element {
@@ -49,7 +49,7 @@ function NotFoundState(): JSX.Element {
   )
 }
 
-function OrderView({ order, title, iconSrc, actions }: OrderViewProps): JSX.Element {
+function OrderView({ order, title, iconSrc, actions, note }: OrderViewProps): JSX.Element {
   const headingRef = useRef<HTMLHeadingElement>(null)
 
   useEffect(() => {
@@ -59,19 +59,16 @@ function OrderView({ order, title, iconSrc, actions }: OrderViewProps): JSX.Elem
   return (
     <div className={ORDER_PAGE_LAYOUT.column}>
       <div className={ORDER_PAGE_LAYOUT.header}>
-        {iconSrc && (
-          <img src={iconSrc} alt="" width={80} height={80} className={ORDER_PAGE_LAYOUT.icon} />
-        )}
+        <img src={iconSrc} alt="" width={80} height={80} className={ORDER_PAGE_LAYOUT.icon} />
         <h1
           ref={headingRef}
           tabIndex={-1}
-          className={cn('font-heading text-h2 font-bold text-dark', FOCUS_RING, SCRIPT_FOCUS_RING)}
+          className={cn(ORDER_PAGE_LAYOUT.title, FOCUS_RING, SCRIPT_FOCUS_RING)}
         >
           {title}
         </h1>
-        <p className="font-body text-lg leading-normal text-medium-dark">
-          {`${ORDER_TEXT.orderIdLabel}: ${ORDER_TEXT.orderNumber(order.id)}`}
-        </p>
+        <p className={ORDER_PAGE_LAYOUT.subtitle}>{ORDER_TEXT.orderIdLine(order.id)}</p>
+        {note}
       </div>
       <OrderDetails order={order} />
       <div className={ORDER_PAGE_LAYOUT.actions}>{actions}</div>
@@ -83,8 +80,8 @@ export function OrderPage({
   orderId,
   title,
   iconSrc,
-  actionCount,
   renderActions,
+  renderNote,
 }: OrderPageProps): JSX.Element {
   const owner = useCartOwner()
   const { data, isPending, isFetching, error, refetch } = useOrder(orderId)
@@ -101,6 +98,7 @@ export function OrderPage({
           title={title}
           iconSrc={iconSrc}
           actions={renderActions(data)}
+          note={renderNote?.(data)}
         />
       )
     }
@@ -108,7 +106,7 @@ export function OrderPage({
     if (showSkeleton) {
       return (
         <div aria-busy="true">
-          <OrderPageSkeleton hasIcon={iconSrc !== undefined} actionCount={actionCount} />
+          <OrderPageSkeleton />
         </div>
       )
     }
@@ -117,7 +115,7 @@ export function OrderPage({
   }
 
   return (
-    <div className="container px-4 pb-10 pt-10 md:px-6 xl:px-0 xl:pb-16 xl:pt-20">
+    <div className={ORDER_PAGE_LAYOUT.container}>
       <p role="status" className="sr-only">
         {showSkeleton ? ORDER_TEXT.loading : ''}
       </p>

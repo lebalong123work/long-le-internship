@@ -1,11 +1,9 @@
 import { render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
-import { TOAST_MESSAGES } from '@/constants/toastMessages'
 import { product } from '@/test/fixtures'
 import { CheckoutSummary } from './CheckoutSummary'
 import { hasStockIssue } from './stockIssue'
-import type { PlaceOrderBlock } from './CheckoutSummary'
 import type { CartLine, CartSummary } from '@/hooks/useCartLines'
 
 const TEE: CartLine = {
@@ -16,22 +14,21 @@ const POLO: CartLine = {
   item: { id: 'p2__Blue__M', productId: 'p2', color: '', size: '', quantity: 1 },
   product: { ...product('p2'), name: 'Polo Two', price: 25.5, stock: 3, images: [], thumbnail: '' },
 }
-const CHECKOUT_STOCK_PROBLEM = 'Some products are out of stock. Update your cart to continue.'
 const SUMMARY: CartSummary = { itemCount: 3, subtotal: 105.5, shippingFee: 0, total: 105.5 }
 
 function withStock(line: CartLine, stock: number): CartLine {
   return { ...line, product: line.product && { ...line.product, stock } }
 }
 
-function stockBlock(lines: CartLine[]): PlaceOrderBlock {
-  return hasStockIssue(lines) ? 'stock' : null
-}
-
-function renderSummary(lines: CartLine[], placeOrderBlock = stockBlock(lines)) {
+function renderSummary(lines: CartLine[], isPlaceOrderBlocked = hasStockIssue(lines)) {
   render(
     <MemoryRouter>
       <form>
-        <CheckoutSummary lines={lines} summary={SUMMARY} placeOrderBlock={placeOrderBlock} />
+        <CheckoutSummary
+          lines={lines}
+          summary={SUMMARY}
+          isPlaceOrderBlocked={isPlaceOrderBlocked}
+        />
       </form>
     </MemoryRouter>
   )
@@ -88,27 +85,18 @@ describe('CheckoutSummary', () => {
     expect(screen.queryByText(/Only \d+ left|Out of Stock/)).toBeNull()
   })
 
-  it('B1 blocks Place Order with the merge-pending message and no cart link', () => {
-    renderSummary([withStock(TEE, 1), POLO], 'mergePending')
-    expect(placeOrder()).toBeDisabled()
-    expect(placeOrder()).toHaveAccessibleDescription(TOAST_MESSAGES.cart.mergePending)
-    expect(screen.queryByText(CHECKOUT_STOCK_PROBLEM)).toBeNull()
-    expect(screen.queryByRole('link', { name: 'Back to cart' })).toBeNull()
-  })
-
   it('B2 enables Place Order with no blocked message when nothing blocks it', () => {
-    renderSummary([withStock(TEE, 1), POLO], null)
+    renderSummary([withStock(TEE, 1), POLO], false)
     expect(placeOrder()).toBeEnabled()
     expect(placeOrder()).not.toHaveAccessibleDescription()
-    expect(screen.queryByText(TOAST_MESSAGES.cart.mergePending)).toBeNull()
-    expect(screen.queryByText(CHECKOUT_STOCK_PROBLEM)).toBeNull()
+    expect(screen.queryByRole('link', { name: 'Back to cart' })).toBeNull()
   })
 
   it('shows Place Order busy and disabled while the order is placing', () => {
     render(
       <MemoryRouter>
         <form>
-          <CheckoutSummary lines={[TEE]} summary={SUMMARY} placeOrderBlock={null} isPlacing />
+          <CheckoutSummary lines={[TEE]} summary={SUMMARY} isPlaceOrderBlocked={false} isPlacing />
         </form>
       </MemoryRouter>
     )

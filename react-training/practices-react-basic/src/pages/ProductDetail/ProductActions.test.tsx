@@ -20,8 +20,6 @@ import type { Cart, Product, User } from '@/types'
 vi.mock('@/services/cartService')
 vi.mock('@/services/wishlistService')
 
-const actualCartService = await vi.importActual<typeof cartService>('@/services/cartService')
-
 interface ActionsOptions {
   item?: Product
   color?: string | null
@@ -98,9 +96,6 @@ beforeEach(() => {
   usePendingActionStore.setState({ action: null })
   vi.mocked(wishlistService.getWishlist).mockResolvedValue([])
   vi.mocked(cartService.getCart).mockResolvedValue(serverCart)
-  vi.mocked(cartService.isMergePendingError).mockImplementation(
-    actualCartService.isMergePendingError
-  )
 })
 
 afterEach(() => {
@@ -176,18 +171,6 @@ describe('ProductActions — Add To Cart', () => {
     })
     await waitFor(() => expect(toasts()).toHaveLength(1))
     expect(cartService.addItem).toHaveBeenCalledTimes(1)
-  })
-
-  it('P3 shows the recovery toast when a pending merge refuses a guest add', async () => {
-    logOut()
-    vi.mocked(cartService.addItem).mockRejectedValue(
-      new ApiError(409, actualCartService.CART_ERRORS.mergePending)
-    )
-    const { user: clicker } = renderActions()
-    await clicker.click(addButton())
-    await waitFor(() =>
-      expect(toasts()).toEqual([{ type: 'error', message: TOAST_MESSAGES.cart.mergePending }])
-    )
   })
 
   it('adds product, color, size and quantity for a logged-in user with one toast', async () => {

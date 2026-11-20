@@ -4,7 +4,6 @@ import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { queryKeys } from '@/constants/queryKeys'
-import { TOAST_MESSAGES } from '@/constants/toastMessages'
 import { ApiError } from '@/services/apiClient'
 import * as cartService from '@/services/cartService'
 import * as orderService from '@/services/orderService'
@@ -19,13 +18,10 @@ vi.mock('@/services/cartService')
 vi.mock('@/services/orderService')
 vi.mock('@/services/productService')
 
-const actualCartService = await vi.importActual<typeof cartService>('@/services/cartService')
-
 const user: User = { id: 'u1', name: 'Test Customer', email: 'user@store.com', role: 'customer' }
 const SERVER_ERROR = new ApiError(500, 'Server error')
 const GUEST_ID = '3f2b8c1e-9a4d-4f6b-8c2a-1d5e7f9a0b3c'
 const GUEST = { kind: 'guest', id: GUEST_ID } as const
-const MERGE_PENDING_ERROR = new ApiError(409, actualCartService.CART_ERRORS.mergePending)
 const TEE: Product = { ...product('p1'), name: 'Tee One', price: 40, stock: 5 }
 
 const teeLine: CartItem = {
@@ -296,9 +292,6 @@ describe('Checkout page — guest (T35)', () => {
   beforeEach(() => {
     useAuthStore.setState({ user: null, token: null, isAuthenticated: false })
     localStorage.setItem('mcs_guest', GUEST_ID)
-    vi.mocked(cartService.isMergePendingError).mockImplementation(
-      actualCartService.isMergePendingError
-    )
     vi.mocked(productService.getByIds).mockResolvedValue([TEE])
   })
 
@@ -320,34 +313,5 @@ describe('Checkout page — guest (T35)', () => {
     expect(await screen.findByText('Order success page')).toBeInTheDocument()
     expect(orderService.createOrder).toHaveBeenCalledWith(GUEST, expect.any(Object))
     expect(cartService.clearCart).toHaveBeenCalledWith(GUEST)
-  })
-
-  it('K2 disables Place Order with the recovery message while a guest merge is pending', async () => {
-    vi.mocked(cartService.getCart).mockResolvedValue({
-      ...guestCart,
-      pendingMerge: { id: 'm1', userId: 'u1', items: [teeLine] },
-    })
-    vi.mocked(productService.getByIds).mockResolvedValue([{ ...TEE, stock: 1 }])
-    renderCheckout()
-    expect(await screen.findByText('Only 1 left')).toBeInTheDocument()
-    expect(placeOrderButton()).toBeDisabled()
-    expect(placeOrderButton()).toHaveAccessibleDescription(TOAST_MESSAGES.cart.mergePending)
-    expect(screen.queryByRole('link', { name: 'Back to cart' })).toBeNull()
-  })
-
-  it('K3 shows the recovery toast, keeps the form and allows a new submit after a 409', async () => {
-    vi.mocked(cartService.getCart).mockResolvedValue(guestCart)
-    vi.mocked(orderService.createOrder).mockRejectedValue(MERGE_PENDING_ERROR)
-    renderCheckout()
-    await userEvent.type(await screen.findByLabelText('Full name'), 'Guest Buyer')
-    await userEvent.type(screen.getByLabelText('Email'), 'guest@store.com')
-    await fillValidForm()
-    await userEvent.click(placeOrderButton())
-    await waitFor(() => expect(toastMessages()).toEqual([TOAST_MESSAGES.cart.mergePending]))
-    await waitFor(() => expect(placeOrderButton()).toBeEnabled())
-    expect(screen.queryByText('Order success page')).toBeNull()
-    expect(screen.getByLabelText('Phone number')).toHaveValue('0901234567')
-    await userEvent.click(placeOrderButton())
-    await waitFor(() => expect(orderService.createOrder).toHaveBeenCalledTimes(2))
   })
 })

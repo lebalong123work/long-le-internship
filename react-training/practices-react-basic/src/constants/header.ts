@@ -1,6 +1,6 @@
 import { ROUTES } from './routes'
 
-interface HeaderNavItem {
+export interface HeaderNavItem {
   label: string
   to: string
   end: boolean
@@ -30,7 +30,8 @@ export const HEADER_TEXT = {
   logIn: 'Log In',
   logout: 'Logout',
   profile: 'Profile',
-  orders: 'Orders',
+  orders: 'Order History',
+  trackOrder: 'Track Order',
   wishlist: 'Wishlist',
   accountNav: 'Account',
   searchLabel: 'Search products',
@@ -48,6 +49,10 @@ export const MAIN_NAV_ITEMS: readonly HeaderNavItem[] = [
   { label: 'Shop', to: ROUTES.SHOP, end: false },
   { label: 'About Us', to: ROUTES.ABOUT, end: true },
   { label: 'Contact', to: ROUTES.CONTACT, end: true },
+]
+
+export const GUEST_NAV_ITEMS: readonly HeaderNavItem[] = [
+  { label: HEADER_TEXT.trackOrder, to: ROUTES.ORDER_LOOKUP, end: true },
 ]
 
 export const ACCOUNT_NAV_ITEMS: readonly HeaderNavItem[] = [

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { MemoryRouter, Route, Routes } from 'react-router-dom'
+import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
 import { ButtonLink } from './ButtonLink'
 
@@ -121,5 +121,32 @@ describe('ButtonLink className', () => {
 
     expect(link()).toHaveClass('px-0')
     expect(link()).not.toHaveClass('px-[34px]')
+  })
+})
+
+describe('ButtonLink navigation state', () => {
+  function StateProbe(): JSX.Element {
+    const { state } = useLocation()
+    return <p>{JSON.stringify(state)}</p>
+  }
+
+  it('B1 passes state to the next location', async () => {
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <ButtonLink to={TARGET} state={{ orderNumber: '#ORD-x' }}>
+                Shop Now
+              </ButtonLink>
+            }
+          />
+          <Route path={TARGET} element={<StateProbe />} />
+        </Routes>
+      </MemoryRouter>
+    )
+    await userEvent.click(link())
+    expect(screen.getByText(JSON.stringify({ orderNumber: '#ORD-x' }))).toBeInTheDocument()
   })
 })

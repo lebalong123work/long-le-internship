@@ -10,7 +10,6 @@ import {
 import { FOCUS_RING } from '@/components/ui/interactionClasses'
 import { CART_TEXT } from '@/constants/cart'
 import { ROUTES } from '@/constants/routes'
-import { TOAST_MESSAGES } from '@/constants/toastMessages'
 import { UI_STATE_MESSAGES } from '@/constants/uiStateMessages'
 import { useRemoveCartItem, useUpdateCartQuantity } from '@/hooks/useCart'
 import { useCartLines } from '@/hooks/useCartLines'
@@ -32,8 +31,7 @@ const BREADCRUMB_ITEMS: BreadcrumbItem[] = [
 export default function Cart(): JSX.Element {
   const headingRef = useRef<HTMLHeadingElement>(null)
   const retryRequested = useRef(false)
-  const { status, lines, summary, hasUnavailableItems, isMergePending, retry, isRetrying } =
-    useCartLines()
+  const { status, lines, summary, hasUnavailableItems, retry, isRetrying } = useCartLines()
   const { mutate: updateQuantity } = useUpdateCartQuantity()
   const { mutate: removeItem } = useRemoveCartItem()
 
@@ -82,7 +80,6 @@ export default function Cart(): JSX.Element {
               line={line}
               onQuantityChange={(quantity) => updateQuantity({ itemId: line.item.id, quantity })}
               onRemove={() => removeLine(line.item.id)}
-              isReadOnly={isMergePending}
             />
           ))}
         </ul>
@@ -106,9 +103,6 @@ export default function Cart(): JSX.Element {
         >
           {CART_TEXT.heading}
         </h2>
-        {isMergePending && (
-          <p className={CART_LAYOUT.noticeText}>{TOAST_MESSAGES.cart.mergePending}</p>
-        )}
         <p role="status" className="sr-only">
           {status === 'loading' ? CART_TEXT.loading : ''}
         </p>

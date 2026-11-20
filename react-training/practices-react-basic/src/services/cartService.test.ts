@@ -1,16 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { mockCartServer } from '@/test/cartServer'
 import { callBody, callInit, callUrl, catchError, mockFetch } from '@/test/mockFetch'
-import { ApiError } from './apiClient'
-import {
-  addItem,
-  CART_ERRORS,
-  clearCart,
-  getCart,
-  isMergePendingError,
-  removeItem,
-  updateQuantity,
-} from './cartService'
+import { addItem, CART_ERRORS, clearCart, getCart, removeItem, updateQuantity } from './cartService'
 import type { CartOwner, Cart, CartItem } from '@/types'
 
 const USER: CartOwner = { kind: 'user', id: 'u1' }
@@ -191,8 +182,6 @@ describe('clearCart', () => {
 
 describe('cart owner (T35)', () => {
   const GUEST: CartOwner = { kind: 'guest', id: 'g1' }
-  const pendingMerge = { id: 'm1', userId: 'u1', items: [blackS] }
-  const pendingGuestCart: Cart = { id: 'g', guestId: 'g1', items: [blackS], pendingMerge }
 
   it('S1 filters a user cart by userId only', async () => {
     const fetchMock = mockFetch({ body: [cartWith([])] })
@@ -216,44 +205,19 @@ describe('cart owner (T35)', () => {
     expect(callBody(fetchMock, 1)).toEqual({ guestId: 'g1', items: [] })
   })
 
-  it.each([
-    [
-      'P1 addItem',
-      () => addItem(GUEST, { productId: 'p2', color: 'Blue', size: 'M', quantity: 1 }),
-    ],
-    ['P2 updateQuantity', () => updateQuantity(GUEST, blackS.id, 5)],
-    ['P3 removeItem', () => removeItem(GUEST, blackS.id)],
-    ['P4 clearCart', () => clearCart(GUEST)],
-  ])('%s is refused without a write while a merge is pending', async (_case, write) => {
-    const fetchMock = mockFetch({ body: [pendingGuestCart] })
+  it('P1 writes a guest cart that still carries an old merge field (no merge guard)', async () => {
+    const oldRecord = {
+      id: 'g',
+      guestId: 'g1',
+      items: [blackS],
+      pendingMerge: { id: 'm1', userId: 'u1', items: [blackS] },
+    }
+    const updated: Cart = { id: 'g', guestId: 'g1', items: [{ ...blackS, quantity: 5 }] }
+    const fetchMock = mockFetch({ body: [oldRecord] }, { body: updated })
 
-    const error = await catchError(write())
-
-    expect(error.status).toBe(409)
-    expect(error.message).toBe(CART_ERRORS.mergePending)
-    expect(fetchMock).toHaveBeenCalledTimes(1)
-  })
-
-  it('P5 user cart writes are not affected by the guard', async () => {
-    const updated = cartWith([{ ...blackS, quantity: 5 }])
-    const fetchMock = mockFetch({ body: [cartWith([blackS])] }, { body: updated })
-
-    await expect(updateQuantity(USER, blackS.id, 5)).resolves.toEqual(updated)
+    await expect(updateQuantity(GUEST, blackS.id, 5)).resolves.toEqual(updated)
     expect(callInit(fetchMock, 1).method).toBe('PATCH')
-  })
-})
-
-describe('isMergePendingError (T35 row 3)', () => {
-  it('E1 is true for the 409 pending-merge error', () => {
-    expect(isMergePendingError(new ApiError(409, CART_ERRORS.mergePending))).toBe(true)
-  })
-
-  it.each([
-    ['a 409 with another message', new ApiError(409, 'Conflict')],
-    ['a 500 with the same message', new ApiError(500, CART_ERRORS.mergePending)],
-    ['a plain Error', new Error(CART_ERRORS.mergePending)],
-  ])('E2 is false for %s', (_case, error) => {
-    expect(isMergePendingError(error)).toBe(false)
+    expect(callBody(fetchMock, 1)).toEqual({ items: [{ ...blackS, quantity: 5 }] })
   })
 })
 

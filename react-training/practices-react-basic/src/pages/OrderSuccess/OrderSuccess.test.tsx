@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { act, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { createMemoryRouter, RouterProvider } from 'react-router-dom'
+import { createMemoryRouter, RouterProvider, useLocation } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { ORDER_TEXT } from '@/constants/order'
 import { queryKeys } from '@/constants/queryKeys'
@@ -93,6 +93,11 @@ async function answerAll(answer: Answer): Promise<void> {
   })
 }
 
+function LookupProbe(): JSX.Element {
+  const { state } = useLocation()
+  return <p>{`Lookup page ${JSON.stringify(state)}`}</p>
+}
+
 function renderPage(cached?: Order) {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false, retryDelay: 0 } },
@@ -106,6 +111,7 @@ function renderPage(cached?: Order) {
     [
       { path: '/order-success/:orderId', element: <OrderSuccess /> },
       { path: '/', element: <p>Home page</p> },
+      { path: '/order-lookup', element: <LookupProbe /> },
     ],
     { initialEntries: ['/order-success/o1'] }
   )
@@ -238,6 +244,12 @@ describe('OrderSuccess page', () => {
     )
   })
 
+  it('S7 shows no order email or save-number text to a logged-in customer', () => {
+    renderPage(ORDER)
+    expect(screen.queryByText('Email: user@store.com')).toBeNull()
+    expect(screen.queryByText('Save your order number to look up your order later.')).toBeNull()
+  })
+
   it('focuses the heading when the order is shown and focus is free', () => {
     renderPage(ORDER)
     expect(heading()).toHaveFocus()
@@ -266,14 +278,27 @@ describe('OrderSuccess page — guest (T35)', () => {
     expect(screen.getByText('Order ID: #ORD-o1')).toBeInTheDocument()
   })
 
-  it('S2 links View Order to the guest order details page', async () => {
+  it('S2 sends a guest View Order to the order lookup page with the order number only', async () => {
+    localStorage.setItem('mcs_guest', GUEST_ID)
+    const { user } = renderPage()
+    await answerAll(GUEST_ORDER)
+    const viewOrder = screen.getByRole('link', { name: ORDER_TEXT.viewOrder })
+    expect(viewOrder).toHaveAttribute('href', '/order-lookup')
+    await user.click(viewOrder)
+    expect(
+      screen.getByText(`Lookup page ${JSON.stringify({ orderNumber: '#ORD-o1' })}`)
+    ).toBeInTheDocument()
+  })
+
+  it('S6 shows the order email and the save-number text to a guest, never an email-sent claim', async () => {
     localStorage.setItem('mcs_guest', GUEST_ID)
     renderPage()
     await answerAll(GUEST_ORDER)
-    expect(screen.getByRole('link', { name: ORDER_TEXT.viewOrder })).toHaveAttribute(
-      'href',
-      '/order/o1'
-    )
+    expect(screen.getByText('Email: user@store.com')).toBeInTheDocument()
+    expect(
+      screen.getByText('Save your order number to look up your order later.')
+    ).toBeInTheDocument()
+    expect(screen.queryByText(/sent/i)).toBeNull()
   })
 
   it('S3 shows Order not found without a request when the browser has no guest id', async () => {

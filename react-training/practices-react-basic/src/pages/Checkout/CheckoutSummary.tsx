@@ -8,29 +8,21 @@ import { FOCUS_RING, LINK_HOVER_OPACITY } from '@/components/ui/interactionClass
 import { CART_TEXT } from '@/constants/cart'
 import { CHECKOUT_TEXT } from '@/constants/checkout'
 import { ROUTES } from '@/constants/routes'
-import { TOAST_MESSAGES } from '@/constants/toastMessages'
 import { cn } from '@/utils/cn'
 import { formatCurrency } from '@/utils/formatCurrency'
 import { productImageSrc } from '@/utils/productImage'
 import { stockIssue } from './stockIssue'
 import type { CartLine, CartSummary } from '@/hooks/useCartLines'
 
-export type PlaceOrderBlock = 'stock' | 'mergePending' | null
-
 interface CheckoutSummaryProps {
   lines: CartLine[]
   summary: CartSummary
-  placeOrderBlock: PlaceOrderBlock
+  isPlaceOrderBlocked: boolean
   isPlacing?: boolean
 }
 
 interface SummaryRowProps {
   line: CartLine
-}
-
-interface BlockedMessageProps {
-  block: Exclude<PlaceOrderBlock, null>
-  messageId: string
 }
 
 const SUMMARY_CLASSES = {
@@ -57,28 +49,10 @@ function SummaryRow({ line }: SummaryRowProps): JSX.Element | null {
   )
 }
 
-function BlockedMessage({ block, messageId }: BlockedMessageProps): JSX.Element {
-  if (block === 'mergePending') {
-    return (
-      <p id={messageId} className={SUMMARY_CLASSES.blocked}>
-        {TOAST_MESSAGES.cart.mergePending}
-      </p>
-    )
-  }
-  return (
-    <div className={SUMMARY_CLASSES.blocked}>
-      <p id={messageId}>{CHECKOUT_TEXT.stockProblem}</p>
-      <Link to={ROUTES.CART} className={SUMMARY_CLASSES.cartLink}>
-        {CHECKOUT_TEXT.backToCart}
-      </Link>
-    </div>
-  )
-}
-
 export function CheckoutSummary({
   lines,
   summary,
-  placeOrderBlock,
+  isPlaceOrderBlocked,
   isPlacing = false,
 }: CheckoutSummaryProps): JSX.Element {
   const blockedMessageId = useId()
@@ -98,14 +72,21 @@ export function CheckoutSummary({
       />
       <Button
         type="submit"
-        disabled={placeOrderBlock !== null}
+        disabled={isPlaceOrderBlocked}
         isLoading={isPlacing}
-        aria-describedby={placeOrderBlock ? blockedMessageId : undefined}
+        aria-describedby={isPlaceOrderBlocked ? blockedMessageId : undefined}
         className="w-full"
       >
         {CHECKOUT_TEXT.placeOrder}
       </Button>
-      {placeOrderBlock && <BlockedMessage block={placeOrderBlock} messageId={blockedMessageId} />}
+      {isPlaceOrderBlocked && (
+        <div className={SUMMARY_CLASSES.blocked}>
+          <p id={blockedMessageId}>{CHECKOUT_TEXT.stockProblem}</p>
+          <Link to={ROUTES.CART} className={SUMMARY_CLASSES.cartLink}>
+            {CHECKOUT_TEXT.backToCart}
+          </Link>
+        </div>
+      )}
     </section>
   )
 }

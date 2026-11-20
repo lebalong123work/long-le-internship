@@ -14,8 +14,8 @@ describe('ROUTES.SEARCH_RESULTS', () => {
   })
 })
 
-describe('ROUTES.ORDER', () => {
-  it('R1 builds the guest order details path', () => {
-    expect(ROUTES.ORDER('o1')).toBe('/order/o1')
+describe('ROUTES.ORDER_LOOKUP', () => {
+  it('R1 is the guest order lookup path', () => {
+    expect(ROUTES.ORDER_LOOKUP).toBe('/order-lookup')
   })
 })

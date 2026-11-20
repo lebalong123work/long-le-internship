@@ -12,14 +12,14 @@ import { TOAST_MESSAGES } from '@/constants/toastMessages'
 import * as cartService from '@/services/cartService'
 import * as orderService from '@/services/orderService'
 import { requireCartOwner } from '@/utils/cartOwner'
-import { orderFailureMessage } from './failureMessage'
+import { failureMessage } from './failureMessage'
 import { retryUnlessNotFound } from './queryRetry'
 import { useAuth } from './useAuth'
 import { CART_MUTATION_SCOPE } from './useCart'
 import { useCartOwner } from './useCartOwner'
 import { useToast } from './useToast'
 import type { QueryClient, UseMutationResult, UseQueryResult } from '@tanstack/react-query'
-import type { CartOwner, CreateOrderDto, Order, PaginatedList } from '@/types'
+import type { CartOwner, CreateOrderDto, GuestOrderLookup, Order, PaginatedList } from '@/types'
 
 async function clearCartAfterOrder(owner: CartOwner): Promise<boolean> {
   try {
@@ -75,8 +75,15 @@ export function useCreateOrder(): UseMutationResult<Order, Error, CreateOrderDto
       navigate(ROUTES.ORDER_SUCCESS(order.id), { replace: true })
     },
     onError: (error) => {
-      toast.error(orderFailureMessage(error))
+      toast.error(failureMessage(error, TOAST_MESSAGES.order.failed))
       if (owner) invalidateOrderData(queryClient, owner)
     },
+  })
+}
+
+export function useGuestOrderLookup(): UseMutationResult<Order, Error, GuestOrderLookup> {
+  return useMutation({
+    mutationFn: ({ email, orderId }) => orderService.findGuestOrder(email, orderId),
+    retry: false,
   })
 }

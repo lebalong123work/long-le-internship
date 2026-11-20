@@ -6,8 +6,6 @@ export type {
   CartItem,
   Cart,
   CartOwner,
-  PendingGuestMerge,
-  GuestMergeResult,
   AddToCartDto,
   Wishlist,
   OrderItem,
@@ -15,6 +13,7 @@ export type {
   PaymentMethod,
   Order,
   CreateOrderDto,
+  GuestOrderLookup,
 } from './order'
 export type { Toast, ToastType, ToastPauseReason } from './toast'
 export type { PendingAction, PendingActionType, PendingActionHandler } from './pendingAction'

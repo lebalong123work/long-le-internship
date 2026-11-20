@@ -6,6 +6,7 @@ import type { ReactNode } from 'react'
 
 interface ButtonLinkProps {
   to: string
+  state?: unknown
   children: ReactNode
   variant?: 'primary' | 'light'
   className?: string
@@ -13,6 +14,7 @@ interface ButtonLinkProps {
 
 export function ButtonLink({
   to,
+  state,
   children,
   variant = 'primary',
   className,
@@ -20,6 +22,7 @@ export function ButtonLink({
   return (
     <Link
       to={to}
+      state={state}
       className={cn(buttonVariants({ variant }), FOCUS_RING, LINK_HOVER_OPACITY, className)}
     >
       {variant === 'light' ? <span className={GRADIENT_TEXT}>{children}</span> : children}

@@ -8,24 +8,55 @@ import { useAuth } from '@/hooks/useAuth'
 import type { Order } from '@/types'
 
 const SUCCESS_ICON = '/icons/check-circle.svg'
-const ACTION_COUNT = 2
+
+interface GuestOrderNoteProps {
+  order: Order
+}
+
+interface ViewOrderTarget {
+  to: string
+  state?: { orderNumber: string }
+}
+
+function GuestOrderNote({ order }: GuestOrderNoteProps): JSX.Element {
+  return (
+    <>
+      <p className={ORDER_PAGE_LAYOUT.subtitle}>
+        {ORDER_TEXT.guestEmail(order.shippingAddress.email)}
+      </p>
+      <p className={ORDER_PAGE_LAYOUT.subtitle}>{ORDER_TEXT.saveOrderNumber}</p>
+    </>
+  )
+}
+
+function viewOrderTarget(order: Order, isAuthenticated: boolean): ViewOrderTarget {
+  if (isAuthenticated) return { to: ROUTES.ACCOUNT.ORDERS }
+  return { to: ROUTES.ORDER_LOOKUP, state: { orderNumber: ORDER_TEXT.orderNumber(order.id) } }
+}
 
 export default function OrderSuccess(): JSX.Element {
   const { orderId } = useParams()
   const { isAuthenticated } = useAuth()
 
   function renderActions(order: Order): JSX.Element {
-    const viewOrderPath = isAuthenticated ? ROUTES.ACCOUNT.ORDERS : ROUTES.ORDER(order.id)
     return (
       <>
         <ButtonLink to={ROUTES.SHOP} className={ORDER_PAGE_LAYOUT.action}>
           {ORDER_TEXT.continueShopping}
         </ButtonLink>
-        <ButtonLink to={viewOrderPath} variant="light" className={ORDER_PAGE_LAYOUT.action}>
+        <ButtonLink
+          {...viewOrderTarget(order, isAuthenticated)}
+          variant="light"
+          className={ORDER_PAGE_LAYOUT.action}
+        >
           {ORDER_TEXT.viewOrder}
         </ButtonLink>
       </>
     )
+  }
+
+  function renderNote(order: Order): JSX.Element | null {
+    return isAuthenticated ? null : <GuestOrderNote order={order} />
   }
 
   return (
@@ -33,8 +64,8 @@ export default function OrderSuccess(): JSX.Element {
       orderId={orderId}
       title={ORDER_TEXT.successTitle}
       iconSrc={SUCCESS_ICON}
-      actionCount={ACTION_COUNT}
       renderActions={renderActions}
+      renderNote={renderNote}
     />
   )
 }

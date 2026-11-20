@@ -283,27 +283,3 @@ describe('useCartLines', () => {
     expect(result.current.status).toBe('error')
   })
 })
-
-describe('useCartLines — guest merge pending (T35 row 3)', () => {
-  it('L1 reports a pending merge from the cart', async () => {
-    vi.mocked(cartService.getCart).mockResolvedValue({
-      ...cartOf(blackP1),
-      pendingMerge: { id: 'm1', userId: 'u9', items: [blackP1] },
-    })
-    vi.mocked(productService.getByIds).mockResolvedValue([P1])
-    const { result } = setup()
-    await waitFor(() => expect(result.current.status).toBe('ready'))
-    expect(result.current.isMergePending).toBe(true)
-  })
-
-  it.each([
-    ['null', { ...cartOf(blackP1), pendingMerge: null }],
-    ['absent', cartOf(blackP1)],
-  ])('L2 reports no pending merge when it is %s', async (_case, cart) => {
-    vi.mocked(cartService.getCart).mockResolvedValue(cart)
-    vi.mocked(productService.getByIds).mockResolvedValue([P1])
-    const { result } = setup()
-    await waitFor(() => expect(result.current.status).toBe('ready'))
-    expect(result.current.isMergePending).toBe(false)
-  })
-})

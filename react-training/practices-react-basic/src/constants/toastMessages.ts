@@ -3,9 +3,6 @@ export const TOAST_MESSAGES = {
     added: 'Added to cart',
     removed: 'Removed from cart',
     updateFailed: 'Could not update your cart. Please try again.',
-    mergeNeedsOriginalAccount:
-      'Your guest cart is saved for another account. Log in to that account to move it.',
-    mergePending: 'Your cart is waiting to move to an account. Log in to that account to finish.',
   },
   wishlist: {
     saved: 'Saved to wishlist',

@@ -42,16 +42,15 @@ describe('RootLayout landmarks', () => {
   })
 })
 
-describe('RootLayout guest cart recovery (T35)', () => {
+describe('RootLayout restored session (T35, no merge)', () => {
   afterEach(() => {
     localStorage.clear()
     vi.resetAllMocks()
   })
 
-  it('B1 retries the guest cart merge once for a restored session', async () => {
+  it('B1 reads only the account cart and writes nothing for a restored session', async () => {
     localStorage.setItem('mcs_guest', '3f2b8c1e-9a4d-4f6b-8c2a-1d5e7f9a0b3c')
     vi.mocked(cartService.getCart).mockResolvedValue({ id: 'a', userId: 'u1', items: [] })
-    vi.mocked(cartService.mergeGuestCart).mockResolvedValue({ status: 'nothing' })
     useAuthStore.setState({
       user: { id: 'u1', name: 'Test Customer', email: 'user@store.com', role: 'customer' },
       token: 't',
@@ -60,10 +59,15 @@ describe('RootLayout guest cart recovery (T35)', () => {
 
     renderLayout()
 
-    await waitFor(() => expect(cartService.mergeGuestCart).toHaveBeenCalledTimes(1))
-    expect(cartService.mergeGuestCart).toHaveBeenCalledWith(
-      '3f2b8c1e-9a4d-4f6b-8c2a-1d5e7f9a0b3c',
-      'u1'
+    await waitFor(() =>
+      expect(cartService.getCart).toHaveBeenCalledWith({ kind: 'user', id: 'u1' })
     )
+    expect(
+      vi.mocked(cartService.getCart).mock.calls.every(([owner]) => owner.kind === 'user')
+    ).toBe(true)
+    expect(cartService.addItem).not.toHaveBeenCalled()
+    expect(cartService.updateQuantity).not.toHaveBeenCalled()
+    expect(cartService.removeItem).not.toHaveBeenCalled()
+    expect(cartService.clearCart).not.toHaveBeenCalled()
   })
 })

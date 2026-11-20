@@ -19,7 +19,7 @@ function cartItem(overrides: Partial<CartItem> = {}): CartItem {
   }
 }
 
-function renderRow(item: CartItem, rowProduct: Product | null = P1, isReadOnly?: boolean) {
+function renderRow(item: CartItem, rowProduct: Product | null = P1) {
   const onQuantityChange = vi.fn()
   const onRemove = vi.fn()
   const { container } = render(
@@ -29,7 +29,6 @@ function renderRow(item: CartItem, rowProduct: Product | null = P1, isReadOnly?:
           line={{ item, product: rowProduct }}
           onQuantityChange={onQuantityChange}
           onRemove={onRemove}
-          isReadOnly={isReadOnly}
         />
       </ul>
     </MemoryRouter>
@@ -143,38 +142,6 @@ describe('CartItemRow', () => {
     await userEvent.click(
       screen.getByRole('button', { name: 'Remove unavailable product, Black, S from cart' })
     )
-    expect(onRemove).toHaveBeenCalledTimes(1)
-  })
-})
-
-describe('CartItemRow read-only (T35 row 3)', () => {
-  function removeButton(): HTMLElement {
-    return screen.getByRole('button', { name: /^Remove / })
-  }
-
-  it('W1 disables the stepper and Remove and ignores mouse and keyboard', async () => {
-    const { onQuantityChange, onRemove } = renderRow(cartItem(), P1, true)
-    expect(screen.getByRole('button', { name: 'Decrease quantity' })).toBeDisabled()
-    expect(screen.getByRole('button', { name: 'Increase quantity' })).toBeDisabled()
-    expect(removeButton()).toBeDisabled()
-    await userEvent.click(screen.getByRole('button', { name: 'Increase quantity' }))
-    await userEvent.click(removeButton())
-    await userEvent.tab()
-    await userEvent.keyboard('{Enter}{ }')
-    expect(onQuantityChange).not.toHaveBeenCalled()
-    expect(onRemove).not.toHaveBeenCalled()
-  })
-
-  it('W2 disables Remove on an unavailable row', () => {
-    renderRow(cartItem(), null, true)
-    expect(removeButton()).toBeDisabled()
-  })
-
-  it('W3 keeps the stepper and Remove enabled by default', async () => {
-    const { onRemove } = renderRow(cartItem())
-    expect(screen.getByRole('button', { name: 'Increase quantity' })).toBeEnabled()
-    expect(removeButton()).toBeEnabled()
-    await userEvent.click(removeButton())
     expect(onRemove).toHaveBeenCalledTimes(1)
   })
 })

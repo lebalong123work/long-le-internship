@@ -11,7 +11,7 @@ import * as orderService from '@/services/orderService'
 import { useAuthStore } from '@/stores/authStore'
 import { useToastStore } from '@/stores/toastStore'
 import { useUpdateCartQuantity } from './useCart'
-import { useCreateOrder, useOrder, useOrders } from './useOrders'
+import { useCreateOrder, useGuestOrderLookup, useOrder, useOrders } from './useOrders'
 import type { ReactNode } from 'react'
 import type { Cart, CreateOrderDto, Order, PaginatedList, User } from '@/types'
 
@@ -497,25 +497,6 @@ describe('orders for a guest (T35)', () => {
     expect(orderService.getOrderById).toHaveBeenCalledTimes(1)
   })
 
-  it('O1 useCreateOrder shows the recovery toast when a guest merge is pending', async () => {
-    const actual = await vi.importActual<typeof cartService>('@/services/cartService')
-    vi.mocked(cartService.isMergePendingError).mockImplementation(actual.isMergePendingError)
-    logOut()
-    localStorage.setItem('mcs_guest', GUEST_ID)
-    vi.mocked(orderService.createOrder).mockRejectedValue(
-      new ApiError(409, actual.CART_ERRORS.mergePending)
-    )
-    const { wrapper } = setup()
-    const { result } = renderHook(() => useCreateOrder(), { wrapper })
-
-    act(() => result.current.mutate(payload))
-
-    await waitFor(() => expect(result.current.isError).toBe(true))
-    expect(useToastStore.getState().toasts.map(({ message }) => message)).toEqual([
-      TOAST_MESSAGES.cart.mergePending,
-    ])
-  })
-
   it('Q3 useOrder makes no request for a guest without an id', () => {
     logOut()
     const { wrapper } = setup()
@@ -523,5 +504,52 @@ describe('orders for a guest (T35)', () => {
 
     expect(result.current.fetchStatus).toBe('idle')
     expect(orderService.getOrderById).not.toHaveBeenCalled()
+  })
+})
+
+describe('useGuestOrderLookup (T35 order lookup)', () => {
+  const guestOrder: Order = { ...order, userId: undefined, guestId: 'g1' }
+
+  it('G1 looks up the order once with the email and id and shows no toast', async () => {
+    vi.mocked(orderService.findGuestOrder).mockResolvedValue(guestOrder)
+    const { wrapper } = setup()
+    const { result } = renderHook(() => useGuestOrderLookup(), { wrapper })
+
+    act(() => result.current.mutate({ email: 'guest@store.com', orderId: 'o1' }))
+
+    await waitFor(() => expect(result.current.data).toEqual(guestOrder))
+    expect(orderService.findGuestOrder).toHaveBeenCalledTimes(1)
+    expect(orderService.findGuestOrder).toHaveBeenCalledWith('guest@store.com', 'o1')
+    expect(toasts()).toEqual([])
+  })
+
+  it('G2 keeps a not-found error in the hook without a toast or a retry', async () => {
+    vi.mocked(orderService.findGuestOrder).mockRejectedValue(
+      new ApiError(404, orderService.ORDER_ERRORS.notFound)
+    )
+    const queryClient = new QueryClient()
+    function wrapper({ children }: { children: ReactNode }) {
+      return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    }
+    const { result } = renderHook(() => useGuestOrderLookup(), { wrapper })
+
+    act(() => result.current.mutate({ email: 'guest@store.com', orderId: 'o1' }))
+
+    await waitFor(() => expect(result.current.isError).toBe(true))
+    expect(orderService.findGuestOrder).toHaveBeenCalledTimes(1)
+    expect(toasts()).toEqual([])
+  })
+})
+
+describe('useCreateOrder failure text (T35, no merge)', () => {
+  it('O1 shows the order-failed toast for a 409', async () => {
+    vi.mocked(orderService.createOrder).mockRejectedValue(new ApiError(409, 'Conflict'))
+    const { wrapper } = setup()
+    const { result } = renderHook(() => useCreateOrder(), { wrapper })
+
+    act(() => result.current.mutate(payload))
+
+    await waitFor(() => expect(result.current.isError).toBe(true))
+    expect(toasts()).toEqual([{ type: 'error', message: TOAST_MESSAGES.order.failed }])
   })
 })

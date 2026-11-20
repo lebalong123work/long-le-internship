@@ -73,6 +73,16 @@ function accountButton(): HTMLElement {
   return screen.getByRole('button', { name: ACCOUNT_BUTTON })
 }
 
+function guestMenuButton(): HTMLElement {
+  return screen.getByRole('button', { name: 'Account menu' })
+}
+
+function menuPanelOf(button: HTMLElement): HTMLElement {
+  const panel = document.getElementById(button.getAttribute('aria-controls') ?? '')
+  if (!panel) throw new Error('menu panel not rendered')
+  return panel
+}
+
 function accountPanel(): HTMLElement {
   const panel = document.getElementById(accountButton().getAttribute('aria-controls') ?? '')
   if (!panel) throw new Error('account panel not rendered')
@@ -153,7 +163,8 @@ describe('Header nav', () => {
   it('header nav has no account links', () => {
     renderHeader()
     expect(within(mainNav()).queryByRole('link', { name: 'Profile' })).toBeNull()
-    expect(within(mainNav()).queryByRole('link', { name: 'Orders' })).toBeNull()
+    expect(within(mainNav()).queryByRole('link', { name: 'Order History' })).toBeNull()
+    expect(within(mainNav()).queryByRole('link', { name: 'Track Order' })).toBeNull()
   })
 })
 
@@ -269,26 +280,51 @@ describe('Header wishlist link', () => {
 })
 
 describe('Header user menu', () => {
-  it('guest Log In button opens login without redirect', async () => {
+  it('H5 guest menu has Track Order linking to the order lookup page', async () => {
+    const user = userEvent.setup()
     renderHeader('/about')
-    await userEvent.click(screen.getByRole('button', { name: 'Log In' }))
+    await user.click(guestMenuButton())
+    const panel = within(menuPanelOf(guestMenuButton()))
+    expect(panel.getAllByRole('link').map((link) => link.textContent)).toEqual(['Track Order'])
+    await user.click(panel.getByRole('link', { name: 'Track Order' }))
+    expect(currentUrl().pathname).toBe('/order-lookup')
+    expect(guestMenuButton()).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  it('H6 guest Log In closes the menu and opens login without redirect', async () => {
+    const user = userEvent.setup()
+    renderHeader('/about')
+    await user.click(guestMenuButton())
+    await user.click(within(menuPanelOf(guestMenuButton())).getByRole('button', { name: 'Log In' }))
+    expect(guestMenuButton()).toHaveAttribute('aria-expanded', 'false')
     expect(currentUrl().pathname).toBe('/about')
     expect(currentUrl().searchParams.get('auth')).toBe('login')
     expect(currentUrl().searchParams.has('redirect')).toBe(false)
   })
 
-  it('guest Log In button has no aria-expanded', () => {
+  it('H8 guest menu button is a disclosure that Esc and an outside press close', async () => {
+    const user = userEvent.setup()
     renderHeader()
-    expect(screen.getByRole('button', { name: 'Log In' })).not.toHaveAttribute('aria-expanded')
+    expect(guestMenuButton()).toHaveAttribute('aria-expanded', 'false')
+    expect(menuPanelOf(guestMenuButton())).not.toBeVisible()
+    await user.click(guestMenuButton())
+    expect(guestMenuButton()).toHaveAttribute('aria-expanded', 'true')
+    within(menuPanelOf(guestMenuButton())).getByRole('link', { name: 'Track Order' }).focus()
+    await user.keyboard('{Escape}')
+    expect(guestMenuButton()).toHaveAttribute('aria-expanded', 'false')
+    expect(guestMenuButton()).toHaveFocus()
+    await user.click(guestMenuButton())
+    fireEvent.pointerDown(document.body)
+    expect(guestMenuButton()).toHaveAttribute('aria-expanded', 'false')
   })
 
-  it('account button opens Profile, Orders, Wishlist and Logout', async () => {
+  it('account button opens Profile, Order History, Wishlist and Logout', async () => {
     await openAccountMenu()
     expect(accountButton()).toHaveAttribute('aria-expanded', 'true')
     const panel = within(accountPanel())
     expect(panel.getAllByRole('link').map((link) => link.textContent)).toEqual([
       'Profile',
-      'Orders',
+      'Order History',
       'Wishlist',
     ])
     expect(panel.getByRole('button', { name: 'Logout' })).toBeVisible()
@@ -359,13 +395,13 @@ describe('Header user menu', () => {
     const user = await openAccountMenu()
     within(accountPanel()).getByRole('link', { name: 'Profile' }).focus()
     await user.tab()
-    expect(within(accountPanel()).getByRole('link', { name: 'Orders' })).toHaveFocus()
+    expect(within(accountPanel()).getByRole('link', { name: 'Order History' })).toHaveFocus()
     expect(accountButton()).toHaveAttribute('aria-expanded', 'true')
   })
 
-  it('clicking Orders goes to /account/orders and closes the menu', async () => {
+  it('H7 clicking Order History goes to /account/orders and closes the menu', async () => {
     const user = await openAccountMenu()
-    await user.click(within(accountPanel()).getByRole('link', { name: 'Orders' }))
+    await user.click(within(accountPanel()).getByRole('link', { name: 'Order History' }))
     expect(currentUrl().pathname).toBe('/account/orders')
     expect(accountButton()).toHaveAttribute('aria-expanded', 'false')
   })
@@ -392,7 +428,7 @@ describe('Header user menu', () => {
     expect(useToastStore.getState().toasts.map(({ type, message }) => ({ type, message }))).toEqual(
       [{ type: 'info', message: TOAST_MESSAGES.auth.loggedOut }]
     )
-    expect(screen.getByRole('button', { name: 'Log In' })).toHaveFocus()
+    expect(guestMenuButton()).toHaveFocus()
   })
 
   it('guest sees no Logout', () => {

@@ -10,23 +10,12 @@ export interface CartItem {
 
 export type CartOwner = { kind: 'user'; id: string } | { kind: 'guest'; id: string }
 
-export interface PendingGuestMerge {
-  id: string
-  userId: string
-  items: CartItem[]
-}
-
 export interface Cart {
   id: string
   userId?: string
   guestId?: string
   items: CartItem[]
-  pendingMerge?: PendingGuestMerge | null
-  appliedMergeIds?: string[]
 }
-
-export type GuestMergeResult =
-  { status: 'nothing' } | { status: 'merged'; cart: Cart } | { status: 'otherAccount' }
 
 export type AddToCartDto = Omit<CartItem, 'id'>
 
@@ -71,6 +60,11 @@ export interface Order {
   total: number
   status: OrderStatus
   createdAt: string
+}
+
+export interface GuestOrderLookup {
+  email: string
+  orderId: string
 }
 
 export interface CreateOrderDto {

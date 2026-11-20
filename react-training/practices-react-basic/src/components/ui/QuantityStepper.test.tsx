@@ -9,10 +9,9 @@ interface StepperOptions {
   value: number
   max?: number
   bordered?: boolean
-  disabled?: boolean
 }
 
-function renderStepper({ value, max, bordered, disabled }: StepperOptions) {
+function renderStepper({ value, max, bordered }: StepperOptions) {
   const onChange = vi.fn()
   const view = render(
     <QuantityStepper
@@ -21,7 +20,6 @@ function renderStepper({ value, max, bordered, disabled }: StepperOptions) {
       productName={PRODUCT_NAME}
       max={max}
       bordered={bordered}
-      disabled={disabled}
     />
   )
   return { onChange, ...view }
@@ -191,27 +189,5 @@ describe('QuantityStepper live region', () => {
 
     expect(observer.takeRecords()).toHaveLength(0)
     observer.disconnect()
-  })
-})
-
-describe('QuantityStepper disabled (T35 row 3)', () => {
-  it('S1 disables both buttons and ignores click and keyboard', async () => {
-    const { onChange } = renderStepper({ value: 2, max: 5, disabled: true })
-    expect(minus()).toBeDisabled()
-    expect(plus()).toBeDisabled()
-    expect(iconOf(minus())).toHaveAttribute('src', '/icons/minus-disabled.svg')
-    await userEvent.click(minus())
-    await userEvent.click(plus())
-    await userEvent.tab()
-    await userEvent.keyboard('{Enter}{ }')
-    expect(onChange).not.toHaveBeenCalled()
-  })
-
-  it('S2 stays enabled without the prop', async () => {
-    const { onChange } = renderStepper({ value: 2, max: 5 })
-    expect(minus()).toBeEnabled()
-    expect(plus()).toBeEnabled()
-    await userEvent.click(plus())
-    expect(onChange).toHaveBeenCalledWith(3)
   })
 })

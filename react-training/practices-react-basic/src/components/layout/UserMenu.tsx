@@ -2,20 +2,31 @@ import { useEffect, useId, useRef, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { FOCUS_RING, HOVER_OPACITY } from '@/components/ui/interactionClasses'
 import { DESKTOP_MEDIA_QUERY } from '@/constants/breakpoints'
-import { ACCOUNT_NAV_ITEMS, HEADER_TEXT } from '@/constants/header'
+import { ACCOUNT_NAV_ITEMS, GUEST_NAV_ITEMS, HEADER_TEXT } from '@/constants/header'
 import { useAuth, useLogout } from '@/hooks/useAuth'
 import { useAuthModal } from '@/hooks/useAuthModal'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { cn } from '@/utils/cn'
 import { HEADER_ICON_BUTTON, MENU_ROW_BUTTON, NAV_LINK_CLASSES } from './headerClasses'
 import type { FocusEvent, KeyboardEvent } from 'react'
+import type { HeaderNavItem } from '@/constants/header'
 
 const USER_ICON = '/icons/user.svg'
+const MENU_ITEM = 'px-6 py-3'
 
 interface AccountNavItemsProps {
   itemClassName: string
   className?: string
   onBeforeLogout?: () => void
+}
+
+interface GuestNavItemsProps {
+  itemClassName: string
+}
+
+interface NavItemLinksProps {
+  items: readonly HeaderNavItem[]
+  itemClassName: string
 }
 
 interface UserMenuProps {
@@ -25,6 +36,45 @@ interface UserMenuProps {
 function focusLeaves(event: FocusEvent<HTMLElement>): boolean {
   const next = event.relatedTarget
   return next instanceof Node && !event.currentTarget.contains(next)
+}
+
+function NavItemLinks({ items, itemClassName }: NavItemLinksProps): JSX.Element {
+  return (
+    <>
+      {items.map((item) => (
+        <li key={item.to}>
+          <NavLink
+            to={item.to}
+            end={item.end}
+            className={({ isActive }) =>
+              cn(NAV_LINK_CLASSES.idle, 'block', itemClassName, isActive && NAV_LINK_CLASSES.active)
+            }
+          >
+            {item.label}
+          </NavLink>
+        </li>
+      ))}
+    </>
+  )
+}
+
+export function GuestNavItems({ itemClassName }: GuestNavItemsProps): JSX.Element {
+  const { open } = useAuthModal()
+
+  return (
+    <ul>
+      <NavItemLinks items={GUEST_NAV_ITEMS} itemClassName={itemClassName} />
+      <li>
+        <button
+          type="button"
+          onClick={() => open('login')}
+          className={cn(NAV_LINK_CLASSES.idle, MENU_ROW_BUTTON, itemClassName)}
+        >
+          {HEADER_TEXT.logIn}
+        </button>
+      </li>
+    </ul>
+  )
 }
 
 export function AccountNavItems({
@@ -41,19 +91,7 @@ export function AccountNavItems({
 
   return (
     <ul className={className}>
-      {ACCOUNT_NAV_ITEMS.map((item) => (
-        <li key={item.to}>
-          <NavLink
-            to={item.to}
-            end={item.end}
-            className={({ isActive }) =>
-              cn(NAV_LINK_CLASSES.idle, 'block', itemClassName, isActive && NAV_LINK_CLASSES.active)
-            }
-          >
-            {item.label}
-          </NavLink>
-        </li>
-      ))}
+      <NavItemLinks items={ACCOUNT_NAV_ITEMS} itemClassName={itemClassName} />
       <li>
         <button
           type="button"
@@ -69,14 +107,13 @@ export function AccountNavItems({
 
 export function UserMenu({ className }: UserMenuProps): JSX.Element {
   const { user } = useAuth()
-  const { open } = useAuthModal()
   const location = useLocation()
   const isDesktop = useMediaQuery(DESKTOP_MEDIA_QUERY)
   const [openKey, setOpenKey] = useState<string | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const menuId = useId()
-  const isOpen = user !== null && isDesktop && openKey === location.key
+  const isOpen = isDesktop && openKey === location.key
 
   useEffect(() => {
     if (!isOpen) return
@@ -94,10 +131,6 @@ export function UserMenu({ className }: UserMenuProps): JSX.Element {
   }
 
   function handleButtonClick(): void {
-    if (user === null) {
-      open('login')
-      return
-    }
     setOpenKey(isOpen ? null : location.key)
   }
 
@@ -126,23 +159,25 @@ export function UserMenu({ className }: UserMenuProps): JSX.Element {
       <button
         ref={buttonRef}
         type="button"
-        aria-label={user === null ? HEADER_TEXT.logIn : HEADER_TEXT.accountMenuLabel(user.name)}
-        aria-expanded={user === null ? undefined : isOpen}
-        aria-controls={user === null ? undefined : menuId}
+        aria-label={HEADER_TEXT.accountMenuLabel(user?.name ?? '')}
+        aria-expanded={isOpen}
+        aria-controls={menuId}
         onClick={handleButtonClick}
         className={cn(HEADER_ICON_BUTTON, FOCUS_RING, HOVER_OPACITY)}
       >
         <img src={USER_ICON} alt="" className="size-6" />
       </button>
-      {user !== null && (
-        <div
-          id={menuId}
-          hidden={!isOpen}
-          className="absolute right-0 top-full z-10 mt-2 whitespace-nowrap rounded-10 bg-white py-2 shadow-header"
-        >
-          <AccountNavItems itemClassName="px-6 py-3" onBeforeLogout={focusButtonBeforeLogout} />
-        </div>
-      )}
+      <div
+        id={menuId}
+        hidden={!isOpen}
+        className="absolute right-0 top-full z-10 mt-2 whitespace-nowrap rounded-10 bg-white py-2 shadow-header"
+      >
+        {user === null ? (
+          <GuestNavItems itemClassName={MENU_ITEM} />
+        ) : (
+          <AccountNavItems itemClassName={MENU_ITEM} onBeforeLogout={focusButtonBeforeLogout} />
+        )}
+      </div>
     </div>
   )
 }

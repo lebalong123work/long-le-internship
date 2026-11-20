@@ -1,4 +1,4 @@
-export const ORDER_SUCCESS_LAYOUT = {
+export const ORDER_PAGE_LAYOUT = {
   column: 'flex flex-col gap-10 xl:mx-auto xl:w-[782px]',
   header: 'flex flex-col items-center gap-4 text-center',
   icon: 'size-20',

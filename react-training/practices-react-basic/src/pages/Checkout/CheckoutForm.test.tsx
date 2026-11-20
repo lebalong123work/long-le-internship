@@ -22,7 +22,7 @@ function renderForm() {
       <CheckoutForm
         lines={LINES}
         summary={SUMMARY}
-        isPlaceOrderBlocked={false}
+        placeOrderBlock={null}
         defaultValues={{ fullName: 'Test Customer', email: 'user@store.com', phone: '' }}
         onValidSubmit={onValidSubmit}
       />

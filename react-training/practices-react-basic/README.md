@@ -31,8 +31,9 @@ Log in from the user icon in the header, or open https://mangcoding-store-seven.
 | Product page — Add To Cart | Without a color: "Please select a color" (red frame around the colors). "Added to cart" and the cart icon count goes up — also without logging in (guests get their own cart in this browser). The heart saves the product (same state as on the product card); the bag button is decoration only |
 | Product page — "Same Product" | Up to 8 other products of the same category, and "See More" (opens the shop page, under development) |
 | Cart `/cart` (no login needed) | Add a product on its page, then open the cart: each row shows the photo, name, color and size, price and stock. "+" / "−" change the quantity (never above the stock) and the total updates at once; the trash icon removes the row ("Removed from cart"). The summary shows the number of products and the total; "Checkout" opens the checkout page. An empty cart shows "Your cart is empty" with "Shop Now". The stock shown is for display only — it is not reserved for you |
-| Checkout `/checkout` (log in, cart not empty) | Shipping address (Province / City → Ward / Commune), payment method (Cash on delivery, bank transfer, or card — demo only, no real payment and no card details asked), order summary. Empty fields show messages. "Place Order" checks the cart again, saves the order and empties the cart |
-| Order Success | After "Place Order": green check, "Order Placed Successfully!", order number, products, address, payment method and totals. "Continue Shopping" opens the shop page (under development), "View Order" opens the order history. An unknown order number, e.g. `/order-success/abc`, shows "Order not found" |
+| Checkout `/checkout` (no login needed, cart not empty) | Shipping address (Province / City → Ward / Commune), payment method (Cash on delivery, bank transfer, or card — demo only, no real payment and no card details asked), order summary. Empty fields show messages. "Place Order" checks the cart again, saves the order and empties the cart. Guests start with empty fields; logged-in customers get their name and email filled in. If a guest cart is still waiting to move to an account, "Place Order" is turned off and a message explains to log in to that account |
+| Order Success | After "Place Order": green check, "Order Placed Successfully!", order number, products, address, payment method and totals. "Continue Shopping" opens the shop page (under development). "View Order" opens the order history when logged in, or the guest order page `/order/<order number>` for a guest. An unknown order number, e.g. `/order-success/abc`, shows "Order not found" |
+| Guest order `/order/<order number>` | "Order Details" with the order number, products, address, payment method and totals, and "Continue Shopping". Works only in the browser that placed the order (refresh keeps it). Another browser, or the same browser while logged in to an account, shows "Order not found". Demo only: the mock API keeps nothing private, so this is not a real privacy protection |
 | Header | Logo, nav (Home · Shop · About Us · Contact), search bar with suggestions while typing (on phones: search button → full-screen search), mobile menu (☰) |
 | Log In / Sign Up | Modal with two tabs, form validation (empty fields, wrong email, wrong password), toast after login |
 | Logged in | User menu: Profile · Orders · Wishlist · Logout |
@@ -42,7 +43,7 @@ Log in from the user icon in the header, or open https://mangcoding-store-seven.
 | Order History `/account/orders` (log in first) | Your orders, newest first, 10 per page ("Previous page" / "Next page"; the page number stays in the address, so refresh keeps it). Each card shows the order number, date (dd/mm/yyyy), total, number of items and a colored status badge. "View Detail" opens the order in place: status steps (Ordered → Processing → Shipped → Delivered; hidden for a cancelled order), products, address, payment method and totals. No orders → "You have no orders yet" + Shop Now |
 | Wishlist `/account/wishlist` (log in first) | Your saved products as cards, newest first. "Add to Cart" opens the product page to pick color and size; "Remove" takes the product off the list. Empty list → "No saved items" + Start Shopping |
 | Search results `/search?q=shirt` | Press Enter in the search bar (or pick a category suggestion): "Results for "shirt"" with the number of items and the matching product cards, 8 per page ("Previous page" / "Next page"; the page number stays in the address). No match → "No results for '…'" with a tip to try another word. An empty search goes back to Home. The demo data has T-shirts only, so most words show the no-results message |
-| Guest | Add to cart and open the cart without an account. Heart / user icon → the login modal opens. Checkout still asks you to log in for now |
+| Guest | Add to cart, open the cart, check out and see the order without an account. Heart / user icon → the login modal opens. Guest orders are not added to an account's order history |
 | Footer | Links and "Log In" (hidden when logged in) |
 | `/shop`, `/about`, `/contact` | "This page is under development" |
 | Any unknown URL, e.g. `/abc` | 404 page |
@@ -212,10 +213,11 @@ Layer rules:
 - [x] "Under development" pages + 404
 - [x] Deploy demo: Vercel (app) + Render (mock API)
 - [x] Home: Hero banner + Best Seller section
-- [x] Product Detail: photo gallery, color / size / quantity, Add to Cart (guests log in first), wishlist heart, "Same Product"
+- [x] Product Detail: photo gallery, color / size / quantity, Add to Cart (also for guests), wishlist heart, "Same Product"
 - [x] Cart: review items, change quantity, remove, order summary
 - [x] Checkout form: shipping address (Province / City → Ward / Commune), payment method (mock), order summary — released together with Place Order
 - [x] Place Order → Order Success
+- [x] Guest checkout: buy without an account, guest order page in the same browser
 - [x] Wishlist page: saved products, Remove, Add to Cart → product page
 - [x] Order History: order cards, status badge, details in place, 10 per page
 - [x] Profile: edit details, photo preview

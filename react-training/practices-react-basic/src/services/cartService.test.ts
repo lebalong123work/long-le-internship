@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
+import { mockCartServer } from '@/test/cartServer'
 import { callBody, callInit, callUrl, catchError, mockFetch } from '@/test/mockFetch'
 import { ApiError } from './apiClient'
 import {
@@ -253,5 +254,40 @@ describe('isMergePendingError (T35 row 3)', () => {
     ['a plain Error', new Error(CART_ERRORS.mergePending)],
   ])('E2 is false for %s', (_case, error) => {
     expect(isMergePendingError(error)).toBe(false)
+  })
+})
+
+describe('getCart — one cart creation per owner (T35 F1)', () => {
+  const GUEST: CartOwner = { kind: 'guest', id: '3f2b8c1e-9a4d-4f6b-8c2a-1d5e7f9a0b3c' }
+
+  it('C1 concurrent get-or-create calls for one owner send exactly one POST', async () => {
+    const server = mockCartServer()
+    const [first, second] = await Promise.all([getCart(GUEST), getCart(GUEST)])
+    expect(server.postCount()).toBe(1)
+    expect(server.carts).toHaveLength(1)
+    expect(first.id).toBe(second.id)
+  })
+
+  it('C2 a failed creation is released so a later call creates the cart', async () => {
+    const server = mockCartServer()
+    server.failNextPost()
+    expect((await catchError(getCart(GUEST))).status).toBe(500)
+    const cart = await getCart(GUEST)
+    expect(server.postCount()).toBe(2)
+    expect(server.carts).toEqual([cart])
+  })
+
+  it('C3 a guest and a user with the same id string each get their own cart', async () => {
+    const server = mockCartServer()
+    const sameId = GUEST.id
+    const [guestCart, userCart] = await Promise.all([
+      getCart(GUEST),
+      getCart({ kind: 'user', id: sameId }),
+    ])
+    expect(server.postCount()).toBe(2)
+    expect(guestCart).toMatchObject({ guestId: sameId })
+    expect(guestCart.userId).toBeUndefined()
+    expect(userCart).toMatchObject({ userId: sameId })
+    expect(userCart.guestId).toBeUndefined()
   })
 })

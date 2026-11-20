@@ -497,6 +497,25 @@ describe('orders for a guest (T35)', () => {
     expect(orderService.getOrderById).toHaveBeenCalledTimes(1)
   })
 
+  it('O1 useCreateOrder shows the recovery toast when a guest merge is pending', async () => {
+    const actual = await vi.importActual<typeof cartService>('@/services/cartService')
+    vi.mocked(cartService.isMergePendingError).mockImplementation(actual.isMergePendingError)
+    logOut()
+    localStorage.setItem('mcs_guest', GUEST_ID)
+    vi.mocked(orderService.createOrder).mockRejectedValue(
+      new ApiError(409, actual.CART_ERRORS.mergePending)
+    )
+    const { wrapper } = setup()
+    const { result } = renderHook(() => useCreateOrder(), { wrapper })
+
+    act(() => result.current.mutate(payload))
+
+    await waitFor(() => expect(result.current.isError).toBe(true))
+    expect(useToastStore.getState().toasts.map(({ message }) => message)).toEqual([
+      TOAST_MESSAGES.cart.mergePending,
+    ])
+  })
+
   it('Q3 useOrder makes no request for a guest without an id', () => {
     logOut()
     const { wrapper } = setup()

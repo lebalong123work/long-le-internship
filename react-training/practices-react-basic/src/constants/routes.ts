@@ -16,6 +16,7 @@ export const ROUTES = {
   CART: '/cart',
   CHECKOUT: '/checkout',
   ORDER_SUCCESS: (orderId: string) => `/order-success/${orderId}`,
+  ORDER: (orderId: string) => `/order/${orderId}`,
   ACCOUNT: {
     PROFILE: '/account/profile',
     ORDERS: '/account/orders',

@@ -13,3 +13,9 @@ describe('ROUTES.SEARCH_RESULTS', () => {
     expect(url.searchParams.get('q')).toBe('a&b #1')
   })
 })
+
+describe('ROUTES.ORDER', () => {
+  it('R1 builds the guest order details path', () => {
+    expect(ROUTES.ORDER('o1')).toBe('/order/o1')
+  })
+})

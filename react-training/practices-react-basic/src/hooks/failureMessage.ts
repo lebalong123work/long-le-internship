@@ -10,3 +10,8 @@ export function cartFailureMessage(error: unknown): string {
   if (isMergePendingError(error)) return TOAST_MESSAGES.cart.mergePending
   return failureMessage(error, TOAST_MESSAGES.cart.updateFailed)
 }
+
+export function orderFailureMessage(error: unknown): string {
+  if (isMergePendingError(error)) return TOAST_MESSAGES.cart.mergePending
+  return failureMessage(error, TOAST_MESSAGES.order.failed)
+}

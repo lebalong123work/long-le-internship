@@ -55,6 +55,8 @@ const ORDER: Order = {
   createdAt: '2026-11-17T08:00:00.000Z',
 }
 const SETTLE_TASKS = 3
+const GUEST_ID = '3f2b8c1e-9a4d-4f6b-8c2a-1d5e7f9a0b3c'
+const GUEST_ORDER: Order = { ...ORDER, userId: undefined, guestId: GUEST_ID }
 
 let pending: PendingFetch[] = []
 
@@ -95,7 +97,11 @@ function renderPage(cached?: Order) {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false, retryDelay: 0 } },
   })
-  if (cached) queryClient.setQueryData(queryKeys.orders.detail({ kind: 'user', id: USER.id }, cached.id), cached)
+  if (cached)
+    queryClient.setQueryData(
+      queryKeys.orders.detail({ kind: 'user', id: USER.id }, cached.id),
+      cached
+    )
   const router = createMemoryRouter(
     [
       { path: '/order-success/:orderId', element: <OrderSuccess /> },
@@ -121,6 +127,10 @@ function tryAgain(): HTMLElement {
 
 function busySkeleton(container: HTMLElement): Element | null {
   return container.querySelector('[aria-busy="true"]:not(button)')
+}
+
+function actionPlaceholders(container: HTMLElement): number {
+  return busySkeleton(container)?.firstElementChild?.lastElementChild?.children.length ?? 0
 }
 
 function statusText(): string {
@@ -240,5 +250,53 @@ describe('OrderSuccess page', () => {
     renderPage(ORDER)
     expect(outside).toHaveFocus()
     outside.remove()
+  })
+})
+
+describe('OrderSuccess page — guest (T35)', () => {
+  beforeEach(() => {
+    useAuthStore.setState({ user: null, token: null, isAuthenticated: false })
+  })
+
+  it('S1 shows a guest order to the guest who placed it', async () => {
+    localStorage.setItem('mcs_guest', GUEST_ID)
+    renderPage()
+    await answerAll(GUEST_ORDER)
+    expect(heading()).toBeInTheDocument()
+    expect(screen.getByText('Order ID: #ORD-o1')).toBeInTheDocument()
+  })
+
+  it('S2 links View Order to the guest order details page', async () => {
+    localStorage.setItem('mcs_guest', GUEST_ID)
+    renderPage()
+    await answerAll(GUEST_ORDER)
+    expect(screen.getByRole('link', { name: ORDER_TEXT.viewOrder })).toHaveAttribute(
+      'href',
+      '/order/o1'
+    )
+  })
+
+  it('S3 shows Order not found without a request when the browser has no guest id', async () => {
+    const { container } = renderPage()
+    await answerAll(GUEST_ORDER)
+    expect(screen.getByText(UI_STATE_MESSAGES.orderNotFound)).toBeInTheDocument()
+    expect(busySkeleton(container)).toBeNull()
+    expect(fetch).not.toHaveBeenCalled()
+  })
+
+  it('S5 shows two action placeholders in the loading skeleton', () => {
+    localStorage.setItem('mcs_guest', GUEST_ID)
+    const { container } = renderPage()
+    expect(actionPlaceholders(container)).toBe(2)
+  })
+
+  it('S4 links Continue Shopping to the shop for a guest', async () => {
+    localStorage.setItem('mcs_guest', GUEST_ID)
+    renderPage()
+    await answerAll(GUEST_ORDER)
+    expect(screen.getByRole('link', { name: ORDER_TEXT.continueShopping })).toHaveAttribute(
+      'href',
+      '/shop'
+    )
   })
 })

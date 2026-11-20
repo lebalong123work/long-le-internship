@@ -1,5 +1,5 @@
 import { mergeCartLines, subtractCartLines } from '@/utils/cartMerge'
-import { ownerFields } from '@/utils/cartOwner'
+import { ownerFields, ownerKey } from '@/utils/cartOwner'
 import { apiClient, ApiError } from './apiClient'
 import type {
   AddToCartDto,
@@ -53,10 +53,23 @@ async function getWritableCart(owner: CartOwner): Promise<Cart> {
   return cart
 }
 
+const cartCreations = new Map<string, Promise<Cart>>()
+
+function createCartOnce(owner: CartOwner): Promise<Cart> {
+  const key = ownerKey(owner)
+  const inFlight = cartCreations.get(key)
+  if (inFlight) return inFlight
+  const creation = apiClient
+    .post<Cart>('/carts', { ...ownerFields(owner), items: [] })
+    .finally(() => cartCreations.delete(key))
+  cartCreations.set(key, creation)
+  return creation
+}
+
 export async function getCart(owner: CartOwner): Promise<Cart> {
   const cart = await findCart(owner)
   if (cart) return cart
-  return apiClient.post<Cart>('/carts', { ...ownerFields(owner), items: [] })
+  return createCartOnce(owner)
 }
 
 export async function addItem(owner: CartOwner, item: AddToCartDto): Promise<Cart> {

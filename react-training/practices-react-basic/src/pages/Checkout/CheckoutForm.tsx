@@ -7,13 +7,14 @@ import { CheckoutSummary } from './CheckoutSummary'
 import { PaymentFields } from './PaymentFields'
 import { ShippingFields } from './ShippingFields'
 import type { DefaultValues } from 'react-hook-form'
+import type { PlaceOrderBlock } from './CheckoutSummary'
 import type { CartLine, CartSummary } from '@/hooks/useCartLines'
 import type { CheckoutFormValues } from '@/schemas/checkout'
 
 interface CheckoutFormProps {
   lines: CartLine[]
   summary: CartSummary
-  isPlaceOrderBlocked: boolean
+  placeOrderBlock: PlaceOrderBlock
   isPlacing?: boolean
   defaultValues: DefaultValues<CheckoutFormValues>
   onValidSubmit: (values: CheckoutFormValues) => void
@@ -22,7 +23,7 @@ interface CheckoutFormProps {
 export function CheckoutForm({
   lines,
   summary,
-  isPlaceOrderBlocked,
+  placeOrderBlock,
   isPlacing = false,
   defaultValues,
   onValidSubmit,
@@ -47,7 +48,7 @@ export function CheckoutForm({
           <CheckoutSummary
             lines={lines}
             summary={summary}
-            isPlaceOrderBlocked={isPlaceOrderBlocked}
+            placeOrderBlock={placeOrderBlock}
             isPlacing={isPlacing}
           />
         </div>

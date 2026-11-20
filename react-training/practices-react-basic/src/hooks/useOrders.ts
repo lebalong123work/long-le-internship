@@ -12,7 +12,7 @@ import { TOAST_MESSAGES } from '@/constants/toastMessages'
 import * as cartService from '@/services/cartService'
 import * as orderService from '@/services/orderService'
 import { requireCartOwner } from '@/utils/cartOwner'
-import { failureMessage } from './failureMessage'
+import { orderFailureMessage } from './failureMessage'
 import { retryUnlessNotFound } from './queryRetry'
 import { useAuth } from './useAuth'
 import { CART_MUTATION_SCOPE } from './useCart'
@@ -75,7 +75,7 @@ export function useCreateOrder(): UseMutationResult<Order, Error, CreateOrderDto
       navigate(ROUTES.ORDER_SUCCESS(order.id), { replace: true })
     },
     onError: (error) => {
-      toast.error(failureMessage(error, TOAST_MESSAGES.order.failed))
+      toast.error(orderFailureMessage(error))
       if (owner) invalidateOrderData(queryClient, owner)
     },
   })

@@ -7,6 +7,7 @@ import { ApiError } from '@/services/apiClient'
 import * as cartService from '@/services/cartService'
 import { useAuthStore } from '@/stores/authStore'
 import { useToastStore } from '@/stores/toastStore'
+import { mockCartServer } from '@/test/cartServer'
 import { useAddToCart, useCart, useRemoveCartItem, useUpdateCartQuantity } from './useCart'
 import type { ReactNode } from 'react'
 import type { AddToCartDto, Cart, CartItem, User } from '@/types'
@@ -411,6 +412,27 @@ describe('guest cart owner (T35)', () => {
     expect(queryClient.getQueryData(queryKeys.cart({ kind: 'guest', id: guestId ?? '' }))).toEqual(
       guestCart
     )
+  })
+
+  it('H1 the first cart read racing with a refetch and the first add creates one cart', async () => {
+    localStorage.setItem('mcs_guest', GUEST_ID)
+    vi.mocked(cartService.getCart).mockImplementation(actualCartService.getCart)
+    vi.mocked(cartService.addItem).mockImplementation(actualCartService.addItem)
+    const server = mockCartServer()
+    server.holdReads()
+    const { queryClient, wrapper } = setup()
+    const { result } = renderHook(() => ({ cart: useCart(), add: useAddToCart() }), { wrapper })
+
+    await act(() => Promise.resolve())
+    act(() => void queryClient.invalidateQueries({ queryKey: guestKey }))
+    act(() => result.current.add.mutate(newItem))
+    act(() => server.releaseReads())
+
+    await waitFor(() => expect(result.current.add.isSuccess).toBe(true))
+    expect(server.postCount()).toBe(1)
+    expect(server.carts).toHaveLength(1)
+    expect(server.carts[0]).toMatchObject({ guestId: GUEST_ID })
+    expect(server.carts[0].items.map(({ productId }) => productId)).toEqual([newItem.productId])
   })
 
   it('K3 guest quantity changes and removals use the guest owner and key', async () => {

@@ -11,9 +11,11 @@ import { CheckoutForm } from './CheckoutForm'
 import { CheckoutSkeleton } from './CheckoutSkeleton'
 import { hasStockIssue } from './stockIssue'
 import { usePlaceOrder } from './usePlaceOrder'
+import type { PlaceOrderBlock } from './CheckoutSummary'
 import type { BreadcrumbItem } from '@/components/ui/Breadcrumb'
 import type { ReactNode } from 'react'
 import type { DefaultValues } from 'react-hook-form'
+import type { CartLine } from '@/hooks/useCartLines'
 import type { CheckoutFormValues } from '@/schemas/checkout'
 import type { User } from '@/types'
 
@@ -27,6 +29,12 @@ function statusText(isLoading: boolean, isPlacing: boolean): string {
   if (isLoading) return CHECKOUT_TEXT.loading
   if (isPlacing) return CHECKOUT_TEXT.placing
   return ''
+}
+
+function placeOrderBlockOf(isMergePending: boolean, lines: CartLine[]): PlaceOrderBlock {
+  if (isMergePending) return 'mergePending'
+  if (hasStockIssue(lines)) return 'stock'
+  return null
 }
 
 function checkoutDefaults(user: User | null): DefaultValues<CheckoutFormValues> {
@@ -45,7 +53,8 @@ export default function Checkout(): JSX.Element {
   const headingRef = useRef<HTMLHeadingElement>(null)
   const retryRequested = useRef(false)
   const { user } = useAuth()
-  const { status, lines, summary, hasUnavailableItems, retry, isRetrying } = useCartLines()
+  const { status, lines, summary, hasUnavailableItems, isMergePending, retry, isRetrying } =
+    useCartLines()
   const { placeOrder, isPlacing, isOrderStarted } = usePlaceOrder()
 
   useEffect(() => {
@@ -77,7 +86,7 @@ export default function Checkout(): JSX.Element {
       <CheckoutForm
         lines={lines}
         summary={summary}
-        isPlaceOrderBlocked={hasStockIssue(lines)}
+        placeOrderBlock={placeOrderBlockOf(isMergePending, lines)}
         isPlacing={isPlacing}
         defaultValues={checkoutDefaults(user)}
         onValidSubmit={(values) => void placeOrder(values, lines)}

@@ -11,6 +11,7 @@ import Contact from '@/pages/Static/Contact'
 import Cart from '@/pages/Cart'
 import Checkout from '@/pages/Checkout'
 import OrderSuccess from '@/pages/OrderSuccess'
+import GuestOrderDetails from '@/pages/GuestOrderDetails'
 import Profile from '@/pages/Account/Profile'
 import OrderHistory from '@/pages/Account/Orders'
 import Wishlist from '@/pages/Account/Wishlist'
@@ -28,12 +29,13 @@ export const routes: RouteObject[] = [
       { path: '/about', element: <AboutUs /> },
       { path: '/contact', element: <Contact /> },
       { path: '/cart', element: <Cart /> },
+      { path: '/checkout', element: <Checkout /> },
+      { path: '/order-success/:orderId', element: <OrderSuccess /> },
+      { path: '/order/:orderId', element: <GuestOrderDetails /> },
 
       {
         element: <ProtectedRoute />,
         children: [
-          { path: '/checkout', element: <Checkout /> },
-          { path: '/order-success/:orderId', element: <OrderSuccess /> },
           {
             element: <AccountLayout />,
             children: [

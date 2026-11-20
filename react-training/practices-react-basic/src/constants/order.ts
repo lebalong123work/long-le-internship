@@ -1,5 +1,6 @@
 export const ORDER_TEXT = {
   successTitle: 'Order Placed Successfully!',
+  detailsTitle: 'Order Details',
   orderIdLabel: 'Order ID',
   orderNumber: (orderId: string): string => `#ORD-${orderId}`,
   loading: 'Loading order',

@@ -19,7 +19,7 @@ const SUMMARY_CLASSES = {
   totalRow: 'mt-[22px] flex justify-between gap-4 font-heading text-lg leading-normal text-dark',
   action: 'mt-6 flex flex-col md:items-end',
   checkout: 'w-full md:w-[180px]',
-  blocked: 'mt-2 font-body text-sm leading-normal text-dark',
+  blocked: CART_LAYOUT.noticeText,
 }
 
 export function OrderSummary({ summary, isCheckoutBlocked }: OrderSummaryProps): JSX.Element {

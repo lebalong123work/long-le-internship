@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { TOAST_MESSAGES } from '@/constants/toastMessages'
 import { ApiError } from '@/services/apiClient'
-import { failureMessage } from './failureMessage'
+import { CART_ERRORS } from '@/services/cartService'
+import { cartFailureMessage, failureMessage } from './failureMessage'
 
 const fallback = TOAST_MESSAGES.cart.updateFailed
 
@@ -18,5 +19,23 @@ describe('failureMessage', () => {
 
   it('returns the fallback for a non-API error', () => {
     expect(failureMessage(new Error('Login required'), fallback)).toBe(fallback)
+  })
+})
+
+describe('cartFailureMessage', () => {
+  it('F1 returns the network text for a status 0 error', () => {
+    expect(cartFailureMessage(new ApiError(0, 'Network error'))).toBe(TOAST_MESSAGES.network.error)
+  })
+
+  it('F2 returns the recovery text for a pending guest merge', () => {
+    expect(cartFailureMessage(new ApiError(409, CART_ERRORS.mergePending))).toBe(
+      TOAST_MESSAGES.cart.mergePending
+    )
+  })
+
+  it('F3 returns the cart error text for any other error', () => {
+    expect(cartFailureMessage(new ApiError(500, 'Internal Server Error'))).toBe(
+      TOAST_MESSAGES.cart.updateFailed
+    )
   })
 })

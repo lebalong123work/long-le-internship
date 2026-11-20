@@ -15,6 +15,12 @@ export const CART_ERRORS = {
   mergePending: 'Guest cart merge pending',
 } as const
 
+export function isMergePendingError(error: unknown): boolean {
+  return (
+    error instanceof ApiError && error.status === 409 && error.message === CART_ERRORS.mergePending
+  )
+}
+
 function cartItemId(item: AddToCartDto): string {
   return `${item.productId}__${item.color}__${item.size}`
 }

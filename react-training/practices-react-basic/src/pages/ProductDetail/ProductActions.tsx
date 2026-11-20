@@ -4,9 +4,7 @@ import { buttonVariants } from '@/components/ui/buttonVariants'
 import { ARIA_DISABLED } from '@/components/ui/interactionClasses'
 import { PRODUCT_CARD_TEXT } from '@/constants/productCard'
 import { PRODUCT_DETAIL_TEXT } from '@/constants/productDetail'
-import { useAuth } from '@/hooks/useAuth'
 import { useAddToCart } from '@/hooks/useCart'
-import { useRequestLogin } from '@/hooks/usePendingAction'
 import { useSubmitLock } from '@/hooks/useSubmitLock'
 import { useWishlist } from '@/hooks/useWishlist'
 import type { AddToCartDto, Product } from '@/types'
@@ -57,9 +55,7 @@ export function ProductActions({
   quantity,
   onMissingColor,
 }: ProductActionsProps): JSX.Element {
-  const { user } = useAuth()
   const addToCart = useAddToCart()
-  const requestLogin = useRequestLogin()
   const submitLock = useSubmitLock()
 
   function handleAdd(): void {
@@ -72,10 +68,6 @@ export function ProductActions({
       color: color ?? '',
       size: size ?? '',
       quantity,
-    }
-    if (!user) {
-      requestLogin({ type: 'addToCart', payload })
-      return
     }
     if (!submitLock.acquire()) return
     addToCart.mutate(payload, { onSettled: submitLock.release })

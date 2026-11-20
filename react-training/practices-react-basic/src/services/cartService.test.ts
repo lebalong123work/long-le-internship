@@ -1,6 +1,15 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { callBody, callInit, callUrl, catchError, mockFetch } from '@/test/mockFetch'
-import { addItem, CART_ERRORS, clearCart, getCart, removeItem, updateQuantity } from './cartService'
+import { ApiError } from './apiClient'
+import {
+  addItem,
+  CART_ERRORS,
+  clearCart,
+  getCart,
+  isMergePendingError,
+  removeItem,
+  updateQuantity,
+} from './cartService'
 import type { CartOwner, Cart, CartItem } from '@/types'
 
 const USER: CartOwner = { kind: 'user', id: 'u1' }
@@ -230,5 +239,19 @@ describe('cart owner (T35)', () => {
 
     await expect(updateQuantity(USER, blackS.id, 5)).resolves.toEqual(updated)
     expect(callInit(fetchMock, 1).method).toBe('PATCH')
+  })
+})
+
+describe('isMergePendingError (T35 row 3)', () => {
+  it('E1 is true for the 409 pending-merge error', () => {
+    expect(isMergePendingError(new ApiError(409, CART_ERRORS.mergePending))).toBe(true)
+  })
+
+  it.each([
+    ['a 409 with another message', new ApiError(409, 'Conflict')],
+    ['a 500 with the same message', new ApiError(500, CART_ERRORS.mergePending)],
+    ['a plain Error', new Error(CART_ERRORS.mergePending)],
+  ])('E2 is false for %s', (_case, error) => {
+    expect(isMergePendingError(error)).toBe(false)
   })
 })

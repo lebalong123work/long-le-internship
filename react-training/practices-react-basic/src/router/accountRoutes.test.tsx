@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, screen, within } from '@testing-library/react'
 import { createMemoryRouter, RouterProvider } from 'react-router-dom'
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
+import { CART_TEXT } from '@/constants/cart'
 import { HEADER_TEXT } from '@/constants/header'
 import { ORDER_HISTORY_TEXT } from '@/constants/order'
 import { PROFILE_TEXT } from '@/constants/profile'
@@ -80,6 +81,15 @@ describe('account routes — logged in', () => {
 })
 
 describe('account routes — guest', () => {
+  it('RT1 guest opens /cart directly without login', async () => {
+    const router = renderAt(ROUTES.CART)
+    expect(
+      await screen.findByRole('heading', { level: 2, name: CART_TEXT.heading })
+    ).toBeInTheDocument()
+    expect(router.state.location.pathname).toBe(ROUTES.CART)
+    expect(new URLSearchParams(router.state.location.search).has('auth')).toBe(false)
+  })
+
   it.each(ACCOUNT_PAGES)('$path stays protected and opens login', ({ path }) => {
     const router = renderAt(path)
     const params = new URLSearchParams(router.state.location.search)

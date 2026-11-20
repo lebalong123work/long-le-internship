@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ProductThumbnail } from '@/components/shared/ProductThumbnail'
-import { FOCUS_RING, HOVER_OPACITY } from '@/components/ui/interactionClasses'
+import { DISABLED_CURSOR, FOCUS_RING, HOVER_OPACITY } from '@/components/ui/interactionClasses'
 import { QuantityStepper } from '@/components/ui/QuantityStepper'
 import { CART_TEXT } from '@/constants/cart'
 import { PRODUCT_DETAIL_TEXT } from '@/constants/productDetail'
@@ -16,6 +16,7 @@ interface CartItemRowProps {
   line: CartLine
   onQuantityChange: (quantity: number) => void
   onRemove: () => void
+  isReadOnly?: boolean
 }
 
 interface LineInfoProps {
@@ -32,6 +33,7 @@ interface ValueBlockProps {
 interface RemoveButtonProps {
   label: string
   onClick: () => void
+  disabled: boolean
 }
 
 const TRASH_ICON = '/icons/trash.svg'
@@ -79,20 +81,32 @@ function ValueBlock({ value, label, className }: ValueBlockProps): JSX.Element {
   )
 }
 
-function RemoveButton({ label, onClick }: RemoveButtonProps): JSX.Element {
+function RemoveButton({ label, onClick, disabled }: RemoveButtonProps): JSX.Element {
   return (
     <button
       type="button"
       aria-label={label}
+      disabled={disabled}
       onClick={onClick}
-      className={cn(ROW_CLASSES.remove, FOCUS_RING, HOVER_OPACITY)}
+      className={cn(
+        ROW_CLASSES.remove,
+        FOCUS_RING,
+        HOVER_OPACITY,
+        DISABLED_CURSOR,
+        'disabled:opacity-50'
+      )}
     >
       <img src={TRASH_ICON} alt="" width={24} height={24} className="size-6" />
     </button>
   )
 }
 
-export function CartItemRow({ line, onQuantityChange, onRemove }: CartItemRowProps): JSX.Element {
+export function CartItemRow({
+  line,
+  onQuantityChange,
+  onRemove,
+  isReadOnly = false,
+}: CartItemRowProps): JSX.Element {
   const { item, product } = line
   const displayName = product?.name ?? CART_TEXT.unavailableName
 
@@ -125,6 +139,7 @@ export function CartItemRow({ line, onQuantityChange, onRemove }: CartItemRowPro
               onChange={(next) => changeQuantity(product, next)}
               productName={CART_TEXT.lineName(product.name, item.color, item.size)}
               max={product.stock}
+              disabled={isReadOnly}
             />
           </div>
         </>
@@ -132,6 +147,7 @@ export function CartItemRow({ line, onQuantityChange, onRemove }: CartItemRowPro
       <RemoveButton
         label={CART_TEXT.removeLabel(displayName, item.color, item.size)}
         onClick={onRemove}
+        disabled={isReadOnly}
       />
     </li>
   )

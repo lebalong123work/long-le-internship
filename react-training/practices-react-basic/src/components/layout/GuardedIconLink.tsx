@@ -1,27 +1,12 @@
-import { Link } from 'react-router-dom'
-import { Badge } from '@/components/ui/Badge'
-import { FOCUS_RING, LINK_HOVER_OPACITY } from '@/components/ui/interactionClasses'
 import { useAuth } from '@/hooks/useAuth'
 import { useAuthModal } from '@/hooks/useAuthModal'
-import { cn } from '@/utils/cn'
-import { HEADER_ICON_BUTTON } from './headerClasses'
+import { HeaderIconLink } from './HeaderIconLink'
 import type { MouseEvent } from 'react'
+import type { HeaderIconLinkProps } from './HeaderIconLink'
 
-interface GuardedIconLinkProps {
-  to: string
-  iconSrc: string
-  label: string
-  badgeCount?: number
-  className?: string
-}
+type GuardedIconLinkProps = Omit<HeaderIconLinkProps, 'onClick'>
 
-export function GuardedIconLink({
-  to,
-  iconSrc,
-  label,
-  badgeCount = 0,
-  className,
-}: GuardedIconLinkProps): JSX.Element {
+export function GuardedIconLink({ to, ...linkProps }: GuardedIconLinkProps): JSX.Element {
   const { isAuthenticated } = useAuth()
   const { open } = useAuthModal()
 
@@ -31,19 +16,5 @@ export function GuardedIconLink({
     open('login', to)
   }
 
-  return (
-    <Link
-      to={to}
-      aria-label={label}
-      onClick={handleClick}
-      className={cn(HEADER_ICON_BUTTON, FOCUS_RING, LINK_HOVER_OPACITY, className)}
-    >
-      <span className="relative size-6">
-        <img src={iconSrc} alt="" className="size-6" />
-        <span className="absolute -top-px left-3">
-          <Badge count={badgeCount} />
-        </span>
-      </span>
-    </Link>
-  )
+  return <HeaderIconLink to={to} onClick={handleClick} {...linkProps} />
 }

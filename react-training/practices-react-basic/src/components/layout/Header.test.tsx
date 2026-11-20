@@ -171,17 +171,23 @@ describe('Header logo', () => {
 })
 
 describe('Header cart link', () => {
-  it('guest cart click opens login with redirect /cart on the current page', async () => {
+  it('H1 guest cart click goes to /cart without opening login', async () => {
     renderHeader('/shop/p1')
     await userEvent.click(screen.getByRole('link', { name: 'Cart' }))
-    expect(currentUrl().searchParams.get('auth')).toBe('login')
-    expect(currentUrl().searchParams.get('redirect')).toBe('/cart')
+    expect(currentUrl().pathname).toBe('/cart')
+    expect(currentUrl().searchParams.has('auth')).toBe(false)
   })
 
-  it('guest cart click does not leave the current page', async () => {
-    renderHeader('/shop/p1')
-    await userEvent.click(screen.getByRole('link', { name: 'Cart' }))
-    expect(currentUrl().pathname).toBe('/shop/p1')
+  it('H2 guest with a guest cart shows badge 2 and the name Cart, 2 items', async () => {
+    localStorage.setItem('mcs_guest', '3f2b8c1e-9a4d-4f6b-8c2a-1d5e7f9a0b3c')
+    vi.mocked(cartService.getCart).mockResolvedValue({ ...cartWith(2), userId: undefined })
+    renderHeader()
+    const link = await screen.findByRole('link', { name: 'Cart, 2 items' })
+    expect(link).toHaveTextContent('2')
+    expect(cartService.getCart).toHaveBeenCalledWith({
+      kind: 'guest',
+      id: '3f2b8c1e-9a4d-4f6b-8c2a-1d5e7f9a0b3c',
+    })
   })
 
   it('logged-in cart click goes to /cart', async () => {

@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { TOAST_MESSAGES } from '@/constants/toastMessages'
+import { UI_STATE_MESSAGES } from '@/constants/uiStateMessages'
 import { useAuthStore } from '@/stores/authStore'
 import { useToastStore } from '@/stores/toastStore'
 import { product } from '@/test/fixtures'
@@ -264,7 +265,7 @@ describe('Cart page', () => {
   it('shows the empty state with Shop Now and no summary for an empty cart', async () => {
     startServer([])
     renderCart()
-    expect(await screen.findByText('Your cart is empty')).toBeInTheDocument()
+    expect(await screen.findByText(UI_STATE_MESSAGES.emptyCart)).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Shop Now' })).toHaveAttribute('href', '/')
     expect(screen.queryByRole('region', { name: 'Order summary' })).toBeNull()
     expect(cartHeading()).toBeInTheDocument()
@@ -322,5 +323,50 @@ describe('Cart page', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Try again' }))
     expect(await screen.findByRole('link', { name: 'Tee One' })).toBeInTheDocument()
     await waitFor(() => expect(cartHeading()).toHaveFocus())
+  })
+})
+
+describe('Cart page — guest (T35 row 3)', () => {
+  const GUEST_ID = '3f2b8c1e-9a4d-4f6b-8c2a-1d5e7f9a0b3c'
+
+  function startGuestServer(pending: boolean): void {
+    startServer([teeLine])
+    server.cart = {
+      id: 'g1',
+      guestId: GUEST_ID,
+      items: [teeLine],
+      pendingMerge: pending ? { id: 'm1', userId: 'u9', items: [teeLine] } : null,
+    }
+  }
+
+  beforeEach(() => {
+    useAuthStore.setState({ user: null, token: null, isAuthenticated: false })
+    localStorage.setItem('mcs_guest', GUEST_ID)
+  })
+
+  it('C1 shows the recovery notice under the heading and disables the controls while a merge is pending', async () => {
+    startGuestServer(true)
+    renderCart()
+    const notice = await screen.findByText(TOAST_MESSAGES.cart.mergePending)
+    expect(cartHeading().nextElementSibling).toBe(notice)
+    const quantity = within(await screen.findByRole('group', { name: TEE_QUANTITY }))
+    quantity.getAllByRole('button').forEach((button) => expect(button).toBeDisabled())
+    expect(screen.getByRole('button', { name: REMOVE_TEE })).toBeDisabled()
+  })
+
+  it('C2 shows no notice and enabled controls without a pending merge', async () => {
+    startGuestServer(false)
+    renderCart()
+    expect(await screen.findByRole('button', { name: REMOVE_TEE })).toBeEnabled()
+    expect(screen.getByRole('button', { name: 'Increase quantity' })).toBeEnabled()
+    expect(screen.queryByText(TOAST_MESSAGES.cart.mergePending)).toBeNull()
+  })
+
+  it('C3 shows the empty state with no request for a guest without a guest id', async () => {
+    localStorage.clear()
+    startServer([teeLine])
+    renderCart()
+    expect(await screen.findByText('Your cart is empty')).toBeInTheDocument()
+    expect(fetch).not.toHaveBeenCalled()
   })
 })

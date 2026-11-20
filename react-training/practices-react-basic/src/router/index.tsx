@@ -27,11 +27,11 @@ export const routes: RouteObject[] = [
       { path: '/search', element: <Search /> },
       { path: '/about', element: <AboutUs /> },
       { path: '/contact', element: <Contact /> },
+      { path: '/cart', element: <Cart /> },
 
       {
         element: <ProtectedRoute />,
         children: [
-          { path: '/cart', element: <Cart /> },
           { path: '/checkout', element: <Checkout /> },
           { path: '/order-success/:orderId', element: <OrderSuccess /> },
           {

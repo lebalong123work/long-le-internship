@@ -13,6 +13,8 @@ import type { AddToCartDto, Cart, CartItem, User } from '@/types'
 
 vi.mock('@/services/cartService')
 
+const actualCartService = await vi.importActual<typeof cartService>('@/services/cartService')
+
 const user: User = { id: 'u1', name: 'Test Customer', email: 'user@store.com', role: 'customer' }
 const cartKey = queryKeys.cart({ kind: 'user', id: 'u1' })
 
@@ -58,6 +60,9 @@ function cachedItems(queryClient: QueryClient) {
 beforeEach(() => {
   useAuthStore.setState({ user, token: 'mock-token-u1', isAuthenticated: true })
   useToastStore.setState({ toasts: [] })
+  vi.mocked(cartService.isMergePendingError).mockImplementation(
+    actualCartService.isMergePendingError
+  )
 })
 
 afterEach(() => {
@@ -443,5 +448,58 @@ describe('guest cart owner (T35)', () => {
     await waitFor(() => expect(result.current.data).toEqual(cart))
     expect(queryClient.getQueryData(guestKey)).toEqual(guestCart)
     expect(queryClient.getQueryData(cartKey)).toEqual(cart)
+  })
+})
+
+describe('cart hooks — guest merge pending (T35 row 3)', () => {
+  const mergePending = new ApiError(409, actualCartService.CART_ERRORS.mergePending)
+
+  it('K5 add refused by a pending merge shows the recovery toast', async () => {
+    vi.mocked(cartService.getCart).mockResolvedValue(cart)
+    vi.mocked(cartService.addItem).mockRejectedValue(mergePending)
+    const { wrapper } = setup()
+    const { result } = renderHook(() => useAddToCart(), { wrapper })
+
+    act(() => result.current.mutate(newItem))
+
+    await waitFor(() =>
+      expect(toasts()).toEqual([{ type: 'error', message: TOAST_MESSAGES.cart.mergePending }])
+    )
+  })
+
+  it('K6 update and remove refused by a pending merge roll back with the recovery toast', async () => {
+    vi.mocked(cartService.updateQuantity).mockRejectedValue(mergePending)
+    vi.mocked(cartService.removeItem).mockRejectedValue(mergePending)
+    vi.mocked(cartService.getCart).mockReturnValue(new Promise<Cart>(() => undefined))
+    const { queryClient, wrapper } = setup()
+    queryClient.setQueryData(cartKey, cart)
+    const { result } = renderHook(
+      () => ({ update: useUpdateCartQuantity(), remove: useRemoveCartItem() }),
+      { wrapper }
+    )
+
+    act(() => result.current.update.mutate({ itemId: black.id, quantity: 5 }))
+    await waitFor(() => expect(result.current.update.isError).toBe(true))
+    act(() => result.current.remove.mutate(blue.id))
+    await waitFor(() => expect(result.current.remove.isError).toBe(true))
+
+    expect(cachedItems(queryClient)).toEqual([black, blue])
+    expect(toasts()).toEqual([
+      { type: 'error', message: TOAST_MESSAGES.cart.mergePending },
+      { type: 'error', message: TOAST_MESSAGES.cart.mergePending },
+    ])
+  })
+
+  it('K7 another 409 keeps the generic cart error toast', async () => {
+    vi.mocked(cartService.getCart).mockResolvedValue(cart)
+    vi.mocked(cartService.addItem).mockRejectedValue(new ApiError(409, 'Conflict'))
+    const { wrapper } = setup()
+    const { result } = renderHook(() => useAddToCart(), { wrapper })
+
+    act(() => result.current.mutate(newItem))
+
+    await waitFor(() =>
+      expect(toasts()).toEqual([{ type: 'error', message: TOAST_MESSAGES.cart.updateFailed }])
+    )
   })
 })

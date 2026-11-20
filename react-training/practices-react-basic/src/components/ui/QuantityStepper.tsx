@@ -20,6 +20,7 @@ interface QuantityStepperProps {
   productName: string
   max?: number
   bordered?: boolean
+  disabled?: boolean
 }
 
 function isOutOfStock(max: number | undefined): boolean {
@@ -36,9 +37,10 @@ export function QuantityStepper({
   productName,
   max,
   bordered = false,
+  disabled = false,
 }: QuantityStepperProps): JSX.Element {
-  const isMinusDisabled = value <= MIN_QUANTITY || isOutOfStock(max)
-  const isPlusDisabled = hasReachedMax(value, max)
+  const isMinusDisabled = disabled || value <= MIN_QUANTITY || isOutOfStock(max)
+  const isPlusDisabled = disabled || hasReachedMax(value, max)
 
   return (
     <div

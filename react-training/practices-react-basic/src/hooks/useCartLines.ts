@@ -26,6 +26,7 @@ export interface CartLinesState {
   lines: CartLine[]
   summary: CartSummary
   hasUnavailableItems: boolean
+  isMergePending: boolean
   retry: () => void
   isRetrying: boolean
 }
@@ -81,6 +82,7 @@ export function useCartLines(): CartLinesState {
     lines,
     summary: { itemCount: countCartItems(items), subtotal, shippingFee, total },
     hasUnavailableItems: lines.some((line) => line.product === null),
+    isMergePending: Boolean(cartQuery.data?.pendingMerge),
     retry,
     isRetrying: retryingQuery !== null,
   }

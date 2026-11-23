@@ -18,3 +18,8 @@ dist
 /.prettierignore
 
 /server/db.json
+/server/db.e2e.json
+
+/coverage/
+/playwright-report/
+/test-results/

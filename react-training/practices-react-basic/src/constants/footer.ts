@@ -47,6 +47,7 @@ export const FOOTER_LINK_GROUPS: readonly FooterLinkGroup[] = [
       { id: 'product', label: 'Product', to: ROUTES.SHOP },
       { id: 'categories', label: 'Categories', to: ROUTES.SHOP },
       { id: 'shop', label: 'Shop', to: ROUTES.SHOP },
+      { id: 'track-order', label: 'Track an Order', to: ROUTES.ORDER_LOOKUP },
     ],
     hasLogInItem: true,
   },

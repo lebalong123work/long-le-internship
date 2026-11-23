@@ -7,10 +7,6 @@ import {
 import type { PendingAction, User } from '@/types'
 
 const user: User = { id: 'u1', name: 'Test Customer', email: 'user@store.com', role: 'customer' }
-const addToCart: PendingAction = {
-  type: 'addToCart',
-  payload: { productId: 'p1', color: 'Black', size: 'M', quantity: 2 },
-}
 const toggleWishlist: PendingAction = { type: 'toggleWishlist', productId: 'p2' }
 
 const unregisters: Array<() => void> = []
@@ -31,8 +27,8 @@ afterEach(() => {
 
 describe('pendingActionStore', () => {
   it('setAction stores the action, clearAction removes it', () => {
-    usePendingActionStore.getState().setAction(addToCart)
-    expect(usePendingActionStore.getState().action).toEqual(addToCart)
+    usePendingActionStore.getState().setAction(toggleWishlist)
+    expect(usePendingActionStore.getState().action).toEqual(toggleWishlist)
 
     usePendingActionStore.getState().clearAction()
     expect(usePendingActionStore.getState().action).toBeNull()
@@ -40,33 +36,20 @@ describe('pendingActionStore', () => {
 
   it('runs the registered handler once with the action and the user, then clears it', () => {
     const handler = vi.fn()
-    register('addToCart', handler)
-    usePendingActionStore.getState().setAction(addToCart)
+    register('toggleWishlist', handler)
+    usePendingActionStore.getState().setAction(toggleWishlist)
 
     runPendingAction(user)
     runPendingAction(user)
 
     expect(handler).toHaveBeenCalledTimes(1)
-    expect(handler).toHaveBeenCalledWith(addToCart, user)
+    expect(handler).toHaveBeenCalledWith(toggleWishlist, user)
     expect(usePendingActionStore.getState().action).toBeNull()
-  })
-
-  it('calls only the handler of the action type', () => {
-    const cartHandler = vi.fn()
-    const wishlistHandler = vi.fn()
-    register('addToCart', cartHandler)
-    register('toggleWishlist', wishlistHandler)
-    usePendingActionStore.getState().setAction(toggleWishlist)
-
-    runPendingAction(user)
-
-    expect(wishlistHandler).toHaveBeenCalledWith(toggleWishlist, user)
-    expect(cartHandler).not.toHaveBeenCalled()
   })
 
   it('does nothing when no action is pending', () => {
     const handler = vi.fn()
-    register('addToCart', handler)
+    register('toggleWishlist', handler)
 
     expect(() => runPendingAction(user)).not.toThrow()
     expect(handler).not.toHaveBeenCalled()
@@ -80,11 +63,11 @@ describe('pendingActionStore', () => {
   })
 
   it('clears the action before the handler runs', () => {
-    let actionDuringRun: PendingAction | null = addToCart
-    register('addToCart', () => {
+    let actionDuringRun: PendingAction | null = toggleWishlist
+    register('toggleWishlist', () => {
       actionDuringRun = usePendingActionStore.getState().action
     })
-    usePendingActionStore.getState().setAction(addToCart)
+    usePendingActionStore.getState().setAction(toggleWishlist)
 
     runPendingAction(user)
 
@@ -93,9 +76,9 @@ describe('pendingActionStore', () => {
 
   it('unregister removes the handler', () => {
     const handler = vi.fn()
-    const unregister = register('addToCart', handler)
+    const unregister = register('toggleWishlist', handler)
     unregister()
-    usePendingActionStore.getState().setAction(addToCart)
+    usePendingActionStore.getState().setAction(toggleWishlist)
 
     runPendingAction(user)
 
@@ -105,10 +88,10 @@ describe('pendingActionStore', () => {
   it('a new registration replaces the old one; the old unregister keeps the new one', () => {
     const first = vi.fn()
     const second = vi.fn()
-    const unregisterFirst = register('addToCart', first)
-    register('addToCart', second)
+    const unregisterFirst = register('toggleWishlist', first)
+    register('toggleWishlist', second)
     unregisterFirst()
-    usePendingActionStore.getState().setAction(addToCart)
+    usePendingActionStore.getState().setAction(toggleWishlist)
 
     runPendingAction(user)
 
@@ -117,7 +100,7 @@ describe('pendingActionStore', () => {
   })
 
   it('is not persisted', () => {
-    usePendingActionStore.getState().setAction(addToCart)
+    usePendingActionStore.getState().setAction(toggleWishlist)
     expect(localStorage.length).toBe(0)
   })
 })

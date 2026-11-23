@@ -5,6 +5,7 @@ export type { Suggestion } from './search'
 export type {
   CartItem,
   Cart,
+  CartOwner,
   AddToCartDto,
   Wishlist,
   OrderItem,
@@ -12,6 +13,7 @@ export type {
   PaymentMethod,
   Order,
   CreateOrderDto,
+  GuestOrderLookup,
 } from './order'
 export type { Toast, ToastType, ToastPauseReason } from './toast'
 export type { PendingAction, PendingActionType, PendingActionHandler } from './pendingAction'

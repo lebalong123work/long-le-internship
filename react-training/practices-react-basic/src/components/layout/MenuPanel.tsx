@@ -7,13 +7,12 @@ import {
 } from '@/components/ui/nativeDialog'
 import { HEADER_TEXT } from '@/constants/header'
 import { useAuth } from '@/hooks/useAuth'
-import { useAuthModal } from '@/hooks/useAuthModal'
 import { cn } from '@/utils/cn'
 import { HeaderBar } from './HeaderBar'
-import { MENU_ROW_BUTTON, NAV_LINK_CLASSES, PANEL_ROW } from './headerClasses'
+import { PANEL_ROW } from './headerClasses'
 import { MainNav } from './MainNav'
 import { SAFE_AREA_X } from './safeArea'
-import { AccountNavItems } from './UserMenu'
+import { AccountNavItems, GuestNavItems } from './UserMenu'
 import type { ReactNode } from 'react'
 
 const DIALOG_CLASSES = [
@@ -31,24 +30,6 @@ interface MenuPanelProps {
   isOpen: boolean
   onClose: () => void
   searchControl: ReactNode
-}
-
-function GuestItems(): JSX.Element {
-  const { open } = useAuthModal()
-
-  return (
-    <ul>
-      <li>
-        <button
-          type="button"
-          onClick={() => open('login')}
-          className={cn(NAV_LINK_CLASSES.idle, MENU_ROW_BUTTON, PANEL_ROW)}
-        >
-          {HEADER_TEXT.logIn}
-        </button>
-      </li>
-    </ul>
-  )
 }
 
 export function MenuPanel({
@@ -84,7 +65,11 @@ export function MenuPanel({
           <div className={PANEL_CLASSES}>
             <MainNav orientation="column" firstLinkRef={homeLinkRef} />
             <hr className="my-2 border-light-medium" />
-            {isAuthenticated ? <AccountNavItems itemClassName={PANEL_ROW} /> : <GuestItems />}
+            {isAuthenticated ? (
+              <AccountNavItems itemClassName={PANEL_ROW} />
+            ) : (
+              <GuestNavItems itemClassName={PANEL_ROW} />
+            )}
           </div>
         </>
       )}

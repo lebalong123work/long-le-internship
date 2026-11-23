@@ -11,71 +11,79 @@ import { ROUTES } from '@/constants/routes'
 import { TOAST_MESSAGES } from '@/constants/toastMessages'
 import * as cartService from '@/services/cartService'
 import * as orderService from '@/services/orderService'
-import { requireUserId } from '@/utils/requireUserId'
+import { requireCartOwner } from '@/utils/cartOwner'
 import { failureMessage } from './failureMessage'
 import { retryUnlessNotFound } from './queryRetry'
 import { useAuth } from './useAuth'
 import { CART_MUTATION_SCOPE } from './useCart'
+import { useCartOwner } from './useCartOwner'
 import { useToast } from './useToast'
 import type { QueryClient, UseMutationResult, UseQueryResult } from '@tanstack/react-query'
-import type { CreateOrderDto, Order, PaginatedList } from '@/types'
+import type { CartOwner, CreateOrderDto, GuestOrderLookup, Order, PaginatedList } from '@/types'
 
-async function clearCartAfterOrder(userId: string): Promise<boolean> {
+async function clearCartAfterOrder(owner: CartOwner): Promise<boolean> {
   try {
-    await cartService.clearCart(userId)
+    await cartService.clearCart(owner)
     return true
   } catch {
     return false
   }
 }
 
-function invalidateOrderData(queryClient: QueryClient, userId: string): void {
-  void queryClient.invalidateQueries({ queryKey: queryKeys.cart(userId) })
-  void queryClient.invalidateQueries({ queryKey: queryKeys.orders.all(userId) })
+function invalidateOrderData(queryClient: QueryClient, owner: CartOwner): void {
+  void queryClient.invalidateQueries({ queryKey: queryKeys.cart(owner) })
+  void queryClient.invalidateQueries({ queryKey: queryKeys.orders.all(owner) })
 }
 
 export function useOrders(page: number): UseQueryResult<PaginatedList<Order>, Error> {
   const { user } = useAuth()
   const userId = user?.id
+  const owner: CartOwner | null = userId ? { kind: 'user', id: userId } : null
 
   return useQuery({
-    queryKey: queryKeys.orders.list(userId ?? '', page),
+    queryKey: queryKeys.orders.list(owner, page),
     queryFn: userId ? () => orderService.getOrdersByUser(userId, page) : skipToken,
     placeholderData: keepPreviousData,
   })
 }
 
 export function useOrder(orderId: string | undefined): UseQueryResult<Order, Error> {
-  const { user } = useAuth()
-  const userId = user?.id
+  const owner = useCartOwner()
 
   return useQuery({
-    queryKey: queryKeys.orders.detail(userId ?? '', orderId ?? ''),
-    queryFn: userId && orderId ? () => orderService.getOrderById(userId, orderId) : skipToken,
+    queryKey: queryKeys.orders.detail(owner, orderId ?? ''),
+    queryFn: owner && orderId ? () => orderService.getOrderById(owner, orderId) : skipToken,
     retry: retryUnlessNotFound,
   })
 }
 
 export function useCreateOrder(): UseMutationResult<Order, Error, CreateOrderDto> {
-  const { user } = useAuth()
-  const userId = user?.id
+  const owner = useCartOwner()
   const queryClient = useQueryClient()
   const toast = useToast()
   const navigate = useNavigate()
 
   return useMutation({
     scope: CART_MUTATION_SCOPE,
-    mutationFn: (payload) => orderService.createOrder(requireUserId(userId), payload),
+    mutationFn: (payload) => orderService.createOrder(requireCartOwner(owner), payload),
     onSuccess: async (order) => {
-      const cartCleared = await clearCartAfterOrder(order.userId)
+      const orderOwner = requireCartOwner(owner)
+      const cartCleared = await clearCartAfterOrder(orderOwner)
       if (!cartCleared) toast.error(TOAST_MESSAGES.cart.updateFailed)
-      invalidateOrderData(queryClient, order.userId)
-      queryClient.setQueryData(queryKeys.orders.detail(order.userId, order.id), order)
+      invalidateOrderData(queryClient, orderOwner)
+      queryClient.setQueryData(queryKeys.orders.detail(orderOwner, order.id), order)
       navigate(ROUTES.ORDER_SUCCESS(order.id), { replace: true })
     },
     onError: (error) => {
       toast.error(failureMessage(error, TOAST_MESSAGES.order.failed))
-      if (userId) invalidateOrderData(queryClient, userId)
+      if (owner) invalidateOrderData(queryClient, owner)
     },
+  })
+}
+
+export function useGuestOrderLookup(): UseMutationResult<Order, Error, GuestOrderLookup> {
+  return useMutation({
+    mutationFn: ({ email, orderId }) => orderService.findGuestOrder(email, orderId),
+    retry: false,
   })
 }

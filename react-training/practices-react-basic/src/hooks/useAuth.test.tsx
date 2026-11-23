@@ -7,6 +7,7 @@ import { TOAST_MESSAGES } from '@/constants/toastMessages'
 import ProtectedRoute from '@/router/ProtectedRoute'
 import { ApiError } from '@/services/apiClient'
 import * as authService from '@/services/authService'
+import * as cartService from '@/services/cartService'
 import { useAuthStore } from '@/stores/authStore'
 import { useToastStore } from '@/stores/toastStore'
 import { useAuth, useLogin, useLogout, useRegister } from './useAuth'
@@ -14,6 +15,7 @@ import type { ReactNode } from 'react'
 import type { AuthResponse, User } from '@/types'
 
 vi.mock('@/services/authService')
+vi.mock('@/services/cartService')
 
 const user: User = { id: 'u1', name: 'Test Customer', email: 'user@store.com', role: 'customer' }
 const authResponse: AuthResponse = { user, token: 'mock-token-u1' }
@@ -179,5 +181,58 @@ describe('useLogout', () => {
 
     expect(screen.getByText('Home')).toBeInTheDocument()
     expect(screen.getByTestId('location')).toHaveTextContent(/^\/$/)
+  })
+})
+
+describe('login / sign up never touch the guest cart (T35, no merge)', () => {
+  const GUEST_ID = '3f2b8c1e-9a4d-4f6b-8c2a-1d5e7f9a0b3c'
+
+  function expectNoCartCall(): void {
+    expect(cartService.getCart).not.toHaveBeenCalled()
+    expect(cartService.addItem).not.toHaveBeenCalled()
+    expect(cartService.updateQuantity).not.toHaveBeenCalled()
+    expect(cartService.removeItem).not.toHaveBeenCalled()
+    expect(cartService.clearCart).not.toHaveBeenCalled()
+  }
+
+  beforeEach(() => {
+    localStorage.setItem('mcs_guest', GUEST_ID)
+  })
+
+  it('A1 login creates the session, shows the toast and runs onSuccess without a cart request', async () => {
+    vi.mocked(authService.login).mockResolvedValue(authResponse)
+    const onSuccess = vi.fn()
+    const { wrapper } = setup()
+    const { result } = renderHook(() => useLogin(), { wrapper })
+
+    act(() => result.current.mutate({ email: 'user@store.com', password: '123456' }, { onSuccess }))
+
+    await waitFor(() => expect(onSuccess).toHaveBeenCalledTimes(1))
+    expect(useAuthStore.getState().user).toEqual(user)
+    expect(toasts()).toEqual([
+      { type: 'success', message: TOAST_MESSAGES.auth.welcomeBack(user.name) },
+    ])
+    expect(localStorage.getItem('mcs_guest')).toBe(GUEST_ID)
+    expectNoCartCall()
+  })
+
+  it('A2 sign up creates the session, shows the toast and runs onSuccess without a cart request', async () => {
+    vi.mocked(authService.register).mockResolvedValue(authResponse)
+    const onSuccess = vi.fn()
+    const { wrapper } = setup()
+    const { result } = renderHook(() => useRegister(), { wrapper })
+
+    act(() =>
+      result.current.mutate(
+        { name: 'Test Customer', email: 'user@store.com', password: '123456' },
+        { onSuccess }
+      )
+    )
+
+    await waitFor(() => expect(onSuccess).toHaveBeenCalledTimes(1))
+    expect(useAuthStore.getState().user).toEqual(user)
+    expect(toasts()).toEqual([{ type: 'success', message: TOAST_MESSAGES.auth.accountCreated }])
+    expect(localStorage.getItem('mcs_guest')).toBe(GUEST_ID)
+    expectNoCartCall()
   })
 })

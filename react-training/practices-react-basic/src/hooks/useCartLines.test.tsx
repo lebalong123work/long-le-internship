@@ -16,7 +16,7 @@ vi.mock('@/services/cartService')
 vi.mock('@/services/productService')
 
 const user: User = { id: 'u1', name: 'Test Customer', email: 'user@store.com', role: 'customer' }
-const cartKey = queryKeys.cart('u1')
+const cartKey = queryKeys.cart({ kind: 'user', id: 'u1' })
 const SERVER_ERROR = new ApiError(500, 'Server error')
 
 const P1: Product = { ...product('p1'), price: 40 }

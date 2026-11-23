@@ -2,10 +2,12 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, screen, within } from '@testing-library/react'
 import { createMemoryRouter, RouterProvider } from 'react-router-dom'
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
+import { CART_TEXT } from '@/constants/cart'
 import { HEADER_TEXT } from '@/constants/header'
-import { ORDER_HISTORY_TEXT } from '@/constants/order'
+import { ORDER_HISTORY_TEXT, ORDER_LOOKUP_TEXT } from '@/constants/order'
 import { PROFILE_TEXT } from '@/constants/profile'
 import { ROUTES } from '@/constants/routes'
+import { UI_STATE_MESSAGES } from '@/constants/uiStateMessages'
 import { WISHLIST_TEXT } from '@/constants/wishlist'
 import { useAuthStore } from '@/stores/authStore'
 import { installDialogStub } from '@/test/dialogStub'
@@ -80,6 +82,47 @@ describe('account routes — logged in', () => {
 })
 
 describe('account routes — guest', () => {
+  it('RT1 guest opens /cart directly without login', async () => {
+    const router = renderAt(ROUTES.CART)
+    expect(
+      await screen.findByRole('heading', { level: 2, name: CART_TEXT.heading })
+    ).toBeInTheDocument()
+    expect(router.state.location.pathname).toBe(ROUTES.CART)
+    expect(new URLSearchParams(router.state.location.search).has('auth')).toBe(false)
+  })
+
+  it('RT2 guest opens /checkout directly without login and an empty cart goes to /cart', async () => {
+    const router = renderAt(ROUTES.CHECKOUT)
+    expect(
+      await screen.findByRole('heading', { level: 2, name: CART_TEXT.heading })
+    ).toBeInTheDocument()
+    expect(router.state.location.pathname).toBe(ROUTES.CART)
+    expect(new URLSearchParams(router.state.location.search).has('auth')).toBe(false)
+  })
+
+  it('RT3 guest opens /order-success/:orderId without login and sees Order not found', async () => {
+    const router = renderAt(ROUTES.ORDER_SUCCESS('x'))
+    expect(await screen.findByText(UI_STATE_MESSAGES.orderNotFound)).toBeInTheDocument()
+    expect(router.state.location.pathname).toBe(ROUTES.ORDER_SUCCESS('x'))
+    expect(new URLSearchParams(router.state.location.search).has('auth')).toBe(false)
+  })
+
+  it('RT4 guest opens /order-lookup without login', async () => {
+    const router = renderAt(ROUTES.ORDER_LOOKUP)
+    expect(
+      await screen.findByRole('heading', { level: 1, name: ORDER_LOOKUP_TEXT.title })
+    ).toBeInTheDocument()
+    expect(router.state.location.pathname).toBe(ROUTES.ORDER_LOOKUP)
+    expect(new URLSearchParams(router.state.location.search).has('auth')).toBe(false)
+  })
+
+  it('RT5 the withdrawn guest order path /order/:orderId shows the 404 page', async () => {
+    renderAt('/order/x')
+    expect(
+      await screen.findByRole('heading', { level: 1, name: 'Page not found' })
+    ).toBeInTheDocument()
+  })
+
   it.each(ACCOUNT_PAGES)('$path stays protected and opens login', ({ path }) => {
     const router = renderAt(path)
     const params = new URLSearchParams(router.state.location.search)

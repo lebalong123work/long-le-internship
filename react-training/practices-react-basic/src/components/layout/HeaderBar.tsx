@@ -3,6 +3,7 @@ import { ROUTES } from '@/constants/routes'
 import { useCart } from '@/hooks/useCart'
 import { countCartItems } from '@/utils/countCartItems'
 import { GuardedIconLink } from './GuardedIconLink'
+import { HeaderIconLink } from './HeaderIconLink'
 import { SiteLogo } from './SiteLogo'
 import { HeaderSearch } from './HeaderSearch'
 import { MainNav } from './MainNav'
@@ -28,7 +29,7 @@ export function HeaderBar({ searchControl, menuControl }: HeaderBarProps): JSX.E
       <MainNav orientation="row" className="hidden xl:mt-[3px] xl:block" />
       <div className="flex items-center justify-end gap-1 md:gap-4 xl:gap-6">
         <div className="flex xl:hidden">{searchControl}</div>
-        <GuardedIconLink
+        <HeaderIconLink
           to={ROUTES.CART}
           iconSrc={CART_ICON}
           label={HEADER_TEXT.cartLabel(cartCount)}

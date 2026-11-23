@@ -19,6 +19,8 @@ export const VALIDATION_MESSAGES = {
   avatarType: 'Choose a JPG, PNG or WebP image',
   avatarTooLarge: 'Image must be 1 MB or smaller',
   avatarReadFailed: 'Could not read the image. Please try again.',
+  orderNumberRequired: 'Order number is required',
+  orderNumberInvalid: 'Enter a valid order number',
 }
 
 export const VN_PHONE_REGEX = /^(0|\+84)\d{9}$/

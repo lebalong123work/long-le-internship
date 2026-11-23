@@ -7,14 +7,17 @@ import { ApiError } from '@/services/apiClient'
 import * as cartService from '@/services/cartService'
 import { useAuthStore } from '@/stores/authStore'
 import { useToastStore } from '@/stores/toastStore'
+import { mockCartServer } from '@/test/cartServer'
 import { useAddToCart, useCart, useRemoveCartItem, useUpdateCartQuantity } from './useCart'
 import type { ReactNode } from 'react'
 import type { AddToCartDto, Cart, CartItem, User } from '@/types'
 
 vi.mock('@/services/cartService')
 
+const actualCartService = await vi.importActual<typeof cartService>('@/services/cartService')
+
 const user: User = { id: 'u1', name: 'Test Customer', email: 'user@store.com', role: 'customer' }
-const cartKey = queryKeys.cart('u1')
+const cartKey = queryKeys.cart({ kind: 'user', id: 'u1' })
 
 const black: CartItem = {
   id: 'p1__Black__S',
@@ -71,16 +74,18 @@ describe('useCart', () => {
     const { queryClient, wrapper } = setup()
     const { result } = renderHook(() => useCart(), { wrapper })
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
-    expect(cartService.getCart).toHaveBeenCalledWith('u1')
+    expect(cartService.getCart).toHaveBeenCalledWith({ kind: 'user', id: 'u1' })
     expect(queryClient.getQueryData(cartKey)).toEqual(cart)
   })
 
-  it('useCart does not call the service for a guest', () => {
+  it('K1 useCart returns an empty cart without a request or a new id for a guest without an id', async () => {
     useAuthStore.setState({ user: null, token: null, isAuthenticated: false })
     const { wrapper } = setup()
     const { result } = renderHook(() => useCart(), { wrapper })
-    expect(result.current.fetchStatus).toBe('idle')
+    await waitFor(() => expect(result.current.isSuccess).toBe(true))
+    expect(result.current.data).toEqual({ id: '', items: [] })
     expect(cartService.getCart).not.toHaveBeenCalled()
+    expect(localStorage.getItem('mcs_guest')).toBeNull()
   })
 
   it('useCart sets isError and shows no toast when loading fails', async () => {
@@ -145,7 +150,7 @@ describe('useAddToCart', () => {
     act(() => result.current.mutate(newItem))
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
-    expect(cartService.addItem).toHaveBeenCalledWith('u1', newItem)
+    expect(cartService.addItem).toHaveBeenCalledWith({ kind: 'user', id: 'u1' }, newItem)
   })
 })
 
@@ -190,7 +195,7 @@ describe('useUpdateCartQuantity', () => {
     act(() => result.current.mutate({ itemId: black.id, quantity: 5 }))
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
-    expect(cartService.updateQuantity).toHaveBeenCalledWith('u1', black.id, 5)
+    expect(cartService.updateQuantity).toHaveBeenCalledWith({ kind: 'user', id: 'u1' }, black.id, 5)
     expect(queryClient.getQueryData(cartKey)).toEqual(saved)
     expect(toasts()).toEqual([])
   })
@@ -252,7 +257,7 @@ describe('useRemoveCartItem', () => {
     act(() => result.current.mutate(black.id))
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
-    expect(cartService.removeItem).toHaveBeenCalledWith('u1', black.id)
+    expect(cartService.removeItem).toHaveBeenCalledWith({ kind: 'user', id: 'u1' }, black.id)
     expect(queryClient.getQueryData(cartKey)).toEqual(saved)
     expect(toasts()).toEqual([{ type: 'info', message: TOAST_MESSAGES.cart.removed }])
   })
@@ -295,15 +300,15 @@ describe('all cart mutations', () => {
     expect(toasts()).toEqual([{ type: 'error', message: TOAST_MESSAGES.cart.updateFailed }])
   })
 
-  it('a cart mutation rejects without a request for a guest and shows the cart error toast', async () => {
+  it('a cart mutation rejects without a request for a guest without an id and shows the cart error toast', async () => {
     useAuthStore.setState({ user: null, token: null, isAuthenticated: false })
     const { wrapper } = setup()
-    const { result } = renderHook(() => useAddToCart(), { wrapper })
+    const { result } = renderHook(() => useUpdateCartQuantity(), { wrapper })
 
-    act(() => result.current.mutate(newItem))
+    act(() => result.current.mutate({ itemId: black.id, quantity: 5 }))
 
     await waitFor(() => expect(result.current.isError).toBe(true))
-    expect(cartService.addItem).not.toHaveBeenCalled()
+    expect(cartService.updateQuantity).not.toHaveBeenCalled()
     expect(toasts()).toEqual([{ type: 'error', message: TOAST_MESSAGES.cart.updateFailed }])
   })
 
@@ -327,7 +332,9 @@ describe('all cart mutations', () => {
     await waitFor(() => expect(cartService.updateQuantity).toHaveBeenCalled())
     expect(cartService.removeItem).not.toHaveBeenCalled()
     first.resolve(cart)
-    await waitFor(() => expect(cartService.removeItem).toHaveBeenCalledWith('u1', blue.id))
+    await waitFor(() =>
+      expect(cartService.removeItem).toHaveBeenCalledWith({ kind: 'user', id: 'u1' }, blue.id)
+    )
   })
 
   it('a cart mutation queued behind a failed one still runs', async () => {
@@ -350,7 +357,7 @@ describe('all cart mutations', () => {
     await waitFor(() => expect(cartService.updateQuantity).toHaveBeenCalled())
     first.reject(new ApiError(500, 'Server error'))
     await waitFor(() => expect(result.current.remove.isSuccess).toBe(true))
-    expect(cartService.removeItem).toHaveBeenCalledWith('u1', blue.id)
+    expect(cartService.removeItem).toHaveBeenCalledWith({ kind: 'user', id: 'u1' }, blue.id)
   })
 
   it('a cart mutation invalidates queryKeys.cart(uid) after success', async () => {
@@ -375,5 +382,90 @@ describe('all cart mutations', () => {
 
     await waitFor(() => expect(result.current.isError).toBe(true))
     expect(invalidate).toHaveBeenCalledWith({ queryKey: cartKey })
+  })
+})
+
+describe('guest cart owner (T35)', () => {
+  const GUEST_ID = '3f2b8c1e-9a4d-4f6b-8c2a-1d5e7f9a0b3c'
+  const guestKey = queryKeys.cart({ kind: 'guest', id: GUEST_ID })
+  const guestCart: Cart = { id: 'g', guestId: GUEST_ID, items: [black] }
+
+  beforeEach(() => {
+    useAuthStore.setState({ user: null, token: null, isAuthenticated: false })
+  })
+
+  it('K2 a guest add creates the guest id and adds to the guest cart', async () => {
+    vi.mocked(cartService.getCart).mockResolvedValue({ id: 'g', guestId: 'x', items: [] })
+    vi.mocked(cartService.addItem).mockResolvedValue(guestCart)
+    const { queryClient, wrapper } = setup()
+    const { result } = renderHook(() => useAddToCart(), { wrapper })
+
+    act(() => result.current.mutate(newItem))
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true))
+    const guestId = localStorage.getItem('mcs_guest')
+    expect(guestId).toMatch(/^[0-9a-f-]{36}$/)
+    expect(cartService.addItem).toHaveBeenCalledWith({ kind: 'guest', id: guestId }, newItem)
+    expect(queryClient.getQueryData(queryKeys.cart({ kind: 'guest', id: guestId ?? '' }))).toEqual(
+      guestCart
+    )
+  })
+
+  it('H1 the first cart read racing with a refetch and the first add creates one cart', async () => {
+    localStorage.setItem('mcs_guest', GUEST_ID)
+    vi.mocked(cartService.getCart).mockImplementation(actualCartService.getCart)
+    vi.mocked(cartService.addItem).mockImplementation(actualCartService.addItem)
+    const server = mockCartServer()
+    server.holdReads()
+    const { queryClient, wrapper } = setup()
+    const { result } = renderHook(() => ({ cart: useCart(), add: useAddToCart() }), { wrapper })
+
+    await act(() => Promise.resolve())
+    act(() => void queryClient.invalidateQueries({ queryKey: guestKey }))
+    act(() => result.current.add.mutate(newItem))
+    act(() => server.releaseReads())
+
+    await waitFor(() => expect(result.current.add.isSuccess).toBe(true))
+    expect(server.postCount()).toBe(1)
+    expect(server.carts).toHaveLength(1)
+    expect(server.carts[0]).toMatchObject({ guestId: GUEST_ID })
+    expect(server.carts[0].items.map(({ productId }) => productId)).toEqual([newItem.productId])
+  })
+
+  it('K3 guest quantity changes and removals use the guest owner and key', async () => {
+    localStorage.setItem('mcs_guest', GUEST_ID)
+    vi.mocked(cartService.updateQuantity).mockResolvedValue(guestCart)
+    vi.mocked(cartService.removeItem).mockResolvedValue(guestCart)
+    const { queryClient, wrapper } = setup()
+    const { result } = renderHook(
+      () => ({ update: useUpdateCartQuantity(), remove: useRemoveCartItem() }),
+      { wrapper }
+    )
+
+    act(() => result.current.update.mutate({ itemId: black.id, quantity: 3 }))
+    await waitFor(() => expect(result.current.update.isSuccess).toBe(true))
+    act(() => result.current.remove.mutate(black.id))
+    await waitFor(() => expect(result.current.remove.isSuccess).toBe(true))
+
+    const guest = { kind: 'guest', id: GUEST_ID }
+    expect(cartService.updateQuantity).toHaveBeenCalledWith(guest, black.id, 3)
+    expect(cartService.removeItem).toHaveBeenCalledWith(guest, black.id)
+    expect(queryClient.getQueryData(guestKey)).toEqual(guestCart)
+  })
+
+  it('K4 guest and user carts never share a cache entry', async () => {
+    localStorage.setItem('mcs_guest', GUEST_ID)
+    vi.mocked(cartService.getCart).mockImplementation((owner) =>
+      Promise.resolve(owner.kind === 'guest' ? guestCart : cart)
+    )
+    const { queryClient, wrapper } = setup()
+    const { result } = renderHook(() => useCart(), { wrapper })
+    await waitFor(() => expect(result.current.data).toEqual(guestCart))
+
+    act(() => useAuthStore.setState({ user, token: 't', isAuthenticated: true }))
+
+    await waitFor(() => expect(result.current.data).toEqual(cart))
+    expect(queryClient.getQueryData(guestKey)).toEqual(guestCart)
+    expect(queryClient.getQueryData(cartKey)).toEqual(cart)
   })
 })

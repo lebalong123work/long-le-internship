@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { TOAST_MESSAGES } from '@/constants/toastMessages'
+import { UI_STATE_MESSAGES } from '@/constants/uiStateMessages'
 import { useAuthStore } from '@/stores/authStore'
 import { useToastStore } from '@/stores/toastStore'
 import { product } from '@/test/fixtures'
@@ -264,7 +265,7 @@ describe('Cart page', () => {
   it('shows the empty state with Shop Now and no summary for an empty cart', async () => {
     startServer([])
     renderCart()
-    expect(await screen.findByText('Your cart is empty')).toBeInTheDocument()
+    expect(await screen.findByText(UI_STATE_MESSAGES.emptyCart)).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Shop Now' })).toHaveAttribute('href', '/')
     expect(screen.queryByRole('region', { name: 'Order summary' })).toBeNull()
     expect(cartHeading()).toBeInTheDocument()
@@ -322,5 +323,18 @@ describe('Cart page', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Try again' }))
     expect(await screen.findByRole('link', { name: 'Tee One' })).toBeInTheDocument()
     await waitFor(() => expect(cartHeading()).toHaveFocus())
+  })
+})
+
+describe('Cart page — guest (T35 row 3)', () => {
+  beforeEach(() => {
+    useAuthStore.setState({ user: null, token: null, isAuthenticated: false })
+  })
+
+  it('C3 shows the empty state with no request for a guest without a guest id', async () => {
+    startServer([teeLine])
+    renderCart()
+    expect(await screen.findByText('Your cart is empty')).toBeInTheDocument()
+    expect(fetch).not.toHaveBeenCalled()
   })
 })

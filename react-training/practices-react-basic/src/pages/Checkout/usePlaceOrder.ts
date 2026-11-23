@@ -2,14 +2,14 @@ import { useEffect, useRef, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { TOAST_MESSAGES } from '@/constants/toastMessages'
 import { failureMessage } from '@/hooks/failureMessage'
-import { useAuth } from '@/hooks/useAuth'
 import { cartQueryOptions } from '@/hooks/useCart'
+import { useCartOwner } from '@/hooks/useCartOwner'
 import { useCreateOrder } from '@/hooks/useOrders'
 import { productsByIdsQueryOptions } from '@/hooks/useProducts'
 import { useSubmitLock } from '@/hooks/useSubmitLock'
 import { useToast } from '@/hooks/useToast'
 import { toShippingAddress } from '@/schemas/checkout'
-import { requireUserId } from '@/utils/requireUserId'
+import { requireCartOwner } from '@/utils/cartOwner'
 import { buildOrderItems } from './buildOrderItems'
 import { stockIssue } from './stockIssue'
 import type { CartLine } from '@/hooks/useCartLines'
@@ -55,7 +55,7 @@ function hasLineChanged(shown: CartLine, fresh: CartLine): boolean {
 }
 
 export function usePlaceOrder(): PlaceOrder {
-  const { user } = useAuth()
+  const owner = useCartOwner()
   const queryClient = useQueryClient()
   const toast = useToast()
   const createOrder = useCreateOrder()
@@ -72,8 +72,10 @@ export function usePlaceOrder(): PlaceOrder {
 
   async function verifiedLines(lines: CartLine[]): Promise<CartLine[] | null> {
     try {
-      const userId = requireUserId(user?.id)
-      const cart = await queryClient.fetchQuery({ ...cartQueryOptions(userId), staleTime: 0 })
+      const cart = await queryClient.fetchQuery({
+        ...cartQueryOptions(requireCartOwner(owner)),
+        staleTime: 0,
+      })
       if (!isMountedRef.current) return null
       if (!isSameCart(cart.items, lines)) {
         toast.error(TOAST_MESSAGES.order.cartChanged)

@@ -85,6 +85,13 @@ describe('CheckoutSummary', () => {
     expect(screen.queryByText(/Only \d+ left|Out of Stock/)).toBeNull()
   })
 
+  it('B2 enables Place Order with no blocked message when nothing blocks it', () => {
+    renderSummary([withStock(TEE, 1), POLO], false)
+    expect(placeOrder()).toBeEnabled()
+    expect(placeOrder()).not.toHaveAccessibleDescription()
+    expect(screen.queryByRole('link', { name: 'Back to cart' })).toBeNull()
+  })
+
   it('shows Place Order busy and disabled while the order is placing', () => {
     render(
       <MemoryRouter>

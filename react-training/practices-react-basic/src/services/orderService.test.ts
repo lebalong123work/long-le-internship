@@ -1,14 +1,24 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { callBody, callInit, callUrl, catchError, mockFetch } from '@/test/mockFetch'
+import {
+  callBody,
+  callInit,
+  callUrl,
+  catchError,
+  mockFetch,
+  mockNetworkFailure,
+} from '@/test/mockFetch'
 import { SHIPPING_FEE } from '@/constants/shipping'
 import {
   createOrder,
+  findGuestOrder,
   getOrderById,
   getOrdersByUser,
   ORDER_ERRORS,
   ORDERS_PER_PAGE,
 } from './orderService'
-import type { CreateOrderDto, Order, OrderItem } from '@/types'
+import type { CartOwner, CreateOrderDto, Order, OrderItem } from '@/types'
+
+const USER: CartOwner = { kind: 'user', id: 'u1' }
 
 const NOW = '2026-11-06T08:30:00.000Z'
 
@@ -70,7 +80,7 @@ describe('createOrder', () => {
     const payload = payloadWith([item()])
     const fetchMock = mockFetch({ body: order(), status: 201 })
 
-    await createOrder('u1', payload)
+    await createOrder(USER, payload)
 
     expect(callUrl(fetchMock, 0).pathname).toBe('/orders')
     expect(callInit(fetchMock, 0).method).toBe('POST')
@@ -97,7 +107,7 @@ describe('createOrder', () => {
     }
     const fetchMock = mockFetch({ body: order(), status: 201 })
 
-    await createOrder('u1', payload)
+    await createOrder(USER, payload)
 
     expect(callBody(fetchMock, 0)).toMatchObject({
       userId: 'u1',
@@ -114,7 +124,7 @@ describe('createOrder', () => {
     ]
     const fetchMock = mockFetch({ body: order(), status: 201 })
 
-    await createOrder('u1', payloadWith(items))
+    await createOrder(USER, payloadWith(items))
 
     expect(callBody(fetchMock, 0)).toMatchObject({
       subtotal: 139.97,
@@ -126,7 +136,7 @@ describe('createOrder', () => {
   it('makes no product request (prices come only from the snapshot)', async () => {
     const fetchMock = mockFetch({ body: order(), status: 201 })
 
-    await createOrder('u1', payloadWith([item({ price: 12.5, quantity: 1 })]))
+    await createOrder(USER, payloadWith([item({ price: 12.5, quantity: 1 })]))
 
     expect(fetchMock).toHaveBeenCalledTimes(1)
     expect(callUrl(fetchMock, 0).pathname).toBe('/orders')
@@ -136,14 +146,14 @@ describe('createOrder', () => {
   it('creates the order when it has one item', async () => {
     const fetchMock = mockFetch({ body: order(), status: 201 })
 
-    await expect(createOrder('u1', payloadWith([item({ quantity: 1 })]))).resolves.toBeDefined()
+    await expect(createOrder(USER, payloadWith([item({ quantity: 1 })]))).resolves.toBeDefined()
     expect(fetchMock).toHaveBeenCalledTimes(1)
   })
 
   it('rejects an order with no items with 400 and makes no request', async () => {
     const fetchMock = mockFetch()
 
-    const error = await catchError(createOrder('u1', payloadWith([])))
+    const error = await catchError(createOrder(USER, payloadWith([])))
 
     expect(error.status).toBe(400)
     expect(error.message).toBe(ORDER_ERRORS.emptyOrder)
@@ -154,13 +164,13 @@ describe('createOrder', () => {
     const saved = order({ id: 'YSRFh05oq0k' })
     mockFetch({ body: saved, status: 201 })
 
-    await expect(createOrder('u1', payloadWith([item()]))).resolves.toEqual(saved)
+    await expect(createOrder(USER, payloadWith([item()]))).resolves.toEqual(saved)
   })
 
   it('rethrows a server error from saving the order', async () => {
     mockFetch({ body: {}, status: 500 })
 
-    const error = await catchError(createOrder('u1', payloadWith([item()])))
+    const error = await catchError(createOrder(USER, payloadWith([item()])))
 
     expect(error.status).toBe(500)
   })
@@ -221,14 +231,14 @@ describe('getOrderById', () => {
     const own = order({ id: 'o 1' })
     const fetchMock = mockFetch({ body: own })
 
-    await expect(getOrderById('u1', 'o 1')).resolves.toEqual(own)
+    await expect(getOrderById(USER, 'o 1')).resolves.toEqual(own)
     expect(callUrl(fetchMock, 0).pathname).toBe('/orders/o%201')
   })
 
   it('throws 404 "Order not found" for another user\'s order', async () => {
     mockFetch({ body: order({ userId: 'u2' }) })
 
-    const error = await catchError(getOrderById('u1', 'o1'))
+    const error = await catchError(getOrderById(USER, 'o1'))
 
     expect(error.status).toBe(404)
     expect(error.message).toBe(ORDER_ERRORS.notFound)
@@ -237,7 +247,7 @@ describe('getOrderById', () => {
   it('maps a server 404 to "Order not found"', async () => {
     mockFetch({ body: {}, status: 404 })
 
-    const error = await catchError(getOrderById('u1', 'xyz'))
+    const error = await catchError(getOrderById(USER, 'xyz'))
 
     expect(error.status).toBe(404)
     expect(error.message).toBe(ORDER_ERRORS.notFound)
@@ -246,7 +256,120 @@ describe('getOrderById', () => {
   it('rethrows a network error unchanged', async () => {
     vi.stubGlobal('fetch', vi.fn().mockRejectedValueOnce(new TypeError('Failed to fetch')))
 
-    const error = await catchError(getOrderById('u1', 'o1'))
+    const error = await catchError(getOrderById(USER, 'o1'))
+
+    expect(error.status).toBe(0)
+    expect(error.message).toBe('Network error')
+  })
+})
+
+describe('orders for a guest owner (T35)', () => {
+  const GUEST: CartOwner = { kind: 'guest', id: 'g1' }
+
+  it('R1 posts a guest order with guestId and without userId', async () => {
+    const fetchMock = mockFetch({ body: order(), status: 201 })
+
+    await createOrder(GUEST, payloadWith([item()]))
+
+    const body = callBody(fetchMock, 0) as Record<string, unknown>
+    expect(body.guestId).toBe('g1')
+    expect(body).not.toHaveProperty('userId')
+  })
+
+  it('R2 posts a user order without guestId and without a cart read', async () => {
+    const fetchMock = mockFetch({ body: order(), status: 201 })
+
+    await createOrder(USER, payloadWith([item()]))
+
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+    expect(callBody(fetchMock, 0)).not.toHaveProperty('guestId')
+  })
+
+  it('R8 posts a guest order without reading the guest cart first', async () => {
+    const fetchMock = mockFetch({ body: order({ userId: undefined, guestId: 'g1' }), status: 201 })
+
+    await createOrder(GUEST, payloadWith([item()]))
+
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+    expect(callInit(fetchMock, 0).method).toBe('POST')
+    expect(callUrl(fetchMock, 0).pathname).toBe('/orders')
+  })
+
+  it("R3 returns the guest's own order", async () => {
+    const own = order({ userId: undefined, guestId: 'g1' })
+    mockFetch({ body: own })
+
+    await expect(getOrderById(GUEST, 'o1')).resolves.toEqual(own)
+  })
+
+  it.each([
+    ['R4 another guest', GUEST, order({ userId: undefined, guestId: 'g2' })],
+    ['R5 a user reading a guest order', USER, order({ userId: undefined, guestId: 'u1' })],
+    ['R6 a guest reading a user order', GUEST, order({ userId: 'g1' })],
+  ])('%s gets "Order not found"', async (_case, owner, stored) => {
+    mockFetch({ body: stored })
+
+    const error = await catchError(getOrderById(owner, 'o1'))
+
+    expect(error.status).toBe(404)
+    expect(error.message).toBe(ORDER_ERRORS.notFound)
+  })
+})
+
+describe('findGuestOrder (T35 order lookup)', () => {
+  const guestOrder = order({ id: 'AbC_12', userId: undefined, guestId: 'g1' })
+
+  it('L1 returns the guest order when the email matches', async () => {
+    const fetchMock = mockFetch({ body: guestOrder })
+
+    await expect(findGuestOrder('user@store.com', 'AbC_12')).resolves.toEqual(guestOrder)
+
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+    expect(callUrl(fetchMock, 0).pathname).toBe('/orders/AbC_12')
+    expect(callUrl(fetchMock, 0).search).toBe('')
+  })
+
+  it('L2 ignores letter case and spaces around the email', async () => {
+    mockFetch({ body: guestOrder })
+
+    await expect(findGuestOrder('  USER@Store.COM ', 'AbC_12')).resolves.toEqual(guestOrder)
+  })
+
+  it.each([
+    ['L3 a different email', 'other@store.com', guestOrder],
+    ['L4 an account order with the same email', 'user@store.com', order({ id: 'AbC_12' })],
+  ])('%s gets "Order not found"', async (_case, email, stored) => {
+    mockFetch({ body: stored })
+
+    const error = await catchError(findGuestOrder(email, 'AbC_12'))
+
+    expect(error.status).toBe(404)
+    expect(error.message).toBe(ORDER_ERRORS.notFound)
+  })
+
+  it('L5 maps a server 404 to "Order not found"', async () => {
+    mockFetch({ status: 404, body: {} })
+
+    const error = await catchError(findGuestOrder('user@store.com', 'missing'))
+
+    expect(error.status).toBe(404)
+    expect(error.message).toBe(ORDER_ERRORS.notFound)
+  })
+
+  it('L6 rejects a blank order id with "Order not found" and makes no request', async () => {
+    const fetchMock = mockFetch({ body: guestOrder })
+
+    const error = await catchError(findGuestOrder('user@store.com', '   '))
+
+    expect(error.status).toBe(404)
+    expect(error.message).toBe(ORDER_ERRORS.notFound)
+    expect(fetchMock).not.toHaveBeenCalled()
+  })
+
+  it('L7 rethrows a network error unchanged', async () => {
+    mockNetworkFailure()
+
+    const error = await catchError(findGuestOrder('user@store.com', 'AbC_12'))
 
     expect(error.status).toBe(0)
     expect(error.message).toBe('Network error')

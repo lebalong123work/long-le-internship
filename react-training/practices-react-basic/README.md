@@ -28,22 +28,23 @@ Log in from the user icon in the header, or open https://mangcoding-store-seven.
 | Home — "Our Best Seller" | Category tabs T-Shirt · Jacket · Shirt · Jeans (click, or arrow keys + Enter): T-Shirt shows 8 product cards, the other tabs show "No products in this category" (the mock data has T-shirts only). Grid: 4 columns on desktop, 3 on tablets, 2 on phones. "See More" opens the shop page (under development) |
 | Product card heart | Logged in: saves / removes the product from your wishlist. Guest: opens Log In, and the product is saved after you log in |
 | Product page — click a product card | Photo gallery (click a thumbnail; the 4th photo is in the sideways scroll strip), name, price "$40 USD", stock, choose color / size / quantity (quantity stays within stock). `/shop/unknown` shows "Product not found" with "Back to Home" |
-| Product page — Add To Cart | Without a color: "Please select a color" (red frame around the colors). Logged in: "Added to cart" and the cart icon count goes up. Guest: Log In opens, and the item is added once after you log in. The heart saves the product (same state as on the product card); the bag button is decoration only |
+| Product page — Add To Cart | Without a color: "Please select a color" (red frame around the colors). "Added to cart" and the cart icon count goes up — also without logging in (guests get their own cart in this browser). The heart saves the product (same state as on the product card); the bag button is decoration only |
 | Product page — "Same Product" | Up to 8 other products of the same category, and "See More" (opens the shop page, under development) |
-| Cart `/cart` (log in first) | Add a product on its page, then open the cart: each row shows the photo, name, color and size, price and stock. "+" / "−" change the quantity (never above the stock) and the total updates at once; the trash icon removes the row ("Removed from cart"). The summary shows the number of products and the total; "Checkout" opens the checkout page. An empty cart shows "Your cart is empty" with "Shop Now". The stock shown is for display only — it is not reserved for you |
-| Checkout `/checkout` (log in, cart not empty) | Shipping address (Province / City → Ward / Commune), payment method (Cash on delivery, bank transfer, or card — demo only, no real payment and no card details asked), order summary. Empty fields show messages. "Place Order" checks the cart again, saves the order and empties the cart |
-| Order Success | After "Place Order": green check, "Order Placed Successfully!", order number, products, address, payment method and totals. "Continue Shopping" opens the shop page (under development), "View Order" opens the order history. An unknown order number, e.g. `/order-success/abc`, shows "Order not found" |
+| Cart `/cart` (no login needed) | Add a product on its page, then open the cart: each row shows the photo, name, color and size, price and stock. "+" / "−" change the quantity (never above the stock) and the total updates at once; the trash icon removes the row ("Removed from cart"). The summary shows the number of products and the total; "Checkout" opens the checkout page. An empty cart shows "Your cart is empty" with "Shop Now". The stock shown is for display only — it is not reserved for you |
+| Checkout `/checkout` (no login needed, cart not empty) | Shipping address (Province / City → Ward / Commune), payment method (Cash on delivery, bank transfer, or card — demo only, no real payment and no card details asked), order summary. Empty fields show messages. "Place Order" checks the cart again, saves the order and empties the cart. Guests start with empty fields; logged-in customers get their name and email filled in |
+| Order Success | After "Place Order": green check, "Order Placed Successfully!", order number, products, address, payment method and totals. "Continue Shopping" opens the shop page (under development). A guest also sees the email used for the order and "Save your order number to look up your order later." (no email is sent). "View Order" opens the order history when logged in, or the order lookup page with the order number already filled in for a guest. An unknown order number, e.g. `/order-success/abc`, shows "Order not found" |
+| Track an order `/order-lookup` (no login needed) | Type the email used for the order and the order number ("#ORD-…" or just the code) → that one order with its status badge, status steps, products, address, payment method and totals. A wrong email or number shows "Order not found". Changing a field hides the old result. Open it from the user menu ("Track Order"), the footer ("Track an Order") or "View Order" after a guest order. Demo only: the mock API keeps nothing private, so this is not real privacy protection |
 | Header | Logo, nav (Home · Shop · About Us · Contact), search bar with suggestions while typing (on phones: search button → full-screen search), mobile menu (☰) |
 | Log In / Sign Up | Modal with two tabs, form validation (empty fields, wrong email, wrong password), toast after login |
-| Logged in | User menu: Profile · Orders · Wishlist · Logout |
-| Account pages `/account/profile`, `/account/orders`, `/account/wishlist` (log in first) | Account pages share the account menu: Profile · Orders · Wishlist. Links sit on top on phones and tablets and become a side menu on wide screens; the current page is highlighted |
+| Logged in | User menu: Profile · Order History · Wishlist · Logout |
+| Account pages `/account/profile`, `/account/orders`, `/account/wishlist` (log in first) | Account pages share the account menu: Profile · Order History · Wishlist. Links sit on top on phones and tablets and become a side menu on wide screens; the current page is highlighted |
 | Profile `/account/profile` (log in first) | Your details filled in: full name, email (cannot be changed), phone, default address, date of birth. "Change photo" shows the new picture before you save (JPG, PNG or WebP, up to 1 MB). Save Changes → "Profile updated successfully" and the new name is used in the account menu |
 | Change Password (on `/account/profile`, log in first) | Below your profile: current password, new password (at least 6 characters), confirm. A wrong current password, or a new password that is the same as the current one, shows a message under that field. Success → "Password changed successfully" and the form clears. On the demo, please change it back to the demo password afterwards |
 | Order History `/account/orders` (log in first) | Your orders, newest first, 10 per page ("Previous page" / "Next page"; the page number stays in the address, so refresh keeps it). Each card shows the order number, date (dd/mm/yyyy), total, number of items and a colored status badge. "View Detail" opens the order in place: status steps (Ordered → Processing → Shipped → Delivered; hidden for a cancelled order), products, address, payment method and totals. No orders → "You have no orders yet" + Shop Now |
 | Wishlist `/account/wishlist` (log in first) | Your saved products as cards, newest first. "Add to Cart" opens the product page to pick color and size; "Remove" takes the product off the list. Empty list → "No saved items" + Start Shopping |
 | Search results `/search?q=shirt` | Press Enter in the search bar (or pick a category suggestion): "Results for "shirt"" with the number of items and the matching product cards, 8 per page ("Previous page" / "Next page"; the page number stays in the address). No match → "No results for '…'" with a tip to try another word. An empty search goes back to Home. The demo data has T-shirts only, so most words show the no-results message |
-| Guest | Click the cart / heart / user icon → the login modal opens |
-| Footer | Links and "Log In" (hidden when logged in) |
+| Guest | Add to cart, open the cart, check out and see the order without an account. User icon → "Track Order" or "Log In"; heart → the login modal opens. Logging in shows the account's own cart; the guest cart stays as it was and comes back after logout. Guest orders are not added to an account's order history |
+| Footer | Links, "Track an Order" and "Log In" (hidden when logged in) |
 | `/shop`, `/about`, `/contact` | "This page is under development" |
 | Any unknown URL, e.g. `/abc` | 404 page |
 
@@ -65,7 +66,7 @@ All planned pages are built (Shop, About Us and Contact show "This page is under
 | Product Detail | Image gallery, choose color / size / quantity, add to cart, add to wishlist, similar products |
 | Search | Suggestions while typing + a full results page (`/search?q=`) |
 | Auth | Log In / Sign Up in a **modal** (no separate pages). Opened with `?auth=login` in the URL |
-| Cart | Login required. Change quantity, remove items, live total. Saved per user on the server |
+| Cart | No login needed. Change quantity, remove items, live total. Saved on the server — per account, or per browser for a guest; logging in moves the guest cart into the account |
 | Wishlist | Login required. Saved per user on the server — the same on every device |
 | Checkout | Shipping address + payment method (mock) → order success page |
 | Account | Order history, profile, change password |
@@ -92,7 +93,7 @@ Users: **Guest** (browse, search) and **Customer** (everything above). There is 
 | Client state | Zustand 4 (auth session, UI state) |
 | Forms | React Hook Form + Zod |
 | Mock backend | json-server 1.0.0-beta.15 (pinned) + concurrently |
-| Testing | Vitest 4 + React Testing Library + jsdom |
+| Testing | Vitest 4 + React Testing Library + jsdom; coverage with @vitest/coverage-v8; end-to-end tests with Playwright (Chromium) |
 | Code quality | ESLint 10 (flat config) + typescript-eslint, Prettier |
 
 ---
@@ -141,9 +142,11 @@ Optional: copy `.env.example` to `.env` to change the API URL or the fake networ
 | `npm run build` | Production build into `dist/` |
 | `npm run preview` | Serve the production build |
 | `npm run type-check` | Type-check app code (`tsconfig.app.json`) and config files (`tsconfig.node.json`) |
-| `npm run lint` | Run ESLint on `src/` |
+| `npm run lint` | Run ESLint on `src/` and `tests/` |
 | `npm run test` | Run all tests once |
 | `npm run test:watch` | Run tests in watch mode |
+| `npm run test:coverage` | Run all tests once and write a coverage report to `coverage/` |
+| `npm run test:e2e` | Run end-to-end tests in Chromium. Starts its own app (:5181) and mock API (:3101) on a fresh copy of the seed data, so your local data is not changed. First time: `npx playwright install chromium` |
 
 Before finishing any change, run `type-check`, `lint`, `test` and `build`.
 
@@ -212,16 +215,18 @@ Layer rules:
 - [x] "Under development" pages + 404
 - [x] Deploy demo: Vercel (app) + Render (mock API)
 - [x] Home: Hero banner + Best Seller section
-- [x] Product Detail: photo gallery, color / size / quantity, Add to Cart (guests log in first), wishlist heart, "Same Product"
+- [x] Product Detail: photo gallery, color / size / quantity, Add to Cart (also for guests), wishlist heart, "Same Product"
 - [x] Cart: review items, change quantity, remove, order summary
 - [x] Checkout form: shipping address (Province / City → Ward / Commune), payment method (mock), order summary — released together with Place Order
 - [x] Place Order → Order Success
+- [x] Guest checkout: buy without an account, guest order page in the same browser
 - [x] Wishlist page: saved products, Remove, Add to Cart → product page
 - [x] Order History: order cards, status badge, details in place, 10 per page
 - [x] Profile: edit details, photo preview
 - [x] Change password
 - [x] Search: suggestions while typing + results page
-- [ ] Responsive pass (mobile)
+- [x] Responsive pass: every screen checked on phone, tablet and desktop widths (320 → 1440), no sideways scrolling
+- [x] Final check: full purchase flow, loading / error / empty states and keyboard use checked in the browser
 
 ---
 

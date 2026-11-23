@@ -7,10 +7,7 @@ import { useDropPendingActionOnClose, useRequestLogin } from './usePendingAction
 import type { ReactNode } from 'react'
 import type { PendingAction } from '@/types'
 
-const addToCart: PendingAction = {
-  type: 'addToCart',
-  payload: { productId: 'p1', color: 'Black', size: 'M', quantity: 1 },
-}
+const toggleWishlist: PendingAction = { type: 'toggleWishlist', productId: 'p1' }
 
 function wrapperAt(path: string) {
   return function Wrapper({ children }: { children: ReactNode }) {
@@ -36,9 +33,9 @@ describe('useRequestLogin', () => {
   it('stores the action and opens the login modal', () => {
     const { result } = renderHook(() => useHarness(), { wrapper: wrapperAt('/shop/p1') })
 
-    act(() => result.current.requestLogin(addToCart))
+    act(() => result.current.requestLogin(toggleWishlist))
 
-    expect(usePendingActionStore.getState().action).toEqual(addToCart)
+    expect(usePendingActionStore.getState().action).toEqual(toggleWishlist)
     expect(result.current.location.pathname).toBe('/shop/p1')
     expect(new URLSearchParams(result.current.location.search).get('auth')).toBe('login')
   })
@@ -48,18 +45,18 @@ describe('useDropPendingActionOnClose', () => {
   it('keeps the action while the modal opens and stays open', () => {
     const { result } = renderHook(() => useHarness(), { wrapper: wrapperAt('/shop/p1') })
 
-    act(() => result.current.requestLogin(addToCart))
+    act(() => result.current.requestLogin(toggleWishlist))
     act(() => result.current.modal.open('register'))
 
-    expect(usePendingActionStore.getState().action).toEqual(addToCart)
+    expect(usePendingActionStore.getState().action).toEqual(toggleWishlist)
   })
 
   it('drops the action when the modal is closed without login; handler never runs', () => {
     const handler = vi.fn()
-    const unregister = registerPendingActionHandler('addToCart', handler)
+    const unregister = registerPendingActionHandler('toggleWishlist', handler)
     const { result } = renderHook(() => useHarness(), { wrapper: wrapperAt('/shop/p1') })
 
-    act(() => result.current.requestLogin(addToCart))
+    act(() => result.current.requestLogin(toggleWishlist))
     act(() => result.current.modal.close())
 
     expect(result.current.modal.mode).toBeNull()
@@ -71,7 +68,7 @@ describe('useDropPendingActionOnClose', () => {
   it('drops the action when the modal is closed with the browser Back button', () => {
     const { result } = renderHook(() => useHarness(), { wrapper: wrapperAt('/shop/p1') })
 
-    act(() => result.current.requestLogin(addToCart))
+    act(() => result.current.requestLogin(toggleWishlist))
     act(() => result.current.navigate(-1))
 
     expect(result.current.modal.mode).toBeNull()
@@ -81,10 +78,10 @@ describe('useDropPendingActionOnClose', () => {
   it('does not drop an action while the modal stays closed', () => {
     const { result, rerender } = renderHook(() => useHarness(), { wrapper: wrapperAt('/') })
 
-    act(() => usePendingActionStore.getState().setAction(addToCart))
+    act(() => usePendingActionStore.getState().setAction(toggleWishlist))
     rerender()
 
     expect(result.current.modal.mode).toBeNull()
-    expect(usePendingActionStore.getState().action).toEqual(addToCart)
+    expect(usePendingActionStore.getState().action).toEqual(toggleWishlist)
   })
 })

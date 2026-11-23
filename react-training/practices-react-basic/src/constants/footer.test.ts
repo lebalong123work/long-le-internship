@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { CATEGORIES } from './categories'
+import { ROUTES } from './routes'
 import { FOOTER_CATEGORY_LINKS, FOOTER_LINK_GROUPS, SOCIAL_LINKS } from './footer'
 
 const PUBLIC_ICONS = new Set(
@@ -19,6 +20,16 @@ describe('footer link groups', () => {
     expect(groupById('shop').items.map((item) => item.label)).toEqual(
       CATEGORIES.map((category) => category.name)
     )
+  })
+
+  it('F1 Home group lists Track an Order after Shop, linking to the order lookup page', () => {
+    const items = groupById('home').items
+    expect(items.map((item) => item.id)).toEqual(['product', 'categories', 'shop', 'track-order'])
+    expect(items[3]).toEqual({
+      id: 'track-order',
+      label: 'Track an Order',
+      to: ROUTES.ORDER_LOOKUP,
+    })
   })
 
   it('no group has an empty heading or link label', () => {

@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { act, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { createMemoryRouter, RouterProvider } from 'react-router-dom'
+import { createMemoryRouter, RouterProvider, useLocation } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { ORDER_TEXT } from '@/constants/order'
 import { queryKeys } from '@/constants/queryKeys'
@@ -55,6 +55,8 @@ const ORDER: Order = {
   createdAt: '2026-11-17T08:00:00.000Z',
 }
 const SETTLE_TASKS = 3
+const GUEST_ID = '3f2b8c1e-9a4d-4f6b-8c2a-1d5e7f9a0b3c'
+const GUEST_ORDER: Order = { ...ORDER, userId: undefined, guestId: GUEST_ID }
 
 let pending: PendingFetch[] = []
 
@@ -91,15 +93,25 @@ async function answerAll(answer: Answer): Promise<void> {
   })
 }
 
+function LookupProbe(): JSX.Element {
+  const { state } = useLocation()
+  return <p>{`Lookup page ${JSON.stringify(state)}`}</p>
+}
+
 function renderPage(cached?: Order) {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false, retryDelay: 0 } },
   })
-  if (cached) queryClient.setQueryData(queryKeys.orders.detail(USER.id, cached.id), cached)
+  if (cached)
+    queryClient.setQueryData(
+      queryKeys.orders.detail({ kind: 'user', id: USER.id }, cached.id),
+      cached
+    )
   const router = createMemoryRouter(
     [
       { path: '/order-success/:orderId', element: <OrderSuccess /> },
       { path: '/', element: <p>Home page</p> },
+      { path: '/order-lookup', element: <LookupProbe /> },
     ],
     { initialEntries: ['/order-success/o1'] }
   )
@@ -121,6 +133,10 @@ function tryAgain(): HTMLElement {
 
 function busySkeleton(container: HTMLElement): Element | null {
   return container.querySelector('[aria-busy="true"]:not(button)')
+}
+
+function actionPlaceholders(container: HTMLElement): number {
+  return busySkeleton(container)?.firstElementChild?.lastElementChild?.children.length ?? 0
 }
 
 function statusText(): string {
@@ -228,6 +244,12 @@ describe('OrderSuccess page', () => {
     )
   })
 
+  it('S7 shows no order email or save-number text to a logged-in customer', () => {
+    renderPage(ORDER)
+    expect(screen.queryByText('Email: user@store.com')).toBeNull()
+    expect(screen.queryByText('Save your order number to look up your order later.')).toBeNull()
+  })
+
   it('focuses the heading when the order is shown and focus is free', () => {
     renderPage(ORDER)
     expect(heading()).toHaveFocus()
@@ -240,5 +262,66 @@ describe('OrderSuccess page', () => {
     renderPage(ORDER)
     expect(outside).toHaveFocus()
     outside.remove()
+  })
+})
+
+describe('OrderSuccess page — guest (T35)', () => {
+  beforeEach(() => {
+    useAuthStore.setState({ user: null, token: null, isAuthenticated: false })
+  })
+
+  it('S1 shows a guest order to the guest who placed it', async () => {
+    localStorage.setItem('mcs_guest', GUEST_ID)
+    renderPage()
+    await answerAll(GUEST_ORDER)
+    expect(heading()).toBeInTheDocument()
+    expect(screen.getByText('Order ID: #ORD-o1')).toBeInTheDocument()
+  })
+
+  it('S2 sends a guest View Order to the order lookup page with the order number only', async () => {
+    localStorage.setItem('mcs_guest', GUEST_ID)
+    const { user } = renderPage()
+    await answerAll(GUEST_ORDER)
+    const viewOrder = screen.getByRole('link', { name: ORDER_TEXT.viewOrder })
+    expect(viewOrder).toHaveAttribute('href', '/order-lookup')
+    await user.click(viewOrder)
+    expect(
+      screen.getByText(`Lookup page ${JSON.stringify({ orderNumber: '#ORD-o1' })}`)
+    ).toBeInTheDocument()
+  })
+
+  it('S6 shows the order email and the save-number text to a guest, never an email-sent claim', async () => {
+    localStorage.setItem('mcs_guest', GUEST_ID)
+    renderPage()
+    await answerAll(GUEST_ORDER)
+    expect(screen.getByText('Email: user@store.com')).toBeInTheDocument()
+    expect(
+      screen.getByText('Save your order number to look up your order later.')
+    ).toBeInTheDocument()
+    expect(screen.queryByText(/sent/i)).toBeNull()
+  })
+
+  it('S3 shows Order not found without a request when the browser has no guest id', async () => {
+    const { container } = renderPage()
+    await answerAll(GUEST_ORDER)
+    expect(screen.getByText(UI_STATE_MESSAGES.orderNotFound)).toBeInTheDocument()
+    expect(busySkeleton(container)).toBeNull()
+    expect(fetch).not.toHaveBeenCalled()
+  })
+
+  it('S5 shows two action placeholders in the loading skeleton', () => {
+    localStorage.setItem('mcs_guest', GUEST_ID)
+    const { container } = renderPage()
+    expect(actionPlaceholders(container)).toBe(2)
+  })
+
+  it('S4 links Continue Shopping to the shop for a guest', async () => {
+    localStorage.setItem('mcs_guest', GUEST_ID)
+    renderPage()
+    await answerAll(GUEST_ORDER)
+    expect(screen.getByRole('link', { name: ORDER_TEXT.continueShopping })).toHaveAttribute(
+      'href',
+      '/shop'
+    )
   })
 })

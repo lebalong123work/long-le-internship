@@ -8,9 +8,12 @@ export interface CartItem {
   quantity: number
 }
 
+export type CartOwner = { kind: 'user'; id: string } | { kind: 'guest'; id: string }
+
 export interface Cart {
   id: string
-  userId: string
+  userId?: string
+  guestId?: string
   items: CartItem[]
 }
 
@@ -47,7 +50,8 @@ export type PaymentMethod = 'cod' | 'bank-transfer' | 'credit-card'
 
 export interface Order {
   id: string
-  userId: string
+  userId?: string
+  guestId?: string
   items: OrderItem[]
   shippingAddress: ShippingAddress
   paymentMethod: PaymentMethod
@@ -56,6 +60,11 @@ export interface Order {
   total: number
   status: OrderStatus
   createdAt: string
+}
+
+export interface GuestOrderLookup {
+  email: string
+  orderId: string
 }
 
 export interface CreateOrderDto {

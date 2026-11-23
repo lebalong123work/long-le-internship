@@ -100,6 +100,7 @@ beforeEach(() => {
 
 afterEach(() => {
   vi.resetAllMocks()
+  localStorage.clear()
 })
 
 describe('ProductActions — Add To Cart', () => {
@@ -110,12 +111,12 @@ describe('ProductActions — Add To Cart', () => {
     expect(cartService.addItem).not.toHaveBeenCalled()
   })
 
-  it('checks the color before asking a guest to log in', async () => {
+  it('checks the color before a guest add', async () => {
     logOut()
     const { user: clicker, onMissingColor } = renderActions({ color: null })
     await clicker.click(addButton())
     expect(onMissingColor).toHaveBeenCalledTimes(1)
-    expect(usePendingActionStore.getState().action).toBeNull()
+    expect(cartService.addItem).not.toHaveBeenCalled()
     expect(authParam()).toBeNull()
   })
 
@@ -123,14 +124,20 @@ describe('ProductActions — Add To Cart', () => {
     vi.mocked(cartService.addItem).mockResolvedValue(serverCart)
     const { user: clicker } = renderActions({ item: { ...PRODUCT, colors: [] }, color: null })
     await clicker.click(addButton())
-    expect(cartService.addItem).toHaveBeenCalledWith('u1', expect.objectContaining({ color: '' }))
+    expect(cartService.addItem).toHaveBeenCalledWith(
+      { kind: 'user', id: 'u1' },
+      expect.objectContaining({ color: '' })
+    )
   })
 
   it('sends an empty size for a product without sizes', async () => {
     vi.mocked(cartService.addItem).mockResolvedValue(serverCart)
     const { user: clicker } = renderActions({ item: { ...PRODUCT, sizes: [] }, size: null })
     await clicker.click(addButton())
-    expect(cartService.addItem).toHaveBeenCalledWith('u1', expect.objectContaining({ size: '' }))
+    expect(cartService.addItem).toHaveBeenCalledWith(
+      { kind: 'user', id: 'u1' },
+      expect.objectContaining({ size: '' })
+    )
   })
 
   it('disables Add To Cart when the quantity is 0 (out of stock)', () => {
@@ -138,28 +145,47 @@ describe('ProductActions — Add To Cart', () => {
     expect(addButton()).toBeDisabled()
   })
 
-  it('saves a pending addToCart and opens the login modal for a guest', async () => {
+  it('P1 adds to the guest cart for a guest without opening login', async () => {
     logOut()
+    vi.mocked(cartService.addItem).mockResolvedValue(serverCart)
     const { user: clicker } = renderActions()
     await clicker.click(addButton())
-    expect(usePendingActionStore.getState().action).toEqual({
-      type: 'addToCart',
-      payload: { productId: 'p1', color: 'Blue', size: 'S', quantity: 2 },
+    await waitFor(() =>
+      expect(toasts()).toEqual([{ type: 'success', message: TOAST_MESSAGES.cart.added }])
+    )
+    expect(cartService.addItem).toHaveBeenCalledWith(
+      { kind: 'guest', id: localStorage.getItem('mcs_guest') },
+      { productId: 'p1', color: 'Blue', size: 'S', quantity: 2 }
+    )
+    expect(usePendingActionStore.getState().action).toBeNull()
+    expect(authParam()).toBeNull()
+  })
+
+  it('P2 sends one guest add for two clicks in the same moment', async () => {
+    logOut()
+    vi.mocked(cartService.addItem).mockResolvedValue(serverCart)
+    renderActions()
+    act(() => {
+      addButton().click()
+      addButton().click()
     })
-    expect(authParam()).toBe('login')
-    expect(cartService.addItem).not.toHaveBeenCalled()
+    await waitFor(() => expect(toasts()).toHaveLength(1))
+    expect(cartService.addItem).toHaveBeenCalledTimes(1)
   })
 
   it('adds product, color, size and quantity for a logged-in user with one toast', async () => {
     vi.mocked(cartService.addItem).mockResolvedValue(serverCart)
     const { user: clicker } = renderActions()
     await clicker.click(addButton())
-    expect(cartService.addItem).toHaveBeenCalledWith('u1', {
-      productId: 'p1',
-      color: 'Blue',
-      size: 'S',
-      quantity: 2,
-    })
+    expect(cartService.addItem).toHaveBeenCalledWith(
+      { kind: 'user', id: 'u1' },
+      {
+        productId: 'p1',
+        color: 'Blue',
+        size: 'S',
+        quantity: 2,
+      }
+    )
     await waitFor(() =>
       expect(toasts()).toEqual([{ type: 'success', message: TOAST_MESSAGES.cart.added }])
     )
@@ -175,8 +201,8 @@ describe('ProductActions — Add To Cart', () => {
     vi.mocked(cartService.addItem).mockResolvedValue(serverCart)
     const { user: clicker, queryClient } = renderActions()
     void queryClient.fetchQuery({
-      queryKey: queryKeys.cart('u1'),
-      queryFn: () => cartService.getCart('u1'),
+      queryKey: queryKeys.cart({ kind: 'user', id: 'u1' }),
+      queryFn: () => cartService.getCart({ kind: 'user', id: 'u1' }),
     })
     await clicker.click(addButton())
     expect(cartService.addItem).not.toHaveBeenCalled()

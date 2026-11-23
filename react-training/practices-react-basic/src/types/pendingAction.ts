@@ -1,8 +1,6 @@
-import type { AddToCartDto } from './order'
 import type { User } from './user'
 
-export type PendingAction =
-  { type: 'addToCart'; payload: AddToCartDto } | { type: 'toggleWishlist'; productId: string }
+export type PendingAction = { type: 'toggleWishlist'; productId: string }
 
 export type PendingActionType = PendingAction['type']
 

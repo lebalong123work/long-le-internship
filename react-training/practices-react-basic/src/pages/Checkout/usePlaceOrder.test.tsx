@@ -115,29 +115,32 @@ describe('usePlaceOrder', () => {
     serveFresh(cartOf(teeItem), [{ ...TEE, name: 'Tee One Renamed' }])
     vi.mocked(orderService.createOrder).mockResolvedValue(order)
     const { result, queryClient } = setup()
-    queryClient.setQueryData(queryKeys.cart('u1'), cartOf(teeItem))
+    queryClient.setQueryData(queryKeys.cart({ kind: 'user', id: 'u1' }), cartOf(teeItem))
     queryClient.setQueryData(queryKeys.products.byIds(['p1']), [TEE])
     await act(() => result.current.placeOrder(values, shownLines))
-    expect(cartService.getCart).toHaveBeenCalledWith('u1')
+    expect(cartService.getCart).toHaveBeenCalledWith({ kind: 'user', id: 'u1' })
     expect(productService.getByIds).toHaveBeenCalledWith(['p1'])
     expect(vi.mocked(cartService.getCart).mock.invocationCallOrder[0]).toBeLessThan(
       vi.mocked(productService.getByIds).mock.invocationCallOrder[0] ?? 0
     )
-    expect(orderService.createOrder).toHaveBeenCalledWith('u1', {
-      items: [
-        {
-          productId: 'p1',
-          name: 'Tee One Renamed',
-          price: 40,
-          image: '/images/products/p1.jpg',
-          color: 'Black',
-          size: 'S',
-          quantity: 2,
-        },
-      ],
-      shippingAddress: order.shippingAddress,
-      paymentMethod: 'cod',
-    })
+    expect(orderService.createOrder).toHaveBeenCalledWith(
+      { kind: 'user', id: 'u1' },
+      {
+        items: [
+          {
+            productId: 'p1',
+            name: 'Tee One Renamed',
+            price: 40,
+            image: '/images/products/p1.jpg',
+            color: 'Black',
+            size: 'S',
+            quantity: 2,
+          },
+        ],
+        shippingAddress: order.shippingAddress,
+        paymentMethod: 'cod',
+      }
+    )
   })
 
   it('places no order when the fresh stock is below the quantity', async () => {

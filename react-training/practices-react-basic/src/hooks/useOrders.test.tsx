@@ -11,7 +11,7 @@ import * as orderService from '@/services/orderService'
 import { useAuthStore } from '@/stores/authStore'
 import { useToastStore } from '@/stores/toastStore'
 import { useUpdateCartQuantity } from './useCart'
-import { useCreateOrder, useOrder, useOrders } from './useOrders'
+import { useCreateOrder, useGuestOrderLookup, useOrder, useOrders } from './useOrders'
 import type { ReactNode } from 'react'
 import type { Cart, CreateOrderDto, Order, PaginatedList, User } from '@/types'
 
@@ -125,7 +125,9 @@ describe('useOrders', () => {
     const { result } = renderHook(() => useOrders(2), { wrapper })
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(orderService.getOrdersByUser).toHaveBeenCalledWith('u1', 2)
-    expect(queryClient.getQueryData(queryKeys.orders.list('u1', 2))).toEqual(orderPage)
+    expect(queryClient.getQueryData(queryKeys.orders.list({ kind: 'user', id: 'u1' }, 2))).toEqual(
+      orderPage
+    )
   })
 
   it('useOrders sends no request for a guest', async () => {
@@ -183,7 +185,9 @@ describe('useOrder', () => {
     const { queryClient, wrapper } = setup()
     const { result } = renderHook(() => useOrder('o1'), { wrapper })
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
-    expect(queryClient.getQueryData(queryKeys.orders.detail('u1', 'o1'))).toEqual(order)
+    expect(
+      queryClient.getQueryData(queryKeys.orders.detail({ kind: 'user', id: 'u1' }, 'o1'))
+    ).toEqual(order)
   })
 
   it('useOrder sends no request without an id', async () => {
@@ -199,7 +203,7 @@ describe('useOrder', () => {
     const { wrapper } = setup()
     const { result } = renderHook(() => useOrder('o1'), { wrapper })
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
-    expect(orderService.getOrderById).toHaveBeenCalledWith('u1', 'o1')
+    expect(orderService.getOrderById).toHaveBeenCalledWith({ kind: 'user', id: 'u1' }, 'o1')
   })
 
   it('useOrder sends no request for a guest', async () => {
@@ -236,8 +240,8 @@ describe('useCreateOrder', () => {
     const { result } = renderHook(() => useCreateOrderWithLocation(), { wrapper })
     act(() => result.current.create.mutate(payload))
     await waitFor(() => expect(result.current.create.isSuccess).toBe(true))
-    expect(orderService.createOrder).toHaveBeenCalledWith('u1', payload)
-    expect(cartService.clearCart).toHaveBeenCalledWith('u1')
+    expect(orderService.createOrder).toHaveBeenCalledWith({ kind: 'user', id: 'u1' }, payload)
+    expect(cartService.clearCart).toHaveBeenCalledWith({ kind: 'user', id: 'u1' })
     expect(result.current.location.pathname).toBe(ROUTES.ORDER_SUCCESS('o1'))
   })
 
@@ -259,8 +263,12 @@ describe('useCreateOrder', () => {
     const { result } = renderHook(() => useCreateOrder(), { wrapper })
     act(() => result.current.mutate(payload))
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
-    expect(invalidate).toHaveBeenCalledWith({ queryKey: queryKeys.cart('u1') })
-    expect(invalidate).toHaveBeenCalledWith({ queryKey: queryKeys.orders.all('u1') })
+    expect(invalidate).toHaveBeenCalledWith({
+      queryKey: queryKeys.cart({ kind: 'user', id: 'u1' }),
+    })
+    expect(invalidate).toHaveBeenCalledWith({
+      queryKey: queryKeys.orders.all({ kind: 'user', id: 'u1' }),
+    })
   })
 
   it('useCreateOrder invalidates cart and orders after a failed order', async () => {
@@ -270,8 +278,12 @@ describe('useCreateOrder', () => {
     const { result } = renderHook(() => useCreateOrder(), { wrapper })
     act(() => result.current.mutate(payload))
     await waitFor(() => expect(result.current.isError).toBe(true))
-    expect(invalidate).toHaveBeenCalledWith({ queryKey: queryKeys.cart('u1') })
-    expect(invalidate).toHaveBeenCalledWith({ queryKey: queryKeys.orders.all('u1') })
+    expect(invalidate).toHaveBeenCalledWith({
+      queryKey: queryKeys.cart({ kind: 'user', id: 'u1' }),
+    })
+    expect(invalidate).toHaveBeenCalledWith({
+      queryKey: queryKeys.orders.all({ kind: 'user', id: 'u1' }),
+    })
   })
 
   it('useCreateOrder shows no toast on success', async () => {
@@ -344,7 +356,10 @@ describe('useCreateOrder', () => {
     const { result } = renderHook(() => useCreateOrder(), { wrapper })
     act(() => result.current.mutate(payload))
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
-    expect(vi.mocked(orderService.createOrder).mock.calls[0]?.[0]).toBe('u1')
+    expect(vi.mocked(orderService.createOrder).mock.calls[0]?.[0]).toEqual({
+      kind: 'user',
+      id: 'u1',
+    })
   })
 
   it('useCreateOrder rejects a guest without calling the service', async () => {
@@ -396,7 +411,7 @@ describe('useCreateOrder', () => {
     const { result } = renderHook(() => useCreateOrder(), { wrapper })
     act(() => result.current.mutate(payload))
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
-    const detailKey = queryKeys.orders.detail('u1', 'o1')
+    const detailKey = queryKeys.orders.detail({ kind: 'user', id: 'u1' }, 'o1')
     expect(queryClient.getQueryData(detailKey)).toEqual(order)
     expect(queryClient.getQueryState(detailKey)?.isInvalidated).toBe(false)
   })
@@ -407,7 +422,9 @@ describe('useCreateOrder', () => {
     const { result } = renderHook(() => useCreateOrder(), { wrapper })
     act(() => result.current.mutate(payload))
     await waitFor(() => expect(result.current.isError).toBe(true))
-    expect(queryClient.getQueryData(queryKeys.orders.detail('u1', 'o1'))).toBeUndefined()
+    expect(
+      queryClient.getQueryData(queryKeys.orders.detail({ kind: 'user', id: 'u1' }, 'o1'))
+    ).toBeUndefined()
   })
 
   it('useCreateOrder navigates with replace', async () => {
@@ -441,5 +458,98 @@ describe('useCreateOrder', () => {
     act(() => result.current.mutate(payload))
     await waitFor(() => expect(result.current.isError).toBe(true))
     expect(result.current.isPending).toBe(false)
+  })
+})
+
+describe('orders for a guest (T35)', () => {
+  const GUEST_ID = '3f2b8c1e-9a4d-4f6b-8c2a-1d5e7f9a0b3c'
+  const GUEST = { kind: 'guest', id: GUEST_ID } as const
+  const guestOrder: Order = { ...order, userId: undefined, guestId: GUEST_ID }
+
+  afterEach(() => {
+    localStorage.clear()
+  })
+
+  it('Q1 a guest order uses the guest owner, clears the guest cart and seeds the guest key', async () => {
+    logOut()
+    localStorage.setItem('mcs_guest', GUEST_ID)
+    vi.mocked(orderService.createOrder).mockResolvedValue(guestOrder)
+    vi.mocked(cartService.clearCart).mockResolvedValue()
+    const { queryClient, wrapper } = setup()
+    const { result } = renderHook(() => useCreateOrderWithLocation(), { wrapper })
+
+    act(() => result.current.create.mutate(payload))
+
+    await waitFor(() => expect(result.current.create.isSuccess).toBe(true))
+    expect(orderService.createOrder).toHaveBeenCalledWith(GUEST, payload)
+    expect(cartService.clearCart).toHaveBeenCalledWith(GUEST)
+    expect(queryClient.getQueryData(queryKeys.orders.detail(GUEST, 'o1'))).toEqual(guestOrder)
+  })
+
+  it('Q2 useOrder for a logged-in user never uses the stored guest id', async () => {
+    localStorage.setItem('mcs_guest', GUEST_ID)
+    vi.mocked(orderService.getOrderById).mockResolvedValue(order)
+    const { wrapper } = setup()
+    const { result } = renderHook(() => useOrder('o1'), { wrapper })
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true))
+    expect(orderService.getOrderById).toHaveBeenCalledWith({ kind: 'user', id: 'u1' }, 'o1')
+    expect(orderService.getOrderById).toHaveBeenCalledTimes(1)
+  })
+
+  it('Q3 useOrder makes no request for a guest without an id', () => {
+    logOut()
+    const { wrapper } = setup()
+    const { result } = renderHook(() => useOrder('o1'), { wrapper })
+
+    expect(result.current.fetchStatus).toBe('idle')
+    expect(orderService.getOrderById).not.toHaveBeenCalled()
+  })
+})
+
+describe('useGuestOrderLookup (T35 order lookup)', () => {
+  const guestOrder: Order = { ...order, userId: undefined, guestId: 'g1' }
+
+  it('G1 looks up the order once with the email and id and shows no toast', async () => {
+    vi.mocked(orderService.findGuestOrder).mockResolvedValue(guestOrder)
+    const { wrapper } = setup()
+    const { result } = renderHook(() => useGuestOrderLookup(), { wrapper })
+
+    act(() => result.current.mutate({ email: 'guest@store.com', orderId: 'o1' }))
+
+    await waitFor(() => expect(result.current.data).toEqual(guestOrder))
+    expect(orderService.findGuestOrder).toHaveBeenCalledTimes(1)
+    expect(orderService.findGuestOrder).toHaveBeenCalledWith('guest@store.com', 'o1')
+    expect(toasts()).toEqual([])
+  })
+
+  it('G2 keeps a not-found error in the hook without a toast or a retry', async () => {
+    vi.mocked(orderService.findGuestOrder).mockRejectedValue(
+      new ApiError(404, orderService.ORDER_ERRORS.notFound)
+    )
+    const queryClient = new QueryClient()
+    function wrapper({ children }: { children: ReactNode }) {
+      return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    }
+    const { result } = renderHook(() => useGuestOrderLookup(), { wrapper })
+
+    act(() => result.current.mutate({ email: 'guest@store.com', orderId: 'o1' }))
+
+    await waitFor(() => expect(result.current.isError).toBe(true))
+    expect(orderService.findGuestOrder).toHaveBeenCalledTimes(1)
+    expect(toasts()).toEqual([])
+  })
+})
+
+describe('useCreateOrder failure text (T35, no merge)', () => {
+  it('O1 shows the order-failed toast for a 409', async () => {
+    vi.mocked(orderService.createOrder).mockRejectedValue(new ApiError(409, 'Conflict'))
+    const { wrapper } = setup()
+    const { result } = renderHook(() => useCreateOrder(), { wrapper })
+
+    act(() => result.current.mutate(payload))
+
+    await waitFor(() => expect(result.current.isError).toBe(true))
+    expect(toasts()).toEqual([{ type: 'error', message: TOAST_MESSAGES.order.failed }])
   })
 })

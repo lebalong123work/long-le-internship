@@ -13,3 +13,9 @@ describe('ROUTES.SEARCH_RESULTS', () => {
     expect(url.searchParams.get('q')).toBe('a&b #1')
   })
 })
+
+describe('ROUTES.ORDER_LOOKUP', () => {
+  it('R1 is the guest order lookup path', () => {
+    expect(ROUTES.ORDER_LOOKUP).toBe('/order-lookup')
+  })
+})

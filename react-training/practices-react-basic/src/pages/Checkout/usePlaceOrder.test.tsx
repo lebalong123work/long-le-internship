@@ -252,6 +252,23 @@ describe('usePlaceOrder', () => {
     expect(orderService.createOrder).not.toHaveBeenCalled()
   })
 
+  it('R3 places no order and shows no toast when the page unmounts during the product re-read', async () => {
+    const freshProducts = deferred<Product[]>()
+    vi.mocked(cartService.getCart).mockResolvedValue(cartOf(teeItem))
+    vi.mocked(productService.getByIds).mockReturnValue(freshProducts.promise)
+    const { result, unmount } = setup()
+    let placing: Promise<void> = Promise.resolve()
+    act(() => {
+      placing = result.current.placeOrder(values, shownLines)
+    })
+    await waitFor(() => expect(productService.getByIds).toHaveBeenCalledTimes(1))
+    unmount()
+    freshProducts.resolve([{ ...TEE, price: 45 }])
+    await placing
+    expect(orderService.createOrder).not.toHaveBeenCalled()
+    expect(toastMessages()).toEqual([])
+  })
+
   it('places no order and reads no products when the fresh cart differs', async () => {
     const otherItem: CartItem = { ...teeItem, id: 'p2__Black__S', productId: 'p2' }
     const { result } = setup()

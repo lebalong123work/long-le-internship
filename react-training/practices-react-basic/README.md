@@ -93,7 +93,7 @@ Users: **Guest** (browse, search) and **Customer** (everything above). There is 
 | Client state | Zustand 4 (auth session, UI state) |
 | Forms | React Hook Form + Zod |
 | Mock backend | json-server 1.0.0-beta.15 (pinned) + concurrently |
-| Testing | Vitest 4 + React Testing Library + jsdom; coverage with @vitest/coverage-v8; end-to-end tests with Playwright (Chromium) |
+| Testing | Vitest 4 + React Testing Library + jsdom; coverage with @vitest/coverage-v8; end-to-end tests with Playwright (Chromium, Firefox and WebKit — Safari's engine) |
 | Code quality | ESLint 10 (flat config) + typescript-eslint, Prettier |
 
 ---
@@ -146,7 +146,7 @@ Optional: copy `.env.example` to `.env` to change the API URL or the fake networ
 | `npm run test` | Run all tests once |
 | `npm run test:watch` | Run tests in watch mode |
 | `npm run test:coverage` | Run all tests once and write a coverage report to `coverage/` |
-| `npm run test:e2e` | Run end-to-end tests in Chromium. Starts its own app (:5181) and mock API (:3101) on a fresh copy of the seed data, so your local data is not changed. First time: `npx playwright install chromium` |
+| `npm run test:e2e` | Run end-to-end tests in Chromium, Firefox and WebKit (Safari's engine). Starts its own app (:5181) and mock API (:3101) on a fresh copy of the seed data, so your local data is not changed. First time: `npx playwright install chromium firefox webkit` |
 
 Before finishing any change, run `type-check`, `lint`, `test` and `build`.
 

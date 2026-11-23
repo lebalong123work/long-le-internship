@@ -69,6 +69,31 @@ describe('apiClient', () => {
     expect(error).toBeInstanceOf(ApiError)
     expect((error as ApiError).status).toBe(0)
   })
+
+  it('S1 keeps the server status text as the error message', async () => {
+    mockFetch({ ok: false, status: 503, statusText: 'Service Unavailable' })
+    await expect(apiClient.get('/products')).rejects.toMatchObject({
+      status: 503,
+      message: 'Service Unavailable',
+    })
+  })
+
+  it('S1 uses "Request failed ({status})" when the server sends no status text', async () => {
+    mockFetch({ ok: false, status: 503, statusText: '' })
+    const error = await apiClient.get('/products').catch((e: unknown) => e)
+    expect(error).toBeInstanceOf(ApiError)
+    expect(error).toMatchObject({ status: 503, message: 'Request failed (503)' })
+  })
+
+  it('S2 resolves undefined for a 204 response without reading its body', async () => {
+    mockFetch({ status: 204, statusText: 'No Content', body: '{"id":"x"}' })
+    await expect(apiClient.patch('/carts/c1', { items: [] })).resolves.toBeUndefined()
+  })
+
+  it('S3 resolves undefined for a 200 response with an empty body', async () => {
+    mockFetch({ status: 200, body: '' })
+    await expect(apiClient.get('/products')).resolves.toBeUndefined()
+  })
 })
 
 describe('isNotFoundError', () => {

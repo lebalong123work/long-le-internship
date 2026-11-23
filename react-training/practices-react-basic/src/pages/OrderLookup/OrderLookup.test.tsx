@@ -274,6 +274,18 @@ describe('OrderLookup page', () => {
     expect(screen.queryByText('Smart T-Shirt')).toBeNull()
   })
 
+  it('U6 editing a field after a network error removes Try again and sends nothing', async () => {
+    vi.mocked(orderService.findGuestOrder).mockRejectedValueOnce(new ApiError(0, 'Network error'))
+    const { user } = renderLookup()
+    await lookUp(user, EMAIL, 'AbC_12')
+    expect(await screen.findByRole('button', { name: UI_STATE_MESSAGES.retry })).toBeInTheDocument()
+
+    await user.type(emailField(), 'x')
+
+    expect(screen.queryByRole('button', { name: UI_STATE_MESSAGES.retry })).toBeNull()
+    expect(orderService.findGuestOrder).toHaveBeenCalledTimes(1)
+  })
+
   it('P13 a second lookup on the same page shows the new order', async () => {
     vi.mocked(orderService.findGuestOrder)
       .mockResolvedValueOnce(guestOrder('AbC_12'))

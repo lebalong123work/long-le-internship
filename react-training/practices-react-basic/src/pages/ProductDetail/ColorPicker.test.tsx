@@ -81,6 +81,20 @@ describe('ColorPicker', () => {
     expect(onChange).toHaveBeenCalledWith('Sunset Orange')
   })
 
+  it('U7 draws a selected unknown color as a white ring with a dot and a bold name', () => {
+    renderPicker(['Sunset Orange', 'Moss'], 'Sunset Orange')
+    const selected = swatchOf('Sunset Orange')
+    expect(selected).toHaveClass('bg-white')
+    expect(selected).not.toHaveClass('bg-light')
+    expect(selected.querySelector('span')).toHaveClass('bg-medium-dark')
+    expect(within(group()).getByText('Sunset Orange')).toHaveClass('font-bold')
+
+    const other = swatchOf('Moss')
+    expect(other).toHaveClass('bg-light')
+    expect(other.querySelector('span')).toBeNull()
+    expect(within(group()).getByText('Moss')).not.toHaveClass('font-bold')
+  })
+
   it('renders nothing for no colors', () => {
     const { container } = renderPicker([])
     expect(container).toBeEmptyDOMElement()

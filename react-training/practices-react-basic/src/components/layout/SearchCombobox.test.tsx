@@ -232,6 +232,36 @@ describe('SearchCombobox keyboard', () => {
     await waitFor(() => expect(input).not.toHaveAttribute('aria-activedescendant'))
     expect(screen.getAllByRole('option').every((o) => o.ariaSelected === 'false')).toBe(true)
   })
+
+  it('U1 ArrowDown after Esc shows the list again without an active option', async () => {
+    resolveWith(suggestions)
+    const { user, input } = renderCombobox()
+    await user.click(input)
+    await user.keyboard('{ArrowDown}')
+    expect(input).toHaveAttribute('aria-expanded', 'false')
+    expect(screen.queryByRole('listbox')).toBeNull()
+
+    await typeAndWaitForOptions(user, input)
+    await user.keyboard('{Escape}')
+    expect(input).toHaveAttribute('aria-expanded', 'false')
+    await user.keyboard('{ArrowDown}')
+    expect(input).toHaveAttribute('aria-expanded', 'true')
+    expect(input).toHaveValue('shirt')
+    expect(input).not.toHaveAttribute('aria-activedescendant')
+
+    await user.keyboard('{ArrowDown}')
+    expect(input).toHaveAttribute('aria-activedescendant', screen.getAllByRole('option')[0].id)
+  })
+
+  it('U2 ArrowUp with nothing active selects the last option', async () => {
+    resolveWith(suggestions)
+    const { user, input } = renderCombobox()
+    const options = await typeAndWaitForOptions(user, input)
+    expect(input).not.toHaveAttribute('aria-activedescendant')
+    await user.keyboard('{ArrowUp}')
+    expect(input).toHaveAttribute('aria-activedescendant', options[2].id)
+    expect(options[2]).toHaveAttribute('aria-selected', 'true')
+  })
 })
 
 describe('SearchCombobox pointer and focus', () => {

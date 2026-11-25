@@ -1,5 +1,7 @@
 import { CATEGORIES } from './categories'
+import { ORDER_LOOKUP_TEXT } from './order'
 import { ROUTES } from './routes'
+import { STORE_CONTACT } from './store'
 
 export interface FooterLinkItem {
   id: string
@@ -26,7 +28,7 @@ export const FOOTER_TEXT = {
     'Explore everyday clothing at Mangcoding Store, from T-shirts and shirts to jackets and jeans. Find pieces that fit your personal style.',
   navLabel: 'Footer',
   socialLabel: 'Social media',
-  email: 'mangcoding@gmail.com',
+  email: STORE_CONTACT.email,
   homeHeading: 'Home',
   shopHeading: 'Shop',
   categoriesHeading: 'Categories',
@@ -47,7 +49,7 @@ export const FOOTER_LINK_GROUPS: readonly FooterLinkGroup[] = [
       { id: 'product', label: 'Product', to: ROUTES.SHOP },
       { id: 'categories', label: 'Categories', to: ROUTES.SHOP },
       { id: 'shop', label: 'Shop', to: ROUTES.SHOP },
-      { id: 'track-order', label: 'Track an Order', to: ROUTES.ORDER_LOOKUP },
+      { id: 'track-order', label: ORDER_LOOKUP_TEXT.linkLabel, to: ROUTES.ORDER_LOOKUP },
     ],
     hasLogInItem: true,
   },

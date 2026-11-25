@@ -58,7 +58,7 @@
         }
       ],
       "category": "t-shirt",
-      "description": "Placeholder description — the real product text has not been provided yet.",
+      "description": "A soft everyday T-shirt in 100% combed cotton with a regular fit, ribbed crew neck and double-stitched hems. Pre-shrunk, so it keeps its shape wash after wash. Machine wash cold, tumble dry low.",
       "stock": 1234,
       "colors": ["Black", "Blue", "Green"],
       "sizes": ["S", "M", "L", "XL"],
@@ -94,7 +94,7 @@
         }
       ],
       "category": "t-shirt",
-      "description": "Placeholder description — the real product text has not been provided yet.",
+      "description": "A soft everyday T-shirt in 100% combed cotton with a regular fit, ribbed crew neck and double-stitched hems. Pre-shrunk, so it keeps its shape wash after wash. Machine wash cold, tumble dry low.",
       "stock": 1234,
       "colors": ["Black", "Blue", "Green"],
       "sizes": ["S", "M", "L", "XL"],
@@ -130,7 +130,7 @@
         }
       ],
       "category": "t-shirt",
-      "description": "Placeholder description — the real product text has not been provided yet.",
+      "description": "A soft everyday T-shirt in 100% combed cotton with a regular fit, ribbed crew neck and double-stitched hems. Pre-shrunk, so it keeps its shape wash after wash. Machine wash cold, tumble dry low.",
       "stock": 1234,
       "colors": ["Black", "Blue", "Green"],
       "sizes": ["S", "M", "L", "XL"],
@@ -166,7 +166,7 @@
         }
       ],
       "category": "t-shirt",
-      "description": "Placeholder description — the real product text has not been provided yet.",
+      "description": "A soft everyday T-shirt in 100% combed cotton with a regular fit, ribbed crew neck and double-stitched hems. Pre-shrunk, so it keeps its shape wash after wash. Machine wash cold, tumble dry low.",
       "stock": 1234,
       "colors": ["Black", "Blue", "Green"],
       "sizes": ["S", "M", "L", "XL"],
@@ -202,7 +202,7 @@
         }
       ],
       "category": "t-shirt",
-      "description": "Placeholder description — the real product text has not been provided yet.",
+      "description": "A soft everyday T-shirt in 100% combed cotton with a regular fit, ribbed crew neck and double-stitched hems. Pre-shrunk, so it keeps its shape wash after wash. Machine wash cold, tumble dry low.",
       "stock": 1234,
       "colors": ["Black", "Blue", "Green"],
       "sizes": ["S", "M", "L", "XL"],
@@ -238,7 +238,7 @@
         }
       ],
       "category": "t-shirt",
-      "description": "Placeholder description — the real product text has not been provided yet.",
+      "description": "A soft everyday T-shirt in 100% combed cotton with a regular fit, ribbed crew neck and double-stitched hems. Pre-shrunk, so it keeps its shape wash after wash. Machine wash cold, tumble dry low.",
       "stock": 1234,
       "colors": ["Black", "Blue", "Green"],
       "sizes": ["S", "M", "L", "XL"],
@@ -274,7 +274,7 @@
         }
       ],
       "category": "t-shirt",
-      "description": "Placeholder description — the real product text has not been provided yet.",
+      "description": "A soft everyday T-shirt in 100% combed cotton with a regular fit, ribbed crew neck and double-stitched hems. Pre-shrunk, so it keeps its shape wash after wash. Machine wash cold, tumble dry low.",
       "stock": 1234,
       "colors": ["Black", "Blue", "Green"],
       "sizes": ["S", "M", "L", "XL"],
@@ -310,7 +310,7 @@
         }
       ],
       "category": "t-shirt",
-      "description": "Placeholder description — the real product text has not been provided yet.",
+      "description": "A soft everyday T-shirt in 100% combed cotton with a regular fit, ribbed crew neck and double-stitched hems. Pre-shrunk, so it keeps its shape wash after wash. Machine wash cold, tumble dry low.",
       "stock": 1234,
       "colors": ["Black", "Blue", "Green"],
       "sizes": ["S", "M", "L", "XL"],
@@ -318,6 +318,1165 @@
       "reviewCount": 1000,
       "isBestSeller": true,
       "createdAt": "2026-11-03T00:00:01.000Z"
+    },
+    {
+      "id": "p9",
+      "name": "Essential Black Tee",
+      "price": 22,
+      "thumbnail": "/images/products/3qqiMT2LdR8-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/3qqiMT2LdR8-main.jpg",
+          "thumbnailSrc": "/images/products/3qqiMT2LdR8-thumb.jpg",
+          "src2x": "/images/products/3qqiMT2LdR8-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/Cs4GVbMqKGY-main.jpg",
+          "thumbnailSrc": "/images/products/Cs4GVbMqKGY-thumb.jpg",
+          "src2x": "/images/products/Cs4GVbMqKGY-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/Uo7pif9YBxA-main.jpg",
+          "thumbnailSrc": "/images/products/Uo7pif9YBxA-thumb.jpg",
+          "src2x": "/images/products/Uo7pif9YBxA-main@2x.jpg"
+        }
+      ],
+      "category": "t-shirt",
+      "description": "A clean black crew-neck tee in heavyweight 220 gsm cotton. Regular fit that layers well under shirts and jackets. Machine wash cold inside out to keep the colour deep.",
+      "stock": 320,
+      "colors": ["Black"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 5,
+      "reviewCount": 412,
+      "isBestSeller": false,
+      "createdAt": "2026-11-25T00:00:00.000Z"
+    },
+    {
+      "id": "p10",
+      "name": "Graphic Print Tee",
+      "price": 28,
+      "thumbnail": "/images/products/ldAhf7KJ_II-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/ldAhf7KJ_II-main.jpg",
+          "thumbnailSrc": "/images/products/ldAhf7KJ_II-thumb.jpg",
+          "src2x": "/images/products/ldAhf7KJ_II-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/ryVemLyxv9Q-main.jpg",
+          "thumbnailSrc": "/images/products/ryVemLyxv9Q-thumb.jpg",
+          "src2x": "/images/products/ryVemLyxv9Q-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/gC_iESfp7a8-main.jpg",
+          "thumbnailSrc": "/images/products/gC_iESfp7a8-thumb.jpg",
+          "src2x": "/images/products/gC_iESfp7a8-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/0UYE4iHvDaA-main.jpg",
+          "thumbnailSrc": "/images/products/0UYE4iHvDaA-thumb.jpg",
+          "src2x": "/images/products/0UYE4iHvDaA-main@2x.jpg"
+        }
+      ],
+      "category": "t-shirt",
+      "description": "A relaxed-fit cotton tee with a bold front print. Dropped shoulders and a slightly longer body give it an easy street look. Wash inside out, do not iron the print.",
+      "stock": 180,
+      "colors": ["Black", "Green"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 4,
+      "reviewCount": 236,
+      "isBestSeller": false,
+      "createdAt": "2026-11-24T23:59:00.000Z"
+    },
+    {
+      "id": "p11",
+      "name": "Classic Denim Jacket",
+      "price": 79,
+      "thumbnail": "/images/products/KKZmUQjTO2E-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/KKZmUQjTO2E-main.jpg",
+          "thumbnailSrc": "/images/products/KKZmUQjTO2E-thumb.jpg",
+          "src2x": "/images/products/KKZmUQjTO2E-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/_BDBEP0ePQc-main.jpg",
+          "thumbnailSrc": "/images/products/_BDBEP0ePQc-thumb.jpg",
+          "src2x": "/images/products/_BDBEP0ePQc-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/TnNo84AJJ5A-main.jpg",
+          "thumbnailSrc": "/images/products/TnNo84AJJ5A-thumb.jpg",
+          "src2x": "/images/products/TnNo84AJJ5A-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/XovTIAjyx2E-main.jpg",
+          "thumbnailSrc": "/images/products/XovTIAjyx2E-thumb.jpg",
+          "src2x": "/images/products/XovTIAjyx2E-main@2x.jpg"
+        }
+      ],
+      "category": "jacket",
+      "description": "A classic trucker jacket in rigid 13 oz denim with button chest pockets and adjustable waist tabs. It softens and fades with every wear. Machine wash cold, line dry.",
+      "stock": 95,
+      "colors": ["Blue"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 5,
+      "reviewCount": 864,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:58:00.000Z"
+    },
+    {
+      "id": "p12",
+      "name": "Leather Biker Jacket",
+      "price": 149,
+      "thumbnail": "/images/products/Vfy9pP8tkQg-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/Vfy9pP8tkQg-main.jpg",
+          "thumbnailSrc": "/images/products/Vfy9pP8tkQg-thumb.jpg",
+          "src2x": "/images/products/Vfy9pP8tkQg-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/UgXvJ1tqBXQ-main.jpg",
+          "thumbnailSrc": "/images/products/UgXvJ1tqBXQ-thumb.jpg",
+          "src2x": "/images/products/UgXvJ1tqBXQ-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/AiBCzPqvh5A-main.jpg",
+          "thumbnailSrc": "/images/products/AiBCzPqvh5A-thumb.jpg",
+          "src2x": "/images/products/AiBCzPqvh5A-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/hmJ0PQC_kaE-main.jpg",
+          "thumbnailSrc": "/images/products/hmJ0PQC_kaE-thumb.jpg",
+          "src2x": "/images/products/hmJ0PQC_kaE-main@2x.jpg"
+        }
+      ],
+      "category": "jacket",
+      "description": "An asymmetric biker jacket in soft lamb leather with a quilted lining, zip cuffs and a snap collar. Built to break in and last for years. Professional leather clean only.",
+      "stock": 40,
+      "colors": ["Black"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 5,
+      "reviewCount": 521,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:57:00.000Z"
+    },
+    {
+      "id": "p13",
+      "name": "Bomber Jacket",
+      "price": 89,
+      "thumbnail": "/images/products/wEcEOMYG2O4-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/wEcEOMYG2O4-main.jpg",
+          "thumbnailSrc": "/images/products/wEcEOMYG2O4-thumb.jpg",
+          "src2x": "/images/products/wEcEOMYG2O4-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/N8aTckZQwco-main.jpg",
+          "thumbnailSrc": "/images/products/N8aTckZQwco-thumb.jpg",
+          "src2x": "/images/products/N8aTckZQwco-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/VBU3WW_Japk-main.jpg",
+          "thumbnailSrc": "/images/products/VBU3WW_Japk-thumb.jpg",
+          "src2x": "/images/products/VBU3WW_Japk-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/4GET5iTc050-main.jpg",
+          "thumbnailSrc": "/images/products/4GET5iTc050-thumb.jpg",
+          "src2x": "/images/products/4GET5iTc050-main@2x.jpg"
+        }
+      ],
+      "category": "jacket",
+      "description": "A lightweight nylon bomber with a padded body, ribbed collar, cuffs and hem, and a utility sleeve pocket. Water-repellent finish for changing weather. Machine wash cold.",
+      "stock": 120,
+      "colors": ["Black", "Green"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 4,
+      "reviewCount": 377,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:56:00.000Z"
+    },
+    {
+      "id": "p14",
+      "name": "Puffer Jacket",
+      "price": 119,
+      "thumbnail": "/images/products/92_tCTr9rtw-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/92_tCTr9rtw-main.jpg",
+          "thumbnailSrc": "/images/products/92_tCTr9rtw-thumb.jpg",
+          "src2x": "/images/products/92_tCTr9rtw-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/shIJes4eYTE-main.jpg",
+          "thumbnailSrc": "/images/products/shIJes4eYTE-thumb.jpg",
+          "src2x": "/images/products/shIJes4eYTE-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/hp7Uj0EO__g-main.jpg",
+          "thumbnailSrc": "/images/products/hp7Uj0EO__g-thumb.jpg",
+          "src2x": "/images/products/hp7Uj0EO__g-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/JsrNYyQXK2Q-main.jpg",
+          "thumbnailSrc": "/images/products/JsrNYyQXK2Q-thumb.jpg",
+          "src2x": "/images/products/JsrNYyQXK2Q-main@2x.jpg"
+        }
+      ],
+      "category": "jacket",
+      "description": "A warm puffer jacket with recycled synthetic fill, a stand collar and an adjustable hood. Packs into its own pocket for travel. Machine wash cold on a gentle cycle.",
+      "stock": 70,
+      "colors": ["Black", "Blue"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 5,
+      "reviewCount": 698,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:55:00.000Z"
+    },
+    {
+      "id": "p15",
+      "name": "Windbreaker Jacket",
+      "price": 65,
+      "thumbnail": "/images/products/12P0_rzSNpM-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/12P0_rzSNpM-main.jpg",
+          "thumbnailSrc": "/images/products/12P0_rzSNpM-thumb.jpg",
+          "src2x": "/images/products/12P0_rzSNpM-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/T8HVD4wK_rw-main.jpg",
+          "thumbnailSrc": "/images/products/T8HVD4wK_rw-thumb.jpg",
+          "src2x": "/images/products/T8HVD4wK_rw-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/QF-CfntfYWc-main.jpg",
+          "thumbnailSrc": "/images/products/QF-CfntfYWc-thumb.jpg",
+          "src2x": "/images/products/QF-CfntfYWc-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/YHscFn67aD8-main.jpg",
+          "thumbnailSrc": "/images/products/YHscFn67aD8-thumb.jpg",
+          "src2x": "/images/products/YHscFn67aD8-main@2x.jpg"
+        }
+      ],
+      "category": "jacket",
+      "description": "A packable windbreaker in ripstop nylon with a half zip, drawcord hood and elastic cuffs. Blocks wind on cool mornings and folds into a small pouch. Machine wash cold.",
+      "stock": 140,
+      "colors": ["Blue", "Green"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 4,
+      "reviewCount": 289,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:54:00.000Z"
+    },
+    {
+      "id": "p16",
+      "name": "Corduroy Jacket",
+      "price": 85,
+      "thumbnail": "/images/products/dUTmNrxnWKI-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/dUTmNrxnWKI-main.jpg",
+          "thumbnailSrc": "/images/products/dUTmNrxnWKI-thumb.jpg",
+          "src2x": "/images/products/dUTmNrxnWKI-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/5B23dDRkmhc-main.jpg",
+          "thumbnailSrc": "/images/products/5B23dDRkmhc-thumb.jpg",
+          "src2x": "/images/products/5B23dDRkmhc-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/QEZuIsPadww-main.jpg",
+          "thumbnailSrc": "/images/products/QEZuIsPadww-thumb.jpg",
+          "src2x": "/images/products/QEZuIsPadww-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/8kDKIuBq9to-main.jpg",
+          "thumbnailSrc": "/images/products/8kDKIuBq9to-thumb.jpg",
+          "src2x": "/images/products/8kDKIuBq9to-main@2x.jpg"
+        }
+      ],
+      "category": "jacket",
+      "description": "A corduroy trucker jacket in soft 8-wale cotton with a sherpa-lined collar and two chest pockets. A warm middle layer for autumn days. Machine wash cold, reshape while damp.",
+      "stock": 85,
+      "colors": ["Green", "Black"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 4,
+      "reviewCount": 204,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:53:00.000Z"
+    },
+    {
+      "id": "p17",
+      "name": "Varsity Jacket",
+      "price": 109,
+      "thumbnail": "/images/products/ETTdzZMS0FA-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/ETTdzZMS0FA-main.jpg",
+          "thumbnailSrc": "/images/products/ETTdzZMS0FA-thumb.jpg",
+          "src2x": "/images/products/ETTdzZMS0FA-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/mgI2mkvUxEQ-main.jpg",
+          "thumbnailSrc": "/images/products/mgI2mkvUxEQ-thumb.jpg",
+          "src2x": "/images/products/mgI2mkvUxEQ-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/zX_KPGtdf4E-main.jpg",
+          "thumbnailSrc": "/images/products/zX_KPGtdf4E-thumb.jpg",
+          "src2x": "/images/products/zX_KPGtdf4E-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/g87oHTXfPk4-main.jpg",
+          "thumbnailSrc": "/images/products/g87oHTXfPk4-thumb.jpg",
+          "src2x": "/images/products/g87oHTXfPk4-main@2x.jpg"
+        }
+      ],
+      "category": "jacket",
+      "description": "A varsity jacket with a wool-blend body, contrast sleeves, snap front and striped rib trims. A college classic with a modern regular fit. Dry clean recommended.",
+      "stock": 60,
+      "colors": ["Black", "Blue"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 5,
+      "reviewCount": 342,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:52:00.000Z"
+    },
+    {
+      "id": "p18",
+      "name": "Fleece Jacket",
+      "price": 59,
+      "thumbnail": "/images/products/zZd4Dx9dO90-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/zZd4Dx9dO90-main.jpg",
+          "thumbnailSrc": "/images/products/zZd4Dx9dO90-thumb.jpg",
+          "src2x": "/images/products/zZd4Dx9dO90-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/QEJ0ymHBFCQ-main.jpg",
+          "thumbnailSrc": "/images/products/QEJ0ymHBFCQ-thumb.jpg",
+          "src2x": "/images/products/QEJ0ymHBFCQ-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/eK3Mptv3zkI-main.jpg",
+          "thumbnailSrc": "/images/products/eK3Mptv3zkI-thumb.jpg",
+          "src2x": "/images/products/eK3Mptv3zkI-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/uSaL3twpUhM-main.jpg",
+          "thumbnailSrc": "/images/products/uSaL3twpUhM-thumb.jpg",
+          "src2x": "/images/products/uSaL3twpUhM-main@2x.jpg"
+        }
+      ],
+      "category": "jacket",
+      "description": "A cosy fleece jacket in brushed recycled polyester with a full zip, zip hand pockets and a stand collar. Light, warm and quick to dry. Machine wash cold.",
+      "stock": 150,
+      "colors": ["Black", "Green"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 4,
+      "reviewCount": 455,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:51:00.000Z"
+    },
+    {
+      "id": "p19",
+      "name": "Rain Jacket",
+      "price": 95,
+      "thumbnail": "/images/products/WDzbLVBJntM-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/WDzbLVBJntM-main.jpg",
+          "thumbnailSrc": "/images/products/WDzbLVBJntM-thumb.jpg",
+          "src2x": "/images/products/WDzbLVBJntM-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/OhyxUN5iG-s-main.jpg",
+          "thumbnailSrc": "/images/products/OhyxUN5iG-s-thumb.jpg",
+          "src2x": "/images/products/OhyxUN5iG-s-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/naBjwpl5R4k-main.jpg",
+          "thumbnailSrc": "/images/products/naBjwpl5R4k-thumb.jpg",
+          "src2x": "/images/products/naBjwpl5R4k-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/wJo4TmNAJK8-main.jpg",
+          "thumbnailSrc": "/images/products/wJo4TmNAJK8-thumb.jpg",
+          "src2x": "/images/products/wJo4TmNAJK8-main@2x.jpg"
+        }
+      ],
+      "category": "jacket",
+      "description": "A waterproof rain jacket with taped seams, an adjustable hood and underarm vents. Keeps you dry on rainy commutes without feeling heavy. Machine wash cold, re-proof yearly.",
+      "stock": 110,
+      "colors": ["Black", "Blue"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 4,
+      "reviewCount": 318,
+      "isBestSeller": false,
+      "createdAt": "2026-11-24T23:50:00.000Z"
+    },
+    {
+      "id": "p20",
+      "name": "Suede Jacket",
+      "price": 139,
+      "thumbnail": "/images/products/KgjNOmuTlNw-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/KgjNOmuTlNw-main.jpg",
+          "thumbnailSrc": "/images/products/KgjNOmuTlNw-thumb.jpg",
+          "src2x": "/images/products/KgjNOmuTlNw-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/tJj88371HJ0-main.jpg",
+          "thumbnailSrc": "/images/products/tJj88371HJ0-thumb.jpg",
+          "src2x": "/images/products/tJj88371HJ0-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/h4bsiYlws5k-main.jpg",
+          "thumbnailSrc": "/images/products/h4bsiYlws5k-thumb.jpg",
+          "src2x": "/images/products/h4bsiYlws5k-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/_F9ppm4ny7s-main.jpg",
+          "thumbnailSrc": "/images/products/_F9ppm4ny7s-thumb.jpg",
+          "src2x": "/images/products/_F9ppm4ny7s-main@2x.jpg"
+        }
+      ],
+      "category": "jacket",
+      "description": "A suede shirt-jacket with a point collar, snap front and flap chest pockets. Soft, slightly brushed texture that ages beautifully. Professional suede clean only.",
+      "stock": 35,
+      "colors": ["Black"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 4,
+      "reviewCount": 167,
+      "isBestSeller": false,
+      "createdAt": "2026-11-24T23:49:00.000Z"
+    },
+    {
+      "id": "p21",
+      "name": "Oxford White Shirt",
+      "price": 45,
+      "thumbnail": "/images/products/GDebkNryTd4-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/GDebkNryTd4-main.jpg",
+          "thumbnailSrc": "/images/products/GDebkNryTd4-thumb.jpg",
+          "src2x": "/images/products/GDebkNryTd4-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/WdhmRPvMn7A-main.jpg",
+          "thumbnailSrc": "/images/products/WdhmRPvMn7A-thumb.jpg",
+          "src2x": "/images/products/WdhmRPvMn7A-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/NS2BZsGxOLE-main.jpg",
+          "thumbnailSrc": "/images/products/NS2BZsGxOLE-thumb.jpg",
+          "src2x": "/images/products/NS2BZsGxOLE-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/TOD8u_n9KIM-main.jpg",
+          "thumbnailSrc": "/images/products/TOD8u_n9KIM-thumb.jpg",
+          "src2x": "/images/products/TOD8u_n9KIM-main@2x.jpg"
+        }
+      ],
+      "category": "shirt",
+      "description": "A crisp Oxford shirt in breathable cotton with a button-down collar and a tailored fit. Dress it up with a tie or wear it open over a tee. Machine wash warm, iron while damp.",
+      "stock": 210,
+      "colors": ["Blue"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 5,
+      "reviewCount": 932,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:48:00.000Z"
+    },
+    {
+      "id": "p22",
+      "name": "Flannel Check Shirt",
+      "price": 49,
+      "thumbnail": "/images/products/l3ujwmoImzI-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/l3ujwmoImzI-main.jpg",
+          "thumbnailSrc": "/images/products/l3ujwmoImzI-thumb.jpg",
+          "src2x": "/images/products/l3ujwmoImzI-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/9T9GTfGAHa8-main.jpg",
+          "thumbnailSrc": "/images/products/9T9GTfGAHa8-thumb.jpg",
+          "src2x": "/images/products/9T9GTfGAHa8-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/e_xxdNdfLhU-main.jpg",
+          "thumbnailSrc": "/images/products/e_xxdNdfLhU-thumb.jpg",
+          "src2x": "/images/products/e_xxdNdfLhU-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/eDx4GesgiLo-main.jpg",
+          "thumbnailSrc": "/images/products/eDx4GesgiLo-thumb.jpg",
+          "src2x": "/images/products/eDx4GesgiLo-main@2x.jpg"
+        }
+      ],
+      "category": "shirt",
+      "description": "A brushed flannel shirt in a classic check with a chest pocket and button cuffs. Soft, warm cotton for layering in cooler months. Machine wash cold, tumble dry low.",
+      "stock": 175,
+      "colors": ["Black", "Green"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 5,
+      "reviewCount": 611,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:47:00.000Z"
+    },
+    {
+      "id": "p23",
+      "name": "Denim Shirt",
+      "price": 55,
+      "thumbnail": "/images/products/oPYn4s5xEec-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/oPYn4s5xEec-main.jpg",
+          "thumbnailSrc": "/images/products/oPYn4s5xEec-thumb.jpg",
+          "src2x": "/images/products/oPYn4s5xEec-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/AvgZ4mKkJfo-main.jpg",
+          "thumbnailSrc": "/images/products/AvgZ4mKkJfo-thumb.jpg",
+          "src2x": "/images/products/AvgZ4mKkJfo-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/DuQ8jVtH2lY-main.jpg",
+          "thumbnailSrc": "/images/products/DuQ8jVtH2lY-thumb.jpg",
+          "src2x": "/images/products/DuQ8jVtH2lY-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/x0dXfHPnOLg-main.jpg",
+          "thumbnailSrc": "/images/products/x0dXfHPnOLg-thumb.jpg",
+          "src2x": "/images/products/x0dXfHPnOLg-main@2x.jpg"
+        }
+      ],
+      "category": "shirt",
+      "description": "A western-style denim shirt in mid-weight cotton with snap buttons and two flap pockets. Wear it as a shirt or as a light overshirt. Machine wash cold.",
+      "stock": 130,
+      "colors": ["Blue"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 4,
+      "reviewCount": 402,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:46:00.000Z"
+    },
+    {
+      "id": "p24",
+      "name": "Linen Shirt",
+      "price": 52,
+      "thumbnail": "/images/products/IoR6wl3L06A-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/IoR6wl3L06A-main.jpg",
+          "thumbnailSrc": "/images/products/IoR6wl3L06A-thumb.jpg",
+          "src2x": "/images/products/IoR6wl3L06A-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/Cm1u9QGDx0Q-main.jpg",
+          "thumbnailSrc": "/images/products/Cm1u9QGDx0Q-thumb.jpg",
+          "src2x": "/images/products/Cm1u9QGDx0Q-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/kUTVapkK9pc-main.jpg",
+          "thumbnailSrc": "/images/products/kUTVapkK9pc-thumb.jpg",
+          "src2x": "/images/products/kUTVapkK9pc-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/iixG5c_YRuY-main.jpg",
+          "thumbnailSrc": "/images/products/iixG5c_YRuY-thumb.jpg",
+          "src2x": "/images/products/iixG5c_YRuY-main@2x.jpg"
+        }
+      ],
+      "category": "shirt",
+      "description": "A relaxed linen shirt that stays cool and breathable on hot days, with a camp collar and a straight hem. Gets softer with every wash. Machine wash cold, line dry.",
+      "stock": 160,
+      "colors": ["Blue", "Green"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 4,
+      "reviewCount": 288,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:45:00.000Z"
+    },
+    {
+      "id": "p25",
+      "name": "Hawaiian Shirt",
+      "price": 42,
+      "thumbnail": "/images/products/G0DTsQDOP-g-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/G0DTsQDOP-g-main.jpg",
+          "thumbnailSrc": "/images/products/G0DTsQDOP-g-thumb.jpg",
+          "src2x": "/images/products/G0DTsQDOP-g-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/8vd1H_RA8ZA-main.jpg",
+          "thumbnailSrc": "/images/products/8vd1H_RA8ZA-thumb.jpg",
+          "src2x": "/images/products/8vd1H_RA8ZA-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/elv3hERoLDA-main.jpg",
+          "thumbnailSrc": "/images/products/elv3hERoLDA-thumb.jpg",
+          "src2x": "/images/products/elv3hERoLDA-main@2x.jpg"
+        }
+      ],
+      "category": "shirt",
+      "description": "A short-sleeve resort shirt in light viscose with an all-over floral print and an open camp collar. Made for holidays and summer evenings. Hand wash cold.",
+      "stock": 145,
+      "colors": ["Black", "Blue", "Green"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 4,
+      "reviewCount": 253,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:44:00.000Z"
+    },
+    {
+      "id": "p26",
+      "name": "Striped Shirt",
+      "price": 44,
+      "thumbnail": "/images/products/avYD_iPH_c4-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/avYD_iPH_c4-main.jpg",
+          "thumbnailSrc": "/images/products/avYD_iPH_c4-thumb.jpg",
+          "src2x": "/images/products/avYD_iPH_c4-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/KOAelg9_QxY-main.jpg",
+          "thumbnailSrc": "/images/products/KOAelg9_QxY-thumb.jpg",
+          "src2x": "/images/products/KOAelg9_QxY-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/93O7lzatRuE-main.jpg",
+          "thumbnailSrc": "/images/products/93O7lzatRuE-thumb.jpg",
+          "src2x": "/images/products/93O7lzatRuE-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/9PhXIQkpLqo-main.jpg",
+          "thumbnailSrc": "/images/products/9PhXIQkpLqo-thumb.jpg",
+          "src2x": "/images/products/9PhXIQkpLqo-main@2x.jpg"
+        }
+      ],
+      "category": "shirt",
+      "description": "A striped cotton poplin shirt with a regular collar and a curved hem. Smart enough for the office, easy enough for weekends. Machine wash warm.",
+      "stock": 190,
+      "colors": ["Black", "Blue"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 4,
+      "reviewCount": 319,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:43:00.000Z"
+    },
+    {
+      "id": "p27",
+      "name": "Black Dress Shirt",
+      "price": 58,
+      "thumbnail": "/images/products/TptTny8ZmdY-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/TptTny8ZmdY-main.jpg",
+          "thumbnailSrc": "/images/products/TptTny8ZmdY-thumb.jpg",
+          "src2x": "/images/products/TptTny8ZmdY-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/M3mJt2AIq2g-main.jpg",
+          "thumbnailSrc": "/images/products/M3mJt2AIq2g-thumb.jpg",
+          "src2x": "/images/products/M3mJt2AIq2g-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/SiD8mcYsnO0-main.jpg",
+          "thumbnailSrc": "/images/products/SiD8mcYsnO0-thumb.jpg",
+          "src2x": "/images/products/SiD8mcYsnO0-main@2x.jpg"
+        }
+      ],
+      "category": "shirt",
+      "description": "A black dress shirt in easy-iron cotton stretch with a slim fit and a cutaway collar. A sharp choice for evenings and events. Machine wash warm, iron on medium heat.",
+      "stock": 125,
+      "colors": ["Black"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 5,
+      "reviewCount": 487,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:42:00.000Z"
+    },
+    {
+      "id": "p28",
+      "name": "Polo Shirt",
+      "price": 35,
+      "thumbnail": "/images/products/itUsEU7GgDU-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/tvG4WvjgsEY-main.jpg",
+          "thumbnailSrc": "/images/products/tvG4WvjgsEY-thumb.jpg",
+          "src2x": "/images/products/tvG4WvjgsEY-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/itUsEU7GgDU-main.jpg",
+          "thumbnailSrc": "/images/products/itUsEU7GgDU-thumb.jpg",
+          "src2x": "/images/products/itUsEU7GgDU-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/O2T2CPLHUek-main.jpg",
+          "thumbnailSrc": "/images/products/O2T2CPLHUek-thumb.jpg",
+          "src2x": "/images/products/O2T2CPLHUek-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/rpiH-Z9ohmk-main.jpg",
+          "thumbnailSrc": "/images/products/rpiH-Z9ohmk-thumb.jpg",
+          "src2x": "/images/products/rpiH-Z9ohmk-main@2x.jpg"
+        }
+      ],
+      "category": "shirt",
+      "description": "A classic polo in breathable cotton piqué with a ribbed collar, two-button placket and side vents. A neat alternative to a tee. Machine wash cold.",
+      "stock": 260,
+      "colors": ["Black", "Blue", "Green"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 5,
+      "reviewCount": 776,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:41:00.000Z"
+    },
+    {
+      "id": "p29",
+      "name": "Khaki Work Shirt",
+      "price": 48,
+      "thumbnail": "/images/products/Zg18Bqd7GGY-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/Zg18Bqd7GGY-main.jpg",
+          "thumbnailSrc": "/images/products/Zg18Bqd7GGY-thumb.jpg",
+          "src2x": "/images/products/Zg18Bqd7GGY-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/6pV4FoDRbbo-main.jpg",
+          "thumbnailSrc": "/images/products/6pV4FoDRbbo-thumb.jpg",
+          "src2x": "/images/products/6pV4FoDRbbo-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/lnGUJri8vE4-main.jpg",
+          "thumbnailSrc": "/images/products/lnGUJri8vE4-thumb.jpg",
+          "src2x": "/images/products/lnGUJri8vE4-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/6SNCof4iGso-main.jpg",
+          "thumbnailSrc": "/images/products/6SNCof4iGso-thumb.jpg",
+          "src2x": "/images/products/6SNCof4iGso-main@2x.jpg"
+        }
+      ],
+      "category": "shirt",
+      "description": "A sturdy work shirt in cotton twill with two button chest pockets and reinforced seams. Wear it alone or as an overshirt. Machine wash warm.",
+      "stock": 115,
+      "colors": ["Green", "Black"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 4,
+      "reviewCount": 198,
+      "isBestSeller": false,
+      "createdAt": "2026-11-24T23:40:00.000Z"
+    },
+    {
+      "id": "p30",
+      "name": "Henley Shirt",
+      "price": 32,
+      "thumbnail": "/images/products/gCt0AoP1jiM-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/gCt0AoP1jiM-main.jpg",
+          "thumbnailSrc": "/images/products/gCt0AoP1jiM-thumb.jpg",
+          "src2x": "/images/products/gCt0AoP1jiM-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/NqPrwHS2TSY-main.jpg",
+          "thumbnailSrc": "/images/products/NqPrwHS2TSY-thumb.jpg",
+          "src2x": "/images/products/NqPrwHS2TSY-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/eULG-K36phc-main.jpg",
+          "thumbnailSrc": "/images/products/eULG-K36phc-thumb.jpg",
+          "src2x": "/images/products/eULG-K36phc-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/AQJcM7ZWvao-main.jpg",
+          "thumbnailSrc": "/images/products/AQJcM7ZWvao-thumb.jpg",
+          "src2x": "/images/products/AQJcM7ZWvao-main@2x.jpg"
+        }
+      ],
+      "category": "shirt",
+      "description": "A long-sleeve henley in soft slub cotton with a three-button placket and ribbed cuffs. A relaxed layer between a tee and a shirt. Machine wash cold.",
+      "stock": 230,
+      "colors": ["Black", "Green"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 4,
+      "reviewCount": 264,
+      "isBestSeller": false,
+      "createdAt": "2026-11-24T23:39:00.000Z"
+    },
+    {
+      "id": "p31",
+      "name": "Slim Blue Jeans",
+      "price": 69,
+      "thumbnail": "/images/products/aWLTXw6kbDw-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/aWLTXw6kbDw-main.jpg",
+          "thumbnailSrc": "/images/products/aWLTXw6kbDw-thumb.jpg",
+          "src2x": "/images/products/aWLTXw6kbDw-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/m1m2EZOZVwA-main.jpg",
+          "thumbnailSrc": "/images/products/m1m2EZOZVwA-thumb.jpg",
+          "src2x": "/images/products/m1m2EZOZVwA-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/UP9DtTjRYpI-main.jpg",
+          "thumbnailSrc": "/images/products/UP9DtTjRYpI-thumb.jpg",
+          "src2x": "/images/products/UP9DtTjRYpI-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/DmD8HVOjy4c-main.jpg",
+          "thumbnailSrc": "/images/products/DmD8HVOjy4c-thumb.jpg",
+          "src2x": "/images/products/DmD8HVOjy4c-main@2x.jpg"
+        }
+      ],
+      "category": "jeans",
+      "description": "Slim jeans in stretch denim that keep their shape all day, with a mid rise and a tapered leg. Five-pocket styling in a classic mid-blue wash. Machine wash cold inside out.",
+      "stock": 200,
+      "colors": ["Blue"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 5,
+      "reviewCount": 1024,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:38:00.000Z"
+    },
+    {
+      "id": "p32",
+      "name": "Black Jeans",
+      "price": 72,
+      "thumbnail": "/images/products/Kz8uVOyrIzA-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/Kz8uVOyrIzA-main.jpg",
+          "thumbnailSrc": "/images/products/Kz8uVOyrIzA-thumb.jpg",
+          "src2x": "/images/products/Kz8uVOyrIzA-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/P7qzHjl_DF4-main.jpg",
+          "thumbnailSrc": "/images/products/P7qzHjl_DF4-thumb.jpg",
+          "src2x": "/images/products/P7qzHjl_DF4-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/4V7fiW1J-Tg-main.jpg",
+          "thumbnailSrc": "/images/products/4V7fiW1J-Tg-thumb.jpg",
+          "src2x": "/images/products/4V7fiW1J-Tg-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/IdYEuXYuiwQ-main.jpg",
+          "thumbnailSrc": "/images/products/IdYEuXYuiwQ-thumb.jpg",
+          "src2x": "/images/products/IdYEuXYuiwQ-main@2x.jpg"
+        }
+      ],
+      "category": "jeans",
+      "description": "Black jeans in a slim straight cut with comfortable stretch. A colour-fast black that stays dark wash after wash. Machine wash cold inside out.",
+      "stock": 165,
+      "colors": ["Black"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 5,
+      "reviewCount": 688,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:37:00.000Z"
+    },
+    {
+      "id": "p33",
+      "name": "Ripped Jeans",
+      "price": 75,
+      "thumbnail": "/images/products/5YthfgXMHBk-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/5YthfgXMHBk-main.jpg",
+          "thumbnailSrc": "/images/products/5YthfgXMHBk-thumb.jpg",
+          "src2x": "/images/products/5YthfgXMHBk-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/U2eolvCbMvg-main.jpg",
+          "thumbnailSrc": "/images/products/U2eolvCbMvg-thumb.jpg",
+          "src2x": "/images/products/U2eolvCbMvg-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/-rpirbUZC5A-main.jpg",
+          "thumbnailSrc": "/images/products/-rpirbUZC5A-thumb.jpg",
+          "src2x": "/images/products/-rpirbUZC5A-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/e9z8_vDmoSo-main.jpg",
+          "thumbnailSrc": "/images/products/e9z8_vDmoSo-thumb.jpg",
+          "src2x": "/images/products/e9z8_vDmoSo-main@2x.jpg"
+        }
+      ],
+      "category": "jeans",
+      "description": "Distressed jeans with ripped knees, light whiskering and a relaxed tapered fit. A worn-in look from the first day. Machine wash cold inside out, line dry.",
+      "stock": 140,
+      "colors": ["Blue"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 4,
+      "reviewCount": 455,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:36:00.000Z"
+    },
+    {
+      "id": "p34",
+      "name": "Wide-Leg Jeans",
+      "price": 79,
+      "thumbnail": "/images/products/fZ1w06hCfXM-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/fZ1w06hCfXM-main.jpg",
+          "thumbnailSrc": "/images/products/fZ1w06hCfXM-thumb.jpg",
+          "src2x": "/images/products/fZ1w06hCfXM-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/3K7EMbWPx24-main.jpg",
+          "thumbnailSrc": "/images/products/3K7EMbWPx24-thumb.jpg",
+          "src2x": "/images/products/3K7EMbWPx24-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/dvnza71D_LQ-main.jpg",
+          "thumbnailSrc": "/images/products/dvnza71D_LQ-thumb.jpg",
+          "src2x": "/images/products/dvnza71D_LQ-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/Y6PS09tgH8U-main.jpg",
+          "thumbnailSrc": "/images/products/Y6PS09tgH8U-thumb.jpg",
+          "src2x": "/images/products/Y6PS09tgH8U-main@2x.jpg"
+        }
+      ],
+      "category": "jeans",
+      "description": "High-rise wide-leg jeans in rigid cotton denim with a full-length leg. A relaxed 90s shape that pairs with crop tops and tucked shirts. Machine wash cold.",
+      "stock": 120,
+      "colors": ["Blue"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 4,
+      "reviewCount": 372,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:35:00.000Z"
+    },
+    {
+      "id": "p35",
+      "name": "Mom Jeans",
+      "price": 68,
+      "thumbnail": "/images/products/5YnSx_EQlN8-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/5YnSx_EQlN8-main.jpg",
+          "thumbnailSrc": "/images/products/5YnSx_EQlN8-thumb.jpg",
+          "src2x": "/images/products/5YnSx_EQlN8-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/aMEhfpU7Wg4-main.jpg",
+          "thumbnailSrc": "/images/products/aMEhfpU7Wg4-thumb.jpg",
+          "src2x": "/images/products/aMEhfpU7Wg4-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/9WEq4xcM3_Q-main.jpg",
+          "thumbnailSrc": "/images/products/9WEq4xcM3_Q-thumb.jpg",
+          "src2x": "/images/products/9WEq4xcM3_Q-main@2x.jpg"
+        }
+      ],
+      "category": "jeans",
+      "description": "High-waisted mom jeans with a relaxed hip and a tapered ankle in a vintage light wash. Comfortable all-day cotton denim. Machine wash cold.",
+      "stock": 135,
+      "colors": ["Blue"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 4,
+      "reviewCount": 341,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:34:00.000Z"
+    },
+    {
+      "id": "p36",
+      "name": "Straight Jeans",
+      "price": 65,
+      "thumbnail": "/images/products/rNXy6ngoyQ0-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/rNXy6ngoyQ0-main.jpg",
+          "thumbnailSrc": "/images/products/rNXy6ngoyQ0-thumb.jpg",
+          "src2x": "/images/products/rNXy6ngoyQ0-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/3oejsU5OQVk-main.jpg",
+          "thumbnailSrc": "/images/products/3oejsU5OQVk-thumb.jpg",
+          "src2x": "/images/products/3oejsU5OQVk-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/quddu_dZKkQ-main.jpg",
+          "thumbnailSrc": "/images/products/quddu_dZKkQ-thumb.jpg",
+          "src2x": "/images/products/quddu_dZKkQ-main@2x.jpg"
+        }
+      ],
+      "category": "jeans",
+      "description": "Straight jeans with a regular rise and a straight leg from hip to hem. An everyday classic in durable cotton denim. Machine wash cold inside out.",
+      "stock": 210,
+      "colors": ["Blue", "Black"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 5,
+      "reviewCount": 590,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:33:00.000Z"
+    },
+    {
+      "id": "p37",
+      "name": "Light Wash Jeans",
+      "price": 66,
+      "thumbnail": "/images/products/VBf7RPTezEc-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/VBf7RPTezEc-main.jpg",
+          "thumbnailSrc": "/images/products/VBf7RPTezEc-thumb.jpg",
+          "src2x": "/images/products/VBf7RPTezEc-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/Gs4Ht2QUU1I-main.jpg",
+          "thumbnailSrc": "/images/products/Gs4Ht2QUU1I-thumb.jpg",
+          "src2x": "/images/products/Gs4Ht2QUU1I-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/4NPIEhhs8Ao-main.jpg",
+          "thumbnailSrc": "/images/products/4NPIEhhs8Ao-thumb.jpg",
+          "src2x": "/images/products/4NPIEhhs8Ao-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/0RtwyKIouKM-main.jpg",
+          "thumbnailSrc": "/images/products/0RtwyKIouKM-thumb.jpg",
+          "src2x": "/images/products/0RtwyKIouKM-main@2x.jpg"
+        }
+      ],
+      "category": "jeans",
+      "description": "Light wash jeans with a soft vintage fade and a regular straight fit. Easy summer denim that goes with everything. Machine wash cold.",
+      "stock": 150,
+      "colors": ["Blue"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 4,
+      "reviewCount": 302,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:32:00.000Z"
+    },
+    {
+      "id": "p38",
+      "name": "Flared Jeans",
+      "price": 78,
+      "thumbnail": "/images/products/6nf2b2BPkxM-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/6nf2b2BPkxM-main.jpg",
+          "thumbnailSrc": "/images/products/6nf2b2BPkxM-thumb.jpg",
+          "src2x": "/images/products/6nf2b2BPkxM-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/5FxwRWP2kuI-main.jpg",
+          "thumbnailSrc": "/images/products/5FxwRWP2kuI-thumb.jpg",
+          "src2x": "/images/products/5FxwRWP2kuI-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/kZ_Z5Af_5vs-main.jpg",
+          "thumbnailSrc": "/images/products/kZ_Z5Af_5vs-thumb.jpg",
+          "src2x": "/images/products/kZ_Z5Af_5vs-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/X05jfsg7tEE-main.jpg",
+          "thumbnailSrc": "/images/products/X05jfsg7tEE-thumb.jpg",
+          "src2x": "/images/products/X05jfsg7tEE-main@2x.jpg"
+        }
+      ],
+      "category": "jeans",
+      "description": "Flared jeans with a high rise, a fitted thigh and a gentle flare from the knee. A 70s-inspired shape in stretch denim. Machine wash cold inside out.",
+      "stock": 95,
+      "colors": ["Blue"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 4,
+      "reviewCount": 226,
+      "isBestSeller": true,
+      "createdAt": "2026-11-24T23:31:00.000Z"
+    },
+    {
+      "id": "p39",
+      "name": "Raw Denim Jeans",
+      "price": 95,
+      "thumbnail": "/images/products/M-NPViXH_do-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/M-NPViXH_do-main.jpg",
+          "thumbnailSrc": "/images/products/M-NPViXH_do-thumb.jpg",
+          "src2x": "/images/products/M-NPViXH_do-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/5sHNWvDbphw-main.jpg",
+          "thumbnailSrc": "/images/products/5sHNWvDbphw-thumb.jpg",
+          "src2x": "/images/products/5sHNWvDbphw-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/sWcDEaemw14-main.jpg",
+          "thumbnailSrc": "/images/products/sWcDEaemw14-thumb.jpg",
+          "src2x": "/images/products/sWcDEaemw14-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/WXuDzSIxiUo-main.jpg",
+          "thumbnailSrc": "/images/products/WXuDzSIxiUo-thumb.jpg",
+          "src2x": "/images/products/WXuDzSIxiUo-main@2x.jpg"
+        }
+      ],
+      "category": "jeans",
+      "description": "Raw selvedge jeans in unwashed 14 oz denim with a straight leg. They mould to your body and fade with your own wear. Wash as rarely as possible, cold and inside out.",
+      "stock": 60,
+      "colors": ["Blue"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 5,
+      "reviewCount": 214,
+      "isBestSeller": false,
+      "createdAt": "2026-11-24T23:30:00.000Z"
+    },
+    {
+      "id": "p40",
+      "name": "Classic Denim Jeans",
+      "price": 64,
+      "thumbnail": "/images/products/4wGaC5pTHvo-card.jpg",
+      "images": [
+        {
+          "src": "/images/products/4wGaC5pTHvo-main.jpg",
+          "thumbnailSrc": "/images/products/4wGaC5pTHvo-thumb.jpg",
+          "src2x": "/images/products/4wGaC5pTHvo-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/PENodSVsL1s-main.jpg",
+          "thumbnailSrc": "/images/products/PENodSVsL1s-thumb.jpg",
+          "src2x": "/images/products/PENodSVsL1s-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/KVHIG5biScQ-main.jpg",
+          "thumbnailSrc": "/images/products/KVHIG5biScQ-thumb.jpg",
+          "src2x": "/images/products/KVHIG5biScQ-main@2x.jpg"
+        },
+        {
+          "src": "/images/products/xmwOCSgV_Z4-main.jpg",
+          "thumbnailSrc": "/images/products/xmwOCSgV_Z4-thumb.jpg",
+          "src2x": "/images/products/xmwOCSgV_Z4-main@2x.jpg"
+        }
+      ],
+      "category": "jeans",
+      "description": "Classic five-pocket jeans in a mid-weight cotton denim with a regular fit. An honest everyday pair that suits any season. Machine wash cold inside out.",
+      "stock": 180,
+      "colors": ["Blue", "Black"],
+      "sizes": ["S", "M", "L", "XL"],
+      "rating": 4,
+      "reviewCount": 247,
+      "isBestSeller": false,
+      "createdAt": "2026-11-24T23:29:00.000Z"
     }
   ],
   "carts": [],

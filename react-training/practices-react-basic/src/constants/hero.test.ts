@@ -47,6 +47,13 @@ describe('hero images', () => {
   it('uses only paths inside /images/hero/', () => {
     for (const path of slidePaths()) expect(path.startsWith(HERO_DIR)).toBe(true)
   })
+
+  it('H1 never shows a small thumbnail file as the main slide photo', () => {
+    for (const slide of HERO_SLIDES) {
+      expect(slide.imageSrc).not.toMatch(/-thumb/)
+      if (slide.imageSrc2x !== undefined) expect(slide.imageSrc2x).not.toMatch(/-thumb/)
+    }
+  })
 })
 
 describe('hero texts', () => {

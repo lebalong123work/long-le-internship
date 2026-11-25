@@ -7,8 +7,12 @@ export interface HeroSlide {
 }
 
 const WOMAN_PHOTO = '/images/hero/IrQmtib-ER4-main.jpg'
-const MAN_PHOTO = '/images/hero/GREEBEtyR9Y-thumb.jpg'
-const MAN_PHOTO_ALT = 'Man in a white printed T-shirt'
+const MAN_SLIDE = {
+  imageSrc: '/images/hero/GREEBEtyR9Y-main.jpg',
+  imageSrc2x: '/images/hero/GREEBEtyR9Y-main@2x.jpg',
+  thumbSrc: '/images/hero/GREEBEtyR9Y-thumb.jpg',
+  alt: 'Man in a white printed T-shirt',
+}
 
 export const HERO_SLIDES: readonly HeroSlide[] = [
   {
@@ -17,8 +21,8 @@ export const HERO_SLIDES: readonly HeroSlide[] = [
     thumbSrc: WOMAN_PHOTO,
     alt: 'Smiling woman in a white T-shirt and jeans',
   },
-  { id: 'man-1', imageSrc: MAN_PHOTO, thumbSrc: MAN_PHOTO, alt: MAN_PHOTO_ALT },
-  { id: 'man-2', imageSrc: MAN_PHOTO, thumbSrc: MAN_PHOTO, alt: MAN_PHOTO_ALT },
+  { id: 'man-1', ...MAN_SLIDE },
+  { id: 'man-2', ...MAN_SLIDE },
 ]
 
 function slidePosition(position: number, total: number): string {

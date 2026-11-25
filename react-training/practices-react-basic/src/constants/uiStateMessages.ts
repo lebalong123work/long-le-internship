@@ -2,6 +2,7 @@ export const UI_STATE_MESSAGES = {
   errorDefault: 'Something went wrong. Please try again.',
   retry: 'Try again',
   emptyCategory: 'No products in this category',
+  loadingProducts: 'Loading products',
   productNotFound: 'Product not found',
   backToHome: 'Back to Home',
   emptyCart: 'Your cart is empty',

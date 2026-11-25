@@ -3,7 +3,10 @@ import { queryKeys } from '@/constants/queryKeys'
 import * as productService from '@/services/productService'
 import { retryUnlessNotFound } from './queryRetry'
 import type { UseQueryResult } from '@tanstack/react-query'
+import type { CategorySlug } from '@/constants/categories'
 import type { PaginatedList, Product, ProductFilters } from '@/types'
+
+type ProductListKey = ReturnType<typeof queryKeys.products.list>
 
 interface ProductsByIdsQueryOptions {
   queryKey: ReturnType<typeof queryKeys.products.byIds>
@@ -16,6 +19,27 @@ export function useProducts(
   return useQuery({
     queryKey: queryKeys.products.list(filters),
     queryFn: () => productService.getProducts(filters),
+  })
+}
+
+function isSameCategory(
+  previousKey: ProductListKey | undefined,
+  category: CategorySlug | undefined
+): boolean {
+  return previousKey !== undefined && previousKey[2].category === category
+}
+
+export function useShopProducts(
+  category: CategorySlug | undefined,
+  page: number
+): UseQueryResult<PaginatedList<Product>, Error> {
+  const filters: ProductFilters = { category, page }
+
+  return useQuery({
+    queryKey: queryKeys.products.list(filters),
+    queryFn: () => productService.getProducts(filters),
+    placeholderData: (previousData, previousQuery) =>
+      isSameCategory(previousQuery?.queryKey, category) ? previousData : undefined,
   })
 }
 

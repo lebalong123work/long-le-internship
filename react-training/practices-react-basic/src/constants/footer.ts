@@ -54,7 +54,11 @@ export const FOOTER_LINK_GROUPS: readonly FooterLinkGroup[] = [
   {
     id: 'shop',
     heading: FOOTER_TEXT.shopHeading,
-    items: CATEGORIES.map(({ slug, name }) => ({ id: slug, label: name, to: ROUTES.SHOP })),
+    items: CATEGORIES.map(({ slug, name }) => ({
+      id: slug,
+      label: name,
+      to: ROUTES.SHOP_CATEGORY(slug),
+    })),
     hasLogInItem: false,
   },
   {

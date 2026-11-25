@@ -1,11 +1,10 @@
 import { useId } from 'react'
 import { ProductGrid, ProductGridSkeleton } from '@/components/shared/ProductGrid'
 import { ButtonLink } from '@/components/ui/ButtonLink'
-import { CATEGORIES } from '@/constants/categories'
 import { PRODUCT_DETAIL_TEXT } from '@/constants/productDetail'
-import { ROUTES } from '@/constants/routes'
 import { useRelatedProducts } from '@/hooks/useProducts'
 import { RELATED_LIMIT } from '@/services/productService'
+import { parseCategoryParam, shopHref } from '@/utils/shopSearchParams'
 import type { Product } from '@/types'
 
 interface SameProductSectionProps {
@@ -18,11 +17,6 @@ const SECTION_CLASSES = {
   grid: 'mt-10',
   seeMoreRow: 'mt-10 flex justify-center',
   seeMore: 'w-[180px]',
-}
-
-function seeMoreHref(category: string): string {
-  const known = CATEGORIES.find((item) => item.slug === category)
-  return known ? ROUTES.SHOP_CATEGORY(known.slug) : ROUTES.SHOP
 }
 
 export function SameProductSection({ product }: SameProductSectionProps): JSX.Element | null {
@@ -45,7 +39,10 @@ export function SameProductSection({ product }: SameProductSectionProps): JSX.El
         <>
           <ProductGrid products={data} className={SECTION_CLASSES.grid} />
           <div className={SECTION_CLASSES.seeMoreRow}>
-            <ButtonLink to={seeMoreHref(product.category)} className={SECTION_CLASSES.seeMore}>
+            <ButtonLink
+              to={shopHref(parseCategoryParam(product.category))}
+              className={SECTION_CLASSES.seeMore}
+            >
               {PRODUCT_DETAIL_TEXT.seeMore}
             </ButtonLink>
           </div>

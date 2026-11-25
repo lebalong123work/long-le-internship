@@ -25,14 +25,14 @@ Log in from the user icon in the header, or open https://mangcoding-store-seven.
 | Where | What to check |
 |---|---|
 | Home `/` | Hero banner (desktop and mobile — resize the window) |
-| Home — "Our Best Seller" | Category tabs T-Shirt · Jacket · Shirt · Jeans (click, or arrow keys + Enter): T-Shirt shows 8 product cards, the other tabs show "No products in this category" (the mock data has T-shirts only). Grid: 4 columns on desktop, 3 on tablets, 2 on phones. "See More" opens the shop page (under development) |
+| Home — "Our Best Seller" | Category tabs T-Shirt · Jacket · Shirt · Jeans (click, or arrow keys + Enter): each tab shows 8 best-selling products of that category. Grid: 4 columns on desktop, 3 on tablets, 2 on phones. "See More" opens the shop page filtered by the chosen category |
 | Product card heart | Logged in: saves / removes the product from your wishlist. Guest: opens Log In, and the product is saved after you log in |
 | Product page — click a product card | Photo gallery (click a thumbnail; the 4th photo is in the sideways scroll strip), name, price "$40 USD", stock, choose color / size / quantity (quantity stays within stock). `/shop/unknown` shows "Product not found" with "Back to Home" |
 | Product page — Add To Cart | Without a color: "Please select a color" (red frame around the colors). "Added to cart" and the cart icon count goes up — also without logging in (guests get their own cart in this browser). The heart saves the product (same state as on the product card); the bag button is decoration only |
-| Product page — "Same Product" | Up to 8 other products of the same category, and "See More" (opens the shop page, under development) |
+| Product page — "Same Product" | Up to 8 other products of the same category, and "See More" (opens the shop page filtered by the same category) |
 | Cart `/cart` (no login needed) | Add a product on its page, then open the cart: each row shows the photo, name, color and size, price and stock. "+" / "−" change the quantity (never above the stock) and the total updates at once; the trash icon removes the row ("Removed from cart"). The summary shows the number of products and the total; "Checkout" opens the checkout page. An empty cart shows "Your cart is empty" with "Shop Now". The stock shown is for display only — it is not reserved for you |
 | Checkout `/checkout` (no login needed, cart not empty) | Shipping address (Province / City → Ward / Commune), payment method (Cash on delivery, bank transfer, or card — demo only, no real payment and no card details asked), order summary. Empty fields show messages. "Place Order" checks the cart again, saves the order and empties the cart. Guests start with empty fields; logged-in customers get their name and email filled in |
-| Order Success | After "Place Order": green check, "Order Placed Successfully!", order number, products, address, payment method and totals. "Continue Shopping" opens the shop page (under development). A guest also sees the email used for the order and "Save your order number to look up your order later." (no email is sent). "View Order" opens the order history when logged in, or the order lookup page with the order number already filled in for a guest. An unknown order number, e.g. `/order-success/abc`, shows "Order not found" |
+| Order Success | After "Place Order": green check, "Order Placed Successfully!", order number, products, address, payment method and totals. "Continue Shopping" opens the shop page. A guest also sees the email used for the order and "Save your order number to look up your order later." (no email is sent). "View Order" opens the order history when logged in, or the order lookup page with the order number already filled in for a guest. An unknown order number, e.g. `/order-success/abc`, shows "Order not found" |
 | Track an order `/order-lookup` (no login needed) | Type the email used for the order and the order number ("#ORD-…" or just the code) → that one order with its status badge, status steps, products, address, payment method and totals. A wrong email or number shows "Order not found". Changing a field hides the old result. Open it from the user menu ("Track Order"), the footer ("Track an Order") or "View Order" after a guest order. Demo only: the mock API keeps nothing private, so this is not real privacy protection |
 | Header | Logo, nav (Home · Shop · About Us · Contact), search bar with suggestions while typing (on phones: search button → full-screen search), mobile menu (☰) |
 | Log In / Sign Up | Modal with two tabs, form validation (empty fields, wrong email, wrong password), toast after login |
@@ -45,10 +45,11 @@ Log in from the user icon in the header, or open https://mangcoding-store-seven.
 | Search results `/search?q=shirt` | Press Enter in the search bar (or pick a category suggestion): "Results for "shirt"" with the number of items and the matching product cards, 8 per page ("Previous page" / "Next page"; the page number stays in the address). No match → "No results for '…'" with a tip to try another word. An empty search goes back to Home. The demo data has T-shirts only, so most words show the no-results message |
 | Guest | Add to cart, open the cart, check out and see the order without an account. User icon → "Track Order" or "Log In"; heart → the login modal opens. Logging in shows the account's own cart; the guest cart stays as it was and comes back after logout. Guest orders are not added to an account's order history |
 | Footer | Links, "Track an Order" and "Log In" (hidden when logged in) |
-| `/shop`, `/about`, `/contact` | "This page is under development" |
+| Shop — `/shop` | All products, 12 per page with "Previous page" / "Next page". Filter links All · T-Shirt · Jacket · Shirt · Jeans; the choice and the page are in the address (`/shop?category=jacket&page=2`), so a link or a reload opens the same list. An unknown category shows all products |
+| `/about`, `/contact` | "This page is under development" |
 | Any unknown URL, e.g. `/abc` | 404 page |
 
-All planned pages are built (Shop, About Us and Contact show "This page is under development" on purpose). The demo updates automatically after each merge into `practices-react-basic`.
+All planned pages are built (About Us and Contact show "This page is under development" on purpose). The demo updates automatically after each merge into `practices-react-basic`.
 
 ### Demo limits
 
@@ -70,7 +71,7 @@ All planned pages are built (Shop, About Us and Contact show "This page is under
 | Wishlist | Login required. Saved per user on the server — the same on every device |
 | Checkout | Shipping address + payment method (mock) → order success page |
 | Account | Order history, profile, change password |
-| Other | Shop, About Us and Contact show "This page is under development"; 404 page for unknown URLs |
+| Other | Shop page with category filter and pages; About Us and Contact show "This page is under development"; 404 page for unknown URLs |
 
 Cross-cutting:
 - **Responsive** for desktop and mobile (desktop from Figma, mobile layout designed by us).
@@ -150,6 +151,8 @@ Optional: copy `.env.example` to `.env` to change the API URL or the fake networ
 
 Before finishing any change, run `type-check`, `lint`, `test` and `build`.
 
+> **Tests are not in this repository.** This is a solo project: the unit tests and end-to-end tests live in a local `tests/` folder that is git-ignored. On a fresh clone, `test`, `test:watch`, `test:coverage`, `test:e2e` and `lint` fail until a `tests/` folder is added. `dev`, `build`, `preview` and `type-check` work as usual.
+
 ---
 
 ## Deployment
@@ -179,8 +182,8 @@ src/
 ├── types/        TypeScript interfaces (source of truth for data shapes)
 ├── constants/    routes, query keys, categories, order status
 ├── utils/        pure helper functions
-├── router/       route config + route guards
-└── test/         test setup
+└── router/       route config + route guards
+tests/            local only, git-ignored (not in this repository): unit/ (same paths as src/) · support/ · e2e/
 ```
 
 Layer rules:

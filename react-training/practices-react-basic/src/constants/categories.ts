@@ -7,3 +7,5 @@ export const CATEGORIES = [
 ] as const
 
 export type CategorySlug = (typeof CATEGORIES)[number]['slug']
+
+export const CATEGORY_LIST_LABEL = 'Product categories'

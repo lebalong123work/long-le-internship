@@ -36,4 +36,5 @@ export const ORDER_LOOKUP_TEXT = {
   orderNumberLabel: 'Order number',
   orderNumberPlaceholder: '#ORD-…',
   submit: 'Find Order',
+  linkLabel: 'Track an Order',
 } as const

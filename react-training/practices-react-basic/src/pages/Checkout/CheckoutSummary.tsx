@@ -4,11 +4,10 @@ import { OrderAmounts } from '@/components/shared/OrderAmounts'
 import { OrderLineItem } from '@/components/shared/OrderLineItem'
 import { ORDER_SUMMARY_CLASSES } from '@/components/shared/orderSummaryClasses'
 import { Button } from '@/components/ui/Button'
-import { FOCUS_RING, LINK_HOVER_OPACITY } from '@/components/ui/interactionClasses'
+import { TEXT_LINK } from '@/components/ui/interactionClasses'
 import { CART_TEXT } from '@/constants/cart'
 import { CHECKOUT_TEXT } from '@/constants/checkout'
 import { ROUTES } from '@/constants/routes'
-import { cn } from '@/utils/cn'
 import { formatCurrency } from '@/utils/formatCurrency'
 import { productImageSrc } from '@/utils/productImage'
 import { stockIssue } from './stockIssue'
@@ -28,7 +27,7 @@ interface SummaryRowProps {
 const SUMMARY_CLASSES = {
   issue: 'font-body text-sm font-bold leading-normal text-dark',
   blocked: 'flex flex-col gap-2 font-body text-sm leading-normal text-dark',
-  cartLink: cn('w-fit font-bold underline', FOCUS_RING, LINK_HOVER_OPACITY),
+  cartLink: TEXT_LINK,
 }
 
 function SummaryRow({ line }: SummaryRowProps): JSX.Element | null {

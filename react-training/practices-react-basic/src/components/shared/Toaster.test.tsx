@@ -331,6 +331,21 @@ describe('Toaster focus and hover', () => {
 
     expect(visibleMessages()).toEqual([])
   })
+
+  it('U4 a touch pointer leaving does not end a mouse hover pause', () => {
+    render(<Toaster />)
+    addToast('success', 'Added to cart')
+    const toast = toastText('Added to cart')
+
+    firePointer(toast, 'pointerover', 'mouse')
+    firePointer(toast, 'pointerout', 'touch')
+    advance(60000)
+    expect(visibleMessages()).toEqual(['Added to cart'])
+
+    firePointer(toast, 'pointerout', 'mouse')
+    advance(5000)
+    expect(visibleMessages()).toEqual([])
+  })
 })
 
 describe('Toaster position', () => {

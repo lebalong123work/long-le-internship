@@ -262,4 +262,26 @@ describe('parseProductList', () => {
     parseProductList([product('p1'), product('p2')])
     expect(warn).not.toHaveBeenCalled()
   })
+
+  it('S4 skips records that are not objects or have no id and warns without an id', () => {
+    expect(parseProductList([product('p1'), null, 'p1', 42, {}])).toEqual([product('p1')])
+    expect(warn).toHaveBeenCalledTimes(4)
+    for (const [, details] of warn.mock.calls) {
+      expect(details).toMatchObject({ id: undefined })
+    }
+  })
+
+  it('S5 throws Invalid product data when every record is broken', () => {
+    const error = catchParseError(() => parseProductList([null, {}]))
+    expect(error.status).toBe(502)
+    expect(error.message).toBe(PRODUCT_ERRORS.invalidData)
+  })
+})
+
+describe('parseProduct — broken record', () => {
+  it('S6 throws Invalid product data with status 502 for a null record', () => {
+    const error = catchParseError(() => parseProduct(null))
+    expect(error.status).toBe(502)
+    expect(error.message).toBe(PRODUCT_ERRORS.invalidData)
+  })
 })

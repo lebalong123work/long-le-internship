@@ -352,6 +352,16 @@ describe('Header user menu', () => {
     expect(screen.getByRole('button', { name: 'Account menu' })).toBeInTheDocument()
   })
 
+  it('U3 clicking the account button again closes the menu and a third click opens it', async () => {
+    const user = await openAccountMenu()
+    await user.click(accountButton())
+    expect(accountButton()).toHaveAttribute('aria-expanded', 'false')
+    expect(accountPanel()).not.toBeVisible()
+    await user.click(accountButton())
+    expect(accountButton()).toHaveAttribute('aria-expanded', 'true')
+    expect(within(accountPanel()).getByRole('link', { name: 'Profile' })).toBeVisible()
+  })
+
   it('Esc closes the account menu and focuses the button', async () => {
     const user = await openAccountMenu()
     within(accountPanel()).getByRole('link', { name: 'Profile' }).focus()

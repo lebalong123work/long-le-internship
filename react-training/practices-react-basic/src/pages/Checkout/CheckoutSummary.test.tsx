@@ -14,6 +14,10 @@ const POLO: CartLine = {
   item: { id: 'p2__Blue__M', productId: 'p2', color: '', size: '', quantity: 1 },
   product: { ...product('p2'), name: 'Polo Two', price: 25.5, stock: 3, images: [], thumbnail: '' },
 }
+const DELETED: CartLine = {
+  item: { id: 'p3__Green__L', productId: 'p3', color: 'Green', size: 'L', quantity: 1 },
+  product: null,
+}
 const SUMMARY: CartSummary = { itemCount: 3, subtotal: 105.5, shippingFee: 0, total: 105.5 }
 
 function withStock(line: CartLine, stock: number): CartLine {
@@ -102,5 +106,24 @@ describe('CheckoutSummary', () => {
     )
     expect(placeOrder()).toBeDisabled()
     expect(placeOrder()).toHaveAttribute('aria-busy', 'true')
+  })
+
+  it('R1 skips a deleted product line and does not block Place Order for it', () => {
+    const region = renderSummary([TEE, DELETED])
+    const items = within(region).getAllByRole('listitem')
+    expect(items).toHaveLength(1)
+    expect(within(items[0]).getByText('Tee One')).toBeInTheDocument()
+    expect(placeOrder()).toBeEnabled()
+    expect(placeOrder()).not.toHaveAccessibleDescription()
+    expect(screen.queryByRole('link', { name: 'Back to cart' })).toBeNull()
+  })
+
+  it('R2 still blocks Place Order for a stock problem next to a deleted product line', () => {
+    renderSummary([DELETED, withStock(TEE, 0)])
+    expect(screen.getByText('Out of Stock')).toBeInTheDocument()
+    expect(placeOrder()).toBeDisabled()
+    expect(placeOrder()).toHaveAccessibleDescription(
+      'Some products are out of stock. Update your cart to continue.'
+    )
   })
 })

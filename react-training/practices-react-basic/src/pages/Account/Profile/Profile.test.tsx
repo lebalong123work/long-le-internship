@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { act, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
@@ -400,6 +400,21 @@ describe('Profile page — avatar', () => {
     expect(preview()).toHaveAttribute('src', 'data:image/png;base64,Yg==')
   })
 
+  it('R5 a failed older read after a newer pick succeeded keeps the newer photo and shows no error', async () => {
+    await showForm()
+    const first = deferred<string>()
+    const second = deferred<string>()
+    vi.mocked(readFileAsDataUrl)
+      .mockReturnValueOnce(first.promise)
+      .mockReturnValueOnce(second.promise)
+    await userEvent.upload(fileInput(), pngFile('a.png'))
+    await userEvent.upload(fileInput(), pngFile('b.png'))
+    await act(async () => second.resolve('data:image/png;base64,Yg=='))
+    await act(async () => first.reject(new Error('read failed')))
+    expect(preview()).toHaveAttribute('src', 'data:image/png;base64,Yg==')
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+  })
+
   it('P19 an invalid pick after a valid one wins over the earlier read', async () => {
     await showForm({ ...PROFILE, avatar: STORED_AVATAR })
     const read = deferred<string>()
@@ -425,7 +440,7 @@ describe('Profile page — avatar', () => {
     await showForm({ ...PROFILE, avatar: STORED_AVATAR })
     await noAcceptFilter().upload(fileInput(), new File(['x'], 'a.gif', { type: 'image/gif' }))
     await screen.findByRole('alert')
-    await userEvent.upload(fileInput(), [])
+    fireEvent.change(fileInput(), { target: { files: [] } })
     expect(screen.getByRole('alert')).toHaveTextContent(VALIDATION_MESSAGES.avatarType)
     expect(preview()).toHaveAttribute('src', STORED_AVATAR)
     expect(readFileAsDataUrl).not.toHaveBeenCalled()

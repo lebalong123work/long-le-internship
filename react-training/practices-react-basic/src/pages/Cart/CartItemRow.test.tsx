@@ -98,6 +98,14 @@ describe('CartItemRow', () => {
     expect(screen.getByRole('button', { name: 'Increase quantity' })).toBeDisabled()
   })
 
+  it('U5 plus at the stock limit is disabled and sends nothing when clicked', async () => {
+    const { onQuantityChange } = renderRow(cartItem({ quantity: 3 }), { ...P1, stock: 3 })
+    const plus = screen.getByRole('button', { name: 'Increase quantity' })
+    expect(plus).toBeDisabled()
+    await userEvent.click(plus)
+    expect(onQuantityChange).not.toHaveBeenCalled()
+  })
+
   it('clamps a quantity above the stock when it is changed', async () => {
     const { onQuantityChange } = renderRow(cartItem({ quantity: 9 }), { ...P1, stock: 5 })
     await userEvent.click(screen.getByRole('button', { name: 'Decrease quantity' }))

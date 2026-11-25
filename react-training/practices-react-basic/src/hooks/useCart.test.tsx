@@ -312,6 +312,34 @@ describe('all cart mutations', () => {
     expect(toasts()).toEqual([{ type: 'error', message: TOAST_MESSAGES.cart.updateFailed }])
   })
 
+  it('S9 a cart removal for a guest without an id sends no request, shows the cart error toast and refetches no cart', async () => {
+    useAuthStore.setState({ user: null, token: null, isAuthenticated: false })
+    const { queryClient, wrapper } = setup()
+    const invalidate = vi.spyOn(queryClient, 'invalidateQueries')
+    const { result } = renderHook(() => useRemoveCartItem(), { wrapper })
+
+    act(() => result.current.mutate(black.id))
+
+    await waitFor(() => expect(result.current.isError).toBe(true))
+    expect(cartService.removeItem).not.toHaveBeenCalled()
+    expect(toasts()).toEqual([{ type: 'error', message: TOAST_MESSAGES.cart.updateFailed }])
+    expect(queryClient.getQueryCache().findAll({ queryKey: ['cart'] })).toEqual([])
+    expect(invalidate).not.toHaveBeenCalled()
+  })
+
+  it('S10 a failed cart removal with no loaded cart leaves the cache empty and shows the cart error toast', async () => {
+    vi.mocked(cartService.removeItem).mockRejectedValue(new ApiError(500, 'Server error'))
+    vi.mocked(cartService.getCart).mockReturnValue(new Promise<Cart>(() => undefined))
+    const { queryClient, wrapper } = setup()
+    const { result } = renderHook(() => useRemoveCartItem(), { wrapper })
+
+    act(() => result.current.mutate(black.id))
+
+    await waitFor(() => expect(result.current.isError).toBe(true))
+    expect(queryClient.getQueryData(cartKey)).toBeUndefined()
+    expect(toasts()).toEqual([{ type: 'error', message: TOAST_MESSAGES.cart.updateFailed }])
+  })
+
   it('two cart mutations run one after the other', async () => {
     const first = deferred<Cart>()
     vi.mocked(cartService.updateQuantity).mockReturnValue(first.promise)

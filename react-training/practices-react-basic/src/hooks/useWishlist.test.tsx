@@ -360,6 +360,25 @@ describe('useWishlistPendingAction', () => {
     unmount()
   })
 
+  it('S11 a failed pending toggleWishlist with no loaded list writes no list, shows the error toast and refetches', async () => {
+    vi.mocked(wishlistService.add).mockRejectedValue(new ApiError(500, 'Server error'))
+    const { queryClient, wrapper } = setup()
+    const setData = vi.spyOn(queryClient, 'setQueryData')
+    const invalidate = vi.spyOn(queryClient, 'invalidateQueries')
+    const { unmount } = renderHook(() => useWishlistPendingAction(), { wrapper })
+    usePendingActionStore.setState({ action: { type: 'toggleWishlist', productId: 'p1' } })
+
+    act(() => runPendingAction(user))
+
+    await waitFor(() =>
+      expect(toasts()).toEqual([{ type: 'error', message: TOAST_MESSAGES.wishlist.updateFailed }])
+    )
+    expect(setData).not.toHaveBeenCalled()
+    expect(queryClient.getQueryData(wishlistKey)).toBeUndefined()
+    await waitFor(() => expect(invalidate).toHaveBeenCalledWith({ queryKey: wishlistKey }))
+    unmount()
+  })
+
   it('no wishlist handler runs after the hook unmounts', () => {
     const { wrapper } = setup()
     const { unmount } = renderHook(() => useWishlistPendingAction(), { wrapper })

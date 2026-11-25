@@ -60,4 +60,19 @@ describe('readFileAsDataUrl', () => {
       VALIDATION_MESSAGES.avatarReadFailed
     )
   })
+
+  it('R4 rejects with the read error text when the reader result is not a string', async () => {
+    class EmptyResultReader {
+      result: string | ArrayBuffer | null = null
+      onload: (() => void) | null = null
+      onerror: (() => void) | null = null
+      readAsDataURL(): void {
+        queueMicrotask(() => this.onload?.())
+      }
+    }
+    vi.stubGlobal('FileReader', EmptyResultReader)
+    await expect(readFileAsDataUrl(fileOf('image/png', 1))).rejects.toThrow(
+      VALIDATION_MESSAGES.avatarReadFailed
+    )
+  })
 })

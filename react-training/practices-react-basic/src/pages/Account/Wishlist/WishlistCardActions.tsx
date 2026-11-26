@@ -16,8 +16,8 @@ export function WishlistCardActions({ product, onRemove }: WishlistCardActionsPr
     <>
       <ButtonLink to={ROUTES.PRODUCT(product.id)} className={CARD_BUTTON}>
         <span>
-          {WISHLIST_TEXT.addToCart}
-          <span className="sr-only">{WISHLIST_TEXT.addToCartName(product.name)}</span>
+          {WISHLIST_TEXT.chooseOptions}
+          <span className="sr-only">{WISHLIST_TEXT.chooseOptionsName(product.name)}</span>
         </span>
       </ButtonLink>
       <Button variant="light" onClick={onRemove} className={CARD_BUTTON}>

@@ -13,4 +13,4 @@ export const MENU_ROW_BUTTON = 'block w-full text-left'
 export const PANEL_ROW = 'py-3'
 
 export const HEADER_ICON_BUTTON =
-  'relative inline-flex size-10 shrink-0 items-center justify-center xl:size-6'
+  'relative inline-flex size-10 shrink-0 items-center justify-center lg:size-6'

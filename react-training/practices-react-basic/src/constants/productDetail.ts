@@ -29,6 +29,7 @@ export const PRODUCT_DETAIL_TEXT = {
   mainPhotoAlt: (productName: string, position: number, total: number): string =>
     `${productName}, photo ${photoPosition(position, total)}`,
   addToCart: 'Add To Cart',
+  buyNow: 'Buy now',
   colorRequired: 'Please select a color',
   sameProduct: 'Same Product',
   seeMore: 'See More',

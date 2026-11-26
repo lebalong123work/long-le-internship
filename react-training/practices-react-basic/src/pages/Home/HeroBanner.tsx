@@ -1,6 +1,6 @@
 import { useId } from 'react'
 import { ButtonLink } from '@/components/ui/ButtonLink'
-import { FOCUS_RING_ON_DARK } from '@/components/ui/interactionClasses'
+import { FOCUS_RING_ON_BRAND } from '@/components/ui/interactionClasses'
 import { HERO_SLIDES, HERO_TEXT } from '@/constants/hero'
 import { ROUTES } from '@/constants/routes'
 import { cn } from '@/utils/cn'
@@ -32,7 +32,7 @@ export function HeroBanner(): JSX.Element {
           <ButtonLink
             to={ROUTES.SHOP}
             variant="light"
-            className={cn(BANNER_CLASSES.shopNow, FOCUS_RING_ON_DARK)}
+            className={cn(BANNER_CLASSES.shopNow, FOCUS_RING_ON_BRAND)}
           >
             {HERO_TEXT.shopNow}
           </ButtonLink>

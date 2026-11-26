@@ -1,5 +1,5 @@
 export const PRODUCT_DETAIL_LAYOUT = {
-  columns: 'mt-8 flex flex-col gap-10 xl:flex-row',
-  gallery: 'w-full xl:w-[588px] xl:shrink-0',
-  info: 'w-full min-w-0 xl:mt-[11px] xl:w-[572px]',
+  columns: 'mt-8 flex flex-col gap-10 lg:flex-row',
+  gallery: 'w-full lg:min-w-0 lg:flex-1 xl:w-[588px] xl:flex-none',
+  info: 'w-full min-w-0 lg:mt-[11px] lg:flex-1 xl:w-[572px] xl:flex-none',
 }

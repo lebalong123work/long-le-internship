@@ -15,11 +15,15 @@ import { useWishlist } from '@/hooks/useWishlist'
 import { cn } from '@/utils/cn'
 import { formatCurrency } from '@/utils/formatCurrency'
 import { formatReviewCount } from '@/utils/formatReviewCount'
+import { splitHyphenatedWords } from '@/utils/splitHyphenatedWords'
 import type { ReactNode } from 'react'
 import type { Product } from '@/types'
 
 const BOOKMARK_ICON = '/icons/card-bookmark.svg'
 const CARD_ACTIONS = 'relative z-10 mt-auto flex flex-col gap-2 px-4 pb-6'
+const NAME_PRICE_ROW = 'flex flex-col items-start md:flex-row md:justify-between md:gap-2'
+const RATING_ROW =
+  'mt-[13px] flex flex-col items-start gap-y-1 md:flex-row md:flex-wrap md:items-center md:gap-x-2.5'
 
 interface ProductCardProps {
   product: Product
@@ -29,6 +33,10 @@ interface ProductCardProps {
 
 interface HeartButtonProps {
   product: Product
+}
+
+interface ProductNameProps {
+  name: string
 }
 
 interface RatingProps {
@@ -65,9 +73,25 @@ function HeartButton({ product }: HeartButtonProps): JSX.Element {
   )
 }
 
+function ProductName({ name }: ProductNameProps): JSX.Element {
+  return (
+    <>
+      {splitHyphenatedWords(name).map((segment, index) =>
+        segment.keepTogether ? (
+          <span key={index} className="whitespace-nowrap">
+            {segment.text}
+          </span>
+        ) : (
+          segment.text
+        )
+      )}
+    </>
+  )
+}
+
 function Rating({ rating, reviewCount }: RatingProps): JSX.Element {
   return (
-    <div className="mt-[13px] flex flex-wrap items-center gap-x-2.5 gap-y-1">
+    <div className={RATING_ROW}>
       <RatingStars rating={rating} className="gap-1" />
       <p className="font-numeric text-sm leading-normal text-medium-dark">
         <span aria-hidden="true">
@@ -110,16 +134,18 @@ export function ProductCard({ product, actions, className }: ProductCardProps): 
         </div>
       </div>
       <div className={CARD_INFO_PADDING}>
-        <div className="flex items-start justify-between gap-2">
+        <div className={NAME_PRICE_ROW}>
           <h3 className="min-w-0 break-words font-body text-sm font-bold leading-normal text-dark">
             <Link
               to={ROUTES.PRODUCT(product.id)}
               className="after:absolute after:inset-0 focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-primary"
             >
-              {product.name}
+              <ProductName name={product.name} />
             </Link>
           </h3>
-          <p className={PRICE_TEXT_CLASSES}>{formatCurrency(product.price, 'short')}</p>
+          <p className={cn(PRICE_TEXT_CLASSES, 'mt-1 md:mt-0')}>
+            {formatCurrency(product.price, 'short')}
+          </p>
         </div>
         <p className="mt-1 font-body text-sm leading-normal text-medium-dark">
           {PRODUCT_CARD_TEXT.bestQuality}

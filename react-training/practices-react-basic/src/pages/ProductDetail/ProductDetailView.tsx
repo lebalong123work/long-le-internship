@@ -50,7 +50,7 @@ function breadcrumbItems(productName: string): BreadcrumbItem[] {
 
 function Stock({ stock }: StockProps): JSX.Element {
   return (
-    <div className="xl:col-start-2 xl:row-span-2 xl:row-start-1 xl:justify-self-end">
+    <div className="lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:justify-self-end">
       <p className={LABEL_CLASS}>
         {stock > 0 ? PRODUCT_DETAIL_TEXT.inStock : PRODUCT_DETAIL_TEXT.outOfStock}
       </p>
@@ -117,12 +117,12 @@ export function ProductDetailView({
               <span className="sr-only">{RATING_TEXT.reviews(product.reviewCount)}</span>
             </p>
           </div>
-          <div className="mt-6 grid gap-y-6 xl:grid-cols-[1fr_auto]">
+          <div className="mt-6 grid gap-y-6 lg:grid-cols-[1fr_auto]">
             <Stock stock={product.stock} />
-            <p className="font-heading text-h2 font-bold text-dark xl:col-start-2 xl:row-start-3 xl:mt-[43px] xl:text-right">
+            <p className="font-heading text-h2 font-bold text-dark lg:col-start-2 lg:row-start-3 lg:mt-[43px] lg:text-right">
               {formatCurrency(product.price, 'long')}
             </p>
-            <div className="xl:col-start-1 xl:row-start-1">
+            <div className="lg:col-start-1 lg:row-start-1">
               <ColorPicker
                 colors={product.colors}
                 value={color}
@@ -137,10 +137,10 @@ export function ProductDetailView({
                 {showColorError ? PRODUCT_DETAIL_TEXT.colorRequired : ''}
               </p>
             </div>
-            <div className="xl:col-start-1 xl:row-start-2">
+            <div className="lg:col-start-1 lg:row-start-2">
               <SizePicker sizes={product.sizes} value={size} onChange={setChosenSize} />
             </div>
-            <div className="flex flex-col gap-[18px] xl:col-start-1 xl:row-start-3">
+            <div className="flex flex-col gap-[18px] lg:col-start-1 lg:row-start-3">
               <p className={LABEL_CLASS}>{PRODUCT_DETAIL_TEXT.quantity}</p>
               <QuantityStepper
                 value={quantity}

@@ -1,1 +1,1 @@
-export const DESKTOP_MEDIA_QUERY = '(min-width: 1280px)'
+export const DESKTOP_MEDIA_QUERY = '(min-width: 1024px)'

@@ -24,11 +24,11 @@ export function HeaderBar({ searchControl, menuControl }: HeaderBarProps): JSX.E
   const cartCount = countCartItems(cart?.items)
 
   return (
-    <div className="container flex h-16 items-center justify-between gap-1 px-4 md:gap-4 md:px-6 xl:grid xl:h-20 xl:grid-cols-[1fr_auto_1fr] xl:px-0">
+    <div className="container flex h-16 items-center justify-between gap-1 px-4 md:gap-4 md:px-6 lg:h-20 lg:gap-6 xl:grid xl:grid-cols-[1fr_auto_1fr] xl:gap-4 xl:px-0">
       <SiteLogo />
-      <MainNav orientation="row" className="hidden xl:mt-[3px] xl:block" />
-      <div className="flex items-center justify-end gap-1 md:gap-4 xl:gap-6">
-        <div className="flex xl:hidden">{searchControl}</div>
+      <MainNav orientation="row" className="hidden lg:mt-[3px] lg:block" />
+      <div className="flex items-center justify-end gap-1 md:gap-4 lg:gap-6">
+        <div className="flex lg:hidden">{searchControl}</div>
         <HeaderIconLink
           to={ROUTES.CART}
           iconSrc={CART_ICON}
@@ -39,11 +39,11 @@ export function HeaderBar({ searchControl, menuControl }: HeaderBarProps): JSX.E
           to={ROUTES.ACCOUNT.WISHLIST}
           iconSrc={HEART_ICON}
           label={HEADER_TEXT.wishlist}
-          className="hidden xl:inline-flex"
+          className="hidden lg:inline-flex"
         />
-        <UserMenu className="hidden xl:flex" />
-        <HeaderSearch className="hidden xl:block" />
-        <div className="flex xl:hidden">{menuControl}</div>
+        <UserMenu className="hidden lg:flex" />
+        <HeaderSearch className="hidden lg:block" />
+        <div className="flex lg:hidden">{menuControl}</div>
       </div>
     </div>
   )

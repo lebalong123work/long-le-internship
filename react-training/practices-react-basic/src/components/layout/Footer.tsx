@@ -75,20 +75,15 @@ function FooterLinkColumn({ group }: { group: FooterLinkGroup }): JSX.Element {
   )
 }
 
-function SocialItem({ link }: { link: SocialLink }): JSX.Element {
-  if (link.href === null) {
-    return (
-      <li>
-        <img
-          src={link.iconSrc}
-          alt={link.label}
-          width={SOCIAL_ICON_SIZE}
-          height={SOCIAL_ICON_SIZE}
-        />
-      </li>
-    )
-  }
+interface PublishedSocialLink extends SocialLink {
+  href: string
+}
 
+function isPublished(link: SocialLink): link is PublishedSocialLink {
+  return link.href !== null
+}
+
+function SocialItem({ link }: { link: PublishedSocialLink }): JSX.Element {
   return (
     <li>
       <a
@@ -104,6 +99,19 @@ function SocialItem({ link }: { link: SocialLink }): JSX.Element {
   )
 }
 
+function SocialList(): JSX.Element | null {
+  const links = SOCIAL_LINKS.filter(isPublished)
+  if (links.length === 0) return null
+
+  return (
+    <ul aria-label={FOOTER_TEXT.socialLabel} className="mt-4 flex flex-wrap gap-4">
+      {links.map((link) => (
+        <SocialItem key={link.id} link={link} />
+      ))}
+    </ul>
+  )
+}
+
 function ContactColumn(): JSX.Element {
   return (
     <FooterColumn heading={FOOTER_TEXT.contactHeading} className="col-span-2 md:col-span-1">
@@ -115,11 +123,7 @@ function ContactColumn(): JSX.Element {
           {FOOTER_TEXT.email}
         </a>
       </p>
-      <ul aria-label={FOOTER_TEXT.socialLabel} className="mt-4 flex flex-wrap gap-4">
-        {SOCIAL_LINKS.map((link) => (
-          <SocialItem key={link.id} link={link} />
-        ))}
-      </ul>
+      <SocialList />
     </FooterColumn>
   )
 }

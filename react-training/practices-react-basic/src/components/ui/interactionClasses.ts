@@ -15,3 +15,5 @@ export const ARIA_DISABLED =
 export const TEXT_LINK = cn('w-fit font-bold underline', FOCUS_RING, LINK_HOVER_OPACITY)
 
 export const FOCUS_RING_ON_DARK = 'focus-visible:ring-white'
+
+export const FOCUS_RING_ON_BRAND = 'focus-visible:ring-dark focus-visible:ring-offset-2'

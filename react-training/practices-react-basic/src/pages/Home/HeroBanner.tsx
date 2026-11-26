@@ -12,9 +12,8 @@ const BANNER_CLASSES = {
     'container flex flex-col gap-10 px-4 py-10 md:px-6 xl:h-[700px] xl:flex-row xl:items-start xl:justify-between xl:gap-0 xl:px-0 xl:py-0',
   text: 'flex flex-col items-start xl:w-[508px] xl:pt-[174px]',
   title: 'font-heading text-h2 font-bold text-white md:text-display xl:max-w-[426px]',
-  description:
-    'mt-6 self-stretch rounded-5 bg-black/50 px-4 py-2 font-body text-body-lg text-light-medium xl:-mx-4 xl:mt-4',
-  shopNow: 'mt-10 w-[180px] xl:mt-8',
+  description: 'mt-6 font-body text-body-lg text-light-medium',
+  shopNow: 'mt-10 w-[180px]',
   photo: 'w-full xl:mr-[92px] xl:mt-20 xl:w-[400px] xl:shrink-0',
 }
 

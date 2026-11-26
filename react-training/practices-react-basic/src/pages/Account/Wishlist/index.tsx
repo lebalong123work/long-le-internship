@@ -67,6 +67,7 @@ export default function Wishlist(): JSX.Element {
         <h2 className="sr-only">{WISHLIST_TEXT.gridHeading}</h2>
         <ProductGrid
           products={products}
+          className="justify-start"
           renderActions={(product) => (
             <WishlistCardActions product={product} onRemove={() => toggle(product.id)} />
           )}

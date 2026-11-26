@@ -22,6 +22,8 @@ export const PRODUCT_DETAIL_TEXT = {
   stockCountLabel: (stock: number): string => `${stock} in stock`,
   loading: 'Loading product',
   choosePhoto: 'Choose photo',
+  previousPhoto: 'Previous photo',
+  nextPhoto: 'Next photo',
   showPhoto: (position: number, total: number): string =>
     `Show photo ${photoPosition(position, total)}`,
   photoStatus: (position: number, total: number): string =>

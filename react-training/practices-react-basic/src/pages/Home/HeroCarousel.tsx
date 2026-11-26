@@ -1,5 +1,6 @@
 import { useId, useState } from 'react'
-import { HOVER_OPACITY } from '@/components/ui/interactionClasses'
+import { CarouselArrowButton } from '@/components/ui/CarouselArrowButton'
+import { FOCUS_RING_ON_PHOTO, HOVER_OPACITY } from '@/components/ui/interactionClasses'
 import { HERO_TEXT } from '@/constants/hero'
 import { useCarouselIndex } from '@/hooks/useCarouselIndex'
 import { cn } from '@/utils/cn'
@@ -12,19 +13,8 @@ interface HeroCarouselProps {
   slides: readonly HeroSlide[]
 }
 
-interface ArrowButtonProps {
-  label: string
-  iconSrc: string
-  sideClassName: string
-  controlsId: string
-  onClick: () => void
-}
-
 const PHOTO_WIDTH = 400
 const PHOTO_HEIGHT = 522
-const CHEVRON_SIZE = 18
-const PREVIOUS_ICON = '/icons/chevron-left.svg'
-const NEXT_ICON = '/icons/chevron-right.svg'
 
 const CAROUSEL_CLASSES = {
   frame: 'relative mx-auto w-full max-w-[400px] drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]',
@@ -33,18 +23,13 @@ const CAROUSEL_CLASSES = {
   strip: 'absolute bottom-6 left-1/2 z-10 h-20 w-[290px] -translate-x-1/2',
   picker:
     'flex size-full items-center gap-10 rounded-5 bg-black/50 shadow-thumb backdrop-blur-[2.5px]',
-  arrow:
-    'absolute top-1/2 z-10 flex size-6 -translate-y-1/2 items-center justify-center bg-primary',
   arrowPrevious: '-left-3',
   arrowNext: '-right-3',
-  chevron: 'size-[18px]',
   thumb: 'shrink-0',
   thumbActive: 'size-20',
   thumbIdle: 'size-[60px]',
   thumbImage: 'block size-full object-cover',
   thumbFallback: 'block size-full bg-[#C4C4C4]',
-  focus:
-    'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dark focus-visible:ring-2 focus-visible:ring-white',
 }
 
 function initialStage(slide: HeroSlide): PhotoStage {
@@ -63,32 +48,6 @@ function stageAfterError(slide: HeroSlide, stage: PhotoStage, failedUrl: string)
 function photoSrcSet(slide: HeroSlide, stage: PhotoStage): string | undefined {
   if (stage !== 'responsive' || slide.imageSrc2x === undefined) return undefined
   return `${slide.imageSrc} 1x, ${slide.imageSrc2x} 2x`
-}
-
-function ArrowButton({
-  label,
-  iconSrc,
-  sideClassName,
-  controlsId,
-  onClick,
-}: ArrowButtonProps): JSX.Element {
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      aria-controls={controlsId}
-      onClick={onClick}
-      className={cn(CAROUSEL_CLASSES.arrow, sideClassName, CAROUSEL_CLASSES.focus, HOVER_OPACITY)}
-    >
-      <img
-        src={iconSrc}
-        alt=""
-        width={CHEVRON_SIZE}
-        height={CHEVRON_SIZE}
-        className={CAROUSEL_CLASSES.chevron}
-      />
-    </button>
-  )
 }
 
 export function HeroCarousel({ slides }: HeroCarouselProps): JSX.Element | null {
@@ -121,10 +80,10 @@ export function HeroCarousel({ slides }: HeroCarouselProps): JSX.Element | null 
     >
       {hasControls && (
         <div className={CAROUSEL_CLASSES.strip}>
-          <ArrowButton
+          <CarouselArrowButton
             label={HERO_TEXT.previousSlide}
-            iconSrc={PREVIOUS_ICON}
-            sideClassName={CAROUSEL_CLASSES.arrowPrevious}
+            direction="previous"
+            className={CAROUSEL_CLASSES.arrowPrevious}
             controlsId={slidesId}
             onClick={prev}
           />
@@ -141,7 +100,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps): JSX.Element | null 
                   className={cn(
                     CAROUSEL_CLASSES.thumb,
                     isActive ? CAROUSEL_CLASSES.thumbActive : CAROUSEL_CLASSES.thumbIdle,
-                    CAROUSEL_CLASSES.focus,
+                    FOCUS_RING_ON_PHOTO,
                     !isActive && HOVER_OPACITY
                   )}
                 >
@@ -159,10 +118,10 @@ export function HeroCarousel({ slides }: HeroCarouselProps): JSX.Element | null 
               )
             })}
           </div>
-          <ArrowButton
+          <CarouselArrowButton
             label={HERO_TEXT.nextSlide}
-            iconSrc={NEXT_ICON}
-            sideClassName={CAROUSEL_CLASSES.arrowNext}
+            direction="next"
+            className={CAROUSEL_CLASSES.arrowNext}
             controlsId={slidesId}
             onClick={next}
           />

@@ -17,6 +17,8 @@ import type { ReactNode } from 'react'
 import type { OrderLookupFormValues } from '@/schemas/orderLookup'
 import type { GuestOrderLookup } from '@/types'
 
+const FORM_AREA_CLASSES = 'mx-auto flex w-full max-w-lg flex-col gap-10'
+
 export default function OrderLookup(): JSX.Element {
   const location = useLocation()
   const submitLock = useSubmitLock()
@@ -51,16 +53,20 @@ export default function OrderLookup(): JSX.Element {
     if (variables) runLookup(variables)
   }
 
+  const isNotFound = isError && isNotFoundError(error)
+
+  function renderNotFound(): ReactNode {
+    if (!isNotFound) return null
+    return (
+      <p role="alert" className={FORM_ERROR_TEXT}>
+        {UI_STATE_MESSAGES.orderNotFound}
+      </p>
+    )
+  }
+
   function renderOutcome(): ReactNode {
     if (data) return <OrderLookupResult order={data} headingRef={headingRef} />
-    if (!isError) return null
-    if (isNotFoundError(error)) {
-      return (
-        <p role="alert" className={FORM_ERROR_TEXT}>
-          {UI_STATE_MESSAGES.orderNotFound}
-        </p>
-      )
-    }
+    if (!isError || isNotFound) return null
     return <ErrorState onRetry={retry} />
   }
 
@@ -71,13 +77,14 @@ export default function OrderLookup(): JSX.Element {
           <h1 className={ORDER_PAGE_LAYOUT.title}>{ORDER_LOOKUP_TEXT.title}</h1>
           <p className={ORDER_PAGE_LAYOUT.subtitle}>{ORDER_LOOKUP_TEXT.intro}</p>
         </div>
-        <div ref={formAreaRef}>
+        <div ref={formAreaRef} className={FORM_AREA_CLASSES}>
           <OrderLookupForm
             defaultOrderNumber={orderNumberFromState(location.state)}
             isSubmitting={isPending}
             onValidSubmit={submit}
             onFieldChange={clearOutcome}
           />
+          {renderNotFound()}
         </div>
         {renderOutcome()}
       </div>

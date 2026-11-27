@@ -1,6 +1,7 @@
 import { cva } from 'class-variance-authority'
 import { Link } from 'react-router-dom'
 import { FOCUS_RING } from '@/components/ui/interactionClasses'
+import { cn } from '@/utils/cn'
 import type { ReactNode } from 'react'
 
 export interface BreadcrumbItem {
@@ -14,7 +15,7 @@ interface BreadcrumbProps {
 }
 
 const breadcrumbVariants = cva(
-  'flex flex-wrap items-center gap-6 py-[9px] font-body text-sm leading-normal',
+  'flex flex-nowrap items-center gap-3 py-[9px] font-body text-sm leading-normal md:gap-6',
   {
     variants: {
       variant: {
@@ -28,10 +29,12 @@ const breadcrumbVariants = cva(
   }
 )
 
+const BREADCRUMB_ITEM = 'flex items-center gap-3 md:gap-6'
+
 function renderItem(item: BreadcrumbItem, isCurrent: boolean): ReactNode {
   if (isCurrent) {
     return (
-      <span aria-current="page" className="font-bold">
+      <span aria-current="page" className="block truncate font-bold">
         {item.label}
       </span>
     )
@@ -55,7 +58,10 @@ export function Breadcrumb({ items, variant }: BreadcrumbProps): ReactNode {
     <nav aria-label="Breadcrumb">
       <ol className={breadcrumbVariants({ variant })}>
         {items.map((item, index) => (
-          <li key={`${index}-${item.label}`} className="flex items-center gap-6">
+          <li
+            key={`${index}-${item.label}`}
+            className={cn(BREADCRUMB_ITEM, index === lastIndex ? 'min-w-0' : 'shrink-0')}
+          >
             {index > 0 && <span aria-hidden="true">/</span>}
             {renderItem(item, index === lastIndex)}
           </li>

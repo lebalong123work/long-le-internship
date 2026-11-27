@@ -55,7 +55,10 @@ export default function Search(): JSX.Element {
         <>
           <h2 className="sr-only">{SEARCH_RESULTS_TEXT.gridHeading}</h2>
           <div aria-busy={isPlaceholderData || undefined}>
-            <ProductGrid products={data.data} className={cn(isPlaceholderData && 'opacity-50')} />
+            <ProductGrid
+              products={data.data}
+              className={cn('justify-start', isPlaceholderData && 'opacity-50')}
+            />
           </div>
           <div className="mt-10">
             <Pagination
@@ -70,7 +73,7 @@ export default function Search(): JSX.Element {
     if (showSkeleton) {
       return (
         <div aria-busy="true">
-          <ProductGridSkeleton count={SEARCH_RESULTS_PER_PAGE} />
+          <ProductGridSkeleton count={SEARCH_RESULTS_PER_PAGE} className="justify-start" />
         </div>
       )
     }

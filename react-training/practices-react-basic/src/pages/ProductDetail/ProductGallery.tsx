@@ -29,8 +29,8 @@ const GALLERY_CLASSES = {
   stripFrame: 'relative mt-5',
   strip:
     'relative -m-1 flex gap-6 overflow-x-auto p-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
-  arrowPrevious: '-left-3',
-  arrowNext: '-right-3',
+  arrowPrevious: 'left-1',
+  arrowNext: 'right-1',
   thumb: 'aspect-square w-[calc((100%-48px)/3)] shrink-0 bg-[#C4C4C4]',
   thumbCurrent: 'outline outline-1 -outline-offset-1 outline-black',
   thumbImage: 'block size-full object-cover',

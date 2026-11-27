@@ -1,6 +1,7 @@
 import { useId } from 'react'
 import { ProductGrid, ProductGridSkeleton } from '@/components/shared/ProductGrid'
 import { ButtonLink } from '@/components/ui/ButtonLink'
+import { seeMoreSuffix } from '@/constants/categories'
 import { PRODUCT_DETAIL_TEXT } from '@/constants/productDetail'
 import { useRelatedProducts } from '@/hooks/useProducts'
 import { RELATED_LIMIT } from '@/services/productService'
@@ -22,6 +23,7 @@ const SECTION_CLASSES = {
 export function SameProductSection({ product }: SameProductSectionProps): JSX.Element | null {
   const titleId = useId()
   const { data, isPending } = useRelatedProducts(product)
+  const category = parseCategoryParam(product.category)
 
   if (data !== undefined && data.length === 0) return null
   if (data === undefined && !isPending) return null
@@ -39,11 +41,9 @@ export function SameProductSection({ product }: SameProductSectionProps): JSX.El
         <>
           <ProductGrid products={data} className={SECTION_CLASSES.grid} />
           <div className={SECTION_CLASSES.seeMoreRow}>
-            <ButtonLink
-              to={shopHref(parseCategoryParam(product.category))}
-              className={SECTION_CLASSES.seeMore}
-            >
+            <ButtonLink to={shopHref(category)} className={SECTION_CLASSES.seeMore}>
               {PRODUCT_DETAIL_TEXT.seeMore}
+              <span className="sr-only">{seeMoreSuffix(category)}</span>
             </ButtonLink>
           </div>
         </>

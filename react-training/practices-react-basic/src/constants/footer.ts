@@ -72,8 +72,23 @@ export const FOOTER_LINK_GROUPS: readonly FooterLinkGroup[] = [
 ]
 
 export const SOCIAL_LINKS: readonly SocialLink[] = [
-  { id: 'facebook', label: 'Facebook', href: null, iconSrc: '/icons/social-facebook.svg' },
-  { id: 'twitter', label: 'Twitter', href: null, iconSrc: '/icons/social-twitter.svg' },
-  { id: 'linkedin', label: 'LinkedIn', href: null, iconSrc: '/icons/social-linkedin.svg' },
-  { id: 'instagram', label: 'Instagram', href: null, iconSrc: '/icons/social-instagram.svg' },
+  {
+    id: 'facebook',
+    label: 'Facebook',
+    href: 'https://www.facebook.com',
+    iconSrc: '/icons/social-facebook.svg',
+  },
+  { id: 'twitter', label: 'Twitter', href: 'https://x.com', iconSrc: '/icons/social-twitter.svg' },
+  {
+    id: 'linkedin',
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com',
+    iconSrc: '/icons/social-linkedin.svg',
+  },
+  {
+    id: 'instagram',
+    label: 'Instagram',
+    href: 'https://www.instagram.com',
+    iconSrc: '/icons/social-instagram.svg',
+  },
 ]

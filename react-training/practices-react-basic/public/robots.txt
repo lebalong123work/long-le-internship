@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mangcoding-store-seven.vercel.app/sitemap.xml

@@ -1,37 +1,34 @@
 import { createBrowserRouter } from 'react-router-dom'
 import { AccountLayout } from '@/components/layout/AccountLayout'
 import { RootLayout } from '@/components/layout/RootLayout'
+import { AppErrorPage } from '@/pages/AppError'
 import ProtectedRoute from './ProtectedRoute'
-import Home from '@/pages/Home'
-import Shop from '@/pages/Shop'
-import ProductDetail from '@/pages/ProductDetail'
-import Search from '@/pages/Search'
-import AboutUs from '@/pages/Static/AboutUs'
-import Contact from '@/pages/Static/Contact'
-import Cart from '@/pages/Cart'
-import Checkout from '@/pages/Checkout'
-import OrderSuccess from '@/pages/OrderSuccess'
-import OrderLookup from '@/pages/OrderLookup'
-import Profile from '@/pages/Account/Profile'
-import OrderHistory from '@/pages/Account/Orders'
-import Wishlist from '@/pages/Account/Wishlist'
-import NotFound from '@/pages/NotFound'
-import type { RouteObject } from 'react-router-dom'
+import type { ComponentType } from 'react'
+import type { LazyRouteFunction, RouteObject } from 'react-router-dom'
+
+interface PageModule {
+  default: ComponentType
+}
+
+function lazyPage(load: () => Promise<PageModule>): LazyRouteFunction<RouteObject> {
+  return async () => ({ Component: (await load()).default })
+}
 
 export const routes: RouteObject[] = [
   {
     element: <RootLayout />,
+    errorElement: <AppErrorPage />,
     children: [
-      { path: '/', element: <Home /> },
-      { path: '/shop', element: <Shop /> },
-      { path: '/shop/:productId', element: <ProductDetail /> },
-      { path: '/search', element: <Search /> },
-      { path: '/about', element: <AboutUs /> },
-      { path: '/contact', element: <Contact /> },
-      { path: '/cart', element: <Cart /> },
-      { path: '/checkout', element: <Checkout /> },
-      { path: '/order-success/:orderId', element: <OrderSuccess /> },
-      { path: '/order-lookup', element: <OrderLookup /> },
+      { path: '/', lazy: lazyPage(() => import('@/pages/Home')) },
+      { path: '/shop', lazy: lazyPage(() => import('@/pages/Shop')) },
+      { path: '/shop/:productId', lazy: lazyPage(() => import('@/pages/ProductDetail')) },
+      { path: '/search', lazy: lazyPage(() => import('@/pages/Search')) },
+      { path: '/about', lazy: lazyPage(() => import('@/pages/Static/AboutUs')) },
+      { path: '/contact', lazy: lazyPage(() => import('@/pages/Static/Contact')) },
+      { path: '/cart', lazy: lazyPage(() => import('@/pages/Cart')) },
+      { path: '/checkout', lazy: lazyPage(() => import('@/pages/Checkout')) },
+      { path: '/order-success/:orderId', lazy: lazyPage(() => import('@/pages/OrderSuccess')) },
+      { path: '/order-lookup', lazy: lazyPage(() => import('@/pages/OrderLookup')) },
 
       {
         element: <ProtectedRoute />,
@@ -39,15 +36,18 @@ export const routes: RouteObject[] = [
           {
             element: <AccountLayout />,
             children: [
-              { path: '/account/profile', element: <Profile /> },
-              { path: '/account/orders', element: <OrderHistory /> },
-              { path: '/account/wishlist', element: <Wishlist /> },
+              { path: '/account/profile', lazy: lazyPage(() => import('@/pages/Account/Profile')) },
+              { path: '/account/orders', lazy: lazyPage(() => import('@/pages/Account/Orders')) },
+              {
+                path: '/account/wishlist',
+                lazy: lazyPage(() => import('@/pages/Account/Wishlist')),
+              },
             ],
           },
         ],
       },
 
-      { path: '*', element: <NotFound /> },
+      { path: '*', lazy: lazyPage(() => import('@/pages/NotFound')) },
     ],
   },
 ]

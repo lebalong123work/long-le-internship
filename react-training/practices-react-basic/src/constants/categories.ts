@@ -8,4 +8,12 @@ export const CATEGORIES = [
 
 export type CategorySlug = (typeof CATEGORIES)[number]['slug']
 
+export function categoryName(slug: CategorySlug): string {
+  return CATEGORIES.find((category) => category.slug === slug)?.name ?? slug
+}
+
+export function seeMoreSuffix(slug: CategorySlug | undefined): string {
+  return slug === undefined ? ' all products' : ` ${categoryName(slug)} products`
+}
+
 export const CATEGORY_LIST_LABEL = 'Product categories'

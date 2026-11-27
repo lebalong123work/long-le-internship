@@ -1,3 +1,5 @@
+const APP_ERROR_HEADING = 'Something went wrong'
+
 export const UI_STATE_MESSAGES = {
   errorDefault: 'Something went wrong. Please try again.',
   retry: 'Try again',
@@ -5,6 +7,9 @@ export const UI_STATE_MESSAGES = {
   loadingProducts: 'Loading products',
   productNotFound: 'Product not found',
   backToHome: 'Back to Home',
+  appErrorHeading: APP_ERROR_HEADING,
+  appErrorMessage: 'Sorry, this page could not be shown. Please try again.',
+  appErrorTitle: `${APP_ERROR_HEADING} – mangcoding Store`,
   emptyCart: 'Your cart is empty',
   orderNotFound: 'Order not found',
   emptyWishlist: 'No saved items',

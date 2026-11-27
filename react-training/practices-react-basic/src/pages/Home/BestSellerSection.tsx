@@ -6,7 +6,7 @@ import { ButtonLink } from '@/components/ui/ButtonLink'
 import { focusWithVisibleRing } from '@/components/ui/focusWithVisibleRing'
 import { Tabs } from '@/components/ui/Tabs'
 import { BEST_SELLER_TEXT, CATEGORY_TABS } from '@/constants/bestSeller'
-import { CATEGORIES } from '@/constants/categories'
+import { CATEGORIES, seeMoreSuffix } from '@/constants/categories'
 import { ROUTES } from '@/constants/routes'
 import { UI_STATE_MESSAGES } from '@/constants/uiStateMessages'
 import { useBestSellers } from '@/hooks/useProducts'
@@ -145,6 +145,7 @@ export function BestSellerSection(): JSX.Element {
       <div className={SECTION_CLASSES.seeMoreRow}>
         <ButtonLink to={ROUTES.SHOP_CATEGORY(activeCategory)} className={SECTION_CLASSES.seeMore}>
           {BEST_SELLER_TEXT.seeMore}
+          <span className="sr-only">{seeMoreSuffix(activeCategory)}</span>
         </ButtonLink>
       </div>
     </section>

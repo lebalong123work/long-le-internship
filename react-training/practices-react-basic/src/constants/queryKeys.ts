@@ -9,7 +9,6 @@ function keyOf(owner: CartOwner | null): string {
 
 export const queryKeys = {
   products: {
-    all: () => ['products'] as const,
     list: (filters: ProductFilters) => ['products', 'list', filters] as const,
     bestSellers: (category: string) => ['products', 'best-sellers', category] as const,
     detail: (id: string) => ['products', 'detail', id] as const,

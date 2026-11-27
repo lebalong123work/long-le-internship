@@ -1,11 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { ORDER_PAGE_LAYOUT } from '@/components/shared/orderPageLayout'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { ORDER_LOOKUP_TEXT } from '@/constants/order'
 import { orderLookupSchema } from '@/schemas/orderLookup'
-import { cn } from '@/utils/cn'
 import type { OrderLookupFormValues } from '@/schemas/orderLookup'
 
 interface OrderLookupFormProps {
@@ -50,11 +48,7 @@ export function OrderLookupForm({
         error={errors.orderNumber?.message}
         {...register('orderNumber', { onChange: onFieldChange })}
       />
-      <Button
-        type="submit"
-        isLoading={isSubmitting}
-        className={cn(ORDER_PAGE_LAYOUT.action, 'md:self-start')}
-      >
+      <Button type="submit" isLoading={isSubmitting} className="w-full">
         {ORDER_LOOKUP_TEXT.submit}
       </Button>
     </form>

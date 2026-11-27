@@ -6,7 +6,7 @@ import {
   isFocusFree,
   SCRIPT_FOCUS_RING,
 } from '@/components/ui/focusWithVisibleRing'
-import { FORM_ERROR_TEXT } from '@/components/ui/formClasses'
+import { FieldError } from '@/components/ui/FieldError'
 import { FOCUS_RING } from '@/components/ui/interactionClasses'
 import { QuantityStepper } from '@/components/ui/QuantityStepper'
 import { RATING_TEXT } from '@/constants/product'
@@ -129,13 +129,13 @@ export function ProductDetailView({
                 onChange={setChosenColor}
                 errorId={showColorError ? colorErrorId : undefined}
               />
-              <p
-                id={colorErrorId}
-                role="alert"
-                className={cn(FORM_ERROR_TEXT, showColorError && 'mt-2')}
-              >
-                {showColorError ? PRODUCT_DETAIL_TEXT.colorRequired : ''}
-              </p>
+              <div className="mt-2">
+                <FieldError
+                  id={colorErrorId}
+                  message={showColorError ? PRODUCT_DETAIL_TEXT.colorRequired : undefined}
+                  announce
+                />
+              </div>
             </div>
             <div className="lg:col-start-1 lg:row-start-2">
               <SizePicker sizes={product.sizes} value={size} onChange={setChosenSize} />

@@ -5,10 +5,13 @@ import type { MouseEvent, MutableRefObject, SyntheticEvent } from 'react'
 export const FULLSCREEN_DIALOG_CLASSES =
   'fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none border-0 bg-transparent'
 
+export const FOCUS_FALLBACK_ATTR = 'data-focus-fallback'
+
 interface DialogControllerProps {
   dialogId: string
   isOpen: boolean
   isOpenRef: MutableRefObject<boolean>
+  returnFocus?: boolean
 }
 
 interface DialogCloseEvents {
@@ -28,16 +31,34 @@ function activeHtmlElement(): HTMLElement | null {
   return active instanceof HTMLElement ? active : null
 }
 
-export function DialogController({ dialogId, isOpen, isOpenRef }: DialogControllerProps): null {
-  const isUnmountingRef = useRef(false)
+function isUsable(element: HTMLElement | null): element is HTMLElement {
+  if (element === null || element === document.body) return false
+  if (!element.isConnected || element.closest('[hidden]') !== null) return false
+  return typeof element.checkVisibility === 'function' ? element.checkVisibility() : true
+}
 
-  useLayoutEffect(() => {
-    isUnmountingRef.current = false
-    return () => {
-      isUnmountingRef.current = true
-    }
-  }, [])
+function isFocusLost(dialog: HTMLDialogElement): boolean {
+  const active = activeHtmlElement()
+  if (active === null || active === document.body) return true
+  return dialog.contains(active) || !isUsable(active)
+}
 
+function restoreFocus(dialog: HTMLDialogElement, opener: HTMLElement | null): void {
+  if (!isFocusLost(dialog)) return
+  if (isUsable(opener)) {
+    opener.focus()
+    return
+  }
+  const fallbacks = document.querySelectorAll<HTMLElement>(`[${FOCUS_FALLBACK_ATTR}]`)
+  Array.from(fallbacks).find(isUsable)?.focus()
+}
+
+export function DialogController({
+  dialogId,
+  isOpen,
+  isOpenRef,
+  returnFocus = true,
+}: DialogControllerProps): null {
   useLayoutEffect(() => {
     const dialog = document.getElementById(dialogId)
     if (!(dialog instanceof HTMLDialogElement) || !isOpen) return
@@ -50,9 +71,9 @@ export function DialogController({ dialogId, isOpen, isOpenRef }: DialogControll
       isOpenRef.current = false
       clearTopLayerHost(dialog)
       if (dialog.open) dialog.close()
-      if (isUnmountingRef.current && opener?.isConnected) opener.focus()
+      if (returnFocus) restoreFocus(dialog, opener)
     }
-  }, [dialogId, isOpen, isOpenRef])
+  }, [dialogId, isOpen, isOpenRef, returnFocus])
 
   return null
 }

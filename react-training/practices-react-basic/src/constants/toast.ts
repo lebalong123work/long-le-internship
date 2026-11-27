@@ -1,8 +1,8 @@
 import type { ToastType } from '@/types'
 export const TOAST_DURATION_MS: Record<ToastType, number> = {
-  success: 5000,
-  info: 5000,
-  error: 7000,
+  success: 3000,
+  info: 3000,
+  error: 3000,
 }
 
 export const MAX_TOASTS = 3

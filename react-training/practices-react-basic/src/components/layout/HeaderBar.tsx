@@ -24,7 +24,7 @@ export function HeaderBar({ searchControl, menuControl }: HeaderBarProps): JSX.E
   const cartCount = countCartItems(cart?.items)
 
   return (
-    <div className="container flex h-16 items-center justify-between gap-1 px-4 md:gap-4 md:px-6 lg:h-20 lg:gap-6 xl:grid xl:grid-cols-[1fr_auto_1fr] xl:gap-4 xl:px-0">
+    <div className="container flex h-[var(--header-height)] items-center justify-between gap-1 px-4 md:gap-4 md:px-6 lg:gap-6 xl:grid xl:grid-cols-[1fr_auto_1fr] xl:gap-4 xl:px-0">
       <SiteLogo />
       <MainNav orientation="row" className="hidden lg:mt-[3px] lg:block" />
       <div className="flex items-center justify-end gap-1 md:gap-4 lg:gap-6">

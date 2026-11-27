@@ -23,7 +23,7 @@ const DIALOG_CLASSES = [
 ]
 
 const PANEL_CLASSES =
-  'max-h-[calc(100dvh_-_4rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))] overflow-y-auto overscroll-contain bg-white px-4 py-4 shadow-header md:px-6'
+  'max-h-[calc(100dvh_-_var(--header-height)_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))] overflow-y-auto overscroll-contain bg-white px-4 py-4 shadow-header md:px-6'
 
 interface MenuPanelProps {
   dialogId: string

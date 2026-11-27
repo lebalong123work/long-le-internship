@@ -45,7 +45,12 @@ export function SearchOverlay({
       className={cn(DIALOG_CLASSES)}
       {...dialogEvents}
     >
-      <DialogController dialogId={dialogId} isOpen={isOpen} isOpenRef={isOpenRef} />
+      <DialogController
+        dialogId={dialogId}
+        isOpen={isOpen}
+        isOpenRef={isOpenRef}
+        returnFocus={false}
+      />
       {isOpen && (
         <SearchCombobox
           variant="overlay"

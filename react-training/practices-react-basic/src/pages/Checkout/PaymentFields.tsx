@@ -1,6 +1,6 @@
 import { useId } from 'react'
 import { useFormContext } from 'react-hook-form'
-import { FORM_ERROR_TEXT } from '@/components/ui/formClasses'
+import { FieldError } from '@/components/ui/FieldError'
 import { FOCUS_RING } from '@/components/ui/interactionClasses'
 import { BANK_TRANSFER_DETAILS, CHECKOUT_TEXT, PAYMENT_OPTIONS } from '@/constants/checkout'
 import { cn } from '@/utils/cn'
@@ -72,11 +72,7 @@ export function PaymentFields({ disabled = false }: PaymentFieldsProps): JSX.Ele
           {label}
         </label>
       ))}
-      {error && (
-        <p id={errorId} className={FORM_ERROR_TEXT}>
-          {error}
-        </p>
-      )}
+      <FieldError id={errorId} message={error} />
       <PaymentDetails method={watch('paymentMethod')} />
     </fieldset>
   )

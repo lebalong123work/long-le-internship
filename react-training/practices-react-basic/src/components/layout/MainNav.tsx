@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { matchPath, NavLink, useLocation } from 'react-router-dom'
 import { HEADER_TEXT, MAIN_NAV_ITEMS } from '@/constants/header'
 import { cn } from '@/utils/cn'
 import { NAV_LINK_CLASSES, PANEL_ROW } from './headerClasses'
@@ -24,7 +24,13 @@ const LINK_LAYOUT: Record<NavOrientation, string[]> = {
   column: ['block', PANEL_ROW],
 }
 
+function isCurrentPage(path: string, pathname: string): boolean {
+  return matchPath({ path, end: true }, pathname) !== null
+}
+
 export function MainNav({ orientation, firstLinkRef, className }: MainNavProps): JSX.Element {
+  const { pathname } = useLocation()
+
   return (
     <nav aria-label={HEADER_TEXT.mainNav} className={className}>
       <ul className={LIST_CLASSES[orientation]}>
@@ -34,6 +40,7 @@ export function MainNav({ orientation, firstLinkRef, className }: MainNavProps):
               ref={index === 0 ? firstLinkRef : undefined}
               to={item.to}
               end={item.end}
+              aria-current={isCurrentPage(item.to, pathname) ? 'page' : false}
               className={({ isActive }) =>
                 cn(
                   NAV_LINK_CLASSES.idle,

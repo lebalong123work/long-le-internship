@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { FOCUS_RING, HOVER_OPACITY } from '@/components/ui/interactionClasses'
+import { FOCUS_FALLBACK_ATTR } from '@/components/ui/nativeDialog'
 import { DESKTOP_MEDIA_QUERY } from '@/constants/breakpoints'
 import { HEADER_TEXT } from '@/constants/header'
 import { SEARCH_ICON_SRC } from '@/constants/search'
@@ -92,6 +93,7 @@ export function Header(): JSX.Element {
         menuControl={
           <button
             type="button"
+            {...{ [FOCUS_FALLBACK_ATTR]: '' }}
             aria-label={HEADER_TEXT.openMenu}
             aria-expanded={isMenuOpen}
             aria-controls={menuId}

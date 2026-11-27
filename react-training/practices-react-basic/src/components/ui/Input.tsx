@@ -1,11 +1,6 @@
 import { forwardRef, useId } from 'react'
-import {
-  FIELD_CONTROL,
-  FIELD_INVALID,
-  FIELD_LABEL,
-  FORM_ERROR_TEXT,
-  joinIds,
-} from '@/components/ui/formClasses'
+import { FieldError } from '@/components/ui/FieldError'
+import { FIELD_CONTROL, FIELD_INVALID, FIELD_LABEL, joinIds } from '@/components/ui/formClasses'
 import { DISABLED_CURSOR, FOCUS_RING } from '@/components/ui/interactionClasses'
 import { cn } from '@/utils/cn'
 import type { InputHTMLAttributes } from 'react'
@@ -44,11 +39,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
             className
           )}
         />
-        {error && (
-          <p id={errorId} className={FORM_ERROR_TEXT}>
-            {error}
-          </p>
-        )}
+        <FieldError id={errorId} message={error} />
       </div>
     </div>
   )

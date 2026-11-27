@@ -1,6 +1,6 @@
 import { useId, useRef } from 'react'
 import { Button } from '@/components/ui/Button'
-import { FORM_ERROR_TEXT } from '@/components/ui/formClasses'
+import { FieldError } from '@/components/ui/FieldError'
 import { AVATAR_RULES, PROFILE_TEXT } from '@/constants/profile'
 import type { ChangeEvent } from 'react'
 
@@ -59,11 +59,7 @@ export function AvatarField({
           onChange={handleChange}
         />
       </div>
-      {error && (
-        <p id={errorId} role="alert" className={FORM_ERROR_TEXT}>
-          {error}
-        </p>
-      )}
+      <FieldError id={errorId} message={error} announce />
     </div>
   )
 }

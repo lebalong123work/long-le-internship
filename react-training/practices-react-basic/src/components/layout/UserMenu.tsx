@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { FOCUS_RING, HOVER_OPACITY } from '@/components/ui/interactionClasses'
+import { FOCUS_FALLBACK_ATTR } from '@/components/ui/nativeDialog'
 import { DESKTOP_MEDIA_QUERY } from '@/constants/breakpoints'
 import { ACCOUNT_NAV_ITEMS, GUEST_NAV_ITEMS, HEADER_TEXT } from '@/constants/header'
 import { useAuth, useLogout } from '@/hooks/useAuth'
@@ -159,6 +160,7 @@ export function UserMenu({ className }: UserMenuProps): JSX.Element {
       <button
         ref={buttonRef}
         type="button"
+        {...{ [FOCUS_FALLBACK_ATTR]: '' }}
         aria-label={HEADER_TEXT.accountMenuLabel(user?.name ?? '')}
         aria-expanded={isOpen}
         aria-controls={menuId}

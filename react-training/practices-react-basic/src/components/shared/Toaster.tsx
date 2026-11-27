@@ -20,17 +20,19 @@ const hostKeys = new WeakMap<HTMLElement, number>()
 let lastHostKey = 0
 
 const STACK_CLASSES = [
-  'pointer-events-none fixed inset-x-4 top-[calc(16px_+_env(safe-area-inset-top))] z-50 flex flex-col gap-2',
+  'pointer-events-none fixed inset-x-4 top-[calc(var(--header-height)_+_16px_+_env(safe-area-inset-top))] z-50 flex flex-col gap-2',
   'md:left-auto md:right-6 md:w-[360px]',
 ]
 
 const TOAST_CLASSES =
-  'pointer-events-auto flex items-start gap-3 border-l-4 bg-white p-4 shadow-header'
+  'pointer-events-auto flex items-center gap-3 rounded-10 bg-white py-3 pl-4 pr-2 shadow-header'
 
-const TOAST_BORDER: Record<ToastType, string> = {
-  success: 'border-primary',
-  info: 'border-medium-dark',
-  error: 'border-error',
+const TOAST_DOT_CLASSES = 'size-2 shrink-0 rounded-full'
+
+const TOAST_DOT_COLOR: Record<ToastType, string> = {
+  success: 'bg-primary',
+  info: 'bg-medium-dark',
+  error: 'bg-error',
 }
 
 interface ToastItemProps {
@@ -60,7 +62,7 @@ function focusLeaves(event: FocusEvent<HTMLElement>): boolean {
 function ToastItem({ toast, onClose, onPause, onResume }: ToastItemProps): JSX.Element {
   return (
     <div
-      className={cn(TOAST_CLASSES, TOAST_BORDER[toast.type])}
+      className={TOAST_CLASSES}
       onFocus={() => onPause(toast.id, 'focus')}
       onBlur={(event) => {
         if (focusLeaves(event)) onResume(toast.id, 'focus')
@@ -72,7 +74,8 @@ function ToastItem({ toast, onClose, onPause, onResume }: ToastItemProps): JSX.E
         if (isMouse(event)) onResume(toast.id, 'hover')
       }}
     >
-      <p className="flex-1 break-words font-heading text-lg font-normal leading-normal text-dark">
+      <span aria-hidden="true" className={cn(TOAST_DOT_CLASSES, TOAST_DOT_COLOR[toast.type])} />
+      <p className="min-w-0 flex-1 break-words font-heading text-lg font-normal leading-normal text-dark">
         {toast.message}
       </p>
       <CloseButton label={CLOSE_LABEL} onClick={() => onClose(toast.id)} />
